@@ -253,7 +253,6 @@ function smf_main()
 		'pm' => array('sa' => array('popup')),
 		'profile' => array('area' => array('popup', 'alerts_popup', 'download', 'dlattach')),
 		'requestmembers' => true,
-		'smstats' => true,
 		'suggest' => true,
 		'verificationcode' => true,
 		'viewquery' => true,
@@ -292,7 +291,7 @@ function smf_main()
 			return 'InMaintenance';
 	}
 	// If guest access is off, a guest can only do one of the very few following actions.
-	elseif (empty($modSettings['allow_guestAccess']) && $user_info['is_guest'] && (!isset($_REQUEST['action']) || !in_array($_REQUEST['action'], array('coppa', 'login', 'login2', 'logintfa', 'reminder', 'activate', 'help', 'helpadmin', 'smstats', 'verificationcode', 'signup', 'signup2'))))
+	elseif (empty($modSettings['allow_guestAccess']) && $user_info['is_guest'] && (!isset($_REQUEST['action']) || !in_array($_REQUEST['action'], array('coppa', 'login', 'login2', 'logintfa', 'reminder', 'activate', 'help', 'helpadmin', 'verificationcode', 'signup', 'signup2'))))
 		return 'KickGuest';
 	elseif (empty($_REQUEST['action']))
 	{
@@ -396,7 +395,6 @@ function smf_main()
 		'sendactivation' => array('Register.php', 'SendActivation'),
 		'signup' => array('Register.php', 'Register'),
 		'signup2' => array('Register.php', 'Register2'),
-		'smstats' => array('Stats.php', 'SMStats'),
 		'suggest' => array('Subs-Editor.php', 'AutoSuggestHandler'),
 		'splittopics' => array('SplitTopics.php', 'SplitTopics'),
 		'stats' => array('Stats.php', 'DisplayStats'),
