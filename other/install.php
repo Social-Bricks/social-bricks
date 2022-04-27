@@ -1311,54 +1311,6 @@ function DatabasePopulation()
 	// Make sure UTF will be used globally.
 	$newSettings[] = array('global_character_set', 'UTF-8');
 
-	// Are we allowing stat collection?
-	if (!empty($_POST['stats']) && substr($boardurl, 0, 16) != 'http://localhost' && empty($modSettings['allow_sm_stats']) && empty($modSettings['enable_sm_stats']))
-	{
-		$incontext['allow_sm_stats'] = true;
-
-		// Attempt to register the site etc.
-		$fp = @fsockopen('www.simplemachines.org', 443, $errno, $errstr);
-		if (!$fp)
-			$fp = @fsockopen('www.simplemachines.org', 80, $errno, $errstr);
-		if ($fp)
-		{
-			$out = 'GET /smf/stats/register_stats.php?site=' . base64_encode($boardurl) . ' HTTP/1.1' . "\r\n";
-			$out .= 'Host: www.simplemachines.org' . "\r\n";
-			$out .= 'Connection: Close' . "\r\n\r\n";
-			fwrite($fp, $out);
-
-			$return_data = '';
-			while (!feof($fp))
-				$return_data .= fgets($fp, 128);
-
-			fclose($fp);
-
-			// Get the unique site ID.
-			preg_match('~SITE-ID:\s(\w{10})~', $return_data, $ID);
-
-			if (!empty($ID[1]))
-				$smcFunc['db_insert']('replace',
-					$db_prefix . 'settings',
-					array('variable' => 'string', 'value' => 'string'),
-					array(
-						array('sm_stats_key', $ID[1]),
-						array('enable_sm_stats', 1),
-					),
-					array('variable')
-				);
-		}
-	}
-	// Don't remove stat collection unless we unchecked the box for real, not from the loop.
-	elseif (empty($_POST['stats']) && empty($incontext['allow_sm_stats']))
-		$smcFunc['db_query']('', '
-			DELETE FROM {db_prefix}settings
-			WHERE variable = {string:enable_sm_stats}',
-			array(
-				'enable_sm_stats' => 'enable_sm_stats',
-				'db_error_skip' => true,
-			)
-		);
-
 	// Are we enabling SSL?
 	if (!empty($_POST['force_ssl']))
 		$newSettings[] = array('force_ssl', 1);
@@ -2363,12 +2315,6 @@ function template_forum_settings()
 				<input type="checkbox" name="dbsession" id="dbsession_check" checked>
 				<label for="dbsession_check">', $txt['install_settings_dbsession_title'], '</label>
 				<div class="smalltext">', $incontext['test_dbsession'] ? $txt['install_settings_dbsession_info1'] : $txt['install_settings_dbsession_info2'], '</div>
-			</dd>
-			<dt>', $txt['install_settings_stats'], ':</dt>
-			<dd>
-				<input type="checkbox" name="stats" id="stats_check" checked="checked">
-				<label for="stats_check">', $txt['install_settings_stats_title'], '</label>
-				<div class="smalltext">', $txt['install_settings_stats_info'], '</div>
 			</dd>
 			<dt>', $txt['force_ssl'], ':</dt>
 			<dd>

@@ -107,9 +107,6 @@ $txt['install_settings_dbsession'] = 'Database Sessions';
 $txt['install_settings_dbsession_title'] = 'Use the database for sessions instead of using files.';
 $txt['install_settings_dbsession_info1'] = 'This feature is almost always for the best, as it makes sessions more dependable.';
 $txt['install_settings_dbsession_info2'] = 'This feature is generally a good idea, but it may not work properly on this server.';
-$txt['install_settings_stats'] = 'Allow stat Collection';
-$txt['install_settings_stats_title'] = 'Allow Simple Machines to collect basic stats monthly';
-$txt['install_settings_stats_info'] = 'If enabled, this will allow Simple Machines to visit your site once a month to collect basic statistics. This will help us make decisions as to which configurations to optimize the software for. For more information please visit our <a href="https://www.simplemachines.org/about/stats.php" target="_blank" rel="noopener">info page</a>.';
 $txt['install_settings_proceed'] = 'Proceed';
 
 $txt['db_settings'] = 'Database Server Settings';
@@ -271,8 +268,6 @@ $txt['upgrade_customize'] = 'Customize';
 $txt['upgrade_debug_info'] = 'Output extra debugging information.';
 $txt['upgrade_empty_errorlog'] = 'Empty error log before upgrading.';
 $txt['upgrade_delete_karma'] = 'Delete all karma settings and info from the DB';
-$txt['upgrade_stats_collection'] = 'Allow Simple Machines to collect basic stats monthly.';
-$txt['upgrade_stats_info'] = 'If enabled, this will allow Simple Machines to visit your site once a month to collect basic statistics. This will help us make decisions as to which configurations to optimise the software for. For more information please visit our <a href="%1$s" target="_blank" rel="noopener">info page</a>.';
 $txt['upgrade_migrate_settings_file'] = 'Migrate to a new Settings file.';
 $txt['upgrade_db_changes'] = 'Executing database changes';
 $txt['upgrade_db_patient'] = 'Please be patient - this may take some time on large forums. The time elapsed increments from the server to show progress is being made.';
