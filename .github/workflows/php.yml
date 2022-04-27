@@ -3,7 +3,7 @@ name: PHP Check
 on:
   push:
     branches:
-      - release-2.1
+      - main
     pull_request:
 
 jobs:
@@ -26,9 +26,6 @@ jobs:
       run: composer install --prefer-dist --no-progress --ansi
 
     - run: php -v
-
-    - name: Checking for sign off (GPG also accepted)
-      run: php ./vendor/simplemachines/build-tools/check-signed-off.php
 
     - name: Checking file integrity
       run: |
