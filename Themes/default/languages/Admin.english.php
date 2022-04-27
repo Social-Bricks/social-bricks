@@ -595,6 +595,7 @@ $txt['legacyBBC'] = 'Legacy BBC tags';
 $txt['bbcTagsToUse'] = 'Enabled BBC tags';
 $txt['enabled_bbc_select'] = 'Select the tags which are allowed to be used';
 $txt['enabled_bbc_select_all'] = 'Select all tags';
+$txt['bbcode_colors'] = 'Colors for the posting editor';
 $txt['groups_can_use'] = 'Membergroups allowed to use %1$s';
 
 $txt['enableParticipation'] = 'Enable participation icons';

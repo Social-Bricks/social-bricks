@@ -341,6 +341,10 @@ $helptxt['enablePostHTML'] = 'This will allow the posting of some basic HTML tag
 		<li>&lt;pre&gt;, &lt;blockquote&gt;</li>
 	</ul>';
 
+$helptxt['bbcode_colors'] = 'The posting editor has a button where you can select one of a list of preset colors for posting. This lets you customize which colors are used.
+	<br><br>
+	You can use hexcodes (both #000 and #000000 styles are supported), or any of the CSS named colors, e.g. AliceBlue or AntiqueWhite.';
+
 $helptxt['themes_manage'] = 'Here you can install new themes and select which themes your users can choose from, the default theme that new users and guests will use, as well as other theme selection settings.';
 $helptxt['theme_install'] = 'This allows you to install new themes. You can do this from an existing directory, by uploading an archive for the theme, or by copying the default theme.<br><br>Note that the archive or directory must have a <pre>theme_info.xml</pre> definition file.';
 $helptxt['xmlnews_enable'] = 'Allows people to link to <a href="%1$s?action=.xml;sa=news" target="_blank" rel="noopener">Recent news</a>
