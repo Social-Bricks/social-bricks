@@ -420,7 +420,7 @@ function template_ssi_above()
 	<head>
 		<title>', SMF_FULL_VERSION, ' SSI.php Examples</title>
 		<link rel="stylesheet" href="', $settings['default_theme_url'], '/css/index.css">
-		<script src="', !empty($context['javascript_files']['smf_jquery']['fileUrl']) ? $context['javascript_files']['smf_jquery']['fileUrl'] : 'https://ajax.googleapis.com/ajax/libs/jquery/' . JQUERY_VERSION . '/jquery.min.js', '"></script>
+		<script src="', !empty($context['javascript_files']['sb_jquery']['fileUrl']) ? $context['javascript_files']['sb_jquery']['fileUrl'] : 'https://ajax.googleapis.com/ajax/libs/jquery/' . JQUERY_VERSION . '/jquery.min.js', '"></script>
 		<script src="', $settings['default_theme_url'], '/scripts/script.js"></script>
 		<style>
 			#wrapper {
@@ -479,8 +479,8 @@ function template_ssi_above()
 		</style>
 		<script>
 			var sb_scripturl = "', $scripturl, '";
-			var smf_iso_case_folding = ', $context['server']['iso_case_folding'] ? 'true' : 'false', ';
-			var smf_charset = "', $context['character_set'], '";
+			var sb_iso_case_folding = ', $context['server']['iso_case_folding'] ? 'true' : 'false', ';
+			var sb_charset = "', $context['character_set'], '";
 
 			// Sets all ssi_preview class to hidden, then shows the one requested.
 			function showSSIBlock(elementID)

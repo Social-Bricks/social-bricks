@@ -64,7 +64,7 @@ if (empty($cachedir) || !is_dir($cachedir) || !is_writable($cachedir))
 		$cachedir = $boarddir . '/cache';
 	else
 	{
-		$cachedir = sys_get_temp_dir() . '/smf_cache_' . md5($boarddir);
+		$cachedir = sys_get_temp_dir() . '/sb_cache_' . md5($boarddir);
 		@mkdir($cachedir, 0750);
 	}
 }
@@ -116,7 +116,7 @@ loadDatabase();
 reloadSettings();
 
 // Just in case there's a problem...
-set_error_handler('smf_error_handler_cron');
+set_error_handler('sb_error_handler_cron');
 $sc = '';
 $_SERVER['QUERY_STRING'] = '';
 $_SERVER['REQUEST_URL'] = FROM_CLI ? 'CLI cron.php' : $boardurl . '/cron.php';
@@ -274,7 +274,7 @@ function cleanRequest_cron()
  * @param int $line What line of the specified file the error occurred on
  * @return void
  */
-function smf_error_handler_cron($error_level, $error_string, $file, $line)
+function sb_error_handler_cron($error_level, $error_string, $file, $line)
 {
 	global $modSettings;
 

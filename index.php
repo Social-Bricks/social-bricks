@@ -63,7 +63,7 @@ if (empty($cachedir) || !is_dir($cachedir) || !is_writable($cachedir))
 
 	else
 	{
-		$cachedir = sys_get_temp_dir() . '/smf_cache_' . md5($boarddir);
+		$cachedir = sys_get_temp_dir() . '/sb_cache_' . md5($boarddir);
 
 		@mkdir($cachedir, 0750);
 	}
@@ -182,7 +182,7 @@ if (!empty($modSettings['enableCompressedOutput']) && !headers_sent())
 }
 
 // Register an error handler.
-set_error_handler('smf_error_handler');
+set_error_handler('sb_error_handler');
 
 // Start the session. (assuming it hasn't already been.)
 loadSession();
@@ -256,7 +256,7 @@ function sb_main()
 		'suggest' => true,
 		'verificationcode' => true,
 		'viewquery' => true,
-		'viewsmfile' => true,
+		'viewadminfile' => true,
 		'xmlhttp' => true,
 		'.xml' => true,
 	);
@@ -409,7 +409,7 @@ function sb_main()
 		'viewprofile' => array('Profile.php', 'ModifyProfile'),
 		'vote' => array('Poll.php', 'Vote'),
 		'viewquery' => array('ViewQuery.php', 'ViewQuery'),
-		'viewsmfile' => array('Admin.php', 'DisplayAdminFile'),
+		'viewadminfile' => array('Admin.php', 'DisplayAdminFile'),
 		'who' => array('Who.php', 'Who'),
 		'.xml' => array('News.php', 'ShowXmlFeed'),
 		'xmlhttp' => array('Xml.php', 'XMLhttpMain'),

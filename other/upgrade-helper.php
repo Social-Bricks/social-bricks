@@ -388,7 +388,7 @@ function throw_error($message)
  * @param $rs
  * @return array|null
  */
-function smf_mysql_fetch_assoc($rs)
+function sb_mysql_fetch_assoc($rs)
 {
 	return mysqli_fetch_assoc($rs);
 }
@@ -397,7 +397,7 @@ function smf_mysql_fetch_assoc($rs)
  * @param $rs
  * @return array|null
  */
-function smf_mysql_fetch_row($rs)
+function sb_mysql_fetch_row($rs)
 {
 	return mysqli_fetch_row($rs);
 }
@@ -405,7 +405,7 @@ function smf_mysql_fetch_row($rs)
 /**
  * @param $rs
  */
-function smf_mysql_free_result($rs)
+function sb_mysql_free_result($rs)
 {
 	mysqli_free_result($rs);
 }
@@ -414,7 +414,7 @@ function smf_mysql_free_result($rs)
  * @param $rs Ignored
  * @return int|string
  */
-function smf_mysql_insert_id($rs)
+function sb_mysql_insert_id($rs)
 {
 	global $db_connection;
 	return mysqli_insert_id($db_connection);
@@ -424,7 +424,7 @@ function smf_mysql_insert_id($rs)
  * @param $rs
  * @return int
  */
-function smf_mysql_num_rows($rs)
+function sb_mysql_num_rows($rs)
 {
 	return mysqli_num_rows($rs);
 }
@@ -432,7 +432,7 @@ function smf_mysql_num_rows($rs)
 /**
  * @param $string
  */
-function smf_mysql_real_escape_string($string)
+function sb_mysql_real_escape_string($string)
 {
 	global $db_connection;
 	return mysqli_real_escape_string($db_connection, $string);

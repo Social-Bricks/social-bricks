@@ -23,20 +23,20 @@ function db_packages_init()
 {
 	global $smcFunc, $reservedTables, $db_package_log, $db_prefix;
 
-	if (!isset($smcFunc['db_create_table']) || $smcFunc['db_create_table'] != 'smf_db_create_table')
+	if (!isset($smcFunc['db_create_table']) || $smcFunc['db_create_table'] != 'sb_db_create_table')
 	{
 		$smcFunc += array(
-			'db_add_column' => 'smf_db_add_column',
-			'db_add_index' => 'smf_db_add_index',
-			'db_calculate_type' => 'smf_db_calculate_type',
-			'db_change_column' => 'smf_db_change_column',
-			'db_create_table' => 'smf_db_create_table',
-			'db_drop_table' => 'smf_db_drop_table',
-			'db_table_structure' => 'smf_db_table_structure',
-			'db_list_columns' => 'smf_db_list_columns',
-			'db_list_indexes' => 'smf_db_list_indexes',
-			'db_remove_column' => 'smf_db_remove_column',
-			'db_remove_index' => 'smf_db_remove_index',
+			'db_add_column' => 'sb_db_add_column',
+			'db_add_index' => 'sb_db_add_index',
+			'db_calculate_type' => 'sb_db_calculate_type',
+			'db_change_column' => 'sb_db_change_column',
+			'db_create_table' => 'sb_db_create_table',
+			'db_drop_table' => 'sb_db_drop_table',
+			'db_table_structure' => 'sb_db_table_structure',
+			'db_list_columns' => 'sb_db_list_columns',
+			'db_list_indexes' => 'sb_db_list_indexes',
+			'db_remove_column' => 'sb_db_remove_column',
+			'db_remove_index' => 'sb_db_remove_index',
 		);
 		$db_package_log = array();
 	}
@@ -102,7 +102,7 @@ function db_packages_init()
  * @param string $if_exists What to do if the table exists.
  * @param string $error
  */
-function smf_db_create_table($table_name, $columns, $indexes = array(), $parameters = array(), $if_exists = 'ignore', $error = 'fatal')
+function sb_db_create_table($table_name, $columns, $indexes = array(), $parameters = array(), $if_exists = 'ignore', $error = 'fatal')
 {
 	global $reservedTables, $smcFunc, $db_package_log, $db_prefix;
 
@@ -280,7 +280,7 @@ function smf_db_create_table($table_name, $columns, $indexes = array(), $paramet
  * @param string $error
  * @return boolean Whether or not the operation was successful
  */
-function smf_db_drop_table($table_name, $parameters = array(), $error = 'fatal')
+function sb_db_drop_table($table_name, $parameters = array(), $error = 'fatal')
 {
 	global $reservedTables, $smcFunc, $db_prefix;
 
@@ -334,13 +334,13 @@ function smf_db_drop_table($table_name, $parameters = array(), $error = 'fatal')
  * This function adds a column.
  *
  * @param string $table_name The name of the table to add the column to
- * @param array $column_info An array of column info (see {@link smf_db_create_table()})
+ * @param array $column_info An array of column info (see {@link sb_db_create_table()})
  * @param array $parameters Not used?
  * @param string $if_exists What to do if the column exists. If 'update', column is updated.
  * @param string $error
  * @return boolean Whether or not the operation was successful
  */
-function smf_db_add_column($table_name, $column_info, $parameters = array(), $if_exists = 'update', $error = 'fatal')
+function sb_db_add_column($table_name, $column_info, $parameters = array(), $if_exists = 'update', $error = 'fatal')
 {
 	global $smcFunc, $db_package_log, $db_prefix;
 
@@ -395,7 +395,7 @@ function smf_db_add_column($table_name, $column_info, $parameters = array(), $if
  * @param string $error
  * @return boolean Whether or not the operation was successful
  */
-function smf_db_remove_column($table_name, $column_name, $parameters = array(), $error = 'fatal')
+function sb_db_remove_column($table_name, $column_name, $parameters = array(), $error = 'fatal')
 {
 	global $smcFunc, $db_prefix;
 
@@ -435,10 +435,10 @@ function smf_db_remove_column($table_name, $column_name, $parameters = array(), 
  *
  * @param string $table_name The name of the table this column is in
  * @param string $old_column The name of the column we want to change
- * @param array $column_info An array of info about the "new" column definition (see {@link smf_db_create_table()})
+ * @param array $column_info An array of info about the "new" column definition (see {@link sb_db_create_table()})
  * @return bool
  */
-function smf_db_change_column($table_name, $old_column, $column_info)
+function sb_db_change_column($table_name, $old_column, $column_info)
 {
 	global $smcFunc, $db_prefix;
 
@@ -603,13 +603,13 @@ function smf_db_change_column($table_name, $old_column, $column_info)
  * Add an index.
  *
  * @param string $table_name The name of the table to add the index to
- * @param array $index_info An array of index info (see {@link smf_db_create_table()})
+ * @param array $index_info An array of index info (see {@link sb_db_create_table()})
  * @param array $parameters Not used?
  * @param string $if_exists What to do if the index exists. If 'update', the definition will be updated.
  * @param string $error
  * @return boolean Whether or not the operation was successful
  */
-function smf_db_add_index($table_name, $index_info, $parameters = array(), $if_exists = 'update', $error = 'fatal')
+function sb_db_add_index($table_name, $index_info, $parameters = array(), $if_exists = 'update', $error = 'fatal')
 {
 	global $smcFunc, $db_package_log, $db_prefix;
 
@@ -681,7 +681,7 @@ function smf_db_add_index($table_name, $index_info, $parameters = array(), $if_e
  * @param string $error
  * @return boolean Whether or not the operation was successful
  */
-function smf_db_remove_index($table_name, $index_name, $parameters = array(), $error = 'fatal')
+function sb_db_remove_index($table_name, $index_name, $parameters = array(), $error = 'fatal')
 {
 	global $smcFunc, $db_prefix;
 
@@ -734,7 +734,7 @@ function smf_db_remove_index($table_name, $index_name, $parameters = array(), $e
  * @param boolean $reverse If true, returns specific types for a generic type
  * @return array An array containing the appropriate type and size for this DB type
  */
-function smf_db_calculate_type($type_name, $type_size = null, $reverse = false)
+function sb_db_calculate_type($type_name, $type_size = null, $reverse = false)
 {
 	// Let's be sure it's lowercase MySQL likes both, others no.
 	$type_name = strtolower($type_name);
@@ -787,9 +787,9 @@ function smf_db_calculate_type($type_name, $type_size = null, $reverse = false)
  * Get table structure.
  *
  * @param string $table_name The name of the table
- * @return array An array of table structure - the name, the column info from {@link smf_db_list_columns()} and the index info from {@link smf_db_list_indexes()}
+ * @return array An array of table structure - the name, the column info from {@link sb_db_list_columns()} and the index info from {@link sb_db_list_indexes()}
  */
-function smf_db_table_structure($table_name)
+function sb_db_table_structure($table_name)
 {
 	global $smcFunc, $db_prefix;
 
@@ -810,7 +810,7 @@ function smf_db_table_structure($table_name)
  * @param array $parameters Not used?
  * @return array An array of column names or detailed column info, depending on $detail
  */
-function smf_db_list_columns($table_name, $detail = false, $parameters = array())
+function sb_db_list_columns($table_name, $detail = false, $parameters = array())
 {
 	global $smcFunc, $db_prefix;
 
@@ -875,7 +875,7 @@ function smf_db_list_columns($table_name, $detail = false, $parameters = array()
  * @param array $parameters Not used?
  * @return array An array of index names or a detailed array of index info, depending on $detail
  */
-function smf_db_list_indexes($table_name, $detail = false, $parameters = array())
+function sb_db_list_indexes($table_name, $detail = false, $parameters = array())
 {
 	global $smcFunc, $db_prefix;
 

@@ -1417,7 +1417,7 @@ function editBuddyIgnoreLists($memID)
 		),
 	);
 
-	loadJavaScriptFile('suggest.js', array('defer' => false, 'minimize' => true), 'smf_suggest');
+	loadJavaScriptFile('suggest.js', array('defer' => false, 'minimize' => true), 'sb_suggest');
 
 	// Pass on to the actual function.
 	$context['sub_template'] = $subActions[$context['list_area']][0];
@@ -1950,7 +1950,7 @@ function notification($memID)
 	global $txt, $context;
 
 	// Going to want this for consistency.
-	loadCSSFile('admin.css', array(), 'smf_admin');
+	loadCSSFile('admin.css', array(), 'sb_admin');
 
 	// This is just a bootstrap for everything else.
 	$sa = array(

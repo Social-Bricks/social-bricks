@@ -1,4 +1,4 @@
-var smf_formSubmitted = false;
+var sb_formSubmitted = false;
 var lastKeepAliveCheck = new Date().getTime();
 var smf_editorArray = new Array();
 
@@ -122,7 +122,7 @@ String.prototype.oCharsetConversion = {
 // Convert a string to an 8 bit representation (like in PHP).
 String.prototype.php_to8bit = function ()
 {
-	if (smf_charset == 'UTF-8')
+	if (sb_charset == 'UTF-8')
 	{
 		var n, sReturn = '';
 
@@ -153,7 +153,7 @@ String.prototype.php_to8bit = function ()
 
 	else if (this.oCharsetConversion.from.length == 0)
 	{
-		switch (smf_charset)
+		switch (sb_charset)
 		{
 			case 'ISO-8859-1':
 				this.oCharsetConversion = {
@@ -263,7 +263,7 @@ String.prototype.php_strtr = function (sFrom, sTo)
 // Simulate PHP's strtolower (in SOME cases PHP uses ISO-8859-1 case folding).
 String.prototype.php_strtolower = function ()
 {
-	return typeof(smf_iso_case_folding) == 'boolean' && smf_iso_case_folding == true ? this.php_strtr(
+	return typeof(sb_iso_case_folding) == 'boolean' && sb_iso_case_folding == true ? this.php_strtr(
 		'ABCDEFGHIJKLMNOPQRSTUVWXYZ\x8a\x8c\x8e\x9f\xc0\xc1\xc2\xc3\xc4\xc5\xc6\xc7\xc8\xc9\xca\xcb\xcc\xcd\xce\xcf\xd0\xd1\xd2\xd3\xd4\xd5\xd6\xd7\xd8\xd9\xda\xdb\xdc\xdd\xde',
 		'abcdefghijklmnopqrstuvwxyz\x9a\x9c\x9e\xff\xe0\xe1\xe2\xe3\xe4\xe5\xe6\xe7\xe8\xe9\xea\xeb\xec\xed\xee\xef\xf0\xf1\xf2\xf3\xf4\xf5\xf6\xf7\xf8\xf9\xfa\xfb\xfc\xfd\xfe'
 	) : this.php_strtr('ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz');
@@ -337,12 +337,12 @@ function reqWin(desktopURL, alternateWidth, alternateHeight, noScrollbars)
 function reqOverlayDiv(desktopURL, sHeader, sIcon)
 {
 	// Set up our div details
-	var sAjax_indicator = '<div class="centertext"><img src="' + smf_images_url + '/loading_sm.gif"></div>';
+	var sAjax_indicator = '<div class="centertext"><img src="' + sb_images_url + '/loading_sm.gif"></div>';
 	var sHeader = typeof(sHeader) == 'string' ? sHeader : help_popup_heading_text;
 
 	var containerOptions;
 	if (typeof(sIcon) == 'string' && sIcon.match(/\.(gif|png|jpe?g|svg|bmp|tiff)$/) != null)
-		containerOptions = {heading: sHeader, content: sAjax_indicator, icon: smf_images_url + '/' + sIcon};
+		containerOptions = {heading: sHeader, content: sAjax_indicator, icon: sb_images_url + '/' + sIcon};
 	else
 		containerOptions = {heading: sHeader, content: sAjax_indicator, icon_class: 'main_icons ' + (typeof(sIcon) != 'string' ? 'help' : sIcon)};
 
@@ -635,7 +635,7 @@ function isEmptyText(theField)
 // Only allow form submission ONCE.
 function submitonce(theform)
 {
-	smf_formSubmitted = true;
+	sb_formSubmitted = true;
 
 	// If there are any editors warn them submit is coming!
 	for (var i = 0; i < smf_editorArray.length; i++)
@@ -650,7 +650,7 @@ function submitThisOnce(oControl)
 	for (var i = 0, n = aTextareas.length; i < n; i++)
 		aTextareas[i].readOnly = true;
 
-	return !smf_formSubmitted;
+	return !sb_formSubmitted;
 }
 
 // Deprecated, as innerHTML is supported everywhere.
@@ -732,7 +732,7 @@ function invertAll(oInvertCheckbox, oForm, sMask, bIgnoreDisabled)
 
 // Keep the session alive - always!
 var lastKeepAliveCheck = new Date().getTime();
-function smf_sessionKeepAlive()
+function sb_sessionKeepAlive()
 {
 	var curTime = new Date().getTime();
 
@@ -744,12 +744,12 @@ function smf_sessionKeepAlive()
 		lastKeepAliveCheck = curTime;
 	}
 
-	window.setTimeout('smf_sessionKeepAlive();', 1200000);
+	window.setTimeout('sb_sessionKeepAlive();', 1200000);
 }
-window.setTimeout('smf_sessionKeepAlive();', 1200000);
+window.setTimeout('sb_sessionKeepAlive();', 1200000);
 
 // Set a theme option through javascript.
-function smf_setThemeOption(theme_var, theme_value, theme_id, theme_cur_session_id, theme_cur_session_var, theme_additional_vars)
+function sb_setThemeOption(theme_var, theme_value, theme_id, theme_cur_session_id, theme_cur_session_var, theme_additional_vars)
 {
 	// Compatibility.
 	if (theme_cur_session_id == null)
@@ -1024,7 +1024,7 @@ smc_Toggle.prototype.changeState = function(bCollapse, bInit)
 		this.oCookie.set(this.opt.oCookieOptions.sCookieName, this.bCollapsed | 0);
 
 	if (!bInit && 'oThemeOptions' in this.opt && this.opt.oThemeOptions.bUseThemeSettings)
-		smf_setThemeOption(this.opt.oThemeOptions.sOptionName, this.bCollapsed | 0, 'sThemeId' in this.opt.oThemeOptions ? this.opt.oThemeOptions.sThemeId : null, sb_session_id, sb_session_var, 'sAdditionalVars' in this.opt.oThemeOptions ? this.opt.oThemeOptions.sAdditionalVars : null);
+		sb_setThemeOption(this.opt.oThemeOptions.sOptionName, this.bCollapsed | 0, 'sThemeId' in this.opt.oThemeOptions ? this.opt.oThemeOptions.sThemeId : null, sb_session_id, sb_session_var, 'sAdditionalVars' in this.opt.oThemeOptions ? this.opt.oThemeOptions.sAdditionalVars : null);
 }
 
 smc_Toggle.prototype.toggle = function()
@@ -1374,7 +1374,7 @@ IconList.prototype.collapseList = function()
 }
 
 // Handy shortcuts for getting the mouse position on the screen - only used for IE at the moment.
-function smf_mousePose(oEvent)
+function sb_mousePose(oEvent)
 {
 	var x = 0;
 	var y = 0;
@@ -1730,7 +1730,7 @@ $(function() {
 	$(document).on('click', '.you_sure', function() {
 		var custom_message = $(this).attr('data-confirm');
 		var timeBefore = new Date();
-		var result = confirm(custom_message ? custom_message.replace(/-n-/g, "\n") : smf_you_sure);
+		var result = confirm(custom_message ? custom_message.replace(/-n-/g, "\n") : sb_you_sure);
 		var timeAfter = new Date();
 
 		// Check if the browser disabled the alert
@@ -1741,7 +1741,7 @@ $(function() {
 	});
 
 	// Generic event for sbSelectText()
-	$('.smf_select_text').on('click', function(e) {
+	$('.sb_select_text').on('click', function(e) {
 		e.preventDefault();
 
 		// Do you want to target yourself?
@@ -1756,10 +1756,10 @@ $(function() {
 			return;
 
 		if($(item).prop('scrollHeight') > parseInt($(item).css('max-height'), 10))
-			$(item.previousSibling).find('.smf_expand_code').removeClass('hidden');
+			$(item.previousSibling).find('.sb_expand_code').removeClass('hidden');
 	});
 	// Expand or Shrink the code bbc area
-	$('.smf_expand_code').on('click', function(e) {
+	$('.sb_expand_code').on('click', function(e) {
 		e.preventDefault();
 
 		var oCodeArea = this.parentNode.nextSibling;
@@ -1775,23 +1775,23 @@ $(function() {
 	});
 
 	// Expand quotes
-	if ((typeof(smf_quote_expand) != 'undefined') && (smf_quote_expand > 0))
+	if ((typeof(sb_quote_expand) != 'undefined') && (sb_quote_expand > 0))
 	{
 		$('blockquote').each(function(index, item) {
 
 			let cite = $(item).find('cite').first();
 			let quote_height = parseInt($(item).height());
 
-			if(quote_height < smf_quote_expand)
+			if(quote_height < sb_quote_expand)
 				return;
 
 			$(item).css({
 				'overflow-y': 'hidden',
-				'max-height': smf_quote_expand +'px'
+				'max-height': sb_quote_expand +'px'
 			});
 
 			let anchor = $('<a/>', {
-				text: ' [' + smf_txt_expand + ']',
+				text: ' [' + sb_txt_expand + ']',
 				class: 'expand'
 			});
 
@@ -1801,18 +1801,18 @@ $(function() {
 			$(item).on('click', 'a.expand', function(event) {
 				event.preventDefault();
 
-				if (smf_quote_expand < parseInt($(item).height()))
+				if (sb_quote_expand < parseInt($(item).height()))
 				{
-					cite.find('a.expand').text(' ['+ smf_txt_expand +']');
+					cite.find('a.expand').text(' ['+ sb_txt_expand +']');
 					$(item).css({
 						'overflow-y': 'hidden',
-						'max-height': smf_quote_expand +'px'
+						'max-height': sb_quote_expand +'px'
 					});
 				}
 
 				else
 				{
-					cite.find('a.expand').text(' ['+ smf_txt_shrink +']');
+					cite.find('a.expand').text(' ['+ sb_txt_shrink +']');
 					$(item).css({
 						'overflow-y': 'visible',
 						'max-height': (quote_height + 10) +'px'
@@ -1833,13 +1833,13 @@ function expand_quote_parent(oElement)
 		$(value).css({
 			'overflow-y': 'visible',
 			'max-height': '',
-		}).find('a.expand').first().text(' ['+ smf_txt_shrink +']');
+		}).find('a.expand').first().text(' ['+ sb_txt_shrink +']');
 	});
 }
 
 function avatar_fallback(e) {
     var e = window.e || e;
-	var default_url = smf_avatars_url + '/default.png';
+	var default_url = sb_avatars_url + '/default.png';
 
     if (e.target.tagName !== 'IMG' || !e.target.classList.contains('avatar') || e.target.src === default_url )
         return;
@@ -1961,7 +1961,7 @@ smc_preview_post.prototype.onDocSent = function (XMLDoc)
 			bodyText += preview.getElementsByTagName('body')[0].childNodes[i].nodeValue;
 
 	setInnerHTML(document.getElementById(this.opts.sPreviewBodyContainerID), bodyText);
-	$('#' + this.opts.sPreviewBodyContainerID + ' .smf_select_text').on('click', function(e) {
+	$('#' + this.opts.sPreviewBodyContainerID + ' .sb_select_text').on('click', function(e) {
 		e.preventDefault();
 
 		// Do you want to target yourself?
@@ -2056,6 +2056,6 @@ smc_preview_post.prototype.onDocSent = function (XMLDoc)
 
 	location.hash = '#' + this.opts.sPreviewSectionContainerID;
 
-	if (typeof(smf_codeFix) != 'undefined')
-		smf_codeFix();
+	if (typeof(sb_codeFix) != 'undefined')
+		sb_codeFix();
 }

@@ -1522,7 +1522,7 @@ function create_control_richedit($editorOptions)
 			$context['drafts_autosave_frequency'] = empty($modSettings['drafts_autosave_frequency']) ? 60000 : $modSettings['drafts_autosave_frequency'] * 1000;
 
 		// This really has some WYSIWYG stuff.
-		loadCSSFile('jquery.sceditor.css', array('default_theme' => true, 'validate' => true), 'smf_jquery_sceditor');
+		loadCSSFile('jquery.sceditor.css', array('default_theme' => true, 'validate' => true), 'sb_jquery_sceditor');
 		loadTemplate('GenericControls');
 
 		/*
@@ -1530,7 +1530,7 @@ function create_control_richedit($editorOptions)
 		 			If you want to change or tweak the CSS for the editor,
 					include a file named 'jquery.sceditor.theme.css' in your theme.
 		*/
-		loadCSSFile('jquery.sceditor.theme.css', array('force_current' => true, 'validate' => true,), 'smf_jquery_sceditor_theme');
+		loadCSSFile('jquery.sceditor.theme.css', array('force_current' => true, 'validate' => true,), 'sb_jquery_sceditor_theme');
 
 		// JS makes the editor go round
 		loadJavaScriptFile('editor.js', array('minimize' => true), 'smf_editor');
@@ -1556,7 +1556,7 @@ function create_control_richedit($editorOptions)
 		addInlineJavaScript($scExtraLangs, true);
 
 		addInlineJavaScript('
-		var smf_smileys_url = \'' . $settings['smileys_url'] . '\';
+		var sb_smileys_url = \'' . $settings['smileys_url'] . '\';
 		var bbc_quote_from = \'' . addcslashes($txt['quote_from'], "'") . '\';
 		var bbc_quote = \'' . addcslashes($txt['quote'], "'") . '\';
 		var bbc_search_on = \'' . addcslashes($txt['search_on'], "'") . '\';');

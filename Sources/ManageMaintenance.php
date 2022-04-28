@@ -191,7 +191,7 @@ function MaintainMembers()
 	if (isset($_GET['done']) && $_GET['done'] == 'recountposts')
 		$context['maintenance_finished'] = $txt['maintain_recountposts'];
 
-	loadJavaScriptFile('suggest.js', array('defer' => false, 'minimize' => true), 'smf_suggest');
+	loadJavaScriptFile('suggest.js', array('defer' => false, 'minimize' => true), 'sb_suggest');
 }
 
 /**

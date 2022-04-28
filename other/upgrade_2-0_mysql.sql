@@ -364,12 +364,12 @@ foreach ($nameChanges as $table_name => $table)
 	$request = upgrade_query("
 		SHOW TABLES
 		LIKE '{$db_prefix}$table_name'");
-	if (smf_mysql_num_rows($request) == 0)
+	if (sb_mysql_num_rows($request) == 0)
 	{
-		smf_mysql_free_result($request);
+		sb_mysql_free_result($request);
 		continue;
 	}
-	smf_mysql_free_result($request);
+	sb_mysql_free_result($request);
 
 	// Check each column!
 	$actualChanges = array();
@@ -535,7 +535,7 @@ $request = upgrade_query("
 	SELECT value
 	FROM {$db_prefix}themes
 	WHERE variable = 'show_sp1_info'");
-if (smf_mysql_num_rows($request) != 0)
+if (sb_mysql_num_rows($request) != 0)
 {
 	upgrade_query("
 		DELETE FROM {$db_prefix}themes
@@ -583,9 +583,9 @@ $request = upgrade_query("
 	SELECT value
 	FROM {$db_prefix}settings
 	WHERE variable = 'disable_visual_verification'");
-if (smf_mysql_num_rows($request) != 0)
+if (sb_mysql_num_rows($request) != 0)
 {
-	list ($oldValue) = smf_mysql_fetch_row($request);
+	list ($oldValue) = sb_mysql_fetch_row($request);
 	if ($oldValue != 0)
 	{
 		// We have changed the medium setting from SMF 1.1.2.
@@ -610,7 +610,7 @@ $request = upgrade_query("
 	SELECT value
 	FROM {$db_prefix}settings
 	WHERE variable = 'reg_verification'");
-if (smf_mysql_num_rows($request) == 0)
+if (sb_mysql_num_rows($request) == 0)
 {
 	// Upgrade visual verification again!
 	if (!empty($modSettings['visual_verification_type']))
@@ -793,11 +793,11 @@ $request = upgrade_query("
 	WHERE variable = 'theme_layers'
 		OR variable = 'theme_dir'");
 $themeLayerChanges = array();
-while ($row = smf_mysql_fetch_assoc($request))
+while ($row = sb_mysql_fetch_assoc($request))
 {
 	$themeLayerChanges[$row['id_theme']][$row['variable']] = $row['value'];
 }
-smf_mysql_free_result($request);
+sb_mysql_free_result($request);
 
 foreach ($themeLayerChanges as $id_theme => $data)
 {
@@ -905,7 +905,7 @@ $request = upgrade_query("
 		AND active = 1
 		AND private != 2");
 $fields = array();
-while ($row = smf_mysql_fetch_assoc($request))
+while ($row = sb_mysql_fetch_assoc($request))
 {
 	$fields[] = array(
 		'c' => strtr($row['col_name'], array('|' => '', ';' => '')),
@@ -913,11 +913,11 @@ while ($row = smf_mysql_fetch_assoc($request))
 		'b' => ($row['bbc'] ? '1' : '0')
 	);
 }
-smf_mysql_free_result($request);
+sb_mysql_free_result($request);
 
 upgrade_query("
 	UPDATE {$db_prefix}settings
-	SET value = '" . smf_mysql_real_escape_string(serialize($fields)) . "'
+	SET value = '" . sb_mysql_real_escape_string(serialize($fields)) . "'
 	WHERE variable = 'displayFields'");
 }
 ---}
@@ -1088,11 +1088,11 @@ if (@$modSettings['smfVersion'] < '2.0')
 		FROM {$db_prefix}permissions
 		WHERE permission = 'calendar_edit_any'");
 	$inserts = array();
-	while ($row = smf_mysql_fetch_assoc($request))
+	while ($row = sb_mysql_fetch_assoc($request))
 	{
 		$inserts[] = "($row[id_group], 'access_mod_center', $row[add_deny])";
 	}
-	smf_mysql_free_result($request);
+	sb_mysql_free_result($request);
 
 	if (!empty($inserts))
 		upgrade_query("
@@ -1417,11 +1417,11 @@ if (@$modSettings['smfVersion'] < '2.0')
 		FROM {$db_prefix}board_permissions
 		WHERE permission = 'modify_any'");
 	$inserts = array();
-	while ($row = smf_mysql_fetch_assoc($request))
+	while ($row = sb_mysql_fetch_assoc($request))
 	{
 		$inserts[] = "($row[id_group], $row[id_board], 'approve_posts', $row[add_deny])";
 	}
-	smf_mysql_free_result($request);
+	sb_mysql_free_result($request);
 
 	if (!empty($inserts))
 		upgrade_query("
@@ -1450,8 +1450,8 @@ ADD line mediumint(8) unsigned NOT NULL default '0';
 $request = upgrade_query("
 	SELECT COUNT(*)
 	FROM {$db_prefix}log_errors");
-list($totalActions) = smf_mysql_fetch_row($request);
-smf_mysql_free_result($request);
+list($totalActions) = sb_mysql_fetch_row($request);
+sb_mysql_free_result($request);
 
 $_GET['m'] = !empty($_GET['m']) ? (int) $_GET['m'] : '0';
 $step_progress['total'] = $totalActions;
@@ -1465,7 +1465,7 @@ while ($_GET['m'] < $totalActions)
 		SELECT id_error, message, file, line
 		FROM {$db_prefix}log_errors
 		LIMIT $_GET[m], 500");
-	while($row = smf_mysql_fetch_assoc($request))
+	while($row = sb_mysql_fetch_assoc($request))
 	{
 		preg_match('~<br />(%1\$s: )?([\w\. \\\\/\-_:]+)<br />(%2\$s: )?([\d]+)~', $row['message'], $matches);
 		if (!empty($matches[2]) && !empty($matches[4]) && empty($row['file']) && empty($row['line']))
@@ -1639,9 +1639,9 @@ $request = upgrade_query("
 	FROM {$db_prefix}permission_profiles
 	WHERE profile_name = ''");
 $profiles = array();
-while ($row = smf_mysql_fetch_assoc($request))
+while ($row = sb_mysql_fetch_assoc($request))
 	$profiles[] = $row['id_profile'];
-smf_mysql_free_result($request);
+sb_mysql_free_result($request);
 
 if (!empty($profiles))
 {
@@ -1650,20 +1650,20 @@ if (!empty($profiles))
 		FROM {$db_prefix}boards
 		WHERE id_profile IN (" . implode(',', $profiles) . ")");
 	$done_ids = array();
-	while ($row = smf_mysql_fetch_assoc($request))
+	while ($row = sb_mysql_fetch_assoc($request))
 	{
 		if (isset($done_ids[$row['id_profile']]))
 			continue;
 		$done_ids[$row['id_profile']] = true;
 
-		$row['name'] = smf_mysql_real_escape_string($row['name']);
+		$row['name'] = sb_mysql_real_escape_string($row['name']);
 
 		upgrade_query("
 			UPDATE {$db_prefix}permission_profiles
 			SET profile_name = '$row[name]'
 			WHERE id_profile = $row[id_profile]");
 	}
-	smf_mysql_free_result($request);
+	sb_mysql_free_result($request);
 }
 ---}
 ---#
@@ -1675,8 +1675,8 @@ if (!empty($profiles))
 $request = upgrade_query("
 	SELECT COUNT(*)
 	FROM {$db_prefix}permission_profiles");
-list ($profileCount) = smf_mysql_fetch_row($request);
-smf_mysql_free_result($request);
+list ($profileCount) = sb_mysql_fetch_row($request);
+sb_mysql_free_result($request);
 
 if ($profileCount == 0)
 {
@@ -1707,16 +1707,16 @@ if ($profileCount == 0)
 		FROM {$db_prefix}board_permissions
 		WHERE id_profile = 0");
 	$all_perms = array();
-	while ($row = smf_mysql_fetch_assoc($request))
+	while ($row = sb_mysql_fetch_assoc($request))
 		$all_perms[$row['id_board']][$row['id_group']][$row['permission']] = $row['add_deny'];
-	smf_mysql_free_result($request);
+	sb_mysql_free_result($request);
 
 	// Now we have the profile profiles for this installation. We now need to go through each board and work out what the permission profile should be!
 	$request = upgrade_query("
 		SELECT id_board, name, permission_mode
 		FROM {$db_prefix}boards");
 	$board_updates = array();
-	while ($row = smf_mysql_fetch_assoc($request))
+	while ($row = sb_mysql_fetch_assoc($request))
 	{
 		$row['name'] = addslashes($row['name']);
 
@@ -1729,7 +1729,7 @@ if ($profileCount == 0)
 					(profile_name)
 				VALUES
 					('$row[name]')");
-			$board_updates[smf_mysql_insert_id()][] = $row['id_board'];
+			$board_updates[sb_mysql_insert_id()][] = $row['id_board'];
 		}
 		// Otherwise, dear god, this is an old school "simple" permission...
 		elseif ($row['permission_mode'] > 1 && $row['permission_mode'] < 5)
@@ -1740,7 +1740,7 @@ if ($profileCount == 0)
 		else
 			$board_updates[1][] = $row['id_board'];
 	}
-	smf_mysql_free_result($request);
+	sb_mysql_free_result($request);
 
 	// Update the board tables.
 	foreach ($board_updates as $profile => $boards)
@@ -1819,7 +1819,7 @@ $request = upgrade_query("
 	WHERE id_group != 0
 		AND min_posts = -1");
 $inserts = array();
-while ($row = smf_mysql_fetch_assoc($request))
+while ($row = sb_mysql_fetch_assoc($request))
 {
 	if ($row['id_group'] == 2 || $row['id_group'] == 3)
 	{
@@ -1840,7 +1840,7 @@ while ($row = smf_mysql_fetch_assoc($request))
 			$inserts[] = "($row[id_group], 4, '$permission')";
 	}
 }
-smf_mysql_free_result($request);
+sb_mysql_free_result($request);
 
 upgrade_query("
 	INSERT INTO {$db_prefix}board_permissions
@@ -1967,8 +1967,8 @@ ADD KEY id_log (id_log);
 $request = upgrade_query("
 	SELECT COUNT(*)
 	FROM {$db_prefix}log_actions");
-list($totalActions) = smf_mysql_fetch_row($request);
-smf_mysql_free_result($request);
+list($totalActions) = sb_mysql_fetch_row($request);
+sb_mysql_free_result($request);
 
 $_GET['m'] = !empty($_GET['m']) ? (int) $_GET['m'] : '0';
 $step_progress['total'] = $totalActions;
@@ -1983,7 +1983,7 @@ while ($_GET['m'] < $totalActions)
 		FROM {$db_prefix}log_actions
 		LIMIT $_GET[m], 500");
 
-	while ($row = smf_mysql_fetch_assoc($mrequest))
+	while ($row = sb_mysql_fetch_assoc($mrequest))
 	{
 		if (!empty($row['id_board']) || !empty($row['id_topic']) || !empty($row['id_msg']))
 			continue;
@@ -2014,9 +2014,9 @@ while ($_GET['m'] < $totalActions)
 					FROM {$db_prefix}topics
 					WHERE id_topic=$topic_id
 					LIMIT 1");
-				if (smf_mysql_num_rows($trequest))
-					list($board_id) = smf_mysql_fetch_row($trequest);
-				smf_mysql_free_result($trequest);
+				if (sb_mysql_num_rows($trequest))
+					list($board_id) = sb_mysql_fetch_row($trequest);
+				sb_mysql_free_result($trequest);
 			}
 		}
 		else
@@ -2033,9 +2033,9 @@ while ($_GET['m'] < $totalActions)
 					FROM {$db_prefix}messages
 					WHERE id_msg=$msg_id
 					LIMIT 1");
-				if (smf_mysql_num_rows($trequest))
-					list($board_id, $topic_id) = smf_mysql_fetch_row($trequest);
-				smf_mysql_free_result($trequest);
+				if (sb_mysql_num_rows($trequest))
+					list($board_id, $topic_id) = sb_mysql_fetch_row($trequest);
+				sb_mysql_free_result($trequest);
 			}
 		}
 		else
@@ -2247,14 +2247,14 @@ $request = upgrade_query("
 	FROM {$db_prefix}subscriptions");
 $new_cols = array('repeatable', 'reminder', 'email_complete', 'allow_partial');
 $new_cols = array_flip($new_cols);
-while ($request && $row = smf_mysql_fetch_row($request))
+while ($request && $row = sb_mysql_fetch_row($request))
 {
 	$row[0] = strtolower($row[0]);
 	if (isset($new_cols[$row[0]]))
 		unset($new_cols[$row[0]]);
 }
 if ($request)
-	smf_mysql_free_result($request);
+	sb_mysql_free_result($request);
 
 if (isset($new_cols['repeatable']))
 	upgrade_query("
@@ -2278,13 +2278,13 @@ $request = upgrade_query("
 	FROM {$db_prefix}log_subscribed");
 $new_cols = array('reminder_sent', 'vendor_ref', 'payments_pending', 'pending_details');
 $new_cols = array_flip($new_cols);
-while ($request && $row = smf_mysql_fetch_row($request))
+while ($request && $row = sb_mysql_fetch_row($request))
 {
 	if (isset($new_cols[$row[0]]))
 		unset($new_cols[$row[0]]);
 }
 if ($request)
-	smf_mysql_free_result($request);
+	sb_mysql_free_result($request);
 
 if (isset($new_cols['reminder_sent']))
 	upgrade_query("
@@ -2569,25 +2569,25 @@ foreach ($nameChanges as $table_name => $table)
 	$request = upgrade_query("
 		SHOW TABLES
 		LIKE '{$db_prefix}$table_name'");
-	if (smf_mysql_num_rows($request) == 0)
+	if (sb_mysql_num_rows($request) == 0)
 	{
-		smf_mysql_free_result($request);
+		sb_mysql_free_result($request);
 		continue;
 	}
-	smf_mysql_free_result($request);
+	sb_mysql_free_result($request);
 
 	// Converting is intensive, so make damn sure that we need to do it.
 	$request = upgrade_query("
 		SHOW FIELDS
 		FROM `{$db_prefix}$table_name`");
 	$tinytextColumns = array();
-	while($row = smf_mysql_fetch_assoc($request))
+	while($row = sb_mysql_fetch_assoc($request))
 	{
 		// Tinytext detected so store column name.
 		if ($row['Type'] == 'tinytext')
 			$tinytextColumns[$row['Field']] = $row['Field'];
 	}
-	smf_mysql_free_result($request);
+	sb_mysql_free_result($request);
 
 	// Check each column!
 	$actualChanges = array();
@@ -2912,7 +2912,7 @@ $request = upgrade_query("
 );
 
 // Drop the existing index before we recreate it.
-while ($row = smf_mysql_fetch_assoc($request))
+while ($row = sb_mysql_fetch_assoc($request))
 {
 	if ($row['Key_name'] === 'real_name' && $row['Sub_part'] == 30)
 	{
@@ -2924,7 +2924,7 @@ while ($row = smf_mysql_fetch_assoc($request))
 	}
 }
 
-smf_mysql_free_result($request);
+sb_mysql_free_result($request);
 ---}
 ---#
 
@@ -2942,7 +2942,7 @@ $request = upgrade_query("
 );
 
 // Drop the existing index before we recreate it.
-while ($row = smf_mysql_fetch_assoc($request))
+while ($row = sb_mysql_fetch_assoc($request))
 {
 	if ($row['Key_name'] === 'member_name' && $row['Sub_part'] == 30)
 	{
@@ -2954,7 +2954,7 @@ while ($row = smf_mysql_fetch_assoc($request))
 	}
 }
 
-smf_mysql_free_result($request);
+sb_mysql_free_result($request);
 
 ---}
 ---#

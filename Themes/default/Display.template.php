@@ -1043,7 +1043,7 @@ function template_quickreply()
 				iTopicId: ', $context['current_topic'], ',
 				iStart: ', $context['start'], ',
 				sScriptUrl: sb_scripturl,
-				sImagesUrl: smf_images_url,
+				sImagesUrl: sb_images_url,
 				sContainerId: "quickreply_options",
 				sImageId: "quickReplyExpand",
 				sClassCollapsed: "toggle_up",

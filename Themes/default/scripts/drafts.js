@@ -80,7 +80,7 @@ smf_DraftAutoSave.prototype.draftSave = function ()
 	var sPostsubj = (typeof document.forms.postmodify['subject'] === 'undefined' ? '' : document.forms.postmodify['subject'].value);
 
 	// nothing to save or already posting or nothing changed?
-	if (isEmptyText(sPostdata) || smf_formSubmitted || this.sCheckDraft == sPostdata)
+	if (isEmptyText(sPostdata) || sb_formSubmitted || this.sCheckDraft == sPostdata)
 		return false;
 
 	// Still saving the last one or other?
@@ -129,7 +129,7 @@ smf_DraftAutoSave.prototype.draftPMSave = function ()
 	var sPostdata = sceditor.instance(e).getText();
 
 	// nothing to save or already posting or nothing changed?
-	if (isEmptyText(sPostdata) || smf_formSubmitted || this.sCheckDraft == sPostdata)
+	if (isEmptyText(sPostdata) || sb_formSubmitted || this.sCheckDraft == sPostdata)
 		return false;
 
 	// Still saving the last one or some other?

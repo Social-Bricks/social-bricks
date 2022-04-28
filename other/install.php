@@ -143,7 +143,7 @@ $incontext['steps'] = array(
 );
 
 // Default title...
-$incontext['page_title'] = $txt['smf_installer'];
+$incontext['page_title'] = $txt['sb_installer'];
 
 // What step are we on?
 $incontext['current_step'] = isset($_GET['step']) ? (int) $_GET['step'] : 0;
@@ -418,7 +418,7 @@ function load_database()
 			$options['db_mb4'] = $db_mb4;
 
 		if (!$db_connection)
-			$db_connection = smf_db_initiate($db_server, $db_name, $db_user, $db_passwd, $db_prefix, $options);
+			$db_connection = sb_db_initiate($db_server, $db_name, $db_user, $db_passwd, $db_prefix, $options);
 	}
 }
 
@@ -886,7 +886,7 @@ function DatabaseSettings()
 		if (!empty($db_mb4))
 			$options['db_mb4'] = $db_mb4;
 
-		$db_connection = smf_db_initiate($db_server, $db_name, $db_user, $db_passwd, $db_prefix, $options);
+		$db_connection = sb_db_initiate($db_server, $db_name, $db_user, $db_passwd, $db_prefix, $options);
 
 		// Still no connection?  Big fat error message :P.
 		if (!$db_connection)
@@ -1902,7 +1902,7 @@ function template_install_above()
 <head>
 	<meta charset="', isset($txt['lang_character_set']) ? $txt['lang_character_set'] : 'UTF-8', '">
 	<meta name="robots" content="noindex">
-	<title>', $txt['smf_installer'], '</title>
+	<title>', $txt['sb_installer'], '</title>
 	<link rel="stylesheet" href="Themes/default/css/index.css">
 	<link rel="stylesheet" href="Themes/default/css/install.css">
 	', $txt['lang_rtl'] == true ? '<link rel="stylesheet" href="Themes/default/css/rtl.css">' : '', '
@@ -1913,7 +1913,7 @@ function template_install_above()
 <body>
 	<div id="footerfix">
 	<div id="header">
-		<h1 class="forumtitle">', $txt['smf_installer'], '</h1>
+		<h1 class="forumtitle">', $txt['sb_installer'], '</h1>
 		<img id="smflogo" src="Themes/default/images/smflogo.svg" alt="Simple Machines Forum" title="Simple Machines Forum">
 	</div>
 	<div id="wrapper">';

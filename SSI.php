@@ -49,7 +49,7 @@ if (empty($cachedir) || !is_dir($cachedir) || !is_writable($cachedir))
 		$cachedir = $boarddir . '/cache';
 	else
 	{
-		$cachedir = sys_get_temp_dir() . '/smf_cache_' . md5($boarddir);
+		$cachedir = sys_get_temp_dir() . '/sb_cache_' . md5($boarddir);
 		@mkdir($cachedir, 0750);
 	}
 }
@@ -1826,7 +1826,7 @@ function ssi_pollVote()
 
 		require_once($sourcedir . '/Subs-Auth.php');
 		$cookie_url = url_parts(!empty($modSettings['localCookies']), !empty($modSettings['globalCookies']));
-		smf_setcookie('guest_poll_vote', $_COOKIE['guest_poll_vote'], time() + 2500000, $cookie_url[1], $cookie_url[0], false, false);
+		sb_setcookie('guest_poll_vote', $_COOKIE['guest_poll_vote'], time() + 2500000, $cookie_url[1], $cookie_url[0], false, false);
 	}
 
 	redirectexit('topic=' . $row['id_topic'] . '.0');

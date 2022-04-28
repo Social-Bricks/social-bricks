@@ -92,7 +92,7 @@ class ProxyServer
 				$cachedir = $boarddir . '/cache';
 			else
 			{
-				$cachedir = sys_get_temp_dir() . '/smf_cache_' . md5($boarddir);
+				$cachedir = sys_get_temp_dir() . '/sb_cache_' . md5($boarddir);
 				@mkdir($cachedir, 0750);
 			}
 		}

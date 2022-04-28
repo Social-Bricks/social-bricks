@@ -168,7 +168,7 @@ function template_error_log()
 					<br class="clear">
 					<a href="', $scripturl, '?action=admin;area=logs;sa=errorlog', $context['sort_direction'] == 'down' ? ';desc' : '', ';filter=error_type;value=', $error['error_type']['type'], '" title="', $txt['apply_filter'], ': ', $txt['filter_only_type'], '"><span class="main_icons filter"></span></a>', $txt['error_type'], ': ', $error['error_type']['type'] === 'critical' ? '<span class="error">' . $error['error_type']['name'] . '</span>' : $error['error_type']['name'], '<br>
 					<a href="', $scripturl, '?action=admin;area=logs;sa=errorlog', $context['sort_direction'] == 'down' ? ';desc' : '', ';filter=message;value=', $error['message']['href'], '" title="', $txt['apply_filter'], ': ', $txt['filter_only_message'], '"><span class="main_icons filter floatleft"></span></a>
-					<div class="codeheader"><span class="code floatleft">' . $txt['error_message'] . '</span> <a class="codeoperation smf_select_text">' . $txt['code_select'] . '</a> <a class="codeoperation smf_expand_code hidden" data-shrink-txt="' . $txt['code_shrink'] . '" data-expand-txt="' . $txt['code_expand'] . '">' . $txt['code_expand'] . '</a>
+					<div class="codeheader"><span class="code floatleft">' . $txt['error_message'] . '</span> <a class="codeoperation sb_select_text">' . $txt['code_select'] . '</a> <a class="codeoperation sb_expand_code hidden" data-shrink-txt="' . $txt['code_shrink'] . '" data-expand-txt="' . $txt['code_expand'] . '">' . $txt['code_expand'] . '</a>
 					</div><code class="bbc_code" style="white-space: pre-line; overflow-y: auto">', $error['message']['html'], '</code>
 				</div>
 			</div>';

@@ -190,7 +190,7 @@ function template_maintain_members()
 
 			$("#membersPanel").slideToggle(300);
 
-			document.getElementById("membersIcon").src = smf_images_url + (membersSwap ? "/selected_open.png" : "/selected.png");
+			document.getElementById("membersIcon").src = sb_images_url + (membersSwap ? "/selected_open.png" : "/selected.png");
 			setInnerHTML(document.getElementById("membersText"), membersSwap ? "', $txt['maintain_members_choose'], '" : "', $txt['maintain_members_all'], '");
 
 			for (var i = 0; i < membersForm.length; i++)
@@ -360,7 +360,7 @@ function template_maintain_topics()
 			rotSwap = !rotSwap;
 
 			// Toggle icon
-			document.getElementById("rotIcon").src = smf_images_url + (rotSwap ? "/selected_open.png" : "/selected.png");
+			document.getElementById("rotIcon").src = sb_images_url + (rotSwap ? "/selected_open.png" : "/selected.png");
 			setInnerHTML(document.getElementById("rotText"), rotSwap ? ', JavaScriptEscape($txt['maintain_old_choose']), ' : ', JavaScriptEscape($txt['maintain_old_all']), ');
 
 			// Toggle panel

@@ -1868,7 +1868,7 @@ function export_load_css_js()
 	}
 
 	// Next, we need to do for JavaScript what we just did for CSS.
-	loadJavaScriptFile('https://ajax.googleapis.com/ajax/libs/jquery/' . JQUERY_VERSION . '/jquery.min.js', array('external' => true, 'seed' => false), 'smf_jquery');
+	loadJavaScriptFile('https://ajax.googleapis.com/ajax/libs/jquery/' . JQUERY_VERSION . '/jquery.min.js', array('external' => true, 'seed' => false), 'sb_jquery');
 
 	// There might be JavaScript that we need to add in order to support custom BBC or something.
 	call_integration_hook('integrate_pre_javascript_output', array(false));

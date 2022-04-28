@@ -378,9 +378,9 @@ function template_view_package()
 			aSwapImages: [
 				{
 					sId: \'operation_img_', $key, '\',
-					srcExpanded: smf_images_url + \'/selected_open.png\',
+					srcExpanded: sb_images_url + \'/selected_open.png\',
 					altExpanded: \'*\',
-					srcCollapsed: smf_images_url + \'/selected.png\',
+					srcCollapsed: sb_images_url + \'/selected.png\',
 					altCollapsed: \'*\'
 				}
 			]
@@ -568,12 +568,12 @@ function template_browse()
 
 	if (empty($modSettings['disable_smf_js']))
 		echo '
-			<script src="', $scripturl, '?action=viewsmfile;filename=latest-news.js"></script>';
+			<script src="', $scripturl, '?action=viewadminfile;filename=latest-news.js"></script>';
 
 	// This sets the announcements and current versions themselves ;).
 	echo '
 			<script>
-				var oAdminIndex = new smf_AdminIndex({
+				var oAdminIndex = new sb_adminIndex({
 					sSelf: \'oAdminCenter\',
 					bLoadAnnouncements: false,
 					bLoadVersions: false,

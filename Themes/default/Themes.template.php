@@ -987,7 +987,7 @@ function template_edit_style()
 					return;
 				refreshPreviewCache = document.forms.stylesheetForm.entire_file.value;
 				// Replace the paths for images.
-				refreshPreviewCache = refreshPreviewCache.replace(/url\(\.\.\/images/gi, "url(" + smf_images_url);
+				refreshPreviewCache = refreshPreviewCache.replace(/url\(\.\.\/images/gi, "url(" + sb_images_url);
 
 				// Try to do it without a complete reparse.
 				if (identical)
@@ -1023,7 +1023,7 @@ function template_edit_style()
 					var stylesheetMatch = new RegExp(\'<link rel="stylesheet"[^>]+href="[^"]+\' + editFilename + \'[^>]*>\');
 
 					// Replace the paths for images.
-					preview_sheet = preview_sheet.replace(/url\(\.\.\/images/gi, "url(" + smf_images_url);
+					preview_sheet = preview_sheet.replace(/url\(\.\.\/images/gi, "url(" + sb_images_url);
 					data = data.replace(stylesheetMatch, "<style type=\"text/css\" id=\"css_preview_sheet\">" + preview_sheet + "<" + "/style>");
 
 					frames["css_preview_box"].document.open();

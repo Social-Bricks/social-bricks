@@ -1858,7 +1858,7 @@ function parse_bbc($message, $smileys = true, $cache_id = '', $parse_tags = arra
 			array(
 				'tag' => 'code',
 				'type' => 'unparsed_content',
-				'content' => '<div class="codeheader"><span class="code floatleft">' . $txt['code'] . '</span> <a class="codeoperation smf_select_text">' . $txt['code_select'] . '</a> <a class="codeoperation smf_expand_code hidden" data-shrink-txt="' . $txt['code_shrink'] . '" data-expand-txt="' . $txt['code_expand'] . '">' . $txt['code_expand'] . '</a></div><code class="bbc_code">$1</code>',
+				'content' => '<div class="codeheader"><span class="code floatleft">' . $txt['code'] . '</span> <a class="codeoperation sb_select_text">' . $txt['code_select'] . '</a> <a class="codeoperation sb_expand_code hidden" data-shrink-txt="' . $txt['code_shrink'] . '" data-expand-txt="' . $txt['code_expand'] . '">' . $txt['code_expand'] . '</a></div><code class="bbc_code">$1</code>',
 				// @todo Maybe this can be simplified?
 				'validate' => isset($disabled['code']) ? null : function(&$tag, &$data, $disabled) use ($context)
 				{
@@ -1895,7 +1895,7 @@ function parse_bbc($message, $smileys = true, $cache_id = '', $parse_tags = arra
 			array(
 				'tag' => 'code',
 				'type' => 'unparsed_equals_content',
-				'content' => '<div class="codeheader"><span class="code floatleft">' . $txt['code'] . '</span> ($2) <a class="codeoperation smf_select_text">' . $txt['code_select'] . '</a> <a class="codeoperation smf_expand_code hidden" data-shrink-txt="' . $txt['code_shrink'] . '" data-expand-txt="' . $txt['code_expand'] . '">' . $txt['code_expand'] . '</a></div><code class="bbc_code">$1</code>',
+				'content' => '<div class="codeheader"><span class="code floatleft">' . $txt['code'] . '</span> ($2) <a class="codeoperation sb_select_text">' . $txt['code_select'] . '</a> <a class="codeoperation sb_expand_code hidden" data-shrink-txt="' . $txt['code_shrink'] . '" data-expand-txt="' . $txt['code_expand'] . '">' . $txt['code_expand'] . '</a></div><code class="bbc_code">$1</code>',
 				// @todo Maybe this can be simplified?
 				'validate' => isset($disabled['code']) ? null : function(&$tag, &$data, $disabled) use ($context)
 				{
@@ -4368,7 +4368,7 @@ function setupThemeContext($forceload = false)
 
 	// Add a generic "Are you sure?" confirmation message.
 	addInlineJavaScript('
-	var smf_you_sure =' . JavaScriptEscape($txt['quickmod_confirm']) . ';');
+	var sb_you_sure =' . JavaScriptEscape($txt['quickmod_confirm']) . ';');
 
 	// Now add the capping code for avatars.
 	if (!empty($modSettings['avatar_max_width_external']) && !empty($modSettings['avatar_max_height_external']) && !empty($modSettings['avatar_action_too_large']) && $modSettings['avatar_action_too_large'] == 'option_css_resize')
@@ -7272,7 +7272,7 @@ function smf_json_decode($json, $returnAsArray = false, $logIt = true)
 	// Something went wrong!
 	if (!empty($jsonError) && $logIt)
 	{
-		// Being a wrapper means we lost our smf_error_handler() privileges :(
+		// Being a wrapper means we lost our sb_error_handler() privileges :(
 		$jsonDebug = debug_backtrace();
 		$jsonDebug = $jsonDebug[0];
 		loadLanguage('Errors');

@@ -25,10 +25,10 @@
 			hoverIntent: {sensitivity: 10, interval: 300, timeout: 50},
 			positionTop: 12,
 			positionLeft: 12,
-			tooltipID: 'smf_tooltip', // ID used on the outer div
-			tooltipTextID: 'smf_tooltipText', // as above but on the inner div holding the text
+			tooltipID: 'sb_tooltip', // ID used on the outer div
+			tooltipTextID: 'sb_tooltipText', // as above but on the inner div holding the text
 			tooltipClass: 'tooltip', // The class applied to the outer div (that displays on hover), use this in your css
-			tooltipSwapClass: 'smf_swaptip', // a class only used internally, change only if you have a conflict
+			tooltipSwapClass: 'sb_swaptip', // a class only used internally, change only if you have a conflict
 			tooltipContent: 'html' // display captured title text as html or text
 		};
 
@@ -708,7 +708,7 @@
 
 /* Takes every category header available and adds a collapse option */
 $(function() {
-	if (smf_member_id > 0)
+	if (sb_member_id > 0)
 		$('div.boardindex_table div.cat_bar').each(function(index, el)
 		{
 			var catid = el.id.replace('category_', '');

@@ -83,7 +83,7 @@ function Packages()
 	);
 
 	if ($context['sub_action'] == 'browse')
-		loadJavaScriptFile('suggest.js', array('defer' => false, 'minimize' => true), 'smf_suggest');
+		loadJavaScriptFile('suggest.js', array('defer' => false, 'minimize' => true), 'sb_suggest');
 
 	call_integration_hook('integrate_manage_packages', array(&$subActions));
 
@@ -1943,8 +1943,8 @@ function ViewOperations()
 	$context['javascript_files'] = array_intersect_key(
 		$context['javascript_files'],
 		[
-			'smf_script_js' => true,
-			'smf_jquery_js' => true
+			'sb_script_js' => true,
+			'sb_jquery_js' => true
 		]
 	);
 

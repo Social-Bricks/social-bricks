@@ -769,7 +769,7 @@ function loadEssentialData()
 			if (!empty($db_mb4))
 				$options['db_mb4'] = $db_mb4;
 
-			$db_connection = smf_db_initiate($db_server, $db_name, $db_user, $db_passwd, $db_prefix, $options);
+			$db_connection = sb_db_initiate($db_server, $db_name, $db_user, $db_passwd, $db_prefix, $options);
 		}
 		else
 			// If we've returned here, ping/reconnect to be safe
@@ -3728,7 +3728,7 @@ function template_upgrade_above()
 	<script src="', $settings['default_theme_url'], '/scripts/script.js"></script>
 	<script>
 		var sb_scripturl = \'', $upgradeurl, '\';
-		var smf_charset = \'', (empty($modSettings['global_character_set']) ? (empty($txt['lang_character_set']) ? 'UTF-8' : $txt['lang_character_set']) : $modSettings['global_character_set']), '\';
+		var sb_charset = \'', (empty($modSettings['global_character_set']) ? (empty($txt['lang_character_set']) ? 'UTF-8' : $txt['lang_character_set']) : $modSettings['global_character_set']), '\';
 		var startPercent = ', $upcontext['overall_percent'], ';
 		var allow_xhjr_credentials = false;
 
@@ -5017,7 +5017,7 @@ function MySQLConvertOldIp($targetTable, $oldCol, $newCol, $limit = 50000, $setS
 }
 
 /**
- * Get the column info. This is basically the same as smf_db_list_columns but we get 1 column, force detail and other checks.
+ * Get the column info. This is basically the same as sb_db_list_columns but we get 1 column, force detail and other checks.
  *
  * @param string $targetTable The table to perform the operation on
  * @param string $column The column we are looking for.

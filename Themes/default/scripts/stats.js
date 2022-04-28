@@ -61,9 +61,9 @@ sb_StatsCenter.prototype.init = function ()
 				aSwapImages: [
 					{
 						sId: this.opt.sYearImageIdPrefix + sYearId,
-						srcExpanded: smf_images_url + '/' + this.opt.sYearImageExpanded,
+						srcExpanded: sb_images_url + '/' + this.opt.sYearImageExpanded,
 						altExpanded: '-',
-						srcCollapsed: smf_images_url + '/' + this.opt.sYearImageCollapsed,
+						srcCollapsed: sb_images_url + '/' + this.opt.sYearImageCollapsed,
 						altCollapsed: '+'
 					}
 				],
@@ -113,9 +113,9 @@ sb_StatsCenter.prototype.init = function ()
 				aSwapImages: [
 					{
 						sId: this.opt.sMonthImageIdPrefix + sMonthId,
-						srcExpanded: smf_images_url + '/' + this.opt.sMonthImageExpanded,
+						srcExpanded: sb_images_url + '/' + this.opt.sMonthImageExpanded,
 						altExpanded: '-',
-						srcCollapsed: smf_images_url + '/' + this.opt.sMonthImageCollapsed,
+						srcCollapsed: sb_images_url + '/' + this.opt.sMonthImageCollapsed,
 						altCollapsed: '+'
 					}
 				],
@@ -145,7 +145,7 @@ sb_StatsCenter.prototype.init = function ()
 
 sb_StatsCenter.prototype.onBeforeCollapseYear = function (oToggle)
 {
-	// Tell SMF that all underlying months have disappeared.
+	// Update that all underlying months have disappeared.
 	for (var sMonth in this.oYears[oToggle.opt.sYearId].oMonths)
 		if (this.oYears[oToggle.opt.sYearId].oMonths[sMonth].oToggle.opt.aSwappableContainers.length > 0)
 			this.oYears[oToggle.opt.sYearId].oMonths[sMonth].oToggle.changeState(true);
@@ -156,7 +156,7 @@ sb_StatsCenter.prototype.onBeforeCollapseMonth = function (oToggle)
 {
 	if (!oToggle.bCollapsed)
 	{
-		// Tell SMF that it the state has changed.
+		// Phone home that it the state has changed.
 		getXMLDocument(sb_prepareScriptUrl(sb_scripturl) + 'action=stats;collapse=' + oToggle.opt.sMonthId + ';xml');
 
 		// Remove the month rows from the year toggle.
@@ -189,7 +189,7 @@ sb_StatsCenter.prototype.onBeforeExpandMonth = function (oToggle)
 		this.bIsLoading = true;
 	}
 
-	// Silently let SMF know this one is expanded.
+	// Silently let everyone know this one is expanded.
 	else
 		getXMLDocument(sb_prepareScriptUrl(sb_scripturl) + 'action=stats;expand=' + oToggle.opt.sMonthId + ';xml');
 }
