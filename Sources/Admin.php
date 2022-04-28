@@ -549,8 +549,7 @@ function AdminHome()
 		$context[$context['admin_menu_name']]['tab_data'] = array(
 			'title' => $txt['admin_center'],
 			'help' => '',
-			'description' => '<strong>' . $txt['hello_guest'] . ' ' . $context['user']['name'] . '!</strong>
-				' . sprintf($txt['admin_main_welcome'], $txt['admin_center'], $txt['help'], $txt['help']),
+			'description' => '',
 		);
 
 	// Lastly, fill in the blanks in the support resources paragraphs.
