@@ -235,8 +235,8 @@ function template_main()
 	<script>
 		var oAddMemberSuggest = new smc_AutoSuggest({
 			sSelf: \'oAddMemberSuggest\',
-			sSessionId: smf_session_id,
-			sSessionVar: smf_session_var,
+			sSessionId: sb_session_id,
+			sSessionVar: sb_session_var,
 			sControlId: \'userspec\',
 			sSearchType: \'member\',
 			bItemList: false

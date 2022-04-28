@@ -1,5 +1,5 @@
 /**
- * SMFtooltip, Basic JQuery function to provide styled tooltips
+ * SBtooltip, Basic JQuery function to provide styled tooltips
  *
  * - will use the hoverintent plugin if available
  * - shows the tooltip in a div with the class defined in tooltipClass
@@ -19,8 +19,8 @@
  */
 
 (function($) {
-	$.fn.SMFtooltip = function(oInstanceSettings) {
-		$.fn.SMFtooltip.oDefaultsSettings = {
+	$.fn.SBtooltip = function(oInstanceSettings) {
+		$.fn.SBtooltip.oDefaultsSettings = {
 			followMouse: 1,
 			hoverIntent: {sensitivity: 10, interval: 300, timeout: 50},
 			positionTop: 12,
@@ -33,7 +33,7 @@
 		};
 
 		// account for any user options
-		var oSettings = $.extend({}, $.fn.SMFtooltip.oDefaultsSettings , oInstanceSettings || {});
+		var oSettings = $.extend({}, $.fn.SBtooltip.oDefaultsSettings , oInstanceSettings || {});
 
 		// move passed selector titles to a hidden span, then remove the selector title to prevent any default browser actions
 		$(this).each(function()
@@ -122,19 +122,19 @@
 				$(this).hoverIntent({
 					sensitivity: oSettings.hoverIntent.sensitivity,
 					interval: oSettings.hoverIntent.interval,
-					over: smf_tooltip_on,
+					over: sb_tooltip_on,
 					timeout: oSettings.hoverIntent.timeout,
-					out: smf_tooltip_off
+					out: sb_tooltip_off
 				});
 			}
 			else
 			{
 				// plain old hover it is
-				$(this).hover(smf_tooltip_on, smf_tooltip_off);
+				$(this).hover(sb_tooltip_on, sb_tooltip_off);
 			}
 
 			// create the on tip action
-			function smf_tooltip_on(event)
+			function sb_tooltip_on(event)
 			{
 				// If we have text in the hidden span element we created on page load
 				if ($(this).children('.' + oSettings.tooltipSwapClass).text())
@@ -161,7 +161,7 @@
 			};
 
 			// create the Bye bye tip
-			function smf_tooltip_off(event)
+			function sb_tooltip_off(event)
 			{
 				hideTooltip(this);
 				return false;
@@ -729,8 +729,8 @@ $(function() {
 				oThemeOptions: {
 					bUseThemeSettings: true,
 					sOptionName: 'collapse_category_' + catid,
-					sSessionVar: smf_session_var,
-					sSessionId: smf_session_id
+					sSessionVar: sb_session_var,
+					sSessionId: sb_session_id
 				}
 			});
 		});

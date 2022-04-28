@@ -40,7 +40,7 @@ var updateAlerts = function ()
 
 	unreadAlerts = parseInt(unreadAlerts);
 
-	$.get(smf_scripturl + '?action=profile;area=alerts_popup;counter=' + unreadAlerts + ';u=' + smf_member_id, function (data)
+	$.get(sb_scripturl + '?action=profile;area=alerts_popup;counter=' + unreadAlerts + ';u=' + smf_member_id, function (data)
 	{
 		var alerts = $(data).find('.unread_notify');
 		if (alerts.length == 0)
@@ -83,7 +83,7 @@ var updateAlerts = function ()
 		});
 
 		var user_menus = new smc_PopupMenu();
-		user_menus.add("alerts", smf_scripturl + "?action=profile;area=alerts_popup;u=" + smf_member_id);
+		user_menus.add("alerts", sb_scripturl + "?action=profile;area=alerts_popup;u=" + smf_member_id);
 	});
 
 	// A counter showing zero looks silly

@@ -24,7 +24,7 @@
 /**
  * Class ExportProfileData_Background
  */
-class ExportProfileData_Background extends SMF_BackgroundTask
+class ExportProfileData_Background extends SB_BackgroundTask
 {
 	/**
 	 * @var array A copy of $this->_details for access by the static functions

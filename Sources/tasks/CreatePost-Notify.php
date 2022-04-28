@@ -18,7 +18,7 @@
 /**
  * Class CreatePost_Notify_Background
  */
-class CreatePost_Notify_Background extends SMF_BackgroundTask
+class CreatePost_Notify_Background extends SB_BackgroundTask
 {
 	/**
 	 * Constants for reply types.

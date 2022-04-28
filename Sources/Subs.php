@@ -4229,7 +4229,7 @@ function url_image_size($url)
 		if ($fp != false)
 		{
 			// Send the HEAD request (since we don't have to worry about chunked, HTTP/1.1 is fine here.)
-			fwrite($fp, 'HEAD /' . $match[2] . ' HTTP/1.1' . "\r\n" . 'Host: ' . $match[1] . "\r\n" . 'user-agent: '. SMF_USER_AGENT . "\r\n" . 'Connection: close' . "\r\n\r\n");
+			fwrite($fp, 'HEAD /' . $match[2] . ' HTTP/1.1' . "\r\n" . 'Host: ' . $match[1] . "\r\n" . 'user-agent: '. SB_USER_AGENT . "\r\n" . 'Connection: close' . "\r\n\r\n");
 
 			// Read in the HTTP/1.1 or whatever.
 			$test = substr(fgets($fp, 11), -1);
@@ -4400,7 +4400,7 @@ function setupThemeContext($forceload = false)
 	$context['common_stats']['boardindex_total_posts'] = sprintf($txt['boardindex_total_posts'], $context['common_stats']['total_posts'], $context['common_stats']['total_topics'], $context['common_stats']['total_members']);
 
 	if (empty($settings['theme_version']))
-		addJavaScriptVar('smf_scripturl', $scripturl);
+		addJavaScriptVar('sb_scripturl', $scripturl);
 
 	if (!isset($context['page_title']))
 		$context['page_title'] = '';
@@ -6145,7 +6145,7 @@ function fetch_web_data($url, $post_data = '', $keep_alive = false, $redirection
 			{
 				fwrite($fp, 'GET ' . ($match[6] !== '/' ? str_replace(' ', '%20', $match[6]) : '') . ' HTTP/1.0' . "\r\n");
 				fwrite($fp, 'Host: ' . $match[3] . (empty($match[5]) ? ($match[2] ? ':443' : '') : ':' . $match[5]) . "\r\n");
-				fwrite($fp, 'user-agent: '. SMF_USER_AGENT . "\r\n");
+				fwrite($fp, 'user-agent: '. SB_USER_AGENT . "\r\n");
 				if ($keep_alive)
 					fwrite($fp, 'connection: Keep-Alive' . "\r\n\r\n");
 				else
@@ -6155,7 +6155,7 @@ function fetch_web_data($url, $post_data = '', $keep_alive = false, $redirection
 			{
 				fwrite($fp, 'POST ' . ($match[6] !== '/' ? $match[6] : '') . ' HTTP/1.0' . "\r\n");
 				fwrite($fp, 'Host: ' . $match[3] . (empty($match[5]) ? ($match[2] ? ':443' : '') : ':' . $match[5]) . "\r\n");
-				fwrite($fp, 'user-agent: '. SMF_USER_AGENT . "\r\n");
+				fwrite($fp, 'user-agent: '. SB_USER_AGENT . "\r\n");
 				if ($keep_alive)
 					fwrite($fp, 'connection: Keep-Alive' . "\r\n");
 				else
@@ -7311,7 +7311,7 @@ function isValidIP($IPString)
  * @param string $type The content type. Defaults to Json.
  * @return void
  */
-function smf_serverResponse($data = '', $type = 'content-type: application/json')
+function sb_serverResponse($data = '', $type = 'content-type: application/json')
 {
 	global $db_show_debug, $modSettings;
 
@@ -8389,7 +8389,7 @@ function JavaScriptEscape($string, $as_json = false)
 		'<script' => '<scri' . $q . '+' . $q . 'pt',
 		'<body>' => '<bo' . $q . '+' . $q . 'dy>',
 		'<a href' => '<a hr' . $q . '+' . $q . 'ef',
-		$scripturl => $q . ' + smf_scripturl + ' . $q,
+		$scripturl => $q . ' + sb_scripturl + ' . $q,
 	)) . $q;
 }
 

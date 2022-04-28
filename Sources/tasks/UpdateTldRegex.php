@@ -16,7 +16,7 @@
 /**
  * Class Update_TLD_Regex
  */
-class Update_TLD_Regex extends SMF_BackgroundTask
+class Update_TLD_Regex extends SB_BackgroundTask
 {
 	/**
 	 * This executes the task. It just calls set_tld_regex() in Subs.php

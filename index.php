@@ -4,7 +4,7 @@
  * This, as you have probably guessed, is the crux on which SMF functions.
  * Everything should start here, so all the setup and security is done
  * properly.  The most interesting part of this file is the action array in
- * the smf_main() function.  It is formatted as so:
+ * the sb_main() function.  It is formatted as so:
  * 	'action-in-url' => array('Source-File.php', 'FunctionToCall'),
  *
  * Then, you can access the FunctionToCall() function from Source-File.php
@@ -29,7 +29,7 @@ define('SMF_SOFTWARE_YEAR', '2022');
 define('JQUERY_VERSION', '3.6.0');
 define('POSTGRE_TITLE', 'PostgreSQL');
 define('MYSQL_TITLE', 'MySQL');
-define('SMF_USER_AGENT', 'Mozilla/5.0 (' . php_uname('s') . ' ' . php_uname('m') . ') AppleWebKit/605.1.15 (KHTML, like Gecko)  SMF/' . strtr(SMF_VERSION, ' ', '.'));
+define('SB_USER_AGENT', 'Mozilla/5.0 (' . php_uname('s') . ' ' . php_uname('m') . ') AppleWebKit/605.1.15 (KHTML, like Gecko) SocialBricks/' . strtr(SMF_VERSION, ' ', '.'));
 
 if (!defined('TIME_START'))
 	define('TIME_START', microtime(true));
@@ -87,7 +87,7 @@ if (!empty($maintenance) &&  2 === $maintenance)
 	display_maintenance_message();
 }
 
-// Create a variable to store some SMF specific functions in.
+// Create a variable to store some platform specific functions in.
 $smcFunc = array();
 
 // Initiate the database connection and define some database functions to use.
@@ -188,7 +188,7 @@ set_error_handler('smf_error_handler');
 loadSession();
 
 // What function shall we execute? (done like this for memory's sake.)
-call_user_func(smf_main());
+call_user_func(sb_main());
 
 // Call obExit specially; we're coming from the main area ;).
 obExit(null, null, true);
@@ -199,7 +199,7 @@ obExit(null, null, true);
  *
  * @return array|string|void An array containing the file to include and name of function to call, the name of a function to call or dies with a fatal_lang_error if we couldn't find anything to do.
  */
-function smf_main()
+function sb_main()
 {
 	global $modSettings, $settings, $user_info, $board, $topic;
 	global $board_info, $maintenance, $sourcedir, $should_log;

@@ -99,7 +99,7 @@ smf_DraftAutoSave.prototype.draftSave = function ()
 		'message=' + escape(sPostdata.php_to8bit()).replace(/\+/g, "%2B"),
 		'icon=' + escape(sPosticon.php_to8bit()).replace(/\+/g, "%2B"),
 		'save_draft=true',
-		smf_session_var + '=' + smf_session_id,
+		sb_session_var + '=' + sb_session_id,
 	];
 
 	// Get the locked an/or sticky values if they have been selected or set that is
@@ -116,7 +116,7 @@ smf_DraftAutoSave.prototype.draftSave = function ()
 	aSections[aSections.length] = 'message_mode=' + sceditor.instance(e).inSourceMode();
 
 	// Send in document for saving and hope for the best
-	sendXMLDocument.call(this, smf_prepareScriptUrl(smf_scripturl) + "action=post2;board=" + this.opt.iBoard + ";xml", aSections.join("&"), this.onDraftDone);
+	sendXMLDocument.call(this, sb_prepareScriptUrl(sb_scripturl) + "action=post2;board=" + this.opt.iBoard + ";xml", aSections.join("&"), this.onDraftDone);
 
 	// Save the latest for compare
 	this.sCheckDraft = sPostdata;
@@ -153,7 +153,7 @@ smf_DraftAutoSave.prototype.draftPMSave = function ()
 		'recipient_to=' + aTo,
 		'recipient_bcc=' + aBcc,
 		'save_draft=true',
-		smf_session_var + '=' + smf_session_id,
+		sb_session_var + '=' + sb_session_id,
 	];
 
 	// account for wysiwyg
@@ -161,7 +161,7 @@ smf_DraftAutoSave.prototype.draftPMSave = function ()
 		aSections[aSections.length] = 'message_mode=' + parseInt(document.forms.postmodify.elements['message_mode'].value);
 
 	// Send in (post) the document for saving
-	sendXMLDocument.call(this, smf_prepareScriptUrl(smf_scripturl) + "action=pm;sa=send2;xml", aSections.join("&"), this.onDraftDone);
+	sendXMLDocument.call(this, sb_prepareScriptUrl(sb_scripturl) + "action=pm;sa=send2;xml", aSections.join("&"), this.onDraftDone);
 
 	// Save the latest for compare
 	this.sCheckDraft = sPostdata;

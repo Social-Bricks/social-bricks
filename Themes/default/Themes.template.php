@@ -168,9 +168,9 @@ function template_main()
 
 	echo '
 	<script>
-		window.smfForum_scripturl = smf_scripturl;
-		window.smfForum_sessionid = smf_session_id;
-		window.smfForum_sessionvar = smf_session_var;
+		window.smfForum_scripturl = sb_scripturl;
+		window.smfForum_sessionid = sb_session_id;
+		window.smfForum_sessionvar = sb_session_var;
 		window.smfThemes_writable = ', $context['can_create_new'] ? 'true' : 'false', ';
 	</script>';
 }
@@ -958,7 +958,7 @@ function template_edit_style()
 
 						// Revert to the theme they actually use ;).
 						var tempImage = new Image();
-						tempImage.src = smf_prepareScriptUrl(smf_scripturl) + "action=admin;area=theme;sa=edit;theme=', $settings['theme_id'], ';preview;" + (new Date().getTime());
+						tempImage.src = sb_prepareScriptUrl(sb_scripturl) + "action=admin;area=theme;sa=edit;theme=', $settings['theme_id'], ';preview;" + (new Date().getTime());
 
 						refreshPreviewCache = null;
 						refreshPreview(false);
@@ -975,7 +975,7 @@ function template_edit_style()
 				myDoc.open("GET", url + (url.indexOf("?") == -1 ? "?" : ";") + "theme=', $context['theme_id'], ';normalcss" + anchor, true);
 				myDoc.send(null);
 			}
-			navigatePreview(smf_scripturl);
+			navigatePreview(sb_scripturl);
 
 			var refreshPreviewCache;
 			function refreshPreview(check)

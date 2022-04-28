@@ -359,8 +359,8 @@ function template_edit_group()
 	<script>
 		var oModeratorSuggest = new smc_AutoSuggest({
 			sSelf: \'oModeratorSuggest\',
-			sSessionId: smf_session_id,
-			sSessionVar: smf_session_var,
+			sSessionId: sb_session_id,
+			sSessionVar: sb_session_var,
 			sSuggestId: \'group_moderators\',
 			sControlId: \'group_moderators\',
 			sSearchType: \'member\',

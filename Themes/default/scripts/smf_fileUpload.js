@@ -12,7 +12,7 @@ function smf_fileUpload(oOptions) {
 
 	// Default values in case oOptions isn't defined.
 	var dOptions = {
-		url: smf_prepareScriptUrl(smf_scripturl) + 'action=uploadAttach;sa=add;' + smf_session_var + '=' + smf_session_id + (current_board ? ';board=' + current_board : ''),
+		url: sb_prepareScriptUrl(sb_scripturl) + 'action=uploadAttach;sa=add;' + sb_session_var + '=' + sb_session_id + (current_board ? ';board=' + current_board : ''),
 		parallelUploads: 1,
 		filesizeBase: 1024,
 		paramName: 'attachment',
@@ -143,7 +143,7 @@ function smf_fileUpload(oOptions) {
 
 		// If the file is too small, it won't have a thumbnail, show the regular file.
 		else if (typeof file.isMock !== "undefined" && typeof file.attachID !== "undefined") {
-			myDropzone.emit('thumbnail', file, smf_prepareScriptUrl(smf_scripturl) + 'action=dlattach;attach=' + (file.thumbID > 0 ? file.thumbID : file.attachID) + ';type=preview');
+			myDropzone.emit('thumbnail', file, sb_prepareScriptUrl(sb_scripturl) + 'action=dlattach;attach=' + (file.thumbID > 0 ? file.thumbID : file.attachID) + ';type=preview');
 		}
 
 		file.name = file.name.php_to8bit().php_urlencode();
@@ -194,7 +194,7 @@ function smf_fileUpload(oOptions) {
 
 					// Let the server know you want to delete the file you just recently uploaded...
 					$.ajax({
-						url: smf_prepareScriptUrl(smf_scripturl) + 'action=uploadAttach;sa=delete;attach=' + attachmentId + ';' + smf_session_var + '=' + smf_session_id + (current_board ? ';board=' + current_board : ''),
+						url: sb_prepareScriptUrl(sb_scripturl) + 'action=uploadAttach;sa=delete;attach=' + attachmentId + ';' + sb_session_var + '=' + sb_session_id + (current_board ? ';board=' + current_board : ''),
 						type: 'GET',
 						headers: {
 							"X-SMF-AJAX": 1

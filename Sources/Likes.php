@@ -616,7 +616,7 @@ class Likes
 		call_integration_hook('integrate_likes_json_response', array(&$print));
 
 		// Print the data.
-		smf_serverResponse($smcFunc['json_encode']($print));
+		sb_serverResponse($smcFunc['json_encode']($print));
 		die;
 	}
 }

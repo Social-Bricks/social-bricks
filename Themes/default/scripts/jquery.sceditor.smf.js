@@ -15,7 +15,7 @@
 		{
 			var self = this;
 			getXMLDocument(
-				smf_prepareScriptUrl(smf_scripturl) + 'action=quotefast;quote=' + messageid + ';xml',
+				sb_prepareScriptUrl(sb_scripturl) + 'action=quotefast;quote=' + messageid + ';xml',
 				function(XMLDoc)
 				{
 					var text = '';
@@ -728,14 +728,14 @@ sceditor.formats.bbcode.set(
 				if (typeof attrs.height !== "undefined")
 					attribs += ' height="' + attrs.height + '"';
 
-				var contentUrl = smf_scripturl +'?action=dlattach;attach='+ id + ';type=preview;thumb';
+				var contentUrl = sb_scripturl +'?action=dlattach;attach='+ id + ';type=preview;thumb';
 				contentIMG = new Image();
 					contentIMG.src = contentUrl;
 			}
 
 			// If not an image, show a boring ol' link
 			if (typeof contentUrl === "undefined" || contentIMG.getAttribute('width') == 0)
-				return '<a href="' + smf_scripturl + '?action=dlattach;attach=' + id + ';type=preview;file"' + attribs + '>' + content + '</a>';
+				return '<a href="' + sb_scripturl + '?action=dlattach;attach=' + id + ';type=preview;file"' + attribs + '>' + content + '</a>';
 			// Show our purdy li'l picture
 			else
 				return '<img' + attribs + ' src="' + contentUrl + '">';
@@ -893,7 +893,7 @@ sceditor.formats.bbcode.set(
 			if (attrs.link)
 			{
 				attr_link = attrs.link;
-				link = attr_link.substr(0, 7) == 'http://' ? attr_link : smf_prepareScriptUrl(smf_scripturl) + attr_link;
+				link = attr_link.substr(0, 7) == 'http://' ? attr_link : sb_prepareScriptUrl(sb_scripturl) + attr_link;
 				author = '<a href="' + link + '">' + (author || bbc_quote_from + ': ' + link) + '</a>';
 			}
 
@@ -945,7 +945,7 @@ sceditor.formats.bbcode.set(
 			if (typeof attrs.defaultattr === "undefined" || attrs.defaultattr.length === 0)
 				attrs.defaultattr = content;
 
-			return '<a href="' + smf_scripturl +'?action=profile;u='+ attrs.defaultattr + '" class="mention" data-mention="'+ attrs.defaultattr + '">@'+ content.replace('@','') +'</a>';
+			return '<a href="' + sb_scripturl +'?action=profile;u='+ attrs.defaultattr + '" class="mention" data-mention="'+ attrs.defaultattr + '">@'+ content.replace('@','') +'</a>';
 		}
 	}
 );

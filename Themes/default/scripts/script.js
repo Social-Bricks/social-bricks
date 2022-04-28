@@ -737,10 +737,10 @@ function smf_sessionKeepAlive()
 	var curTime = new Date().getTime();
 
 	// Prevent a Firefox bug from hammering the server.
-	if (smf_scripturl && curTime - lastKeepAliveCheck > 900000)
+	if (sb_scripturl && curTime - lastKeepAliveCheck > 900000)
 	{
 		var tempImage = new Image();
-		tempImage.src = smf_prepareScriptUrl(smf_scripturl) + 'action=keepalive;time=' + curTime;
+		tempImage.src = sb_prepareScriptUrl(sb_scripturl) + 'action=keepalive;time=' + curTime;
 		lastKeepAliveCheck = curTime;
 	}
 
@@ -753,7 +753,7 @@ function smf_setThemeOption(theme_var, theme_value, theme_id, theme_cur_session_
 {
 	// Compatibility.
 	if (theme_cur_session_id == null)
-		theme_cur_session_id = smf_session_id;
+		theme_cur_session_id = sb_session_id;
 	if (typeof(theme_cur_session_var) == 'undefined')
 		theme_cur_session_var = 'sesc';
 
@@ -761,7 +761,7 @@ function smf_setThemeOption(theme_var, theme_value, theme_id, theme_cur_session_
 		theme_additional_vars = '';
 
 	var tempImage = new Image();
-	tempImage.src = smf_prepareScriptUrl(smf_scripturl) + 'action=jsoption;var=' + theme_var + ';val=' + theme_value + ';' + theme_cur_session_var + '=' + theme_cur_session_id + theme_additional_vars + (theme_id == null ? '' : '&th=' + theme_id) + ';time=' + (new Date().getTime());
+	tempImage.src = sb_prepareScriptUrl(sb_scripturl) + 'action=jsoption;var=' + theme_var + ';val=' + theme_value + ';' + theme_cur_session_var + '=' + theme_cur_session_id + theme_additional_vars + (theme_id == null ? '' : '&th=' + theme_id) + ';time=' + (new Date().getTime());
 }
 
 // Shows the page numbers by clicking the dots (in compact view).
@@ -1024,7 +1024,7 @@ smc_Toggle.prototype.changeState = function(bCollapse, bInit)
 		this.oCookie.set(this.opt.oCookieOptions.sCookieName, this.bCollapsed | 0);
 
 	if (!bInit && 'oThemeOptions' in this.opt && this.opt.oThemeOptions.bUseThemeSettings)
-		smf_setThemeOption(this.opt.oThemeOptions.sOptionName, this.bCollapsed | 0, 'sThemeId' in this.opt.oThemeOptions ? this.opt.oThemeOptions.sThemeId : null, smf_session_id, smf_session_var, 'sAdditionalVars' in this.opt.oThemeOptions ? this.opt.oThemeOptions.sAdditionalVars : null);
+		smf_setThemeOption(this.opt.oThemeOptions.sOptionName, this.bCollapsed | 0, 'sThemeId' in this.opt.oThemeOptions ? this.opt.oThemeOptions.sThemeId : null, sb_session_id, sb_session_var, 'sAdditionalVars' in this.opt.oThemeOptions ? this.opt.oThemeOptions.sAdditionalVars : null);
 }
 
 smc_Toggle.prototype.toggle = function()
@@ -1095,7 +1095,7 @@ function createEventListener(oTarget)
 // This function will retrieve the contents needed for the jump to boxes.
 function grabJumpToContent(elem)
 {
-	var oXMLDoc = getXMLDocument(smf_prepareScriptUrl(smf_scripturl) + 'action=xmlhttp;sa=jumpto;xml');
+	var oXMLDoc = getXMLDocument(sb_prepareScriptUrl(sb_scripturl) + 'action=xmlhttp;sa=jumpto;xml');
 	var aBoardsAndCategories = [];
 
 	ajax_indicator(true);
@@ -1145,7 +1145,7 @@ JumpTo.prototype.showSelect = function ()
 	var sChildLevelPrefix = '';
 	for (var i = this.opt.iCurBoardChildLevel; i > 0; i--)
 		sChildLevelPrefix += this.opt.sBoardChildLevelIndicator;
-	setInnerHTML(document.getElementById(this.opt.sContainerId), this.opt.sJumpToTemplate.replace(/%select_id%/, this.opt.sContainerId + '_select').replace(/%dropdown_list%/, '<select ' + (this.opt.bDisabled == true ? 'disabled ' : '') + (this.opt.sClassName != undefined ? 'class="' + this.opt.sClassName + '" ' : '') + 'name="' + (this.opt.sCustomName != undefined ? this.opt.sCustomName : this.opt.sContainerId + '_select') + '" id="' + this.opt.sContainerId + '_select"><option value="' + (this.opt.bNoRedirect != undefined && this.opt.bNoRedirect == true ? this.opt.iCurBoardId : '?board=' + this.opt.iCurBoardId + '.0') + '">' + sChildLevelPrefix + this.opt.sBoardPrefix + this.opt.sCurBoardName.removeEntities() + '</option></select>&nbsp;' + (this.opt.sGoButtonLabel != undefined ? '<input type="button" class="button" value="' + this.opt.sGoButtonLabel + '" onclick="window.location.href = \'' + smf_prepareScriptUrl(smf_scripturl) + 'board=' + this.opt.iCurBoardId + '.0\';">' : '')));
+	setInnerHTML(document.getElementById(this.opt.sContainerId), this.opt.sJumpToTemplate.replace(/%select_id%/, this.opt.sContainerId + '_select').replace(/%dropdown_list%/, '<select ' + (this.opt.bDisabled == true ? 'disabled ' : '') + (this.opt.sClassName != undefined ? 'class="' + this.opt.sClassName + '" ' : '') + 'name="' + (this.opt.sCustomName != undefined ? this.opt.sCustomName : this.opt.sContainerId + '_select') + '" id="' + this.opt.sContainerId + '_select"><option value="' + (this.opt.bNoRedirect != undefined && this.opt.bNoRedirect == true ? this.opt.iCurBoardId : '?board=' + this.opt.iCurBoardId + '.0') + '">' + sChildLevelPrefix + this.opt.sBoardPrefix + this.opt.sCurBoardName.removeEntities() + '</option></select>&nbsp;' + (this.opt.sGoButtonLabel != undefined ? '<input type="button" class="button" value="' + this.opt.sGoButtonLabel + '" onclick="window.location.href = \'' + sb_prepareScriptUrl(sb_scripturl) + 'board=' + this.opt.iCurBoardId + '.0\';">' : '')));
 	this.dropdownList = document.getElementById(this.opt.sContainerId + '_select');
 }
 
@@ -1215,7 +1215,7 @@ JumpTo.prototype.fillSelect = function (aBoardsAndCategories)
 	if (!this.opt.bNoRedirect)
 		this.dropdownList.onchange = function() {
 			if (this.selectedIndex > 0 && this.options[this.selectedIndex].value)
-				window.location.href = smf_scripturl + this.options[this.selectedIndex].value.substr(smf_scripturl.indexOf('?') == -1 || this.options[this.selectedIndex].value.substr(0, 1) != '?' ? 0 : 1);
+				window.location.href = sb_scripturl + this.options[this.selectedIndex].value.substr(sb_scripturl.indexOf('?') == -1 || this.options[this.selectedIndex].value.substr(0, 1) != '?' ? 0 : 1);
 		}
 }
 
@@ -1276,13 +1276,13 @@ IconList.prototype.openPopup = function (oDiv, iMessageId)
 
 		// Start to fetch its contents.
 		ajax_indicator(true);
-		sendXMLDocument.call(this, smf_prepareScriptUrl(smf_scripturl) + 'action=xmlhttp;sa=messageicons;board=' + this.opt.iBoardId + ';xml', '', this.onIconsReceived);
+		sendXMLDocument.call(this, sb_prepareScriptUrl(sb_scripturl) + 'action=xmlhttp;sa=messageicons;board=' + this.opt.iBoardId + ';xml', '', this.onIconsReceived);
 
 		createEventListener(document.body);
 	}
 
 	// Set the position of the container.
-	var aPos = smf_itemPos(oDiv);
+	var aPos = sb_itemPos(oDiv);
 
 	this.oContainerDiv.style.top = (aPos[1] + oDiv.offsetHeight) + 'px';
 	this.oContainerDiv.style.left = (aPos[0] - 1) + 'px';
@@ -1333,7 +1333,7 @@ IconList.prototype.onItemMouseDown = function (oDiv, sNewIcon)
 	{
 		ajax_indicator(true);
 		this.tmpMethod = getXMLDocument;
-		var oXMLDoc = this.tmpMethod(smf_prepareScriptUrl(smf_scripturl) + 'action=jsmodify;topic=' + this.opt.iTopicId + ';msg=' + this.iCurMessageId + ';' + smf_session_var + '=' + smf_session_id + ';icon=' + sNewIcon + ';xml'),
+		var oXMLDoc = this.tmpMethod(sb_prepareScriptUrl(sb_scripturl) + 'action=jsmodify;topic=' + this.opt.iTopicId + ';msg=' + this.iCurMessageId + ';' + sb_session_var + '=' + sb_session_id + ';icon=' + sNewIcon + ';xml'),
 		oThis = this;
 		delete this.tmpMethod;
 		ajax_indicator(false);
@@ -1394,7 +1394,7 @@ function smf_mousePose(oEvent)
 }
 
 // Short function for finding the actual position of an item.
-function smf_itemPos(itemHandle)
+function sb_itemPos(itemHandle)
 {
 	var itemX = 0;
 	var itemY = 0;
@@ -1420,7 +1420,7 @@ function smf_itemPos(itemHandle)
 }
 
 // This function takes the script URL and prepares it to allow the query string to be appended to it.
-function smf_prepareScriptUrl(sUrl)
+function sb_prepareScriptUrl(sUrl)
 {
 	return sUrl.indexOf('?') == -1 ? sUrl + '?' : sUrl + (sUrl.charAt(sUrl.length - 1) == '?' || sUrl.charAt(sUrl.length - 1) == '&' || sUrl.charAt(sUrl.length - 1) == ';' ? '' : ';');
 }
@@ -1454,7 +1454,7 @@ function addLoadEvent(fNewOnload)
 }
 
 // Get the text in a code tag.
-function smfSelectText(oCurElement, bActOnElement)
+function sbSelectText(oCurElement, bActOnElement)
 {
 	// The place we're looking for is one div up, and next door - if it's auto detect.
 	if (typeof(bActOnElement) == 'boolean' && bActOnElement)
@@ -1740,14 +1740,14 @@ $(function() {
 		return result;
 	});
 
-	// Generic event for smfSelectText()
+	// Generic event for sbSelectText()
 	$('.smf_select_text').on('click', function(e) {
 		e.preventDefault();
 
 		// Do you want to target yourself?
 		var actOnElement = $(this).attr('data-actonelement');
 
-		return typeof actOnElement !== "undefined" ? smfSelectText(actOnElement, true) : smfSelectText(this);
+		return typeof actOnElement !== "undefined" ? sbSelectText(actOnElement, true) : sbSelectText(this);
 	});
 
 	// Show the Expand bbc button if needed
@@ -1928,7 +1928,7 @@ smc_preview_post.prototype.doPreviewPost = function (event)
 			i++;
 		}
 
-		sendXMLDocument(smf_prepareScriptUrl(smf_scripturl) + 'action=post2' + (this.opts.iCurrentBoard ? ';board=' + this.opts.iCurrentBoard : '') + (this.opts.bMakePoll ? ';poll' : '') + ';preview;xml', x.join('&'), this.onDocSent.bind(this));
+		sendXMLDocument(sb_prepareScriptUrl(sb_scripturl) + 'action=post2' + (this.opts.iCurrentBoard ? ';board=' + this.opts.iCurrentBoard : '') + (this.opts.bMakePoll ? ';poll' : '') + ';preview;xml', x.join('&'), this.onDocSent.bind(this));
 
 		document.getElementById(this.opts.sPreviewSectionContainerID).style.display = '';
 		setInnerHTML(document.getElementById(this.opts.sPreviewSubjectContainerID), this.opts.sTxtPreviewTitle);
@@ -1967,7 +1967,7 @@ smc_preview_post.prototype.onDocSent = function (XMLDoc)
 		// Do you want to target yourself?
 		var actOnElement = $(this).attr('data-actonelement');
 
-		return typeof actOnElement !== "undefined" ? smfSelectText(actOnElement, true) : smfSelectText(this);
+		return typeof actOnElement !== "undefined" ? sbSelectText(actOnElement, true) : sbSelectText(this);
 	});
 	document.getElementById(this.opts.sPreviewBodyContainerID).className = 'windowbg';
 
