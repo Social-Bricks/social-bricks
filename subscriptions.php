@@ -17,7 +17,7 @@
 // Set this to true to always log $_POST info received from payment gateways.
 $paid_debug = false;
 
-// Start things rolling by getting SMF alive...
+// Start things rolling by getting Social Bricks alive...
 $ssi_guest_access = true;
 if (!file_exists(dirname(__FILE__) . '/SSI.php'))
 	die('Cannot find SSI.php');

@@ -122,10 +122,6 @@ $helptxt['time_format'] = '<strong>Time Format</strong><br>
 	<br>
 	<em>* Does not work on Windows-based servers.</em></span>';
 
-$helptxt['live_news'] = '<strong>Live announcements</strong><br>
-	This box shows recently updated announcements from <a href="https://www.simplemachines.org/" target="_blank" rel="noopener">www.simplemachines.org</a>.
-	You should check here every now and then for updates, new releases, and important information from Simple Machines.';
-
 $helptxt['registrations'] = '<strong>Registration Management</strong><br>
 	This page contains all the functions that could be necessary to manage new registrations on the forum. It contains up to four
 	pages which are visible depending on your forum settings. These are:<br><br>

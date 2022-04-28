@@ -1304,10 +1304,10 @@ function Post($post_errors = array())
 		));
 
 		loadJavaScriptFile('dropzone.min.js', array('defer' => true), 'smf_dropzone');
-		loadJavaScriptFile('smf_fileUpload.js', array('defer' => true, 'minimize' => true), 'smf_fileUpload');
+		loadJavaScriptFile('sb_fileUpload.js', array('defer' => true, 'minimize' => true), 'sb_fileUpload');
 		addInlineJavaScript('
 	$(function() {
-		smf_fileUpload({
+		sb_fileUpload({
 			dictDefaultMessage : ' . JavaScriptEscape($txt['attach_drop_zone']) . ',
 			dictFallbackMessage : ' . JavaScriptEscape($txt['attach_drop_zone_no']) . ',
 			dictCancelUpload : ' . JavaScriptEscape($txt['modify_cancel']) . ',

@@ -93,7 +93,7 @@ function ajax_getSignaturePreview (showPreview)
 
 	$.ajax({
 		type: "POST",
-		url: smf_scripturl + "?action=xmlhttp;sa=previews;xml",
+		url: sb_scripturl + "?action=xmlhttp;sa=previews;xml",
 		headers: {
 			"X-SMF-AJAX": 1
 		},

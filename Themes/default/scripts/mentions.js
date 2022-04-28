@@ -34,7 +34,7 @@ var atwhoConfig = {
 					return;
 
 			$.ajax({
-				url: smf_scripturl + '?action=suggest;' + smf_session_var + '=' + smf_session_id + ';xml',
+				url: sb_scripturl + '?action=suggest;' + sb_session_var + '=' + sb_session_id + ';xml',
 				method: 'GET',
 				headers: {
 					"X-SMF-AJAX": 1

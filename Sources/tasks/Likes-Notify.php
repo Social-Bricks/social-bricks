@@ -16,7 +16,7 @@
 /**
  * Class Likes_Notify_Background
  */
-class Likes_Notify_Background extends SMF_BackgroundTask
+class Likes_Notify_Background extends SB_BackgroundTask
 {
 	/**
 	 * This executes the task: loads up the info, puts the email in the queue

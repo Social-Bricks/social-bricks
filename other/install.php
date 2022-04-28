@@ -20,7 +20,7 @@ define('SMF_INSTALLING', 1);
 define('JQUERY_VERSION', '3.6.0');
 define('POSTGRE_TITLE', 'PostgreSQL');
 define('MYSQL_TITLE', 'MySQL');
-define('SMF_USER_AGENT', 'Mozilla/5.0 (' . php_uname('s') . ' ' . php_uname('m') . ') AppleWebKit/605.1.15 (KHTML, like Gecko)  SMF/' . strtr(SMF_VERSION, ' ', '.'));
+define('SB_USER_AGENT', 'Mozilla/5.0 (' . php_uname('s') . ' ' . php_uname('m') . ') AppleWebKit/605.1.15 (KHTML, like Gecko) SocialBricks/' . strtr(SMF_VERSION, ' ', '.'));
 if (!defined('TIME_START'))
 	define('TIME_START', microtime(true));
 
@@ -143,7 +143,7 @@ $incontext['steps'] = array(
 );
 
 // Default title...
-$incontext['page_title'] = $txt['smf_installer'];
+$incontext['page_title'] = $txt['sb_installer'];
 
 // What step are we on?
 $incontext['current_step'] = isset($_GET['step']) ? (int) $_GET['step'] : 0;
@@ -331,7 +331,7 @@ function load_lang_file()
 		echo '<!DOCTYPE html>
 <html>
 	<head>
-		<title>SMF Installer: Error!</title>
+		<title>Social Bricks Installer: Error!</title>
 		<style>
 			body {
 				font-family: sans-serif;
@@ -418,7 +418,7 @@ function load_database()
 			$options['db_mb4'] = $db_mb4;
 
 		if (!$db_connection)
-			$db_connection = smf_db_initiate($db_server, $db_name, $db_user, $db_passwd, $db_prefix, $options);
+			$db_connection = sb_db_initiate($db_server, $db_name, $db_user, $db_passwd, $db_prefix, $options);
 	}
 }
 
@@ -523,7 +523,7 @@ function Welcome()
 	if (isset($error))
 		$incontext['error'] = $txt[$error];
 
-	// Mod_security blocks everything that smells funny. Let SMF handle security.
+	// Mod_security blocks everything that smells funny. Let us handle security.
 	if (!fixModSecurity() && !isset($_GET['overmodsecurity']))
 		$incontext['error'] = $txt['error_mod_security'] . '<br><br><a href="' . $installurl . '?overmodsecurity=true">' . $txt['error_message_click'] . '</a> ' . $txt['error_message_bad_try_again'];
 
@@ -886,7 +886,7 @@ function DatabaseSettings()
 		if (!empty($db_mb4))
 			$options['db_mb4'] = $db_mb4;
 
-		$db_connection = smf_db_initiate($db_server, $db_name, $db_user, $db_passwd, $db_prefix, $options);
+		$db_connection = sb_db_initiate($db_server, $db_name, $db_user, $db_passwd, $db_prefix, $options);
 
 		// Still no connection?  Big fat error message :P.
 		if (!$db_connection)
@@ -1902,7 +1902,7 @@ function template_install_above()
 <head>
 	<meta charset="', isset($txt['lang_character_set']) ? $txt['lang_character_set'] : 'UTF-8', '">
 	<meta name="robots" content="noindex">
-	<title>', $txt['smf_installer'], '</title>
+	<title>', $txt['sb_installer'], '</title>
 	<link rel="stylesheet" href="Themes/default/css/index.css">
 	<link rel="stylesheet" href="Themes/default/css/install.css">
 	', $txt['lang_rtl'] == true ? '<link rel="stylesheet" href="Themes/default/css/rtl.css">' : '', '
@@ -1913,7 +1913,7 @@ function template_install_above()
 <body>
 	<div id="footerfix">
 	<div id="header">
-		<h1 class="forumtitle">', $txt['smf_installer'], '</h1>
+		<h1 class="forumtitle">', $txt['sb_installer'], '</h1>
 		<img id="smflogo" src="Themes/default/images/smflogo.svg" alt="Simple Machines Forum" title="Simple Machines Forum">
 	</div>
 	<div id="wrapper">';

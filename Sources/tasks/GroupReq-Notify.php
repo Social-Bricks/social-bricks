@@ -17,7 +17,7 @@
 /**
  * Class GroupReq_Notify_Background
  */
-class GroupReq_Notify_Background extends SMF_BackgroundTask
+class GroupReq_Notify_Background extends SB_BackgroundTask
 {
 	/**
 	 * This executes the task: loads up the info, puts the email in the queue

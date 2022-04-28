@@ -34,8 +34,8 @@ if (!defined('POSTGRE_TITLE'))
 if (!defined('MYSQL_TITLE'))
 	define('MYSQL_TITLE', 'MySQL');
 
-if (!defined('SMF_USER_AGENT'))
-	define('SMF_USER_AGENT', 'Mozilla/5.0 (' . php_uname('s') . ' ' . php_uname('m') . ') AppleWebKit/605.1.15 (KHTML, like Gecko)  SMF/' . strtr(SMF_VERSION, ' ', '.'));
+if (!defined('SB_USER_AGENT'))
+	define('SB_USER_AGENT', 'Mozilla/5.0 (' . php_uname('s') . ' ' . php_uname('m') . ') AppleWebKit/605.1.15 (KHTML, like Gecko) SocialBricks/' . strtr(SMF_VERSION, ' ', '.'));
 
 /**
  * Class ProxyServer
@@ -92,7 +92,7 @@ class ProxyServer
 				$cachedir = $boarddir . '/cache';
 			else
 			{
-				$cachedir = sys_get_temp_dir() . '/smf_cache_' . md5($boarddir);
+				$cachedir = sys_get_temp_dir() . '/sb_cache_' . md5($boarddir);
 				@mkdir($cachedir, 0750);
 			}
 		}

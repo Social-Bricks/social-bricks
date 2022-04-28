@@ -62,9 +62,9 @@ class Postgres extends CacheApi implements CacheApiInterface
 
 		$this->prepareQueries(
 			array(
-				'smf_cache_get_data',
-				'smf_cache_put_data',
-				'smf_cache_delete_data',
+				'sb_cache_get_data',
+				'sb_cache_put_data',
+				'sb_cache_delete_data',
 			),
 			array(
 				'SELECT value FROM ' . $this->db_prefix . 'cache WHERE key = $1 AND ttl >= $2 LIMIT 1',
@@ -127,7 +127,7 @@ class Postgres extends CacheApi implements CacheApiInterface
 	 */
 	public function getData($key, $ttl = null)
 	{
-		$result = pg_execute($this->db_connection, 'smf_cache_get_data', array($key, time()));
+		$result = pg_execute($this->db_connection, 'sb_cache_get_data', array($key, time()));
 
 		if (pg_affected_rows($result) === 0)
 			return null;
@@ -145,9 +145,9 @@ class Postgres extends CacheApi implements CacheApiInterface
 		$ttl = time() + (int) ($ttl !== null ? $ttl : $this->ttl);
 
 		if ($value === null)
-			$result = pg_execute($this->db_connection, 'smf_cache_delete_data', array($key));
+			$result = pg_execute($this->db_connection, 'sb_cache_delete_data', array($key));
 		else
-			$result = pg_execute($this->db_connection, 'smf_cache_put_data', array($key, $value, $ttl));
+			$result = pg_execute($this->db_connection, 'sb_cache_put_data', array($key, $value, $ttl));
 
 		return pg_affected_rows($result) > 0;
 	}

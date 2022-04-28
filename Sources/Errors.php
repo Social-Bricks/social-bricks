@@ -247,7 +247,7 @@ function fatal_lang_error($error, $log = 'general', $sprintf = array(), $status 
  * @param string $file The file where the error occurred
  * @param int $line The line where the error occurred
  */
-function smf_error_handler($error_level, $error_string, $file, $line)
+function sb_error_handler($error_level, $error_string, $file, $line)
 {
 	global $settings, $modSettings, $db_show_debug;
 
@@ -389,7 +389,7 @@ function setup_fatal_error_context($error_message, $error_code = null)
 	obExit(null, true, false, true);
 
 	/* DO NOT IGNORE:
-		If you are creating a bridge to SMF or modifying this function, you MUST
+		If you are creating a bridge or modifying this function, you MUST
 		make ABSOLUTELY SURE that this function quits and DOES NOT RETURN TO NORMAL
 		PROGRAM FLOW.  Otherwise, security error messages will not be shown, and
 		your forum will be in a very easily hackable state.
@@ -454,7 +454,7 @@ function display_db_error()
 
 		// Language files aren't loaded yet :(.
 		$db_error = @$smcFunc['db_error']($db_connection);
-		@mail($webmaster_email, $mbname . ': SMF Database Error!', 'There has been a problem with the database!' . ($db_error == '' ? '' : "\n" . $smcFunc['db_title'] . ' reported:' . "\n" . $db_error) . "\n\n" . 'This is a notice email to let you know that SMF could not connect to the database, contact your host if this continues.');
+		@mail($webmaster_email, $mbname . ': Database Error!', 'There has been a problem with the database!' . ($db_error == '' ? '' : "\n" . $smcFunc['db_title'] . ' reported:' . "\n" . $db_error) . "\n\n" . 'This is a notice email to let you know that Social Bricks could not connect to the database, contact your host if this continues.');
 	}
 
 	// What to do?  Language files haven't and can't be loaded yet...
@@ -466,7 +466,7 @@ function display_db_error()
 	</head>
 	<body>
 		<h3>Connection Problems</h3>
-		Sorry, SMF was unable to connect to the database.  This may be caused by the server being busy.  Please try again later.
+		Sorry, Social Bricks was unable to connect to the database.  This may be caused by the server being busy.  Please try again later.
 	</body>
 </html>';
 
@@ -553,7 +553,7 @@ function log_error_online($error, $sprintf = array())
 	);
 	if ($smcFunc['db_num_rows']($request) != 0)
 	{
-		// If this happened very early on in SMF startup, $smcFunc may not fully be defined.
+		// If this happened very early on in startup, $smcFunc may not fully be defined.
 		if (!isset($smcFunc['json_decode']))
 		{
 			$smcFunc['json_decode'] = 'smf_json_decode';

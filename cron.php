@@ -1,13 +1,13 @@
 <?php
 
 /**
- * This is a slightly strange file. It is not designed to ever be run directly from within SMF's
+ * This is a slightly strange file. It is not designed to ever be run directly from within
  * conventional running, but called externally to facilitate background tasks. It can be called
  * either directly or via cron, and in either case will completely ignore anything supplied
  * via command line, or $_GET, $_POST, $_COOKIE etc. because those things should never affect the
  * running of this script.
  *
- * Because of the way this runs, etc. we do need some of SMF but not everything to try to keep this
+ * Because of the way this runs, etc. we do need some of the system but not everything to try to keep this
  * running a little bit faster.
  *
  * Simple Machines Forum (SMF)
@@ -29,7 +29,7 @@ define('FROM_CLI', empty($_SERVER['REQUEST_METHOD']));
 define('JQUERY_VERSION', '3.6.0');
 define('POSTGRE_TITLE', 'PostgreSQL');
 define('MYSQL_TITLE', 'MySQL');
-define('SMF_USER_AGENT', 'Mozilla/5.0 (' . php_uname('s') . ' ' . php_uname('m') . ') AppleWebKit/605.1.15 (KHTML, like Gecko)  SMF/' . strtr(SMF_VERSION, ' ', '.'));
+define('SB_USER_AGENT', 'Mozilla/5.0 (' . php_uname('s') . ' ' . php_uname('m') . ') AppleWebKit/605.1.15 (KHTML, like Gecko) SocialBricks/' . strtr(SMF_VERSION, ' ', '.'));
 
 // This one setting is worth bearing in mind. If you are running this from proper cron, make sure you
 // don't run this file any more frequently than indicated here. It might turn ugly if you do.
@@ -64,7 +64,7 @@ if (empty($cachedir) || !is_dir($cachedir) || !is_writable($cachedir))
 		$cachedir = $boarddir . '/cache';
 	else
 	{
-		$cachedir = sys_get_temp_dir() . '/smf_cache_' . md5($boarddir);
+		$cachedir = sys_get_temp_dir() . '/sb_cache_' . md5($boarddir);
 		@mkdir($cachedir, 0750);
 	}
 }
@@ -107,7 +107,7 @@ require_once($sourcedir . '/Subs.php');
 if (version_compare(PHP_VERSION, '8.0.0', '>='))
 	require_once($sourcedir . '/Subs-Compat.php');
 
-// Create a variable to store some SMF specific functions in.
+// Create a variable to store some platform specific functions in.
 $smcFunc = array();
 
 // This is our general bootstrap, a la SSI.php but with a few differences.
@@ -116,7 +116,7 @@ loadDatabase();
 reloadSettings();
 
 // Just in case there's a problem...
-set_error_handler('smf_error_handler_cron');
+set_error_handler('sb_error_handler_cron');
 $sc = '';
 $_SERVER['QUERY_STRING'] = '';
 $_SERVER['REQUEST_URL'] = FROM_CLI ? 'CLI cron.php' : $boardurl . '/cron.php';
@@ -230,7 +230,7 @@ function perform_task($task_details)
 	}
 
 	// All background tasks need to be classes.
-	elseif (class_exists($task_details['task_class']) && is_subclass_of($task_details['task_class'], 'SMF_BackgroundTask'))
+	elseif (class_exists($task_details['task_class']) && is_subclass_of($task_details['task_class'], 'SB_BackgroundTask'))
 	{
 		$details = empty($task_details['task_data']) ? array() : $smcFunc['json_decode']($task_details['task_data'], true);
 		$bgtask = new $task_details['task_class']($details);
@@ -274,7 +274,7 @@ function cleanRequest_cron()
  * @param int $line What line of the specified file the error occurred on
  * @return void
  */
-function smf_error_handler_cron($error_level, $error_string, $file, $line)
+function sb_error_handler_cron($error_level, $error_string, $file, $line)
 {
 	global $modSettings;
 
@@ -308,9 +308,9 @@ function obExit_cron()
 // We would like this to be defined, but we don't want to have to load more stuff than necessary.
 // Thus we declare it here, and any legitimate background task must implement this.
 /**
- * Class SMF_BackgroundTask
+ * Class SB_BackgroundTask
  */
-abstract class SMF_BackgroundTask
+abstract class SB_BackgroundTask
 {
 	/**
 	 * Constants for notification types.

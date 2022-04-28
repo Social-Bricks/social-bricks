@@ -13,7 +13,7 @@ $txt['install_step_databasechange'] = 'Database Population';
 $txt['install_step_admin'] = 'Admin account';
 $txt['install_step_delete'] = 'Finalize install';
 
-$txt['smf_installer'] = 'SMF Installer';
+$txt['sb_installer'] = 'SMF Installer';
 $txt['installer_language'] = 'Language';
 $txt['installer_language_set'] = 'Set';
 $txt['congratulations'] = 'Congratulations, the installation process is complete!';

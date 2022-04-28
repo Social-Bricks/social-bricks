@@ -608,8 +608,8 @@ function template_modify_board()
 	<script>
 		var oModeratorSuggest = new smc_AutoSuggest({
 			sSelf: \'oModeratorSuggest\',
-			sSessionId: smf_session_id,
-			sSessionVar: smf_session_var,
+			sSessionId: sb_session_id,
+			sSessionVar: sb_session_var,
 			sSuggestId: \'moderators\',
 			sControlId: \'moderators\',
 			sSearchType: \'member\',
@@ -633,8 +633,8 @@ function template_modify_board()
 
 		var oModeratorGroupSuggest = new smc_AutoSuggest({
 			sSelf: \'oModeratorGroupSuggest\',
-			sSessionId: smf_session_id,
-			sSessionVar: smf_session_var,
+			sSessionId: sb_session_id,
+			sSessionVar: sb_session_var,
 			sSuggestId: \'moderator_groups\',
 			sControlId: \'moderator_groups\',
 			sSearchType: \'membergroups\',

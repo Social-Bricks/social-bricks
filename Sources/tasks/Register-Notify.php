@@ -16,7 +16,7 @@
 /**
  * Class Register_Notify_Background
  */
-class Register_Notify_Background extends SMF_BackgroundTask
+class Register_Notify_Background extends SB_BackgroundTask
 {
 	/**
 	 * This executes the task: loads up the info, puts the email in the queue

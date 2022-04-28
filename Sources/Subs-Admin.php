@@ -625,7 +625,7 @@ function get_settings_defs()
 				'########## Cache Info ##########',
 				'/**',
 				' * Select a cache system. You want to leave this up to the cache area of the admin panel for',
-				' * proper detection of memcached, output_cache, or smf file system',
+				' * proper detection of memcached, output_cache, or file_system',
 				' * (you can add more with a mod).',
 				' *',
 				' * @var string',

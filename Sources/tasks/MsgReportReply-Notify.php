@@ -17,7 +17,7 @@
 /**
  * Class MsgReportReply_Notify_Background
  */
-class MsgReportReply_Notify_Background extends SMF_BackgroundTask
+class MsgReportReply_Notify_Background extends SB_BackgroundTask
 {
 	/**
 	 * This executes the task: loads up the info, puts the email in the queue

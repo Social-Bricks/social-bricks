@@ -168,9 +168,9 @@ function template_main()
 
 	echo '
 	<script>
-		window.smfForum_scripturl = smf_scripturl;
-		window.smfForum_sessionid = smf_session_id;
-		window.smfForum_sessionvar = smf_session_var;
+		window.smfForum_scripturl = sb_scripturl;
+		window.smfForum_sessionid = sb_session_id;
+		window.smfForum_sessionvar = sb_session_var;
 		window.smfThemes_writable = ', $context['can_create_new'] ? 'true' : 'false', ';
 	</script>';
 }
@@ -958,7 +958,7 @@ function template_edit_style()
 
 						// Revert to the theme they actually use ;).
 						var tempImage = new Image();
-						tempImage.src = smf_prepareScriptUrl(smf_scripturl) + "action=admin;area=theme;sa=edit;theme=', $settings['theme_id'], ';preview;" + (new Date().getTime());
+						tempImage.src = sb_prepareScriptUrl(sb_scripturl) + "action=admin;area=theme;sa=edit;theme=', $settings['theme_id'], ';preview;" + (new Date().getTime());
 
 						refreshPreviewCache = null;
 						refreshPreview(false);
@@ -975,7 +975,7 @@ function template_edit_style()
 				myDoc.open("GET", url + (url.indexOf("?") == -1 ? "?" : ";") + "theme=', $context['theme_id'], ';normalcss" + anchor, true);
 				myDoc.send(null);
 			}
-			navigatePreview(smf_scripturl);
+			navigatePreview(sb_scripturl);
 
 			var refreshPreviewCache;
 			function refreshPreview(check)
@@ -987,7 +987,7 @@ function template_edit_style()
 					return;
 				refreshPreviewCache = document.forms.stylesheetForm.entire_file.value;
 				// Replace the paths for images.
-				refreshPreviewCache = refreshPreviewCache.replace(/url\(\.\.\/images/gi, "url(" + smf_images_url);
+				refreshPreviewCache = refreshPreviewCache.replace(/url\(\.\.\/images/gi, "url(" + sb_images_url);
 
 				// Try to do it without a complete reparse.
 				if (identical)
@@ -1023,7 +1023,7 @@ function template_edit_style()
 					var stylesheetMatch = new RegExp(\'<link rel="stylesheet"[^>]+href="[^"]+\' + editFilename + \'[^>]*>\');
 
 					// Replace the paths for images.
-					preview_sheet = preview_sheet.replace(/url\(\.\.\/images/gi, "url(" + smf_images_url);
+					preview_sheet = preview_sheet.replace(/url\(\.\.\/images/gi, "url(" + sb_images_url);
 					data = data.replace(stylesheetMatch, "<style type=\"text/css\" id=\"css_preview_sheet\">" + preview_sheet + "<" + "/style>");
 
 					frames["css_preview_box"].document.open();

@@ -95,8 +95,8 @@ function template_group_requests_block()
 				oThemeOptions: {
 					bUseThemeSettings: true,
 					sOptionName: \'admin_preferences\',
-					sSessionVar: smf_session_var,
-					sSessionId: smf_session_id,
+					sSessionVar: sb_session_var,
+					sSessionId: sb_session_id,
 					sThemeId: \'1\',
 					sAdditionalVars: \';admin_key=mcgr\'
 				}
@@ -162,8 +162,8 @@ function template_watched_users()
 				oThemeOptions: {
 					bUseThemeSettings: true,
 					sOptionName: \'admin_preferences\',
-					sSessionVar: smf_session_var,
-					sSessionId: smf_session_id,
+					sSessionVar: sb_session_var,
+					sSessionId: sb_session_id,
 					sThemeId: \'1\',
 					sAdditionalVars: \';admin_key=mcwu\'
 				}
@@ -229,8 +229,8 @@ function template_reported_posts_block()
 				oThemeOptions: {
 					bUseThemeSettings: true,
 					sOptionName: \'admin_preferences\',
-					sSessionVar: smf_session_var,
-					sSessionId: smf_session_id,
+					sSessionVar: sb_session_var,
+					sSessionId: sb_session_id,
 					sThemeId: \'1\',
 					sAdditionalVars: \';admin_key=mcrp\'
 				}
@@ -296,8 +296,8 @@ function template_reported_users_block()
 				oThemeOptions: {
 					bUseThemeSettings: true,
 					sOptionName: \'admin_preferences\',
-					sSessionVar: smf_session_var,
-					sSessionId: smf_session_id,
+					sSessionVar: sb_session_var,
+					sSessionId: sb_session_id,
 					sThemeId: \'1\',
 					sAdditionalVars: \';admin_key=mcur\'
 				}

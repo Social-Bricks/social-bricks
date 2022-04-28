@@ -2519,25 +2519,25 @@ function loadTheme($id_theme = 0, $initialize = true)
 
 	// Default JS variables for use in every theme
 	$context['javascript_vars'] = array(
-		'smf_theme_url' => '"' . $settings['theme_url'] . '"',
-		'smf_default_theme_url' => '"' . $settings['default_theme_url'] . '"',
-		'smf_images_url' => '"' . $settings['images_url'] . '"',
-		'smf_smileys_url' => '"' . $modSettings['smileys_url'] . '"',
-		'smf_smiley_sets' => '"' . $modSettings['smiley_sets_known'] . '"',
-		'smf_smiley_sets_default' => '"' . $modSettings['smiley_sets_default'] . '"',
-		'smf_avatars_url' => '"' . $modSettings['avatar_url'] . '"',
-		'smf_scripturl' => '"' . $scripturl . '"',
-		'smf_iso_case_folding' => $context['server']['iso_case_folding'] ? 'true' : 'false',
-		'smf_charset' => '"' . $context['character_set'] . '"',
-		'smf_session_id' => '"' . $context['session_id'] . '"',
-		'smf_session_var' => '"' . $context['session_var'] . '"',
-		'smf_member_id' => $context['user']['id'],
+		'sb_theme_url' => '"' . $settings['theme_url'] . '"',
+		'sb_default_theme_url' => '"' . $settings['default_theme_url'] . '"',
+		'sb_images_url' => '"' . $settings['images_url'] . '"',
+		'sb_smileys_url' => '"' . $modSettings['smileys_url'] . '"',
+		'sb_smiley_sets' => '"' . $modSettings['smiley_sets_known'] . '"',
+		'sb_smiley_sets_default' => '"' . $modSettings['smiley_sets_default'] . '"',
+		'sb_avatars_url' => '"' . $modSettings['avatar_url'] . '"',
+		'sb_scripturl' => '"' . $scripturl . '"',
+		'sb_iso_case_folding' => $context['server']['iso_case_folding'] ? 'true' : 'false',
+		'sb_charset' => '"' . $context['character_set'] . '"',
+		'sb_session_id' => '"' . $context['session_id'] . '"',
+		'sb_session_var' => '"' . $context['session_var'] . '"',
+		'sb_member_id' => $context['user']['id'],
 		'ajax_notification_text' => JavaScriptEscape($txt['ajax_in_progress']),
 		'help_popup_heading_text' => JavaScriptEscape($txt['help_popup']),
 		'banned_text' => JavaScriptEscape(sprintf($txt['your_ban'], $context['user']['name'])),
-		'smf_txt_expand' => JavaScriptEscape($txt['code_expand']),
-		'smf_txt_shrink' => JavaScriptEscape($txt['code_shrink']),
-		'smf_quote_expand' => !empty($modSettings['quote_expand']) ? $modSettings['quote_expand'] : 'false',
+		'sb_txt_expand' => JavaScriptEscape($txt['code_expand']),
+		'sb_txt_shrink' => JavaScriptEscape($txt['code_shrink']),
+		'sb_quote_expand' => !empty($modSettings['quote_expand']) ? $modSettings['quote_expand'] : 'false',
 		'allow_xhjr_credentials' => !empty($modSettings['allow_cors_credentials']) ? 'true' : 'false',
 	);
 
@@ -2545,28 +2545,28 @@ function loadTheme($id_theme = 0, $initialize = true)
 	$jQueryUrls = array ('cdn' => 'https://ajax.googleapis.com/ajax/libs/jquery/'. JQUERY_VERSION . '/jquery.min.js', 'jquery_cdn' => 'https://code.jquery.com/jquery-'. JQUERY_VERSION . '.min.js', 'microsoft_cdn' => 'https://ajax.aspnetcdn.com/ajax/jQuery/jquery-'. JQUERY_VERSION . '.min.js');
 
 	if (isset($modSettings['jquery_source']) && array_key_exists($modSettings['jquery_source'], $jQueryUrls))
-		loadJavaScriptFile($jQueryUrls[$modSettings['jquery_source']], array('external' => true, 'seed' => false), 'smf_jquery');
+		loadJavaScriptFile($jQueryUrls[$modSettings['jquery_source']], array('external' => true, 'seed' => false), 'sb_jquery');
 
 	elseif (isset($modSettings['jquery_source']) && $modSettings['jquery_source'] == 'local')
-		loadJavaScriptFile('jquery-' . JQUERY_VERSION . '.min.js', array('seed' => false), 'smf_jquery');
+		loadJavaScriptFile('jquery-' . JQUERY_VERSION . '.min.js', array('seed' => false), 'sb_jquery');
 
 	elseif (isset($modSettings['jquery_source'], $modSettings['jquery_custom']) && $modSettings['jquery_source'] == 'custom')
-		loadJavaScriptFile($modSettings['jquery_custom'], array('external' => true, 'seed' => false), 'smf_jquery');
+		loadJavaScriptFile($modSettings['jquery_custom'], array('external' => true, 'seed' => false), 'sb_jquery');
 
 	// Fall back to the forum default
 	else
-		loadJavaScriptFile('https://ajax.googleapis.com/ajax/libs/jquery/' . JQUERY_VERSION . '/jquery.min.js', array('external' => true, 'seed' => false), 'smf_jquery');
+		loadJavaScriptFile('https://ajax.googleapis.com/ajax/libs/jquery/' . JQUERY_VERSION . '/jquery.min.js', array('external' => true, 'seed' => false), 'sb_jquery');
 
 	// Queue our JQuery plugins!
-	loadJavaScriptFile('smf_jquery_plugins.js', array('minimize' => true), 'smf_jquery_plugins');
+	loadJavaScriptFile('sb_jquery_plugins.js', array('minimize' => true), 'sb_jquery_plugins');
 	if (!$user_info['is_guest'])
 	{
-		loadJavaScriptFile('jquery.custom-scrollbar.js', array('minimize' => true), 'smf_jquery_scrollbar');
+		loadJavaScriptFile('jquery.custom-scrollbar.js', array('minimize' => true), 'sb_jquery_scrollbar');
 		loadCSSFile('jquery.custom-scrollbar.css', array('force_current' => false, 'validate' => true), 'smf_scrollbar');
 	}
 
 	// script.js and theme.js, always required, so always add them! Makes index.template.php cleaner and all.
-	loadJavaScriptFile('script.js', array('defer' => false, 'minimize' => true), 'smf_script');
+	loadJavaScriptFile('script.js', array('defer' => false, 'minimize' => true), 'sb_script');
 	loadJavaScriptFile('theme.js', array('minimize' => true), 'smf_theme');
 
 	// If we think we have mail to send, let's offer up some possibilities... robots get pain (Now with scheduled task support!)
@@ -2591,7 +2591,7 @@ function loadTheme($id_theme = 0, $initialize = true)
 			addInlineJavaScript('
 		function smfAutoTask()
 		{
-			$.get(smf_scripturl + "?scheduled=' . $type . ';ts=' . $ts . '");
+			$.get(sb_scripturl + "?scheduled=' . $type . ';ts=' . $ts . '");
 		}
 		window.setTimeout("smfAutoTask();", 1);');
 		}
@@ -3642,7 +3642,7 @@ function loadDatabase()
 	{
 		$options = array_merge($db_options, array('persist' => $db_persist, 'non_fatal' => true, 'dont_select_db' => true));
 
-		$db_connection = smf_db_initiate($db_server, $db_name, $ssi_db_user, $ssi_db_passwd, $db_prefix, $options);
+		$db_connection = sb_db_initiate($db_server, $db_name, $ssi_db_user, $ssi_db_passwd, $db_prefix, $options);
 	}
 
 	// Either we aren't in SSI mode, or it failed.
@@ -3650,7 +3650,7 @@ function loadDatabase()
 	{
 		$options = array_merge($db_options, array('persist' => $db_persist, 'dont_select_db' => SMF == 'SSI'));
 
-		$db_connection = smf_db_initiate($db_server, $db_name, $db_user, $db_passwd, $db_prefix, $options);
+		$db_connection = sb_db_initiate($db_server, $db_name, $db_user, $db_passwd, $db_prefix, $options);
 	}
 
 	// Safe guard here, if there isn't a valid connection lets put a stop to it.

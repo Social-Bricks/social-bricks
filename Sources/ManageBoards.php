@@ -595,7 +595,7 @@ function EditBoard()
 	{
 		$context['sub_template'] = 'modify_board';
 		$context['page_title'] = $txt['boards_edit'];
-		loadJavaScriptFile('suggest.js', array('defer' => false, 'minimize' => true), 'smf_suggest');
+		loadJavaScriptFile('suggest.js', array('defer' => false, 'minimize' => true), 'sb_suggest');
 	}
 	else
 	{

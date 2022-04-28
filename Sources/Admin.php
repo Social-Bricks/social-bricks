@@ -30,8 +30,8 @@ function AdminMain()
 	// Load the language and templates....
 	loadLanguage('Admin');
 	loadTemplate('Admin');
-	loadJavaScriptFile('admin.js', array('minimize' => true), 'smf_admin');
-	loadCSSFile('admin.css', array(), 'smf_admin');
+	loadJavaScriptFile('admin.js', array('minimize' => true), 'sb_admin');
+	loadCSSFile('admin.css', array(), 'sb_admin');
 
 	// No indexing evil stuff.
 	$context['robot_no_index'] = true;
@@ -516,21 +516,12 @@ function AdminHome()
 	// You have to be able to do at least one of the below to see this page.
 	isAllowedTo(array('admin_forum', 'manage_permissions', 'moderate_forum', 'manage_membergroups', 'manage_bans', 'send_mail', 'edit_news', 'manage_boards', 'manage_smileys', 'manage_attachments'));
 
-	// Find all of this forum's administrators...
-	require_once($sourcedir . '/Subs-Membergroups.php');
-	if (listMembergroupMembers_Href($context['administrators'], 1, 32) && allowedTo('manage_membergroups'))
-	{
-		// Add a 'more'-link if there are more than 32.
-		$context['more_admins_link'] = '<a href="' . $scripturl . '?action=moderate;area=viewgroups;sa=members;group=1">' . $txt['more'] . '</a>';
-	}
-
 	// Load the credits stuff.
 	require_once($sourcedir . '/Who.php');
 	Credits(true);
 
 	// This makes it easier to get the latest news with your time format.
 	$context['time_format'] = urlencode($user_info['time_format']);
-	$context['forum_version'] = SMF_FULL_VERSION;
 
 	// Get a list of current server versions.
 	require_once($sourcedir . '/Subs-Admin.php');
@@ -558,8 +549,7 @@ function AdminHome()
 		$context[$context['admin_menu_name']]['tab_data'] = array(
 			'title' => $txt['admin_center'],
 			'help' => '',
-			'description' => '<strong>' . $txt['hello_guest'] . ' ' . $context['user']['name'] . '!</strong>
-				' . sprintf($txt['admin_main_welcome'], $txt['admin_center'], $txt['help'], $txt['help']),
+			'description' => '',
 		);
 
 	// Lastly, fill in the blanks in the support resources paragraphs.
@@ -579,7 +569,7 @@ function AdminHome()
 	);
 
 	if ($context['admin_area'] == 'admin')
-		loadJavaScriptFile('admin.js', array('defer' => false, 'minimize' => true), 'smf_admin');
+		loadJavaScriptFile('admin.js', array('defer' => false, 'minimize' => true), 'sb_admin');
 }
 
 /**

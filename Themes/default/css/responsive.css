@@ -785,7 +785,7 @@
 		display: none;
 	}
 	/* Admin */
-	#live_news, #support_info {
+	#support_info {
 		width: 100%;
 		padding: 0;
 		margin: 0 0 5px 0;

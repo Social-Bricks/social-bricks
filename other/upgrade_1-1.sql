@@ -10,9 +10,9 @@ $request = upgrade_query("
 	SHOW KEYS
 	FROM {$db_prefix}messages");
 $found = false;
-while ($row = smf_mysql_fetch_assoc($request))
+while ($row = sb_mysql_fetch_assoc($request))
 	$found |= $row['Key_name'] == 'ID_BOARD' && $row['Column_name'] == 'ID_MSG';
-smf_mysql_free_result($request);
+sb_mysql_free_result($request);
 
 if (!$found)
 	upgrade_query("
@@ -377,7 +377,7 @@ if ((!isset($modSettings['smfVersion']) || $modSettings['smfVersion'] <= '1.1 RC
 // Do they have "classic" installed?
 if (file_exists($GLOBALS['boarddir'] . '/Themes/classic'))
 {
-	$classic_dir = smf_mysql_real_escape_string($GLOBALS['boarddir'] . '/Themes/classic');
+	$classic_dir = sb_mysql_real_escape_string($GLOBALS['boarddir'] . '/Themes/classic');
 	$theme_request = upgrade_query("
 		SELECT ID_THEME
 		FROM {$db_prefix}themes
@@ -385,10 +385,10 @@ if (file_exists($GLOBALS['boarddir'] . '/Themes/classic'))
 			AND value ='$classic_dir'");
 
 	// Don't do anything if this theme is already uninstalled
-	if (smf_mysql_num_rows($theme_request) == 1)
+	if (sb_mysql_num_rows($theme_request) == 1)
 	{
-		list($id_theme) = smf_mysql_fetch_row($theme_request);
-		smf_mysql_free_result($theme_request);
+		list($id_theme) = sb_mysql_fetch_row($theme_request);
+		sb_mysql_free_result($theme_request);
 
 		$known_themes = explode(',', $modSettings['knownThemes']);
 
@@ -504,8 +504,8 @@ $result = upgrade_query("
 	FROM {$db_prefix}calendar_holidays
 	WHERE YEAR(eventDate) > 2010
 	LIMIT 1");
-$do_it = smf_mysql_num_rows($result) == 0;
-smf_mysql_free_result($result);
+$do_it = sb_mysql_num_rows($result) == 0;
+sb_mysql_free_result($result);
 
 if ($do_it)
 {
@@ -687,10 +687,10 @@ $request = upgrade_query("
 	SHOW COLUMNS
 	FROM {$db_prefix}message_icons");
 $test = false;
-while ($request && $row = smf_mysql_fetch_row($request))
+while ($request && $row = sb_mysql_fetch_row($request))
 	$test |= $row[0] == 'Name';
 if ($request)
-	smf_mysql_free_result($request);
+	sb_mysql_free_result($request);
 
 if ($test)
 {
@@ -844,8 +844,8 @@ CHANGE COLUMN lastLogin lastLogin int(10) unsigned NOT NULL default 0;
 $request = upgrade_query("
 	SELECT COUNT(*)
 	FROM {$db_prefix}members");
-list ($totalMembers) = smf_mysql_fetch_row($request);
-smf_mysql_free_result($request);
+list ($totalMembers) = sb_mysql_fetch_row($request);
+sb_mysql_free_result($request);
 
 $_GET['m'] = isset($_GET['m']) ? (int) $_GET['m'] : 0;
 
@@ -862,7 +862,7 @@ while ($_GET['m'] < $totalMembers)
 		GROUP BY mem.ID_MEMBER, mem.instantMessages
 		HAVING instantMessages_real != instantMessages
 		LIMIT 256");
-	while ($row = smf_mysql_fetch_assoc($mrequest))
+	while ($row = sb_mysql_fetch_assoc($mrequest))
 	{
 		upgrade_query("
 			UPDATE {$db_prefix}members
@@ -882,8 +882,8 @@ unset($_GET['m']);
 $request = upgrade_query("
 	SELECT COUNT(*)
 	FROM {$db_prefix}members");
-list ($totalMembers) = smf_mysql_fetch_row($request);
-smf_mysql_free_result($request);
+list ($totalMembers) = sb_mysql_fetch_row($request);
+sb_mysql_free_result($request);
 
 $_GET['m'] = isset($_GET['m']) ? (int) $_GET['m'] : 0;
 
@@ -900,7 +900,7 @@ while ($_GET['m'] < $totalMembers)
 		GROUP BY mem.ID_MEMBER, mem.unreadMessages
 		HAVING unreadMessages_real != unreadMessages
 		LIMIT 256");
-	while ($row = smf_mysql_fetch_assoc($mrequest))
+	while ($row = sb_mysql_fetch_assoc($mrequest))
 	{
 		upgrade_query("
 			UPDATE {$db_prefix}members
@@ -978,12 +978,12 @@ $request = upgrade_query("
 	FROM {$db_prefix}attachments");
 $has_customAvatarDir_column = false;
 $has_attachmentType_column = false;
-while ($row = smf_mysql_fetch_assoc($request))
+while ($row = sb_mysql_fetch_assoc($request))
 {
 	$has_customAvatarDir_column |= $row['Field'] == 'customAvatarDir';
 	$has_attachmentType_column |= $row['Field'] == 'attachmentType';
 }
-smf_mysql_free_result($request);
+sb_mysql_free_result($request);
 
 // Post SMF 1.1 Beta 1.
 if ($has_customAvatarDir_column)
@@ -1011,7 +1011,7 @@ if (!$has_attachmentType_column)
 	$filenames = array();
 	$encrypted_filenames = array();
 	$ID_MSG = array();
-	while ($row = smf_mysql_fetch_assoc($request))
+	while ($row = sb_mysql_fetch_assoc($request))
 	{
 		$clean_name = strtr($row['filename'], 'ŠŽšžŸÀÁÂÃÄÅÇÈÉÊËÌÍÎÏÑÒÓÔÕÖØÙÚÛÜÝàáâãäåçèéêëìíîïñòóôõöøùúûüýÿ', 'SZszYAAAAAACEEEEIIIINOOOOOOUUUUYaaaaaaceeeeiiiinoooooouuuuyy');
 		$clean_name = strtr($clean_name, array('Þ' => 'TH', 'þ' => 'th', 'Ð' => 'DH', 'ð' => 'dh', 'ß' => 'ss', 'Œ' => 'OE', 'œ' => 'oe', 'Æ' => 'AE', 'æ' => 'ae', 'µ' => 'u'));
@@ -1030,7 +1030,7 @@ if (!$has_attachmentType_column)
 		$encrypted_filenames[$row['ID_ATTACH']] = $filename;
 		$ID_MSG[$row['ID_ATTACH']] = $row['ID_MSG'];
 	}
-	smf_mysql_free_result($request);
+	sb_mysql_free_result($request);
 
 	// Let's loop through the attachments
 	if (is_dir($modSettings['attachmentUploadDir']) && $dir = @opendir($modSettings['attachmentUploadDir']))
@@ -1068,7 +1068,7 @@ if (!$has_attachmentType_column)
 					INSERT INTO {$db_prefix}attachments
 						(ID_MSG, attachmentType, filename, size, width, height)
 					VALUES (" . $ID_MSG[$attach_id] . ", 3, '$thumb_filename', " . (int) $thumb_size . ', ' . (int) $thumb_width . ', ' . (int) $thumb_height . ')');
-				$thumb_attach_id = smf_mysql_insert_id();
+				$thumb_attach_id = sb_mysql_insert_id();
 
 				// Determine the dimensions of the original attachment.
 				$attach_width = $attach_height = 0;
@@ -1105,7 +1105,7 @@ $request = upgrade_query("
 		AND (RIGHT(filename, 4) IN ('.gif', '.jpg', '.png', '.bmp') OR RIGHT(filename, 5) = '.jpeg')
 		AND width = 0
 		AND height = 0");
-while ($row = smf_mysql_fetch_assoc($request))
+while ($row = sb_mysql_fetch_assoc($request))
 {
 	if ($row['attachmentType'] == 1)
 		$filename = $modSettings['custom_avatar_dir'] . '/' . $row['filename'];
@@ -1137,7 +1137,7 @@ while ($row = smf_mysql_fetch_assoc($request))
 			WHERE ID_ATTACH = $row[ID_ATTACH]
 			LIMIT 1");
 }
-smf_mysql_free_result($request);
+sb_mysql_free_result($request);
 ---}
 ---#
 
@@ -1151,8 +1151,8 @@ smf_mysql_free_result($request);
 $request = upgrade_query("
 	SHOW TABLES
 	LIKE '{$db_prefix}banned'");
-$upgradeBanTable = smf_mysql_num_rows($request) == 1;
-smf_mysql_free_result($request);
+$upgradeBanTable = sb_mysql_num_rows($request) == 1;
+sb_mysql_free_result($request);
 
 if ($upgradeBanTable)
 {
@@ -1224,12 +1224,12 @@ if ($upgradeBanTable)
 	);
 	if ($request != false)
 	{
-		while ($row = smf_mysql_fetch_assoc($request))
+		while ($row = sb_mysql_fetch_assoc($request))
 			upgrade_query("
 				UPDATE {$db_prefix}ban_groups
 				SET name = '" . $row['restriction_type'] . '_' . str_pad($ban_names[$row['restriction_type']]++, 3, '0', STR_PAD_LEFT) . "'
 				WHERE id_ban_group = $row[id_ban_group]");
-		smf_mysql_free_result($request);
+		sb_mysql_free_result($request);
 	}
 
 	// Move each restriction type to its own column.
@@ -1263,9 +1263,9 @@ if ($upgradeBanTable)
 			AND (mem.ID_MEMBER = bi.ID_MEMBER OR mem.emailAddress LIKE bi.email_address)
 			AND mem.is_activated < 10");
 	$updates = array();
-	while ($row = smf_mysql_fetch_assoc($request))
+	while ($row = sb_mysql_fetch_assoc($request))
 		$updates[$row['new_value']][] = $row['ID_MEMBER'];
-	smf_mysql_free_result($request);
+	sb_mysql_free_result($request);
 
 	// Find members that are wrongfully marked as banned.
 	$request = upgrade_query("
@@ -1275,9 +1275,9 @@ if ($upgradeBanTable)
 			LEFT JOIN {$db_prefix}ban_groups AS bg ON (bg.id_ban_group = bi.id_ban_group AND bg.cannot_access = 1 AND (bg.expire_time IS NULL OR bg.expire_time > " . time() . "))
 		WHERE (bi.id_ban IS NULL OR bg.id_ban_group IS NULL)
 			AND mem.is_activated >= 10");
-	while ($row = smf_mysql_fetch_assoc($request))
+	while ($row = sb_mysql_fetch_assoc($request))
 		$updates[$row['new_value']][] = $row['ID_MEMBER'];
-	smf_mysql_free_result($request);
+	sb_mysql_free_result($request);
 
 	if (!empty($updates))
 		foreach ($updates as $newStatus => $members)
@@ -1333,8 +1333,8 @@ if (!isset($modSettings['permission_enable_deny']))
 		FROM {$db_prefix}permissions
 		WHERE addDeny = 0
 		LIMIT 1");
-	$disable_deny_permissions = smf_mysql_num_rows($request) == 0;
-	smf_mysql_free_result($request);
+	$disable_deny_permissions = sb_mysql_num_rows($request) == 0;
+	sb_mysql_free_result($request);
 
 	// Still wanna disable deny permissions? Check board permissions.
 	if ($disable_deny_permissions)
@@ -1344,8 +1344,8 @@ if (!isset($modSettings['permission_enable_deny']))
 			FROM {$db_prefix}board_permissions
 			WHERE addDeny = 0
 			LIMIT 1");
-		$disable_deny_permissions &= smf_mysql_num_rows($request) == 0;
-		smf_mysql_free_result($request);
+		$disable_deny_permissions &= sb_mysql_num_rows($request) == 0;
+		sb_mysql_free_result($request);
 	}
 
 	$request = upgrade_query("
@@ -1368,8 +1368,8 @@ if (!isset($modSettings['permission_enable_postgroups']))
 		WHERE mg.ID_GROUP = p.ID_GROUP
 			AND mg.minPosts != -1
 		LIMIT 1");
-	$disable_postgroup_permissions &= smf_mysql_num_rows($request) == 0;
-	smf_mysql_free_result($request);
+	$disable_postgroup_permissions &= sb_mysql_num_rows($request) == 0;
+	sb_mysql_free_result($request);
 
 	// Still wanna disable postgroup permissions? Check board permissions.
 	if ($disable_postgroup_permissions)
@@ -1380,8 +1380,8 @@ if (!isset($modSettings['permission_enable_postgroups']))
 			WHERE mg.ID_GROUP = bp.ID_GROUP
 				AND mg.minPosts != -1
 			LIMIT 1");
-		$disable_postgroup_permissions &= smf_mysql_num_rows($request) == 0;
-		smf_mysql_free_result($request);
+		$disable_postgroup_permissions &= sb_mysql_num_rows($request) == 0;
+		sb_mysql_free_result($request);
 	}
 
 	$request = upgrade_query("
@@ -1405,8 +1405,8 @@ if (!isset($modSettings['permission_enable_by_board']))
 		FROM {$db_prefix}boards
 		WHERE permission_mode = 1
 		LIMIT 1");
-	$enable_by_board = smf_mysql_num_rows($request) == 1 ? '1' : '0';
-	smf_mysql_free_result($request);
+	$enable_by_board = sb_mysql_num_rows($request) == 1 ? '1' : '0';
+	sb_mysql_free_result($request);
 
 	$request = upgrade_query("
 		INSERT INTO {$db_prefix}settings
@@ -1482,9 +1482,9 @@ $request = upgrade_query("
 	SHOW KEYS
 	FROM {$db_prefix}messages");
 $found = false;
-while ($row = smf_mysql_fetch_assoc($request))
+while ($row = sb_mysql_fetch_assoc($request))
 	$found |= $row['Key_name'] == 'subject' && $row['Column_name'] == 'subject';
-smf_mysql_free_result($request);
+sb_mysql_free_result($request);
 if ($found)
 {
 	$request = upgrade_query("
@@ -1501,15 +1501,15 @@ if ($found)
 $request = upgrade_query("
 	SELECT COUNT(*)
 	FROM {$db_prefix}log_search_subjects");
-list ($numIndexedWords) = smf_mysql_fetch_row($request);
-smf_mysql_free_result($request);
+list ($numIndexedWords) = sb_mysql_fetch_row($request);
+sb_mysql_free_result($request);
 if ($numIndexedWords == 0 || isset($_GET['lt']))
 {
 	$request = upgrade_query("
 		SELECT COUNT(*)
 		FROM {$db_prefix}topics");
-	list ($maxTopics) = smf_mysql_fetch_row($request);
-	smf_mysql_free_result($request);
+	list ($maxTopics) = sb_mysql_fetch_row($request);
+	sb_mysql_free_result($request);
 
 	$_GET['lt'] = isset($_GET['lt']) ? (int) $_GET['lt'] : 0;
 	$step_progress['name'] = 'Indexing Topic Subjects';
@@ -1524,12 +1524,12 @@ if ($numIndexedWords == 0 || isset($_GET['lt']))
 			WHERE m.ID_MSG = t.ID_FIRST_MSG
 			LIMIT $_GET[lt], 250");
 		$inserts = array();
-		while ($row = smf_mysql_fetch_assoc($request))
+		while ($row = sb_mysql_fetch_assoc($request))
 		{
 			foreach (text2words($row['subject']) as $word)
-				$inserts[] = "'" . smf_mysql_real_escape_string($word) . "', $row[ID_TOPIC]";
+				$inserts[] = "'" . sb_mysql_real_escape_string($word) . "', $row[ID_TOPIC]";
 		}
-		smf_mysql_free_result($request);
+		sb_mysql_free_result($request);
 
 		if (!empty($inserts))
 			upgrade_query("
@@ -1589,10 +1589,10 @@ $request = upgrade_query("
 	SHOW COLUMNS
 	FROM {$db_prefix}log_topics");
 $upgradeLogTable = false;
-while ($request && $row = smf_mysql_fetch_row($request))
+while ($request && $row = sb_mysql_fetch_row($request))
 	$upgradeLogTable |= $row[0] == 'logTime';
 if ($request !== false)
-	smf_mysql_free_result($request);
+	sb_mysql_free_result($request);
 
 if ($upgradeLogTable)
 {
@@ -1657,10 +1657,10 @@ $request = upgrade_query("
 	SHOW COLUMNS
 	FROM {$db_prefix}log_topics");
 $upgradeLogTable = false;
-while ($request && $row = smf_mysql_fetch_row($request))
+while ($request && $row = sb_mysql_fetch_row($request))
 	$upgradeLogTable |= $row[0] == 'logTime';
 if ($request !== false)
-	smf_mysql_free_result($request);
+	sb_mysql_free_result($request);
 
 if ($upgradeLogTable)
 {
@@ -1771,18 +1771,18 @@ $request = upgrade_query("
 	SHOW COLUMNS
 	FROM {$db_prefix}log_topics");
 $upgradeLogTable = false;
-while ($request && $row = smf_mysql_fetch_row($request))
+while ($request && $row = sb_mysql_fetch_row($request))
 	$upgradeLogTable |= $row[0] == 'logTime';
 if ($request !== false)
-	smf_mysql_free_result($request);
+	sb_mysql_free_result($request);
 
 if ($upgradeLogTable)
 {
 	$request = upgrade_query("
 		SELECT MAX(ID_MSG)
 		FROM {$db_prefix}messages");
-	list($maxMsg) = smf_mysql_fetch_row($request);
-	smf_mysql_free_result($request);
+	list($maxMsg) = sb_mysql_fetch_row($request);
+	sb_mysql_free_result($request);
 
 	if (empty($maxMsg))
 		$maxMsg = 0;
@@ -1805,8 +1805,8 @@ if ($upgradeLogTable)
 			SELECT posterTime
 			FROM {$db_prefix}messages
 			WHERE ID_MSG = $maxMsg");
-		list($maxPosterTime) = smf_mysql_fetch_row($request);
-		smf_mysql_free_result($request);
+		list($maxPosterTime) = sb_mysql_fetch_row($request);
+		sb_mysql_free_result($request);
 
 		if (empty($maxPosterTime))
 			$maxPosterTime = 0;
@@ -1838,8 +1838,8 @@ if ($upgradeLogTable)
 			SELECT MAX(posterTime) + 1
 			FROM {$db_prefix}messages
 			WHERE ID_MSG < $_GET[m]");
-		list($lower_limit) = smf_mysql_fetch_row($request);
-		smf_mysql_free_result($request);
+		list($lower_limit) = sb_mysql_fetch_row($request);
+		sb_mysql_free_result($request);
 
 		if (empty($lower_limit))
 			$lower_limit = 1;
@@ -1859,7 +1859,7 @@ if ($upgradeLogTable)
 			GROUP BY posterTime
 			ORDER BY posterTime
 			LIMIT 300");
-		while ($row = smf_mysql_fetch_assoc($request))
+		while ($row = sb_mysql_fetch_assoc($request))
 		{
 			if ($condition === '')
 				$condition = "IF(logTime BETWEEN $lower_limit AND $row[posterTime], $row[ID_MSG], %else%)";
@@ -1868,7 +1868,7 @@ if ($upgradeLogTable)
 
 			$lower_limit = $row['posterTime'] + 1;
 		}
-		smf_mysql_free_result($request);
+		sb_mysql_free_result($request);
 
 		if ($condition !== '')
 		{
@@ -1912,18 +1912,18 @@ $request = upgrade_query("
 	SHOW COLUMNS
 	FROM {$db_prefix}boards");
 $upgradeBoardsTable = false;
-while ($request && $row = smf_mysql_fetch_row($request))
+while ($request && $row = sb_mysql_fetch_row($request))
 	$upgradeBoardsTable |= $row[0] == 'lastUpdated';
 if ($request !== false)
-	smf_mysql_free_result($request);
+	sb_mysql_free_result($request);
 
 if ($upgradeBoardsTable)
 {
 	$request = upgrade_query("
 		SELECT MAX(ID_BOARD)
 		FROM {$db_prefix}boards");
-	list ($maxBoard) = smf_mysql_fetch_row($request);
-	smf_mysql_free_result($request);
+	list ($maxBoard) = sb_mysql_fetch_row($request);
+	sb_mysql_free_result($request);
 
 	$_GET['bdi'] = isset($_GET['bdi']) ? (int) $_GET['bdi'] : 0;
 	$step_progress['name'] = 'Updating Last Board ID';
@@ -1934,7 +1934,7 @@ if ($upgradeBoardsTable)
 	$request = upgrade_query("
 		SELECT ID_BOARD, lastUpdated
 		FROM {$db_prefix}boards");
-	while ($row = smf_mysql_fetch_assoc($request))
+	while ($row = sb_mysql_fetch_assoc($request))
 	{
 		// Done this?
 		if ($row['ID_BOARD'] < $_GET['bdi'])
@@ -1950,7 +1950,7 @@ if ($upgradeBoardsTable)
 				SELECT MIN(ID_MSG)
 				FROM {$db_prefix}messages
 				WHERE posterTime >= $row[lastUpdated]");
-			list ($ID_MSG) = smf_mysql_fetch_row($request2);
+			list ($ID_MSG) = sb_mysql_fetch_row($request2);
 
 			if (empty($ID_MSG))
 				$ID_MSG = 0;
@@ -1976,10 +1976,10 @@ $request = upgrade_query("
 	SHOW COLUMNS
 	FROM {$db_prefix}log_topics");
 $upgradeLogTable = false;
-while ($request && $row = smf_mysql_fetch_row($request))
+while ($request && $row = sb_mysql_fetch_row($request))
 	$upgradeLogTable |= $row[0] == 'logTime';
 if ($request !== false)
-	smf_mysql_free_result($request);
+	sb_mysql_free_result($request);
 
 if ($upgradeLogTable)
 {
@@ -2090,8 +2090,8 @@ $request = upgrade_query("
 	SHOW COLUMNS
 	FROM {$db_prefix}messages
 	LIKE 'body'");
-$body_row = smf_mysql_fetch_assoc($request);
-smf_mysql_free_result($request);
+$body_row = sb_mysql_fetch_assoc($request);
+sb_mysql_free_result($request);
 
 $body_type = $body_row['Type'];
 

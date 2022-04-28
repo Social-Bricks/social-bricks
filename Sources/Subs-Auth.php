@@ -66,7 +66,7 @@ function setLoginCookie($cookie_length, $id, $password = '')
 
 		// Out with the old, in with the new!
 		if (isset($old_domain) && $old_domain != $cookie_url[0] || isset($old_path) && $old_path != $cookie_url[1])
-			smf_setcookie($cookiename, $smcFunc['json_encode'](array(0, '', 0, $old_domain, $old_path), JSON_FORCE_OBJECT), 1, $old_path, $old_domain);
+			sb_setcookie($cookiename, $smcFunc['json_encode'](array(0, '', 0, $old_domain, $old_path), JSON_FORCE_OBJECT), 1, $old_path, $old_domain);
 	}
 
 	// Get the data and path to set it on.
@@ -79,11 +79,11 @@ function setLoginCookie($cookie_length, $id, $password = '')
 	$data = $smcFunc['json_encode'](array_merge($data, $custom_data), JSON_FORCE_OBJECT);
 
 	// Set the cookie, $_COOKIE, and session variable.
-	smf_setcookie($cookiename, $data, $expiry_time, $cookie_url[1], $cookie_url[0]);
+	sb_setcookie($cookiename, $data, $expiry_time, $cookie_url[1], $cookie_url[0]);
 
 	// If subdomain-independent cookies are on, unset the subdomain-dependent cookie too.
 	if (empty($id) && !empty($modSettings['globalCookies']))
-		smf_setcookie($cookiename, $data, $expiry_time, $cookie_url[1], '');
+		sb_setcookie($cookiename, $data, $expiry_time, $cookie_url[1], '');
 
 	// Any alias URLs?  This is mainly for use with frames, etc.
 	if (!empty($modSettings['forum_alias_urls']))
@@ -107,7 +107,7 @@ function setLoginCookie($cookie_length, $id, $password = '')
 			$alias_data[4] = $cookie_url[1];
 			$alias_data = $smcFunc['json_encode']($alias_data, JSON_FORCE_OBJECT);
 
-			smf_setcookie($cookiename, $alias_data, $expiry_time, $cookie_url[1], $cookie_url[0]);
+			sb_setcookie($cookiename, $alias_data, $expiry_time, $cookie_url[1], $cookie_url[0]);
 		}
 
 		$boardurl = $temp;
@@ -156,11 +156,11 @@ function setTFACookie($cookie_length, $id, $secret)
 	$data = $smcFunc['json_encode'](empty($id) ? array(0, '', 0, $cookie_url[0], $cookie_url[1], false) : array($id, $secret, $expiry_time, $cookie_url[0], $cookie_url[1]), JSON_FORCE_OBJECT);
 
 	// Set the cookie, $_COOKIE, and session variable.
-	smf_setcookie($identifier, $data, $expiry_time, $cookie_url[1], $cookie_url[0]);
+	sb_setcookie($identifier, $data, $expiry_time, $cookie_url[1], $cookie_url[0]);
 
 	// If subdomain-independent cookies are on, unset the subdomain-dependent cookie too.
 	if (empty($id) && !empty($modSettings['globalCookies']))
-		smf_setcookie($identifier, $data, $expiry_time, $cookie_url[1], '');
+		sb_setcookie($identifier, $data, $expiry_time, $cookie_url[1], '');
 
 	$_COOKIE[$identifier] = $data;
 }
@@ -856,7 +856,7 @@ function rebuildModCache()
  * @param bool $httponly = true
  * @param string $samesite = lax
  */
-function smf_setcookie($name, $value = '', $expire = 0, $path = '', $domain = '', $secure = null, $httponly = true, $samesite = null)
+function sb_setcookie($name, $value = '', $expire = 0, $path = '', $domain = '', $secure = null, $httponly = true, $samesite = null)
 {
 	global $modSettings;
 

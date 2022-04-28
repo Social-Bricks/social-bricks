@@ -21,7 +21,7 @@ define('SMF_INSTALLING', 1);
 define('JQUERY_VERSION', '3.6.0');
 define('POSTGRE_TITLE', 'PostgreSQL');
 define('MYSQL_TITLE', 'MySQL');
-define('SMF_USER_AGENT', 'Mozilla/5.0 (' . php_uname('s') . ' ' . php_uname('m') . ') AppleWebKit/605.1.15 (KHTML, like Gecko)  SMF/' . strtr(SMF_VERSION, ' ', '.'));
+define('SB_USER_AGENT', 'Mozilla/5.0 (' . php_uname('s') . ' ' . php_uname('m') . ') AppleWebKit/605.1.15 (KHTML, like Gecko) SocialBricks/' . strtr(SMF_VERSION, ' ', '.'));
 if (!defined('TIME_START'))
 	define('TIME_START', microtime(true));
 
@@ -769,7 +769,7 @@ function loadEssentialData()
 			if (!empty($db_mb4))
 				$options['db_mb4'] = $db_mb4;
 
-			$db_connection = smf_db_initiate($db_server, $db_name, $db_user, $db_passwd, $db_prefix, $options);
+			$db_connection = sb_db_initiate($db_server, $db_name, $db_user, $db_passwd, $db_prefix, $options);
 		}
 		else
 			// If we've returned here, ping/reconnect to be safe
@@ -3727,8 +3727,8 @@ function template_upgrade_above()
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/', JQUERY_VERSION, '/jquery.min.js"></script>
 	<script src="', $settings['default_theme_url'], '/scripts/script.js"></script>
 	<script>
-		var smf_scripturl = \'', $upgradeurl, '\';
-		var smf_charset = \'', (empty($modSettings['global_character_set']) ? (empty($txt['lang_character_set']) ? 'UTF-8' : $txt['lang_character_set']) : $modSettings['global_character_set']), '\';
+		var sb_scripturl = \'', $upgradeurl, '\';
+		var sb_charset = \'', (empty($modSettings['global_character_set']) ? (empty($txt['lang_character_set']) ? 'UTF-8' : $txt['lang_character_set']) : $modSettings['global_character_set']), '\';
 		var startPercent = ', $upcontext['overall_percent'], ';
 		var allow_xhjr_credentials = false;
 
@@ -4076,7 +4076,7 @@ function template_welcome_message()
 						addLoadEvent(smfCurrentVersion);
 
 						// This checks that the script file even exists!
-						if (typeof(smfSelectText) == \'undefined\')
+						if (typeof(sbSelectText) == \'undefined\')
 							document.getElementById(\'js_script_missing_error\').classList.remove(\'hidden\');
 
 					</script>';
@@ -5017,7 +5017,7 @@ function MySQLConvertOldIp($targetTable, $oldCol, $newCol, $limit = 50000, $setS
 }
 
 /**
- * Get the column info. This is basically the same as smf_db_list_columns but we get 1 column, force detail and other checks.
+ * Get the column info. This is basically the same as sb_db_list_columns but we get 1 column, force detail and other checks.
  *
  * @param string $targetTable The table to perform the operation on
  * @param string $column The column we are looking for.

@@ -1821,7 +1821,7 @@ function MessagePost()
 	// Just in case it was loaded from somewhere else.
 	loadTemplate('PersonalMessage');
 	loadJavaScriptFile('PersonalMessage.js', array('defer' => false, 'minimize' => true), 'smf_pms');
-	loadJavaScriptFile('suggest.js', array('defer' => false, 'minimize' => true), 'smf_suggest');
+	loadJavaScriptFile('suggest.js', array('defer' => false, 'minimize' => true), 'sb_suggest');
 	if ($context['drafts_autosave'])
 		loadJavaScriptFile('drafts.js', array('defer' => false, 'minimize' => true), 'smf_drafts');
 	$context['sub_template'] = 'send';
@@ -2133,7 +2133,7 @@ function messagePostError($error_types, $named_recipients, $recipient_ids = arra
 		$context['menu_data_' . $context['pm_menu_id']]['current_area'] = 'send';
 		$context['sub_template'] = 'send';
 		loadJavaScriptFile('PersonalMessage.js', array('defer' => false, 'minimize' => true), 'smf_pms');
-		loadJavaScriptFile('suggest.js', array('defer' => false, 'minimize' => true), 'smf_suggest');
+		loadJavaScriptFile('suggest.js', array('defer' => false, 'minimize' => true), 'sb_suggest');
 	}
 	else
 		$context['sub_template'] = 'pm';

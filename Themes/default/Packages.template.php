@@ -90,7 +90,7 @@ function template_view_package()
 		<div class="windowbg">
 			', $context['package_readme'], '
 			<span class="floatright">', $txt['package_available_readme_language'], '
-				<select name="readme_language" id="readme_language" onchange="if (this.options[this.selectedIndex].value) window.location.href = smf_prepareScriptUrl(smf_scripturl + \'', '?action=admin;area=packages;sa=', $context['uninstalling'] ? 'uninstall' : 'install', ';package=', $context['filename'], ';license=\' + this.options[this.selectedIndex].value + \';readme=\' + get_selected(\'readme_language\'));">';
+				<select name="readme_language" id="readme_language" onchange="if (this.options[this.selectedIndex].value) window.location.href = sb_prepareScriptUrl(sb_scripturl + \'', '?action=admin;area=packages;sa=', $context['uninstalling'] ? 'uninstall' : 'install', ';package=', $context['filename'], ';license=\' + this.options[this.selectedIndex].value + \';readme=\' + get_selected(\'readme_language\'));">';
 
 		foreach ($context['readmes'] as $a => $b)
 			echo '
@@ -113,7 +113,7 @@ function template_view_package()
 		<div class="windowbg">
 			', $context['package_license'], '
 			<span class="floatright">', $txt['package_available_license_language'], '
-				<select name="license_language" id="license_language" onchange="if (this.options[this.selectedIndex].value) window.location.href = smf_prepareScriptUrl(smf_scripturl + \'', '?action=admin;area=packages;sa=install', ';package=', $context['filename'], ';readme=\' + this.options[this.selectedIndex].value + \';license=\' + get_selected(\'license_language\'));">';
+				<select name="license_language" id="license_language" onchange="if (this.options[this.selectedIndex].value) window.location.href = sb_prepareScriptUrl(sb_scripturl + \'', '?action=admin;area=packages;sa=install', ';package=', $context['filename'], ';readme=\' + this.options[this.selectedIndex].value + \';license=\' + get_selected(\'license_language\'));">';
 
 		foreach ($context['licenses'] as $a => $b)
 			echo '
@@ -378,9 +378,9 @@ function template_view_package()
 			aSwapImages: [
 				{
 					sId: \'operation_img_', $key, '\',
-					srcExpanded: smf_images_url + \'/selected_open.png\',
+					srcExpanded: sb_images_url + \'/selected_open.png\',
 					altExpanded: \'*\',
-					srcCollapsed: smf_images_url + \'/selected.png\',
+					srcCollapsed: sb_images_url + \'/selected.png\',
 					altCollapsed: \'*\'
 				}
 			]
@@ -555,9 +555,9 @@ function template_browse()
 			</div>
 
 			<script>
-				window.smfForum_scripturl = smf_scripturl;
-				window.smfForum_sessionid = smf_session_id;
-				window.smfForum_sessionvar = smf_session_var;';
+				window.smfForum_scripturl = sb_scripturl;
+				window.smfForum_sessionid = sb_session_id;
+				window.smfForum_sessionvar = sb_session_var;';
 
 	// Make a list of already installed mods so nothing is listed twice ;).
 	echo '
@@ -568,15 +568,13 @@ function template_browse()
 
 	if (empty($modSettings['disable_smf_js']))
 		echo '
-			<script src="', $scripturl, '?action=viewsmfile;filename=latest-news.js"></script>';
+			<script src="', $scripturl, '?action=viewadminfile;filename=latest-news.js"></script>';
 
 	// This sets the announcements and current versions themselves ;).
 	echo '
 			<script>
-				var oAdminIndex = new smf_AdminIndex({
+				var oAdminIndex = new sb_adminIndex({
 					sSelf: \'oAdminCenter\',
-					bLoadAnnouncements: false,
-					bLoadVersions: false,
 					bLoadUpdateNotification: true,
 					sUpdateNotificationContainerId: \'update_section\',
 					sUpdateNotificationDefaultTitle: ', JavaScriptEscape($txt['update_available']), ',
@@ -589,7 +587,7 @@ function template_browse()
 							%message%
 						</div>
 					'), ',
-					sUpdateNotificationLink: smf_scripturl + ', JavaScriptEscape('?action=admin;area=packages;pgdownload;auto;package=%package%;' . $context['session_var'] . '=' . $context['session_id']), '
+					sUpdateNotificationLink: sb_scripturl + ', JavaScriptEscape('?action=admin;area=packages;pgdownload;auto;package=%package%;' . $context['session_var'] . '=' . $context['session_id']), '
 				});
 			</script>';
 
@@ -1357,7 +1355,7 @@ function template_file_permissions()
 		{
 			ajax_indicator(true);
 
-			getXMLDocument(smf_prepareScriptUrl(smf_scripturl) + \'action=admin;area=packages;fileoffset=\' + (parseInt(this.offset) + ', $context['file_limit'], ') + \';onlyfind=\' + escape(this.path) + \';sa=perms;xml;', $context['session_var'], '=', $context['session_id'], '\', onNewFolderReceived);
+			getXMLDocument(sb_prepareScriptUrl(sb_scripturl) + \'action=admin;area=packages;fileoffset=\' + (parseInt(this.offset) + ', $context['file_limit'], ') + \';onlyfind=\' + escape(this.path) + \';sa=perms;xml;', $context['session_var'], '=', $context['session_id'], '\', onNewFolderReceived);
 		}
 
 		// Getting something back?

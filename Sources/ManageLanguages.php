@@ -152,9 +152,9 @@ function list_getLanguagesList()
 
 	// Check that the site responded and that the language exists.
 	if (!$language_list->exists('languages'))
-		$context['smf_error'] = 'no_response';
+		$context['sb_error'] = 'no_response';
 	elseif (!$language_list->exists('languages/language'))
-		$context['smf_error'] = 'no_files';
+		$context['sb_error'] = 'no_files';
 	else
 	{
 		$language_list = $language_list->path('languages[0]');
@@ -176,7 +176,7 @@ function list_getLanguagesList()
 			);
 		}
 		if (empty($smf_languages))
-			$context['smf_error'] = 'no_files';
+			$context['sb_error'] = 'no_files';
 		else
 			return $smf_languages;
 	}

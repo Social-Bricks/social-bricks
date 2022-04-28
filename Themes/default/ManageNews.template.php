@@ -141,8 +141,8 @@ function template_email_members()
 	<script>
 		var oMemberSuggest = new smc_AutoSuggest({
 			sSelf: \'oMemberSuggest\',
-			sSessionId: smf_session_id,
-			sSessionVar: smf_session_var,
+			sSessionId: sb_session_id,
+			sSessionVar: sb_session_var,
 			sSuggestId: \'members\',
 			sControlId: \'members\',
 			sSearchType: \'member\',
@@ -291,7 +291,7 @@ function template_email_members_compose()
 
 						x[x.length] = \'item=newsletterpreview\';
 
-						sendXMLDocument(smf_prepareScriptUrl(smf_scripturl) + \'action=xmlhttp;sa=previews;xml\', x.join(\'&\'), onDocSent);
+						sendXMLDocument(sb_prepareScriptUrl(sb_scripturl) + \'action=xmlhttp;sa=previews;xml\', x.join(\'&\'), onDocSent);
 
 						document.getElementById(\'preview_section\').style.display = \'\';
 						setInnerHTML(document.getElementById(\'preview_subject\'), txt_preview_title);

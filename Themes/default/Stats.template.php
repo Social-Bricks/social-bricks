@@ -218,7 +218,7 @@ function template_main()
 		</table>
 	</div><!-- #statistics -->
 	<script>
-		var oStatsCenter = new smf_StatsCenter({
+		var oStatsCenter = new sb_StatsCenter({
 			sTableId: \'stats\',
 
 			reYearPattern: /year_(\d+)/,

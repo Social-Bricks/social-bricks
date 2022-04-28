@@ -1,5 +1,5 @@
 /*
-	smf_AdminIndex(oOptions)
+	sb_adminIndex(oOptions)
 	{
 		public init()
 		public loadAdminIndex()
@@ -21,13 +21,13 @@
 
 
 // Handle the JavaScript surrounding the admin and moderation center.
-function smf_AdminIndex(oOptions)
+function sb_adminIndex(oOptions)
 {
 	this.opt = oOptions;
 	this.init();
 }
 
-smf_AdminIndex.prototype.init = function ()
+sb_adminIndex.prototype.init = function ()
 {
 	window.adminIndexInstanceRef = this;
 	var fHandlePageLoaded = function () {
@@ -36,50 +36,14 @@ smf_AdminIndex.prototype.init = function ()
 	addLoadEvent(fHandlePageLoaded);
 }
 
-smf_AdminIndex.prototype.loadAdminIndex = function ()
+sb_adminIndex.prototype.loadAdminIndex = function ()
 {
-	// Load the text box containing the latest news items.
-	if (this.opt.bLoadAnnouncements)
-		this.setAnnouncements();
-
-	// Load the current SMF and your SMF version numbers.
-	if (this.opt.bLoadVersions)
-		this.showCurrentVersion();
-
 	// Load the text box that sais there's a new version available.
 	if (this.opt.bLoadUpdateNotification)
 		this.checkUpdateAvailable();
 }
 
-
-smf_AdminIndex.prototype.setAnnouncements = function ()
-{
-	if (!('smfAnnouncements' in window) || !('length' in window.smfAnnouncements))
-		return;
-
-	var sMessages = '';
-	for (var i = 0; i < window.smfAnnouncements.length; i++)
-		sMessages += this.opt.sAnnouncementMessageTemplate.replace('%href%', window.smfAnnouncements[i].href).replace('%subject%', window.smfAnnouncements[i].subject).replace('%time%', window.smfAnnouncements[i].time).replace('%message%', window.smfAnnouncements[i].message);
-
-	setInnerHTML(document.getElementById(this.opt.sAnnouncementContainerId), this.opt.sAnnouncementTemplate.replace('%content%', sMessages));
-}
-
-smf_AdminIndex.prototype.showCurrentVersion = function ()
-{
-	if (!('smfVersion' in window))
-		return;
-
-	var oSmfVersionContainer = document.getElementById(this.opt.sSmfVersionContainerId);
-	var oYourVersionContainer = document.getElementById(this.opt.sYourVersionContainerId);
-
-	setInnerHTML(oSmfVersionContainer, window.smfVersion);
-
-	var sCurrentVersion = getInnerHTML(oYourVersionContainer);
-	if (sCurrentVersion != window.smfVersion)
-		setInnerHTML(oYourVersionContainer, this.opt.sVersionOutdatedTemplate.replace('%currentVersion%', sCurrentVersion));
-}
-
-smf_AdminIndex.prototype.checkUpdateAvailable = function ()
+sb_adminIndex.prototype.checkUpdateAvailable = function ()
 {
 	if (!('smfUpdatePackage' in window))
 		return;
@@ -498,11 +462,11 @@ function updatePreview(filename, filepath)
 		relative_url = "/" + filepath + "/" + filename;
 
 	// Make sure no sneaky people are trying to be sneaky
-	var regex = new RegExp("^/(" + smf_smiley_sets.split(",").join("|") + ")/[^.]+\.(gif|png|jpg|jpeg|tiff|svg)$");
+	var regex = new RegExp("^/(" + sb_smiley_sets.split(",").join("|") + ")/[^.]+\.(gif|png|jpg|jpeg|tiff|svg)$");
 	var is_valid = relative_url.match(regex);
 
 	if (is_valid !== null)
-		currentImage.src = smf_smileys_url + relative_url;
+		currentImage.src = sb_smileys_url + relative_url;
 }
 
 function testFTP()
@@ -523,7 +487,7 @@ function testFTP()
 		sPostData = sPostData + (sPostData.length == 0 ? "" : "&") + oPostData[i] + "=" + escape(document.getElementById(oPostData[i]).value);
 
 	// Post the data out.
-	sendXMLDocument(smf_prepareScriptUrl(smf_scripturl) + 'action=admin;area=packages;sa=ftptest;xml;' + smf_session_var + '=' + smf_session_id, sPostData, testFTPResults);
+	sendXMLDocument(sb_prepareScriptUrl(sb_scripturl) + 'action=admin;area=packages;sa=ftptest;xml;' + sb_session_var + '=' + sb_session_id, sPostData, testFTPResults);
 }
 
 function expandFolder(folderIdent, folderReal)
@@ -550,7 +514,7 @@ function expandFolder(folderIdent, folderReal)
 	else if (window.XMLHttpRequest)
 	{
 		ajax_indicator(true);
-		getXMLDocument(smf_prepareScriptUrl(smf_scripturl) + 'action=admin;area=packages;onlyfind=' + escape(folderReal) + ';sa=perms;xml;' + smf_session_var + '=' + smf_session_id, onNewFolderReceived);
+		getXMLDocument(sb_prepareScriptUrl(sb_scripturl) + 'action=admin;area=packages;onlyfind=' + escape(folderReal) + ';sa=perms;xml;' + sb_session_var + '=' + sb_session_id, onNewFolderReceived);
 	}
 	// Otherwise reload.
 	else
