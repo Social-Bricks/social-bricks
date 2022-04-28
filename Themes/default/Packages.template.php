@@ -575,8 +575,6 @@ function template_browse()
 			<script>
 				var oAdminIndex = new sb_adminIndex({
 					sSelf: \'oAdminCenter\',
-					bLoadAnnouncements: false,
-					bLoadVersions: false,
 					bLoadUpdateNotification: true,
 					sUpdateNotificationContainerId: \'update_section\',
 					sUpdateNotificationDefaultTitle: ', JavaScriptEscape($txt['update_available']), ',

@@ -21,56 +21,6 @@ function template_admin()
 	echo '
 						<div id="update_section"></div>';
 
-	echo '
-						<div id="admin_main_section">';
-
-	// Display the "live news" from simplemachines.org.
-	echo '
-							<div id="live_news" class="floatleft">
-								<div class="cat_bar">
-									<h3 class="catbg">
-										<a href="', $scripturl, '?action=helpadmin;help=live_news" onclick="return reqOverlayDiv(this.href);" class="help"><span class="main_icons help" title="', $txt['help'], '"></span></a> ', $txt['live'], '
-									</h3>
-								</div>
-								<div class="windowbg nopadding">
-									<div id="smfAnnouncements">', $txt['smf_news_cant_connect'], '</div>
-								</div>
-							</div>';
-
-	// Show the user version information from their server.
-	echo '
-							<div id="support_info" class="floatright">
-								<div class="cat_bar">
-									<h3 class="catbg">
-										<a href="', $scripturl, '?action=admin;area=credits">', $txt['support_title'], '</a>
-									</h3>
-								</div>
-								<div class="windowbg nopadding">
-									<div id="version_details" class="padding">
-										<strong>', $txt['support_versions'], ':</strong><br>
-										', $txt['support_versions_forum'], ':
-										<em id="yourVersion">', $context['forum_version'], '</em><br>
-										', $txt['support_versions_current'], ':
-										<em id="smfVersion">??</em><br>
-										', $context['can_admin'] ? '<a href="' . $scripturl . '?action=admin;area=maintain;sa=routine;activity=version">' . $txt['version_check_more'] . '</a>' : '', '<br>';
-
-	// Display all the members who can administrate the forum.
-	echo '
-										<br>
-										<strong>', $txt['administrators'], ':</strong>
-										', implode(', ', $context['administrators']);
-
-	// If we have lots of admins... don't show them all.
-	if (!empty($context['more_admins_link']))
-		echo '
-										(', $context['more_admins_link'], ')';
-
-	echo '
-									</div><!-- #version_details -->
-								</div><!-- .windowbg -->
-							</div><!-- #support_info -->
-						</div><!-- #admin_main_section -->';
-
 	foreach ($context[$context['admin_menu_name']]['sections'] as $area_id => $area)
 	{
 		echo '
@@ -108,27 +58,6 @@ function template_admin()
 					<script>
 						var oAdminIndex = new sb_adminIndex({
 							sSelf: \'oAdminCenter\',
-
-							bLoadAnnouncements: true,
-							sAnnouncementTemplate: ', JavaScriptEscape('
-								<dl>
-									%content%
-								</dl>
-							'), ',
-							sAnnouncementMessageTemplate: ', JavaScriptEscape('
-								<dt><a href="%href%">%subject%</a> ' . $txt['on'] . ' %time%</dt>
-								<dd>
-									%message%
-								</dd>
-							'), ',
-							sAnnouncementContainerId: \'smfAnnouncements\',
-
-							bLoadVersions: true,
-							sSmfVersionContainerId: \'smfVersion\',
-							sYourVersionContainerId: \'yourVersion\',
-							sVersionOutdatedTemplate: ', JavaScriptEscape('
-								<span class="alert">%currentVersion%</span>
-							'), ',
 
 							bLoadUpdateNotification: true,
 							sUpdateNotificationContainerId: \'update_section\',

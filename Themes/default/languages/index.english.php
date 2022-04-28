@@ -609,7 +609,6 @@ $txt['attach_viewed'] = 'viewed %1$d times';
 
 $txt['settings'] = 'Settings';
 $txt['never'] = 'Never';
-$txt['more'] = 'more';
 $txt['etc'] = 'etc.';
 
 $txt['hostname'] = 'Hostname';

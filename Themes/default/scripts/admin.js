@@ -38,45 +38,9 @@ sb_adminIndex.prototype.init = function ()
 
 sb_adminIndex.prototype.loadAdminIndex = function ()
 {
-	// Load the text box containing the latest news items.
-	if (this.opt.bLoadAnnouncements)
-		this.setAnnouncements();
-
-	// Load the current SMF and your SMF version numbers.
-	if (this.opt.bLoadVersions)
-		this.showCurrentVersion();
-
 	// Load the text box that sais there's a new version available.
 	if (this.opt.bLoadUpdateNotification)
 		this.checkUpdateAvailable();
-}
-
-
-sb_adminIndex.prototype.setAnnouncements = function ()
-{
-	if (!('smfAnnouncements' in window) || !('length' in window.smfAnnouncements))
-		return;
-
-	var sMessages = '';
-	for (var i = 0; i < window.smfAnnouncements.length; i++)
-		sMessages += this.opt.sAnnouncementMessageTemplate.replace('%href%', window.smfAnnouncements[i].href).replace('%subject%', window.smfAnnouncements[i].subject).replace('%time%', window.smfAnnouncements[i].time).replace('%message%', window.smfAnnouncements[i].message);
-
-	setInnerHTML(document.getElementById(this.opt.sAnnouncementContainerId), this.opt.sAnnouncementTemplate.replace('%content%', sMessages));
-}
-
-sb_adminIndex.prototype.showCurrentVersion = function ()
-{
-	if (!('smfVersion' in window))
-		return;
-
-	var oSmfVersionContainer = document.getElementById(this.opt.sSmfVersionContainerId);
-	var oYourVersionContainer = document.getElementById(this.opt.sYourVersionContainerId);
-
-	setInnerHTML(oSmfVersionContainer, window.smfVersion);
-
-	var sCurrentVersion = getInnerHTML(oYourVersionContainer);
-	if (sCurrentVersion != window.smfVersion)
-		setInnerHTML(oYourVersionContainer, this.opt.sVersionOutdatedTemplate.replace('%currentVersion%', sCurrentVersion));
 }
 
 sb_adminIndex.prototype.checkUpdateAvailable = function ()
