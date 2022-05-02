@@ -112,7 +112,6 @@ $txt['image_proxy_maxsize'] = 'Maximum file size of images to cache (in KB)';
 $txt['force_ssl'] = 'Forum SSL mode';
 $txt['force_ssl_off'] = 'Disable SSL';
 $txt['force_ssl_complete'] = 'Force SSL throughout the forum';
-$txt['search_language'] = 'Fulltext Search Language';
 
 // Like settings.
 $txt['enable_likes'] = 'Enable Likes';
