@@ -480,7 +480,7 @@ function get_settings_defs()
 				'########## Database Info ##########',
 				'/**',
 				' * The database type',
-				' * Default options: mysql, postgresql',
+				' * Default options: mysql',
 				' *',
 				' * @var string',
 				' */',

@@ -52,7 +52,7 @@ function sb_db_initiate($db_server, $db_name, $db_user, $db_passwd, $db_prefix, 
 			'db_transaction'            => 'sb_db_transaction',
 			'db_error'                  => 'mysqli_error',
 			'db_select_db'              => 'sb_db_select',
-			'db_title'                  => MYSQL_TITLE,
+			'db_title'                  => 'MySQL',
 			'db_sybase'                 => false,
 			'db_case_sensitive'         => false,
 			'db_escape_wildcard_string' => 'sb_db_escape_wildcard_string',
@@ -355,7 +355,7 @@ function sb_db_quote($db_string, $db_values, $connection = null)
 /**
  * Do a query.  Takes care of errors too.
  *
- * @param string $identifier An identifier. Only used in Postgres when we need to do things differently...
+ * @param string $identifier An identifier.
  * @param string $db_string The database string
  * @param array $db_values = array() The values to be inserted into the string
  * @param resource $connection = null The connection to use (null to use $db_connection)
@@ -516,7 +516,7 @@ function sb_db_affected_rows($connection = null)
 /**
  * Gets the ID of the most recently inserted row.
  *
- * @param string $table The table (only used for Postgres)
+ * @param string $table The table.
  * @param string $field = null The specific field (not used here)
  * @param resource $connection = null The connection (if null, $db_connection is used)
  * @return int The ID of the most recently inserted row

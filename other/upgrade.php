@@ -19,8 +19,6 @@ define('SMF_LANG_VERSION', '2.1.2');
 define('SMF_INSTALLING', 1);
 
 define('JQUERY_VERSION', '3.6.0');
-define('POSTGRE_TITLE', 'PostgreSQL');
-define('MYSQL_TITLE', 'MySQL');
 define('SB_USER_AGENT', 'Mozilla/5.0 (' . php_uname('s') . ' ' . php_uname('m') . ') AppleWebKit/605.1.15 (KHTML, like Gecko) SocialBricks/' . strtr(SMF_VERSION, ' ', '.'));
 if (!defined('TIME_START'))
 	define('TIME_START', microtime(true));
@@ -48,17 +46,6 @@ $databases = array(
 			return mysqli_fetch_row(mysqli_query($db_connection, 'SELECT VERSION();'))[0];
 		},
 		'alter_support' => true,
-	),
-	'postgresql' => array(
-		'name' => 'PostgreSQL',
-		'version' => '9.6',
-		'version_check' => function() {
-			if (!function_exists('pg_version'))
-				return false;
-			$version = pg_version();
-			return $version['client'];
-		},
-		'always_has_db' => true,
 	),
 );
 
@@ -1354,9 +1341,6 @@ function UpgradeOptions()
 	if (!empty($db_port))
 	{
 		if ($db_type == 'mysql' && $db_port == ini_get('mysqli.default_port'))
-			$changes['db_port'] = 0;
-
-		elseif ($db_type == 'postgresql' && $db_port == 5432)
 			$changes['db_port'] = 0;
 	}
 
@@ -2747,7 +2731,7 @@ function ConvertUtf8()
 			return true;
 	}
 	// First make sure they aren't already on UTF-8 before we go anywhere...
-	if ($db_type == 'postgresql' || ($db_character_set === 'utf8' && !empty($modSettings['global_character_set']) && $modSettings['global_character_set'] === 'UTF-8'))
+	if (($db_character_set === 'utf8' && !empty($modSettings['global_character_set']) && $modSettings['global_character_set'] === 'UTF-8'))
 	{
 		$smcFunc['db_insert']('replace',
 			'{db_prefix}settings',

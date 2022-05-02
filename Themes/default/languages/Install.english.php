@@ -111,8 +111,6 @@ $txt['install_settings_proceed'] = 'Proceed';
 
 $txt['db_settings'] = 'Database Server Settings';
 $txt['db_settings_info'] = 'These are the settings to use for your database server. If you do not know the values, you should ask your host what they are.';
-$txt['db_settings_type'] = 'Database type';
-$txt['db_settings_type_info'] = 'Multiple supported database types were detected, which do you wish to use? Please note that running pre-SMF 2.0 RC3 along with newer SMF versions in the same PostgreSQL database is not supported. You need to upgrade your older installations in that case.';
 $txt['db_settings_server'] = 'Server name';
 $txt['db_settings_server_info'] = 'This is nearly always localhost, so if you do not know, try localhost.';
 $txt['db_settings_username'] = 'Username';
@@ -189,12 +187,9 @@ $txt['error_already_installed'] = 'The installer has detected that you already h
 $txt['error_warning_notice'] = 'Warning!';
 $txt['error_script_outdated'] = 'This install script is out of date! The current version of SMF is %1$s, but this install script is for %2$s.<br><br>
 	It is recommended that you visit the <a href="https://www.simplemachines.org">Simple Machines</a> website to ensure you are installing the latest version.';
-$txt['error_db_prefix_numeric'] = 'The selected database type does not support the use of numeric prefixes.';
-$txt['error_pg_scs'] = 'PostgreSQL is configured incorrectly. Please turn on the standard_conforming_strings configuration parameter.';
 $txt['error_invalid_characters_username'] = 'Invalid character used in Username.';
 $txt['error_username_too_long'] = 'Username may only be up to 25 characters long.';
 $txt['error_username_left_empty'] = 'Username field was left empty.';
-$txt['error_db_prefix_reserved'] = 'The prefix that you entered is a reserved prefix. Please enter another prefix.';
 $txt['error_utf8_support'] = 'The database you are trying to use is not using UTF-8 charset';
 
 $txt['ftp_login'] = 'Your FTP connection information';

@@ -28,12 +28,6 @@ if (!defined('SMF_SOFTWARE_YEAR'))
 if (!defined('JQUERY_VERSION'))
 	define('JQUERY_VERSION', '3.6.0');
 
-if (!defined('POSTGRE_TITLE'))
-	define('POSTGRE_TITLE', 'PostgreSQL');
-
-if (!defined('MYSQL_TITLE'))
-	define('MYSQL_TITLE', 'MySQL');
-
 if (!defined('SB_USER_AGENT'))
 	define('SB_USER_AGENT', 'Mozilla/5.0 (' . php_uname('s') . ' ' . php_uname('m') . ') AppleWebKit/605.1.15 (KHTML, like Gecko) SocialBricks/' . strtr(SMF_VERSION, ' ', '.'));
 

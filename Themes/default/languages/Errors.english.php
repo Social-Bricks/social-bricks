@@ -501,9 +501,6 @@ $txt['check_submit_once_invalid_action'] = 'checkSubmitOnce(): Invalid action \'
 
 $txt['get_server_versions_no_database'] = 'getServerVersions(): you need to be connected to the database in order to get its server version';
 
-// Subs-Db-postgresql.php line 801
-$txt['postgres_id_not_int'] = 'Trying to return an ID field which is not an Int';
-
 $txt['add_members_to_group_invalid_type'] = 'addMembersToGroup(): Unknown type \'%s\'';
 
 $txt['get_members_online_stats_invalid_sort'] = 'Sort method for getMembersOnlineStats() function is not allowed';

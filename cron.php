@@ -27,8 +27,6 @@ define('SMF_SOFTWARE_YEAR', '2022');
 define('FROM_CLI', empty($_SERVER['REQUEST_METHOD']));
 
 define('JQUERY_VERSION', '3.6.0');
-define('POSTGRE_TITLE', 'PostgreSQL');
-define('MYSQL_TITLE', 'MySQL');
 define('SB_USER_AGENT', 'Mozilla/5.0 (' . php_uname('s') . ' ' . php_uname('m') . ') AppleWebKit/605.1.15 (KHTML, like Gecko) SocialBricks/' . strtr(SMF_VERSION, ' ', '.'));
 
 // This one setting is worth bearing in mind. If you are running this from proper cron, make sure you

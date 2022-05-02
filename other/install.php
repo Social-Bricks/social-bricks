@@ -18,8 +18,6 @@ define('DB_SCRIPT_VERSION', '2-1');
 define('SMF_INSTALLING', 1);
 
 define('JQUERY_VERSION', '3.6.0');
-define('POSTGRE_TITLE', 'PostgreSQL');
-define('MYSQL_TITLE', 'MySQL');
 define('SB_USER_AGENT', 'Mozilla/5.0 (' . php_uname('s') . ' ' . php_uname('m') . ') AppleWebKit/605.1.15 (KHTML, like Gecko) SocialBricks/' . strtr(SMF_VERSION, ' ', '.'));
 if (!defined('TIME_START'))
 	define('TIME_START', microtime(true));
@@ -67,55 +65,6 @@ $databases = array(
 		'validate_prefix' => function(&$value)
 		{
 			$value = preg_replace('~[^A-Za-z0-9_\$]~', '', $value);
-			return true;
-		},
-	),
-	'postgresql' => array(
-		'name' => 'PostgreSQL',
-		'version' => '9.6',
-		'version_check' => function() {
-			global $db_connection;
-			$request = pg_query($db_connection, 'SELECT version()');
-			list ($version) = pg_fetch_row($request);
-			list($pgl, $version) = explode(' ', $version);
-			return $version;
-		},
-		'supported' => function_exists('pg_connect'),
-		'always_has_db' => true,
-		'utf8_support' => function()
-		{
-			global $db_connection;
-			$request = pg_query($db_connection, 'SHOW SERVER_ENCODING');
-
-			list ($charcode) = pg_fetch_row($request);
-
-			if ($charcode == 'UTF8')
-				return true;
-			else
-				return false;
-		},
-		'utf8_version' => '8.0',
-		'utf8_version_check' => function (){
-			global $db_connection;
-			$request = pg_query($db_connection, 'SELECT version()');
-			list ($version) = pg_fetch_row($request);
-			list($pgl, $version) = explode(' ', $version);
-			return $version;
-		},
-		'validate_prefix' => function(&$value)
-		{
-			global $txt;
-
-			$value = preg_replace('~[^A-Za-z0-9_\$]~', '', $value);
-
-			// Is it reserved?
-			if ($value == 'pg_')
-				return $txt['error_db_prefix_reserved'];
-
-			// Is the prefix numeric?
-			if (preg_match('~^\d~', $value))
-				return $txt['error_db_prefix_numeric'];
-
 			return true;
 		},
 	),
@@ -838,10 +787,8 @@ function DatabaseSettings()
 		// Only set the port if we're not using the default
 		if (!empty($_POST['db_port']))
 		{
-			// For MySQL, we can get the "default port" from PHP. PostgreSQL has no such option though.
+			// For MySQL, we can get the "default port" from PHP.
 			if (($db_type == 'mysql' || $db_type == 'mysqli') && $_POST['db_port'] != ini_get($db_type . '.default_port'))
-				$vars['db_port'] = (int) $_POST['db_port'];
-			elseif ($db_type == 'postgresql' && $_POST['db_port'] != 5432)
 				$vars['db_port'] = (int) $_POST['db_port'];
 		}
 
@@ -993,29 +940,6 @@ function ForumSettings()
 
 	$incontext['continue'] = 1;
 
-	// Check Postgres setting
-	if ( $db_type === 'postgresql')
-	{
-		load_database();
-		$result = $smcFunc['db_query']('', '
-			show standard_conforming_strings',
-			array(
-				'db_error_skip' => true,
-			)
-		);
-
-		if ($result !== false)
-		{
-			$row = $smcFunc['db_fetch_assoc']($result);
-			if ($row['standard_conforming_strings'] !== 'on')
-				{
-					$incontext['continue'] = 0;
-					$incontext['error'] = $txt['error_pg_scs'];
-				}
-			$smcFunc['db_free_result']($result);
-		}
-	}
-
 	// Setup the SSL checkbox...
 	$incontext['ssl_chkbx_protected'] = false;
 	$incontext['ssl_chkbx_checked'] = false;
@@ -1152,7 +1076,7 @@ function DatabasePopulation()
 	}
 	$modSettings['disableQueryCheck'] = true;
 
-	// If doing UTF8, select it. PostgreSQL requires passing it as a string...
+	// If doing UTF8, select it.
 	$smcFunc['db_query']('', '
 		SET NAMES {string:utf8}',
 		array(
@@ -1272,10 +1196,10 @@ function DatabasePopulation()
 				$exists[] = $match[1];
 				$incontext['sql_results']['table_dups']++;
 			}
-			// Don't error on duplicate indexes (or duplicate operators in PostgreSQL.)
-			elseif (!preg_match('~^\s*CREATE( UNIQUE)? INDEX ([^\n\r]+?)~', $current_statement, $match) && !($db_type == 'postgresql' && preg_match('~^\s*CREATE OPERATOR (^\n\r]+?)~', $current_statement, $match)))
+			// Don't error on duplicate indexes.
+			elseif (!preg_match('~^\s*CREATE( UNIQUE)? INDEX ([^\n\r]+?)~', $current_statement, $match))
 			{
-				// MySQLi requires a connection object. It's optional with MySQL and Postgres
+				// MySQLi requires a connection object.
 				$incontext['failures'][$count] = $smcFunc['db_error']($db_connection);
 			}
 		}
@@ -2172,36 +2096,10 @@ function template_database_settings()
 	template_warning_divs();
 
 	echo '
-		<dl class="settings">';
-
-	// More than one database type?
-	if (count($incontext['supported_databases']) > 1)
-	{
-		echo '
-			<dt>
-				<label for="db_type_input">', $txt['db_settings_type'], ':</label>
-			</dt>
-			<dd>
-				<select name="db_type" id="db_type_input" onchange="toggleDBInput();">';
-
-		foreach ($incontext['supported_databases'] as $key => $db)
-			echo '
-					<option value="', $key, '"', isset($_POST['db_type']) && $_POST['db_type'] == $key ? ' selected' : '', '>', $db['name'], '</option>';
-
-		echo '
-				</select>
-				<div class="smalltext">', $txt['db_settings_type_info'], '</div>
-			</dd>';
-	}
-	else
-	{
-		echo '
+		<dl class="settings">
 			<dd>
 				<input type="hidden" name="db_type" value="', $incontext['db']['type'], '">
-			</dd>';
-	}
-
-	echo '
+			</dd>
 			<dt>
 				<label for="db_server_input">', $txt['db_settings_server'], ':</label>
 			</dt>
@@ -2248,19 +2146,6 @@ function template_database_settings()
 				<div class="smalltext">', $txt['db_settings_prefix_info'], '</div>
 			</dd>
 		</dl>';
-
-	// Toggles a warning related to db names in PostgreSQL
-	echo '
-		<script>
-			function toggleDBInput()
-			{
-				if (document.getElementById(\'db_type_input\').value == \'postgresql\')
-					document.getElementById(\'db_name_info_warning\').classList.add(\'hidden\');
-				else
-					document.getElementById(\'db_name_info_warning\').classList.remove(\'hidden\');
-			}
-			toggleDBInput();
-		</script>';
 }
 
 // Stick in their forum settings.

@@ -73,7 +73,7 @@ $cookiename = 'SMFCookie11';
 ########## Database Info ##########
 /**
  * The database type
- * Default options: mysql, postgresql
+ * Default options: mysql
  *
  * @var string
  */

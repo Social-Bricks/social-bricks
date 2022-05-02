@@ -38,7 +38,7 @@ class custom_search extends search_api
 	/**
 	 * @var array Which databases support this method
 	 */
-	protected $supported_databases = array('mysql', 'postgresql');
+	protected $supported_databases = array('mysql');
 
 	/**
 	 * Constructor function
