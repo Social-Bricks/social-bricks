@@ -347,11 +347,6 @@ $txt['calendar_viewlist'] = 'List view';
 $txt['calendar_viewmonth'] = 'Month view';
 $txt['calendar_viewweek'] = 'Week view';
 
-$txt['display_quick_mod'] = 'Show quick-moderation as';
-$txt['display_quick_mod_none'] = 'don\'t show';
-$txt['display_quick_mod_check'] = 'checkboxes';
-$txt['display_quick_mod_image'] = 'icons';
-
 $txt['whois_title'] = 'Look up IP on a regional whois-server';
 $txt['whois_apnic'] = 'APNIC (Asia Pacific region)';
 $txt['whois_arin'] = 'ARIN (North America, a portion of the Caribbean and sub-Saharan Africa)';
@@ -599,7 +594,6 @@ $txt['cannot_disable_tfa2'] = 'You cannot disable two-factor authentication beca
 $txt['theme_opt_calendar'] = 'Calendar';
 $txt['theme_opt_display'] = 'Board and Topic display';
 $txt['theme_opt_posting'] = 'Posting';
-$txt['theme_opt_moderation'] = 'Moderation';
 $txt['theme_opt_personal_messages'] = 'Personal Messages';
 
 $txt['export_profile_data'] = 'Download profile data';

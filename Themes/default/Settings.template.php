@@ -105,17 +105,6 @@ function template_options()
 			'default' => true,
 			'enabled' => !empty($modSettings['drafts_show_saved_enabled']) && (!empty($modSettings['drafts_post_enabled']) || !empty($modSettings['drafts_pm_enabled'])),
 		),
-		$txt['theme_opt_moderation'],
-		array(
-			'id' => 'display_quick_mod',
-			'label' => $txt['display_quick_mod'],
-			'options' => array(
-				0 => $txt['display_quick_mod_none'],
-				1 => $txt['display_quick_mod_check'],
-				2 => $txt['display_quick_mod_image'],
-			),
-			'default' => true,
-		),
 		$txt['theme_opt_personal_messages'],
 		array(
 			'id' => 'popup_messages',

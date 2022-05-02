@@ -581,9 +581,8 @@ function template_showAlerts()
 
 	else
 	{
-		// Start the form if checkboxes are in use
-		if ($context['showCheckboxes'])
-			echo '
+		// Start the form for checkboxes.
+		echo '
 		<form action="', $scripturl, '?action=profile;u=', $context['id_member'], ';area=showalerts;save" method="post" accept-charset="', $context['character_set'], '" id="mark_all">';
 
 		echo '
@@ -620,10 +619,7 @@ function template_showAlerts()
 			</table>
 			<div class="pagesection">
 				<div class="pagelinks">', $context['pagination'], '</div>
-				<div class="floatright">';
-
-		if ($context['showCheckboxes'])
-			echo '
+				<div class="floatright">
 					', $txt['check_all'], ': <input type="checkbox" name="select_all" id="select_all">
 					<select name="mark_as">
 						<option value="read">', $txt['quick_mod_markread'], '</option>
@@ -632,15 +628,11 @@ function template_showAlerts()
 					</select>
 					<input type="hidden" name="', $context['session_var'], '" value="', $context['session_id'], '">
 					<input type="hidden" name="start" value="', $context['start'], '">
-					<input type="submit" name="req" value="', $txt['quick_mod_go'], '" class="button you_sure">';
+					<input type="submit" name="req" value="', $txt['quick_mod_go'], '" class="button you_sure">
 
-		echo '
 					<a href="', $context['alert_purge_link'], '" class="button you_sure">', $txt['alert_purge'], '</a>
 				</div>
-			</div>';
-
-		if ($context['showCheckboxes'])
-			echo '
+			</div>
 		</form>';
 	}
 }
@@ -1771,7 +1763,7 @@ function template_profile_theme_settings()
 		}
 
 		// Some of these may not be set...  Set to defaults here
-		$opts = array('calendar_start_day', 'topics_per_page', 'messages_per_page', 'display_quick_mod');
+		$opts = array('calendar_start_day', 'topics_per_page', 'messages_per_page');
 		if (in_array($setting['id'], $opts) && !isset($context['member']['options'][$setting['id']]))
 			$context['member']['options'][$setting['id']] = 0;
 

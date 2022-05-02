@@ -1640,7 +1640,7 @@ function prepareDisplayContext($reset = false)
 			'id' => 'in_topic_mod_check_'. $output['id'],
 			'custom' => 'style="display: none;"',
 			'content' => '',
-			'show' => !empty($options['display_quick_mod']) && $options['display_quick_mod'] == 1 && $output['can_remove']
+			'show' => $output['can_remove']
 		)
 	);
 

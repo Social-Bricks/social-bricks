@@ -386,17 +386,12 @@ function template_unapproved_posts()
 	else
 	{
 		echo '
-			<div class="pagesection">';
-
-		if (!empty($options['display_quick_mod']) && $options['display_quick_mod'] == 1)
-			echo '
+			<div class="pagesection">
 				<ul class="buttonlist floatright">
 					<li class="inline_mod_check">
 						<input type="checkbox" onclick="invertAll(this, this.form, \'item[]\');" checked>
 					</li>
-				</ul>';
-
-		echo '
+				</ul>
 				<div class="pagelinks">', $context['page_index'], '</div>
 			</div>';
 
@@ -420,7 +415,7 @@ function template_unapproved_posts()
 			'quickmod' => array(
 				'class' => 'inline_mod_check',
 				'content' => '<input type="checkbox" name="item[]" value="'.$item['id'].'" checked>',
-				'show' => !empty($options['display_quick_mod']) && $options['display_quick_mod'] == 1
+				'show' => true,
 			),
 		);
 		echo '
@@ -440,10 +435,7 @@ function template_unapproved_posts()
 	}
 
 	echo '
-			<div class="pagesection">';
-
-	if (!empty($options['display_quick_mod']) && $options['display_quick_mod'] == 1)
-		echo '
+			<div class="pagesection">
 				<div class="floatright">
 					<select name="do" onchange="if (this.value != 0 &amp;&amp; confirm(\'', $txt['mc_unapproved_sure'], '\')) submit();">
 						<option value="0">', $txt['with_selected'], ':</option>

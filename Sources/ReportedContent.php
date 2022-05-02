@@ -132,7 +132,7 @@ function ReportedContent()
 				'quickmod' => array(
 					'class' => 'inline_mod_check',
 					'content' => '<input type="checkbox" name="close[]" value="'.$report['id'].'">',
-					'show' => !$context['view_closed'] && !empty($options['display_quick_mod']) && $options['display_quick_mod'] == 1
+					'show' => !$context['view_closed'],
 				)
 			);
 		}

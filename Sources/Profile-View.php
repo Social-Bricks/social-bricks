@@ -709,15 +709,11 @@ function showAlerts($memID)
 	$toMark = false;
 	$action = '';
 
-	//  Are we using checkboxes?
-	$context['showCheckboxes'] = !empty($options['display_quick_mod']) && $options['display_quick_mod'] == 1;
-
 	// Create the pagination.
 	$context['pagination'] = constructPageIndex($scripturl . '?action=profile;area=showalerts;u=' . $memID, $context['start'], $count, $maxIndex, false);
 
 	// Set some JavaScript for checking all alerts at once.
-	if ($context['showCheckboxes'])
-		addInlineJavaScript('
+	addInlineJavaScript('
 		$(function(){
 			$(\'#select_all\').on(\'change\', function() {
 				var checkboxes = $(\'ul.quickbuttons\').find(\':checkbox\');
@@ -753,7 +749,7 @@ function showAlerts($memID)
 			'quickmod' => array(
     			'class' => 'inline_mod_check',
 				'content' => '<input type="checkbox" name="mark[' . $id . ']" value="' . $id . '">',
-				'show' => $context['showCheckboxes']
+				'show' => true,
 			)
 		);
 	}
