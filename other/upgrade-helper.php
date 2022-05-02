@@ -492,7 +492,6 @@ function upgradeCacheSettings()
 		'apcu' => 'Apcu',
 		'memcache' => 'MemcacheImplementation',
 		'memcached' => 'MemcachedImplementation',
-		'postgres' => 'Postgres',
 		'sqlite' => 'Sqlite',
 		'xcache' => 'FileBase',
 		'zend' => 'Zend',

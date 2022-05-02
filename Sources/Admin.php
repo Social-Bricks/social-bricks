@@ -532,7 +532,6 @@ function AdminHome()
 		'apcu',
 		'memcacheimplementation',
 		'memcachedimplementation',
-		'postgres',
 		'sqlite',
 		'zend',
 		'filebased',

@@ -125,7 +125,6 @@ $txt['caching_information'] = 'SMF supports caching through the use of accelerat
 	<li>APCu</li>
 	<li>Memcached</li>
 	<li>SQLite3</li>
-	<li>PostgreSQL</li>
 	<li>Zend Platform/Performance Suite (Not Zend Optimizer)</li>
 </ul>
 Caching will work best if you have PHP compiled with one of the above optimizers, or have memcached available. If you do not have any optimizer installed SMF will do file based caching.';
@@ -140,7 +139,6 @@ $txt['cache_level3'] = 'Level 3 Caching (Not Recommended)';
 $txt['cache_accelerator'] = 'Caching Accelerator';
 $txt['filebased_cache'] = 'SMF file based caching';
 $txt['sqlite_cache'] = 'SQLite3 database based caching';
-$txt['postgres_cache'] = 'PostgreSQL caching';
 $txt['cachedir_sqlite'] = 'SQLite3 database cache directory';
 $txt['apcu_cache'] = 'APCu';
 $txt['memcacheimplementation_cache'] = 'Memcache';
