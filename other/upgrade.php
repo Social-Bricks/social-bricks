@@ -49,17 +49,6 @@ $databases = array(
 		},
 		'alter_support' => true,
 	),
-	'postgresql' => array(
-		'name' => 'PostgreSQL',
-		'version' => '9.6',
-		'version_check' => function() {
-			if (!function_exists('pg_version'))
-				return false;
-			$version = pg_version();
-			return $version['client'];
-		},
-		'always_has_db' => true,
-	),
 );
 
 /**
@@ -1354,9 +1343,6 @@ function UpgradeOptions()
 	if (!empty($db_port))
 	{
 		if ($db_type == 'mysql' && $db_port == ini_get('mysqli.default_port'))
-			$changes['db_port'] = 0;
-
-		elseif ($db_type == 'postgresql' && $db_port == 5432)
 			$changes['db_port'] = 0;
 	}
 
@@ -2747,7 +2733,7 @@ function ConvertUtf8()
 			return true;
 	}
 	// First make sure they aren't already on UTF-8 before we go anywhere...
-	if ($db_type == 'postgresql' || ($db_character_set === 'utf8' && !empty($modSettings['global_character_set']) && $modSettings['global_character_set'] === 'UTF-8'))
+	if (($db_character_set === 'utf8' && !empty($modSettings['global_character_set']) && $modSettings['global_character_set'] === 'UTF-8'))
 	{
 		$smcFunc['db_insert']('replace',
 			'{db_prefix}settings',
