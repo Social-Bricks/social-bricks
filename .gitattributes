@@ -9,3 +9,5 @@
 *.zip binary
 *.tar.gz binary
 *.ttf binary
+
+*.wav binary
