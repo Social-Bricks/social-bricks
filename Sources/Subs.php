@@ -6903,7 +6903,7 @@ function inet_ptod($ip_address)
 /**
  * Converts a binary version of an IP address into a readable format
  *
- * @param string $bin An IP address in IPv4, IPv6 (Either string (postgresql) or binary (other databases))
+ * @param string $bin An IP address in IPv4, IPv6 (binary)
  * @return string|false The IP address in presentation format or false on error
  */
 function inet_dtop($bin)
@@ -6912,8 +6912,6 @@ function inet_dtop($bin)
 
 	if (empty($bin))
 		return '';
-	elseif ($db_type == 'postgresql')
-		return $bin;
 	// Already a String?
 	elseif (isValidIP($bin))
 		return $bin;

@@ -33,49 +33,26 @@ function getBirthdayRange($low_date, $high_date)
 	$year_low = (int) substr($low_date, 0, 4);
 	$year_high = (int) substr($high_date, 0, 4);
 
-	if ($smcFunc['db_title'] !== POSTGRE_TITLE)
-	{
-		// Collect all of the birthdays for this month.  I know, it's a painful query.
-		$result = $smcFunc['db_query']('', '
-			SELECT id_member, real_name, YEAR(birthdate) AS birth_year, birthdate
-			FROM {db_prefix}members
-			WHERE birthdate != {date:no_birthdate}
-				AND (
-					DATE_FORMAT(birthdate, {string:year_low}) BETWEEN {date:low_date} AND {date:high_date}' . ($year_low == $year_high ? '' : '
-					OR DATE_FORMAT(birthdate, {string:year_high}) BETWEEN {date:low_date} AND {date:high_date}') . '
-				)
-				AND is_activated = {int:is_activated}',
-			array(
-				'is_activated' => 1,
-				'no_birthdate' => '1004-01-01',
-				'year_low' => $year_low . '-%m-%d',
-				'year_high' => $year_high . '-%m-%d',
-				'low_date' => $low_date,
-				'high_date' => $high_date,
+	// Collect all of the birthdays for this month.  I know, it's a painful query.
+	$result = $smcFunc['db_query']('', '
+		SELECT id_member, real_name, YEAR(birthdate) AS birth_year, birthdate
+		FROM {db_prefix}members
+		WHERE birthdate != {date:no_birthdate}
+			AND (
+				DATE_FORMAT(birthdate, {string:year_low}) BETWEEN {date:low_date} AND {date:high_date}' . ($year_low == $year_high ? '' : '
+				OR DATE_FORMAT(birthdate, {string:year_high}) BETWEEN {date:low_date} AND {date:high_date}') . '
 			)
-		);
-	}
-	else
-	{
-		$result = $smcFunc['db_query']('', '
-			SELECT id_member, real_name, YEAR(birthdate) AS birth_year, birthdate
-			FROM {db_prefix}members
-			WHERE birthdate != {date:no_birthdate}
-				AND (
-					indexable_month_day(birthdate) BETWEEN indexable_month_day({date:year_low_low_date}) AND indexable_month_day({date:year_low_high_date})' . ($year_low == $year_high ? '' : '
-					OR indexable_month_day(birthdate) BETWEEN indexable_month_day({date:year_high_low_date}) AND indexable_month_day({date:year_high_high_date})') . '
-				)
-				AND is_activated = {int:is_activated}',
-			array(
-				'is_activated' => 1,
-				'no_birthdate' => '1004-01-01',
-				'year_low_low_date' => $low_date,
-				'year_low_high_date' => $year_low == $year_high ? $high_date : $year_low . '-12-31',
-				'year_high_low_date' => $year_low == $year_high ? $low_date : $year_high . '-01-01',
-				'year_high_high_date' => $high_date,
-			)
-		);
-	}
+			AND is_activated = {int:is_activated}',
+		array(
+			'is_activated' => 1,
+			'no_birthdate' => '1004-01-01',
+			'year_low' => $year_low . '-%m-%d',
+			'year_high' => $year_high . '-%m-%d',
+			'low_date' => $low_date,
+			'high_date' => $high_date,
+		)
+	);
+
 	$bday = array();
 	while ($row = $smcFunc['db_fetch_assoc']($result))
 	{

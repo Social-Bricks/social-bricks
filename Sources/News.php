@@ -2603,9 +2603,9 @@ function getXmlPMs($xml_format, $ascending = false)
 	if (empty($context['xmlnews_uid']) || ($context['xmlnews_uid'] != $user_info['id']))
 		return array();
 
-	$select_id_members_to = $smcFunc['db_title'] === POSTGRE_TITLE ? "string_agg(pmr.id_member::text, ',')" : 'GROUP_CONCAT(pmr.id_member)';
+	$select_id_members_to = 'GROUP_CONCAT(pmr.id_member)';
 
-	$select_to_names = $smcFunc['db_title'] === POSTGRE_TITLE ? "string_agg(COALESCE(mem.real_name, mem.member_name), ',')" : 'GROUP_CONCAT(COALESCE(mem.real_name, mem.member_name))';
+	$select_to_names = 'GROUP_CONCAT(COALESCE(mem.real_name, mem.member_name))';
 
 	$request = $smcFunc['db_query']('', '
 		SELECT pm.id_pm, pm.msgtime, pm.subject, pm.body, pm.id_member_from, nis.from_name, nis.id_members_to, nis.to_names

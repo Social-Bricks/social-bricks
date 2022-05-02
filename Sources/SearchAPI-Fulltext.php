@@ -33,7 +33,7 @@ class fulltext_search extends search_api
 	/**
 	 * @var array Which databases support this method?
 	 */
-	protected $supported_databases = array('mysql', 'postgresql');
+	protected $supported_databases = array('mysql');
 
 	/**
 	 * The constructor function
@@ -91,8 +91,6 @@ class fulltext_search extends search_api
 	{
 		global $smcFunc, $db_type;
 
-		if ($db_type == 'postgresql')
-			return 0;
 		// Try to determine the minimum number of letters for a fulltext search.
 		$request = $smcFunc['db_search_query']('max_fulltext_length', '
 			SHOW VARIABLES
@@ -175,9 +173,6 @@ class fulltext_search extends search_api
 		$query_where = array();
 		$query_params = $search_data['params'];
 
-		if ($smcFunc['db_title'] === POSTGRE_TITLE)
-			$modSettings['search_simple_fulltext'] = true;
-
 		if ($query_params['id_search'])
 			$query_select['id_search'] = '{int:id_search}';
 
@@ -218,15 +213,7 @@ class fulltext_search extends search_api
 
 		if (!empty($modSettings['search_simple_fulltext']))
 		{
-			if ($smcFunc['db_title'] === POSTGRE_TITLE)
-			{
-				$language_ftx = $smcFunc['db_search_language']();
-
-				$query_where[] = 'to_tsvector({string:language_ftx},body) @@ plainto_tsquery({string:language_ftx},{string:body_match})';
-				$query_params['language_ftx'] = $language_ftx;
-			}
-			else
-				$query_where[] = 'MATCH (body) AGAINST ({string:body_match})';
+			$query_where[] = 'MATCH (body) AGAINST ({string:body_match})';
 			$query_params['body_match'] = implode(' ', array_diff($words['indexed_words'], $query_params['excluded_index_words']));
 		}
 		else
@@ -236,34 +223,17 @@ class fulltext_search extends search_api
 			// remove any indexed words that are used in the complex body search terms
 			$words['indexed_words'] = array_diff($words['indexed_words'], $words['complex_words']);
 
-			if ($smcFunc['db_title'] === POSTGRE_TITLE)
+			foreach ($words['indexed_words'] as $fulltextWord)
 			{
-				$row = 0;
-				foreach ($words['indexed_words'] as $fulltextWord)
-				{
-					$query_params['boolean_match'] .= ($row <> 0 ? '&' : '');
-					$query_params['boolean_match'] .= (in_array($fulltextWord, $query_params['excluded_index_words']) ? '!' : '') . $fulltextWord . ' ';
-					$row++;
-				}
+				$query_params['boolean_match'] .= (in_array($fulltextWord, $query_params['excluded_index_words']) ? '-' : '+') . $fulltextWord . ' ';
 			}
-			else
-				foreach ($words['indexed_words'] as $fulltextWord)
-					$query_params['boolean_match'] .= (in_array($fulltextWord, $query_params['excluded_index_words']) ? '-' : '+') . $fulltextWord . ' ';
 
 			$query_params['boolean_match'] = substr($query_params['boolean_match'], 0, -1);
 
 			// if we have bool terms to search, add them in
 			if ($query_params['boolean_match'])
 			{
-				if ($smcFunc['db_title'] === POSTGRE_TITLE)
-				{
-					$language_ftx = $smcFunc['db_search_language']();
-
-					$query_where[] = 'to_tsvector({string:language_ftx},body) @@ plainto_tsquery({string:language_ftx},{string:boolean_match})';
-					$query_params['language_ftx'] = $language_ftx;
-				}
-				else
-					$query_where[] = 'MATCH (body) AGAINST ({string:boolean_match} IN BOOLEAN MODE)';
+				$query_where[] = 'MATCH (body) AGAINST ({string:boolean_match} IN BOOLEAN MODE)';
 			}
 		}
 

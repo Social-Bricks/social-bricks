@@ -41,8 +41,7 @@ class Birthday_Notify_Background extends SB_BackgroundTask
 			WHERE is_activated < 10
 				AND MONTH(birthdate) = {int:month}
 				AND DAYOFMONTH(birthdate) = {int:day}
-				AND YEAR(birthdate) > {int:year}
-				' . ($smcFunc['db_title'] === POSTGRE_TITLE ? 'AND indexable_month_day(birthdate) = indexable_month_day({date:bdate})' : ''),
+				AND YEAR(birthdate) > {int:year}',
 			array(
 				'year' => 1004,
 				'month' => $month,

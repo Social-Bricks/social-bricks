@@ -556,49 +556,26 @@ function ConvertEntities()
 
 		// Get a list of text columns.
 		$columns = array();
-		if ($db_type == 'postgresql')
-			$request = $smcFunc['db_query']('', '
-				SELECT column_name "Field", data_type "Type"
-				FROM information_schema.columns
-				WHERE table_name = {string:cur_table}
-					AND (data_type = \'character varying\' or data_type = \'text\')',
-				array(
-					'cur_table' => $db_prefix . $cur_table,
-				)
-			);
-		else
-			$request = $smcFunc['db_query']('', '
-				SHOW FULL COLUMNS
-				FROM {db_prefix}{raw:cur_table}',
-				array(
-					'cur_table' => $cur_table,
-				)
-			);
+
+		$request = $smcFunc['db_query']('', '
+			SHOW FULL COLUMNS
+			FROM {db_prefix}{raw:cur_table}',
+			array(
+				'cur_table' => $cur_table,
+			)
+		);
 		while ($column_info = $smcFunc['db_fetch_assoc']($request))
 			if (strpos($column_info['Type'], 'text') !== false || strpos($column_info['Type'], 'char') !== false)
 				$columns[] = strtolower($column_info['Field']);
 
 		// Get the column with the (first) primary key.
-		if ($db_type == 'postgresql')
-			$request = $smcFunc['db_query']('', '
-				SELECT a.attname "Column_name", \'PRIMARY\' "Key_name", attnum "Seq_in_index"
-				FROM   pg_index i
-				JOIN   pg_attribute a ON a.attrelid = i.indrelid
-					AND a.attnum = ANY(i.indkey)
-				WHERE  i.indrelid = {string:cur_table}::regclass
-					AND    i.indisprimary',
-				array(
-					'cur_table' => $db_prefix . $cur_table,
-				)
-			);
-		else
-			$request = $smcFunc['db_query']('', '
-				SHOW KEYS
-				FROM {db_prefix}{raw:cur_table}',
-				array(
-					'cur_table' => $cur_table,
-				)
-			);
+		$request = $smcFunc['db_query']('', '
+			SHOW KEYS
+			FROM {db_prefix}{raw:cur_table}',
+			array(
+				'cur_table' => $cur_table,
+			)
+		);
 		while ($row = $smcFunc['db_fetch_assoc']($request))
 		{
 			if ($row['Key_name'] === 'PRIMARY')
