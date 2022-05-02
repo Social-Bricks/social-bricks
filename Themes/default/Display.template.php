@@ -328,7 +328,7 @@ function template_main()
 	echo '
 		<script>';
 
-	if (!empty($options['display_quick_mod']) && $options['display_quick_mod'] == 1 && $context['can_remove_post'])
+	if ($context['can_remove_post'])
 	{
 		echo '
 			var oInTopicModeration = new InTopicModeration({

@@ -33,7 +33,7 @@ function template_reported_posts()
 		</div>
 		<div class="pagesection">';
 
-	if (!empty($context['reports']) && !$context['view_closed'] && !empty($options['display_quick_mod']) && $options['display_quick_mod'] == 1)
+	if (!empty($context['reports']) && !$context['view_closed'])
 		echo '
 			<ul class="buttonlist floatright">
 				<li class="inline_mod_check">
@@ -85,7 +85,7 @@ function template_reported_posts()
 		<div class="pagesection">
 			<div class="pagelinks floatleft">' . $context['page_index'] . '</div>';
 
-	if (!empty($context['reports']) && !$context['view_closed'] && !empty($options['display_quick_mod']) && $options['display_quick_mod'] == 1)
+	if (!empty($context['reports']) && !$context['view_closed'])
 		echo '
 			<div class="floatright">
 				<input type="hidden" name="' . $context['mod-report-close-all_token_var'] . '" value="' . $context['mod-report-close-all_token'] . '">
@@ -404,7 +404,7 @@ function template_reported_members()
 		</div>
 		<div class="pagesection">';
 
-	if (!empty($context['reports']) && !$context['view_closed'] && !empty($options['display_quick_mod']) && $options['display_quick_mod'] == 1)
+	if (!empty($context['reports']) && !$context['view_closed'])
 		echo '
 			<ul class="buttonlist floatright">
 				<li class="inline_mod_check">

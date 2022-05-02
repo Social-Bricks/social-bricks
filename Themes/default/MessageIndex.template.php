@@ -129,7 +129,7 @@ function template_main()
 	</div>';
 
 		// If Quick Moderation is enabled start the form.
-		if (!empty($context['can_quick_mod']) && $options['display_quick_mod'] > 0 && !empty($context['topics']))
+		if (!empty($context['can_quick_mod']) && !empty($context['topics']))
 			echo '
 	<form action="', $scripturl, '?action=quickmod;board=', $context['current_board'], '.', $context['start'], '" method="post" accept-charset="', $context['character_set'], '" class="clear" name="quickModForm" id="quickModForm">';
 
@@ -149,7 +149,7 @@ function template_main()
 				<div class="lastpost">', $context['topics_headers']['last_post'], '</div>';
 
 			// Show a "select all" box for quick moderation?
-			if (!empty($context['can_quick_mod']) && $options['display_quick_mod'] == 1)
+			if (!empty($context['can_quick_mod']))
 				echo '
 				<div class="moderation">
 					<input type="checkbox" onclick="invertAll(this, this.form, \'topics[]\');">
@@ -235,30 +235,8 @@ function template_main()
 			if (!empty($context['can_quick_mod']))
 			{
 				echo '
-					<div class="moderation">';
-
-				if ($options['display_quick_mod'] == 1)
-					echo '
-						<input type="checkbox" name="topics[]" value="', $topic['id'], '">';
-				else
-				{
-					// Check permissions on each and show only the ones they are allowed to use.
-					if ($topic['quick_mod']['remove'])
-						echo '<a href="', $scripturl, '?action=quickmod;board=', $context['current_board'], '.', $context['start'], ';actions%5B', $topic['id'], '%5D=remove;', $context['session_var'], '=', $context['session_id'], '" class="you_sure"><span class="main_icons delete" title="', $txt['remove_topic'], '"></span></a>';
-
-					if ($topic['quick_mod']['lock'])
-						echo '<a href="', $scripturl, '?action=quickmod;board=', $context['current_board'], '.', $context['start'], ';actions%5B', $topic['id'], '%5D=lock;', $context['session_var'], '=', $context['session_id'], '" class="you_sure"><span class="main_icons lock" title="', $topic['is_locked'] ? $txt['set_unlock'] : $txt['set_lock'], '"></span></a>';
-
-					if ($topic['quick_mod']['lock'] || $topic['quick_mod']['remove'])
-						echo '<br>';
-
-					if ($topic['quick_mod']['sticky'])
-						echo '<a href="', $scripturl, '?action=quickmod;board=', $context['current_board'], '.', $context['start'], ';actions%5B', $topic['id'], '%5D=sticky;', $context['session_var'], '=', $context['session_id'], '" class="you_sure"><span class="main_icons sticky" title="', $topic['is_sticky'] ? $txt['set_nonsticky'] : $txt['set_sticky'], '"></span></a>';
-
-					if ($topic['quick_mod']['move'])
-						echo '<a href="', $scripturl, '?action=movetopic;current_board=', $context['current_board'], ';board=', $context['current_board'], '.', $context['start'], ';topic=', $topic['id'], '.0"><span class="main_icons move" title="', $txt['move_topic'], '"></span></a>';
-				}
-				echo '
+					<div class="moderation">
+						<input type="checkbox" name="topics[]" value="', $topic['id'], '">
 					</div><!-- .moderation -->';
 			}
 			echo '
@@ -267,7 +245,7 @@ function template_main()
 		echo '
 			</div><!-- #topic_container -->';
 
-		if (!empty($context['can_quick_mod']) && $options['display_quick_mod'] == 1 && !empty($context['topics']))
+		if (!empty($context['can_quick_mod']) && !empty($context['topics']))
 		{
 			echo '
 			<div class="righttext" id="quick_actions">
@@ -296,7 +274,7 @@ function template_main()
 		</div><!-- #messageindex -->';
 
 		// Finish off the form - again.
-		if (!empty($context['can_quick_mod']) && $options['display_quick_mod'] > 0 && !empty($context['topics']))
+		if (!empty($context['can_quick_mod']) && !empty($context['topics']))
 			echo '
 		<input type="hidden" name="' . $context['session_var'] . '" value="' . $context['session_id'] . '">
 	</form>';
@@ -324,7 +302,7 @@ function template_main()
 	// Show breadcrumbs at the bottom too.
 	theme_linktree();
 
-	if (!empty($context['can_quick_mod']) && $options['display_quick_mod'] == 1 && !empty($context['topics']) && $context['can_move'])
+	if (!empty($context['can_quick_mod']) && !empty($context['topics']) && $context['can_move'])
 		echo '
 	<script>
 		if (typeof(window.XMLHttpRequest) != "undefined")
