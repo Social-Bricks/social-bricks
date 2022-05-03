@@ -240,7 +240,6 @@ function sb_main()
 
 	// Do some logging, unless this is an attachment, avatar, toggle of editor buttons, theme option, XML feed, popup, etc.
 	$no_stat_actions = array(
-		'about:unknown' => true,
 		'clock' => true,
 		'dlattach' => true,
 		'findmember' => true,
@@ -399,7 +398,6 @@ function sb_main()
 		'sticky' => array('Topic.php', 'Sticky'),
 		'theme' => array('Themes.php', 'ThemesMain'),
 		'trackip' => array('Profile-View.php', 'trackIP'),
-		'about:unknown' => array('Likes.php', 'BookOfUnknown'),
 		'unread' => array('Recent.php', 'UnreadTopics'),
 		'unreadreplies' => array('Recent.php', 'UnreadTopics'),
 		'uploadAttach' => array('Attachments.php', 'Attachments::call#'),
