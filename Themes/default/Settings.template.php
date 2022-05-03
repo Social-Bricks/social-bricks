@@ -56,13 +56,13 @@ function template_options()
 			'default' => true,
 		),
 		array(
-			'id' => 'show_no_avatars',
-			'label' => $txt['show_no_avatars'],
+			'id' => 'show_avatars',
+			'label' => $txt['show_avatars'],
 			'default' => true,
 		),
 		array(
-			'id' => 'show_no_signatures',
-			'label' => $txt['show_no_signatures'],
+			'id' => 'show_signatures',
+			'label' => $txt['show_signatures'],
 			'default' => true,
 		),
 		array(

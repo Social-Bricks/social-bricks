@@ -2244,6 +2244,8 @@ INSERT INTO {$db_prefix}themes
 	(id_member, id_theme, variable, value)
 VALUES (-1, 1, 'posts_apply_ignore_list', '1'),
 	(-1, 1, 'drafts_show_saved_enabled', '1'),
+	(-1, 1, 'show_avatars', '1'),
+	(-1, 1, 'show_signatures', '1'),
 	(-1, 1, 'return_to_post', '1');
 # --------------------------------------------------------
 
