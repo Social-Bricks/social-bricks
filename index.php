@@ -240,7 +240,6 @@ function sb_main()
 
 	// Do some logging, unless this is an attachment, avatar, toggle of editor buttons, theme option, XML feed, popup, etc.
 	$no_stat_actions = array(
-		'clock' => true,
 		'dlattach' => true,
 		'findmember' => true,
 		'helpadmin' => true,
@@ -341,7 +340,6 @@ function sb_main()
 		'attachapprove' => array('ManageAttachments.php', 'ApproveAttach'),
 		'buddy' => array('Subs-Members.php', 'BuddyListToggle'),
 		'calendar' => array('Calendar.php', 'CalendarMain'),
-		'clock' => array('Calendar.php', 'clock'),
 		'coppa' => array('Register.php', 'CoppaForm'),
 		'credits' => array('Who.php', 'Credits'),
 		'deletemsg' => array('RemoveTopic.php', 'DeleteMessage'),
