@@ -49,7 +49,7 @@ require_once(dirname(__FILE__) . '/Settings.php');
 error_reporting(!empty($db_show_debug) ? E_ALL : E_ALL & ~E_DEPRECATED);
 
 // Ensure there are no trailing slashes in these variables.
-foreach (array('boardurl', 'boarddir', 'sourcedir', 'packagesdir', 'taskddir', 'cachedir') as $variable)
+foreach (array('boardurl', 'boarddir', 'sourcedir', 'packagesdir', 'tasksdir', 'cachedir') as $variable)
 	if (!empty($GLOBALS[$variable]))
 		$GLOBALS[$variable] = rtrim($GLOBALS[$variable], "\\/");
 
@@ -141,10 +141,6 @@ reloadSettings();
 
 // Clean the request variables, add slashes, etc.
 cleanRequest();
-
-// Seed the random generator.
-if (empty($modSettings['rand_seed']) || mt_rand(1, 250) == 69)
-	smf_seed_generator();
 
 // And important includes.
 require_once($sourcedir . '/Session.php');
@@ -240,14 +236,11 @@ function sb_main()
 
 	// Do some logging, unless this is an attachment, avatar, toggle of editor buttons, theme option, XML feed, popup, etc.
 	$no_stat_actions = array(
-		'about:unknown' => true,
-		'clock' => true,
 		'dlattach' => true,
 		'findmember' => true,
 		'helpadmin' => true,
 		'jsoption' => true,
 		'likes' => true,
-		'modifycat' => true,
 		'pm' => array('sa' => array('popup')),
 		'profile' => array('area' => array('popup', 'alerts_popup', 'download', 'dlattach')),
 		'requestmembers' => true,
@@ -343,7 +336,6 @@ function sb_main()
 		'attachapprove' => array('ManageAttachments.php', 'ApproveAttach'),
 		'buddy' => array('Subs-Members.php', 'BuddyListToggle'),
 		'calendar' => array('Calendar.php', 'CalendarMain'),
-		'clock' => array('Calendar.php', 'clock'),
 		'coppa' => array('Register.php', 'CoppaForm'),
 		'credits' => array('Who.php', 'Credits'),
 		'deletemsg' => array('RemoveTopic.php', 'DeleteMessage'),
@@ -367,7 +359,6 @@ function sb_main()
 		'mergetopics' => array('SplitTopics.php', 'MergeTopics'),
 		'mlist' => array('Memberlist.php', 'Memberlist'),
 		'moderate' => array('ModerationCenter.php', 'ModerationMain'),
-		'modifycat' => array('ManageBoards.php', 'ModifyCat'),
 		'movetopic' => array('MoveTopic.php', 'MoveTopic'),
 		'movetopic2' => array('MoveTopic.php', 'MoveTopic2'),
 		'notifyannouncements' => array('Notify.php', 'AnnouncementsNotify'),
@@ -399,7 +390,6 @@ function sb_main()
 		'sticky' => array('Topic.php', 'Sticky'),
 		'theme' => array('Themes.php', 'ThemesMain'),
 		'trackip' => array('Profile-View.php', 'trackIP'),
-		'about:unknown' => array('Likes.php', 'BookOfUnknown'),
 		'unread' => array('Recent.php', 'UnreadTopics'),
 		'unreadreplies' => array('Recent.php', 'UnreadTopics'),
 		'uploadAttach' => array('Attachments.php', 'Attachments::call#'),

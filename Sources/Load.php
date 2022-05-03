@@ -97,6 +97,10 @@ function reloadSettings()
 	$modSettings['browser_cache'] = !empty($modSettings['browser_cache']) ? (int) $modSettings['browser_cache'] : 0;
 	$context['browser_cache'] = '?' . preg_replace('~\W~', '', strtolower(SMF_FULL_VERSION)) . '_' . $modSettings['browser_cache'];
 
+	// Seed the random generator.
+	if (empty($modSettings['rand_seed']) || mt_rand(1, 250) == 42)
+		updateSettings(array('rand_seed' => microtime(true)));
+
 	// Disable image proxy if we don't have SSL enabled
 	if (empty($modSettings['force_ssl']))
 		$image_proxy_enabled = false;

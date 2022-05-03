@@ -5712,14 +5712,6 @@ function setupMenuContext()
 }
 
 /**
- * Generate a random seed and ensure it's stored in settings.
- */
-function smf_seed_generator()
-{
-	updateSettings(array('rand_seed' => microtime(true)));
-}
-
-/**
  * Process functions of an integration hook.
  * calls all functions of the given hook.
  * supports static class method calls.
