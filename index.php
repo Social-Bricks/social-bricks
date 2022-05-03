@@ -142,10 +142,6 @@ reloadSettings();
 // Clean the request variables, add slashes, etc.
 cleanRequest();
 
-// Seed the random generator.
-if (empty($modSettings['rand_seed']) || mt_rand(1, 250) == 69)
-	smf_seed_generator();
-
 // And important includes.
 require_once($sourcedir . '/Session.php');
 require_once($sourcedir . '/Logging.php');
