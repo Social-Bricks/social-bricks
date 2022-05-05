@@ -539,6 +539,8 @@ function AdminHome()
 	);
 	$context['current_versions'] = getServerVersions($checkFor);
 
+	$context['forum_version'] = SMF_FULL_VERSION;
+
 	$context['can_admin'] = allowedTo('admin_forum');
 
 	$context['sub_template'] = $context['admin_area'] == 'credits' ? 'credits' : 'admin';
