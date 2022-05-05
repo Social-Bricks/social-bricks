@@ -111,6 +111,7 @@ $smcFunc = array();
 // This is our general bootstrap, a la SSI.php but with a few differences.
 unset ($db_show_debug);
 loadDatabase();
+registerAutoLoader();
 reloadSettings();
 
 // Just in case there's a problem...

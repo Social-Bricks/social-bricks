@@ -3667,6 +3667,54 @@ function loadDatabase()
 }
 
 /**
+ * An autoloader for certain classes.
+ *
+ * @param string $class The fully-qualified class name.
+ */
+function registerAutoLoader()
+{
+	global $sourcedir;
+	spl_autoload_register(function($class) use ($sourcedir)
+	{
+		$classMap = array(
+			'ReCaptcha\\' => 'ReCaptcha/',
+			'MatthiasMullie\\Minify\\' => 'minify/src/',
+			'MatthiasMullie\\PathConverter\\' => 'minify/path-converter/src/',
+			'SMF\\Cache\\' => 'Cache/',
+		);
+
+		// Do any third-party scripts want in on the fun?
+		call_integration_hook('integrate_autoload', array(&$classMap));
+
+		foreach ($classMap as $prefix => $dirName)
+		{
+			// does the class use the namespace prefix?
+			$len = strlen($prefix);
+			if (strncmp($prefix, $class, $len) !== 0)
+			{
+				continue;
+			}
+
+			// get the relative class name
+			$relativeClass = substr($class, $len);
+
+			// replace the namespace prefix with the base directory, replace namespace
+			// separators with directory separators in the relative class name, append
+			// with .php
+			$fileName = $dirName . strtr($relativeClass, '\\', '/') . '.php';
+
+			// if the file exists, require it
+			if (file_exists($fileName = $sourcedir . '/' . $fileName))
+			{
+				require_once $fileName;
+
+				return;
+			}
+		}
+	});
+}
+
+/**
  * Try to load up a supported caching method. This is saved in $cacheAPI if we are not overriding it.
  *
  * @param string $overrideCache Try to use a different cache method other than that defined in $cache_accelerator.
