@@ -141,19 +141,6 @@ function sha1_rol($num, $cnt)
 	return ($num << $cnt) | $a;
 }
 
-/**
- * Available since: (PHP 5)
- * If the optional raw_output is set to TRUE, then the sha1 digest is instead returned in raw binary format with a length of 20,
- * otherwise the returned value is a 40-character hexadecimal number.
- *
- * @param string $text The text to hash
- * @return string The sha1 hash of $text
- */
-function sha1_raw($text)
-{
-	return sha1($text, true);
-}
-
 if (!function_exists('smf_crc32'))
 {
 	/**

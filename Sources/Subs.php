@@ -7658,10 +7658,7 @@ function ssl_cert_found($url)
 	$url = 'ssl://' . $parsedurl['host'] . ':443';
 
 	// Next, check the ssl stream context for certificate info
-	if (version_compare(PHP_VERSION, '5.6.0', '<'))
-		$ssloptions = array("capture_peer_cert" => true);
-	else
-		$ssloptions = array("capture_peer_cert" => true, "verify_peer" => true, "allow_self_signed" => true);
+	$ssloptions = array("capture_peer_cert" => true, "verify_peer" => true, "allow_self_signed" => true);
 
 	$result = false;
 	$context = stream_context_create(array("ssl" => $ssloptions));
@@ -7871,15 +7868,6 @@ function parse_iri($iri, $component = -1)
 function validate_iri($iri, $flags = 0)
 {
 	$url = iri_to_url($iri);
-
-	// PHP 5 doesn't recognize IPv6 addresses in the URL host.
-	if (version_compare(phpversion(), '7.0.0', '<'))
-	{
-		$host = parse_url((strpos($url, '//') === 0 ? 'http:' : '') . $url, PHP_URL_HOST);
-
-		if (strpos($host, '[') === 0 && strpos($host, ']') === strlen($host) - 1 && strpos($host, ':') !== false)
-			$url = str_replace($host, '127.0.0.1', $url);
-	}
 
 	if (filter_var($url, FILTER_VALIDATE_URL, $flags) !== false)
 		return $iri;
