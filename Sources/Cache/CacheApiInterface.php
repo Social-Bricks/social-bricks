@@ -13,10 +13,6 @@
 
 namespace SMF\Cache;
 
-if (!defined('SMF'))
-	die('No direct access...');
-
-
 interface CacheApiInterface
 {
 	/**

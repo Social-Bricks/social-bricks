@@ -13,8 +13,7 @@
  * @version 2.1.0
  */
 
-if (!defined('SMF'))
-	die('No direct access...');
+use SocialBricks\Helper\XmlArray;
 
 /**
  * This is the main function for the languages area.
@@ -147,8 +146,7 @@ function list_getLanguagesList()
 	$url = 'https://download.simplemachines.org/fetch_language.php?version=' . urlencode(SMF_VERSION);
 
 	// Load the class file and stick it into an array.
-	require_once($sourcedir . '/Class-Package.php');
-	$language_list = new xmlArray(fetch_web_data($url), true);
+	$language_list = new XmlArray(fetch_web_data($url), true);
 
 	// Check that the site responded and that the language exists.
 	if (!$language_list->exists('languages'))

@@ -15,9 +15,6 @@
  * @version 2.1.2
  */
 
-if (!defined('SMF'))
-	die('No direct access...');
-
 /**
  * This defines every profile field known to man.
  *

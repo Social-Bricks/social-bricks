@@ -13,9 +13,6 @@
  * @version 2.1.0
  */
 
-if (!defined('SMF'))
-	die('No direct access...');
-
 /**
  * Main dispatcher, the maintenance access point.
  * This, as usual, checks permissions, loads language files, and forwards to the actual workers.

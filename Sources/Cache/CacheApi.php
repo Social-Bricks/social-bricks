@@ -13,9 +13,6 @@
 
 namespace SMF\Cache;
 
-if (!defined('SMF'))
-	die('No direct access...');
-
 abstract class CacheApi
 {
 	const APIS_FOLDER = 'APIs';

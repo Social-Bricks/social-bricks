@@ -13,9 +13,6 @@
  * @version 2.1.0
  */
 
-if (!defined('SMF'))
-	die('No direct access...');
-
 /**
  * Show the database queries for debugging
  * What this does:

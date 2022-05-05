@@ -13,9 +13,6 @@
  * @version 2.1.2
  */
 
-if (!defined('SMF'))
-	die('No direct access...');
-
 /**
  * Dispatches to the right function based on the given subaction.
  * Checks the permissions, based on the sub-action.

@@ -13,9 +13,6 @@
  * @version 2.1.0
  */
 
-if (!defined('SMF'))
-	die('No direct access...');
-
 /**
  * The main entrance point for the 'Posts and topics' screen.
  * Like all others, it checks permissions, then forwards to the right function

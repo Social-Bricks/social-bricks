@@ -14,9 +14,6 @@
  * @version 2.1.0
  */
 
-if (!defined('SMF'))
-	die('No direct access...');
-
 /**
  * Fetches a list of boards and (optional) categories including
  * statistical information, child boards and moderators.

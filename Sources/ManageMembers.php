@@ -13,9 +13,6 @@
  * @version 2.1.0
  */
 
-if (!defined('SMF'))
-	die('No direct access...');
-
 /**
  * The main entrance point for the Manage Members screen.
  * As everyone else, it calls a function based on the given sub-action.

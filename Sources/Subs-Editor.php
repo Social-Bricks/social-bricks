@@ -14,9 +14,6 @@
  * @version 2.1.2
  */
 
-if (!defined('SMF'))
-	die('No direct access...');
-
 /**
  * As of SMF 2.1, this is unused. But it is available if any mod wants to use it.
  * Convert only the BBC that can be edited in HTML mode for the (old) editor.

@@ -21,9 +21,6 @@
  * @version 2.1.0
  */
 
-if (!defined('SMF'))
-	die('No direct access...');
-
 /**
  * Handling function for generating reports.
  * Requires the admin_forum permission.

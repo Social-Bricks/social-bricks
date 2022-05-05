@@ -13,9 +13,6 @@
  * @version 2.1.2
  */
 
-if (!defined('SMF'))
-	die('No direct access...');
-
 /**
  * Ask the user what they want to search for.
  * What it does:

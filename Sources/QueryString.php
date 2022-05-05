@@ -14,9 +14,6 @@
  * @version 2.1.0
  */
 
-if (!defined('SMF'))
-	die('No direct access...');
-
 /**
  * Clean the request variables - add html entities to GET and slashes if magic_quotes_gpc is Off.
  *

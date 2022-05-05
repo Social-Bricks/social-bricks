@@ -13,9 +13,6 @@
  * @version 2.1.2
  */
 
-if (!defined('SMF'))
-	die('No direct access...');
-
 /**
  * Downloads an avatar or attachment based on $_GET['attach'], and increments the download count.
  * It requires the view_attachments permission.

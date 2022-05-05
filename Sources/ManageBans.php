@@ -15,9 +15,6 @@
  * @version 2.1.0
  */
 
-if (!defined('SMF'))
-	die('No direct access...');
-
 /**
  * Ban center. The main entrance point for all ban center functions.
  * It is accesssed by ?action=admin;area=ban.

@@ -13,9 +13,6 @@
  * @version 2.1.2
  */
 
-if (!defined('SMF'))
-	die('No direct access...');
-
 /**
  * Entry point function, permission checks, admin bars, etc.
  * It allows moderators and users to access the group showing functions.

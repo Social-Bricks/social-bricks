@@ -17,9 +17,6 @@ use Memcache;
 use SMF\Cache\CacheApi;
 use SMF\Cache\CacheApiInterface;
 
-if (!defined('SMF'))
-	die('No direct access...');
-
 /**
  * Our Cache API class
  *

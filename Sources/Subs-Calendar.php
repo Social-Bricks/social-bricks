@@ -13,9 +13,6 @@
  * @version 2.1.2
  */
 
-if (!defined('SMF'))
-	die('No direct access...');
-
 /**
  * Get all birthdays within the given time range.
  * finds all the birthdays in the specified range of days.

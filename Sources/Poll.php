@@ -14,9 +14,6 @@
  * @version 2.1.0
  */
 
-if (!defined('SMF'))
-	die('No direct access...');
-
 /**
  * Allow the user to vote.
  * It is called to register a vote in a poll.

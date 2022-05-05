@@ -13,9 +13,6 @@
  * @version 2.1.0
  */
 
-if (!defined('SMF'))
-	die('No direct access...');
-
 /**
  * Sets and call a function based on the given subaction. Acts as a dispatcher function.
  * It requires the moderate_forum permission.

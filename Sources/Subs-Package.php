@@ -16,8 +16,7 @@
  * @version 2.1.2
  */
 
-if (!defined('SMF'))
-	die('No direct access...');
+use SocialBricks\Helper\XmlArray;
 
 /**
  * Reads an archive from either a remote location or from the local filesystem.
@@ -433,7 +432,7 @@ function loadInstalledPackages()
  * - expects the file to be a package in Packages/.
  * - returns a error string if the package-info is invalid.
  * - otherwise returns a basic array of id, version, filename, and similar information.
- * - an xmlArray is available in 'xml'.
+ * - an XmlArray is available in 'xml'.
  *
  * @param string $gzfilename The path to the file
  * @return array|string An array of info about the file or a string indicating an error
@@ -469,9 +468,8 @@ function getPackageInfo($gzfilename)
 			return 'package_get_error_is_zero';
 	}
 
-	// Parse package-info.xml into an xmlArray.
-	require_once($sourcedir . '/Class-Package.php');
-	$packageInfo = new xmlArray($packageInfo);
+	// Parse package-info.xml into an XmlArray.
+	$packageInfo = new XmlArray($packageInfo);
 
 	// @todo Error message of some sort?
 	if (!$packageInfo->exists('package-info[0]'))
@@ -1019,13 +1017,13 @@ function packageRequireFTP($destination_url, $files = null, $return = false)
 /**
  * Parses the actions in package-info.xml file from packages.
  *
- * - package should be an xmlArray with package-info as its base.
+ * - package should be an XmlArray with package-info as its base.
  * - testing_only should be true if the package should not actually be applied.
  * - method can be upgrade, install, or uninstall.  Its default is install.
  * - previous_version should be set to the previous installed version of this package, if any.
  * - does not handle failure terribly well; testing first is always better.
  *
- * @param xmlArray &$packageXML The info from the package-info file
+ * @param XmlArray &$packageXML The info from the package-info file
  * @param bool $testing_only Whether we're only testing
  * @param string $method The method ('install', 'upgrade', or 'uninstall')
  * @param string $previous_version The previous version of the mod, if method is 'upgrade'
@@ -1082,7 +1080,7 @@ function parsePackageInfo(&$packageXML, $testing_only = true, $method = 'install
 	}
 
 	// Bad news, a matching script wasn't found!
-	if (!($script instanceof xmlArray))
+	if (!($script instanceof XmlArray))
 		return array();
 
 	// Find all the actions in this method - in theory, these should only be allowed actions. (* means all.)
@@ -1897,8 +1895,7 @@ function parseModification($file, $testing = true, $undo = false, $theme_paths =
 	global $boarddir, $sourcedir, $txt, $modSettings;
 
 	@set_time_limit(600);
-	require_once($sourcedir . '/Class-Package.php');
-	$xml = new xmlArray(strtr($file, array("\r" => '')));
+	$xml = new XmlArray(strtr($file, array("\r" => '')));
 	$actions = array();
 	$everything_found = true;
 

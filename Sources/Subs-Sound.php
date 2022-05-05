@@ -15,9 +15,6 @@
  * @version 2.1.2
  */
 
-if (!defined('SMF'))
-	die('No direct access...');
-
 /**
  * Creates a wave file that spells the letters of $word.
  * Tries the user's language first, and defaults to english.

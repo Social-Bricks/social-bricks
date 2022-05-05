@@ -14,9 +14,6 @@
  * @version 2.1.0
  */
 
-if (!defined('SMF'))
-	die('No direct access...');
-
 /**
  * Prepares the information from the moderation log for viewing.
  * Show the moderation log.

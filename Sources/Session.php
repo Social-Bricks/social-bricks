@@ -17,9 +17,6 @@
  * @version 2.1.0
  */
 
-if (!defined('SMF'))
-	die('No direct access...');
-
 /**
  * Attempt to start the session, unless it already has been.
  */

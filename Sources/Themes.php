@@ -30,9 +30,6 @@
  * @version 2.1.0
  */
 
-if (!defined('SMF'))
-	die('No direct access...');
-
 /**
  * Subaction handler - manages the action and delegates control to the proper
  * sub-action.

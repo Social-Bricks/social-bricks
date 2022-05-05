@@ -14,9 +14,6 @@
  * @version 2.1.0
  */
 
-if (!defined('SMF'))
-	die('No direct access...');
-
 /**
  * Locks a topic... either by way of a moderator or the topic starter.
  * What this does:

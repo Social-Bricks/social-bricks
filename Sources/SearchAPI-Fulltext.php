@@ -11,9 +11,6 @@
  * @version 2.1.0
  */
 
-if (!defined('SMF'))
-	die('No direct access...');
-
 /**
  * Class fulltext_search
  * Used for fulltext index searching

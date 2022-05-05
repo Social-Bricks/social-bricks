@@ -15,9 +15,6 @@
  * @version 2.1.2
  */
 
-if (!defined('SMF'))
-	die('No direct access...');
-
 /**
  * Log an error, if the error logging is enabled.
  * filename and line should be __FILE__ and __LINE__, respectively.

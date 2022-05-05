@@ -13,9 +13,6 @@
  * @version 2.1.0
  */
 
-if (!defined('SMF'))
-	die('No direct access...');
-
 /**
  * The main handler and designator for AJAX stuff - jumpto, message icons and previews
  */

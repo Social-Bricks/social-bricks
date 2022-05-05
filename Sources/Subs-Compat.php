@@ -16,9 +16,6 @@
  * @version 2.1.2
  */
 
-if (!defined('SMF'))
-	die('No direct access...');
-
 /**
  * Define the old SMF sha1 function. Uses mhash if available
  *

@@ -14,9 +14,6 @@
  * @version 2.1.2
  */
 
-if (!defined('SMF'))
-	die('No direct access...');
-
 /**
  * Who's online, and what are they doing?
  * This function prepares the who's online data for the Who template.
