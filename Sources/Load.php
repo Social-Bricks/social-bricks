@@ -3681,6 +3681,7 @@ function registerAutoLoader()
 			'MatthiasMullie\\Minify\\' => 'minify/src/',
 			'MatthiasMullie\\PathConverter\\' => 'minify/path-converter/src/',
 			'SMF\\Cache\\' => 'Cache/',
+			'SocialBricks\\Helper\\' => 'SocialBricks/Helper/',
 		);
 
 		// Do any third-party scripts want in on the fun?

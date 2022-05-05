@@ -13,6 +13,8 @@
  * @version 2.1.1
  */
 
+use SocialBricks\Helper\XmlArray;
+
 if (!defined('SMF'))
 	die('No direct access...');
 
@@ -278,9 +280,8 @@ function PackageGBrowse()
 	// Might take some time.
 	@set_time_limit(600);
 
-	// Read packages.xml and parse into xmlArray. (the true tells it to trim things ;).)
-	require_once($sourcedir . '/Class-Package.php');
-	$listing = new xmlArray(fetch_web_data($_GET['package']), true);
+	// Read packages.xml and parse into XmlArray. (the true tells it to trim things ;).)
+	$listing = new XmlArray(fetch_web_data($_GET['package']), true);
 
 	// Errm.... empty file?  Try the URL....
 	if (!$listing->exists('package-list'))

@@ -1749,7 +1749,7 @@ function list_getPackages($start, $items_per_page, $sort, $params)
 					}
 				}
 
-				// Save some memory by not passing the xmlArray object into context.
+				// Save some memory by not passing the XmlArray object into context.
 				unset($packageInfo['xml']);
 
 				if (isset($sort_id[$packageInfo['type']]) && $params == $packageInfo['type'])

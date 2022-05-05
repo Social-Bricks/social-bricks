@@ -13,6 +13,8 @@
  * @version 2.1.0
  */
 
+use SocialBricks\Helper\XmlArray;
+
 if (!defined('SMF'))
 	die('No direct access...');
 
@@ -859,7 +861,7 @@ function AdminSearchOM()
 	require_once($sourcedir . '/Class-Package.php');
 
 	// Get the results loaded into an array for processing!
-	$results = new xmlArray($search_results, false);
+	$results = new XmlArray($search_results, false);
 
 	// Move through the api layer.
 	if (!$results->exists('api'))
