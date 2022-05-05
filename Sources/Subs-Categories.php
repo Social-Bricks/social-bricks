@@ -13,9 +13,6 @@
  * @version 2.1.0
  */
 
-if (!defined('SMF'))
-	die('No direct access...');
-
 /**
  * Edit the position and properties of a category.
  * general function to modify the settings and position of a category.

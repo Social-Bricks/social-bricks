@@ -13,9 +13,6 @@
  * @version 2.1.2
  */
 
-if (!defined('SMF'))
-	die('No direct access...');
-
 if (!defined('PHP_INT_MIN'))
 	define('PHP_INT_MIN', ~PHP_INT_MAX);
 

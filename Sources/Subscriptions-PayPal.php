@@ -14,9 +14,6 @@
 // This won't be dedicated without this - this must exist in each gateway!
 // SMF Payment Gateway: paypal
 
-if (!defined('SMF'))
-	die('No direct access...');
-
 /**
  * Class for returning available form data for this gateway
  */

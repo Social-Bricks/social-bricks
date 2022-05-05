@@ -11,9 +11,6 @@
  * @version 2.1.2
  */
 
-if (!defined('SMF'))
-	die('No direct access...');
-
 /**
  * Generates the query to determine the list of available boards for a user
  * Executes the query and returns the list

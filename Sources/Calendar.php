@@ -14,9 +14,6 @@
  * @version 2.1.2
  */
 
-if (!defined('SMF'))
-	die('No direct access...');
-
 /**
  * Show the calendar.
  * It loads the specified month's events, holidays, and birthdays.

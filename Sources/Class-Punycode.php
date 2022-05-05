@@ -18,9 +18,6 @@
  * @version 2.1.0
  */
 
-if (!defined('SMF'))
-	die('No direct access...');
-
 /**
  * Punycode implementation as described in RFC 3492
  *

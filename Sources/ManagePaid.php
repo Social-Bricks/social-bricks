@@ -14,9 +14,6 @@
  * @version 2.1.0
  */
 
-if (!defined('SMF'))
-	die('No direct access...');
-
 /**
  * The main entrance point for the 'Paid Subscription' screen, calling
  * the right function based on the given sub-action.

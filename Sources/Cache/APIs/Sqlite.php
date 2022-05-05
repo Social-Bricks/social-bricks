@@ -17,9 +17,6 @@ use SMF\Cache\CacheApi;
 use SMF\Cache\CacheApiInterface;
 use SQLite3;
 
-if (!defined('SMF'))
-	die('No direct access...');
-
 /**
  * SQLite Cache API class
  *

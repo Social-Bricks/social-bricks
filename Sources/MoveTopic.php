@@ -14,9 +14,6 @@
  * @version 2.1.0
  */
 
-if (!defined('SMF'))
-	die('No direct access...');
-
 /**
  * This function allows to move a topic, making sure to ask the moderator
  * to give reason for topic move.

@@ -15,9 +15,6 @@
 
 namespace SocialBricks\Helper;
 
-if (!defined('SMF'))
-	die('No direct access...');
-
 /**
  * Class XmlArray
  * Represents an XML array

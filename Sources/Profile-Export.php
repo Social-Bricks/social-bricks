@@ -14,10 +14,6 @@
  * @version 2.1.2
  */
 
-if (!defined('SMF'))
-	die('No direct access...');
-
-
 /**
  * Initiates exports a member's profile, posts, and personal messages to a file.
  *

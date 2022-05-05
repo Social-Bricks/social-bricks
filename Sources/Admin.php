@@ -15,9 +15,6 @@
 
 use SocialBricks\Helper\XmlArray;
 
-if (!defined('SMF'))
-	die('No direct access...');
-
 /**
  * The main admin handling function.<br>
  * It initialises all the basic context required for the admin center.<br>

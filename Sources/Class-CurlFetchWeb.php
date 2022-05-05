@@ -10,9 +10,6 @@
  * @version 2.1.0
  */
 
-if (!defined('SMF'))
-	die('No direct access...');
-
 /**
  * Class curl_fetch_web_data
  * Simple cURL class to fetch a web page

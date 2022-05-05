@@ -14,9 +14,6 @@
  * @version 2.1.2
  */
 
-if (!defined('SMF'))
-	die('No direct access...');
-
 /**
  * Handles showing the post screen, loading the post to be modified, and loading any post quoted.
  *

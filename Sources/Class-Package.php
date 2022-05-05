@@ -11,9 +11,6 @@
  * @version 2.1.0
  */
 
-if (!defined('SMF'))
-	die('No direct access...');
-
 /**
  * Class ftp_connection
  * Simple FTP protocol implementation.

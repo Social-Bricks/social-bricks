@@ -15,9 +15,6 @@
 
 use SMF\Cache\CacheApiInterface;
 
-if (!defined('SMF'))
-	die('No direct access...');
-
 /**
  * Get a list of versions that are currently installed on the server.
  *

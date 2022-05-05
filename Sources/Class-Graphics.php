@@ -19,9 +19,6 @@
  * @version 2.1.0
  */
 
-if (!defined('SMF'))
-	die('No direct access...');
-
 /**
  * Class gif_lzw_compression
  *

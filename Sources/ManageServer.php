@@ -62,9 +62,6 @@
 use SMF\Cache\CacheApi;
 use SMF\Cache\CacheApiInterface;
 
-if (!defined('SMF'))
-	die('No direct access...');
-
 /**
  * This is the main dispatcher. Sets up all the available sub-actions, all the tabs and selects
  * the appropriate one based on the sub-action.

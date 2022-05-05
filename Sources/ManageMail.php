@@ -16,9 +16,6 @@
  * @version 2.1.0
  */
 
-if (!defined('SMF'))
-	die('No direct access...');
-
 /**
  * Main dispatcher. This function checks permissions and passes control through to the relevant section.
  */

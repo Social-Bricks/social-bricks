@@ -15,9 +15,6 @@
 
 use SocialBricks\Helper\XmlArray;
 
-if (!defined('SMF'))
-	die('No direct access...');
-
 /**
  * Browse the list of package servers, add servers...
  */

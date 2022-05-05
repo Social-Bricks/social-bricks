@@ -13,9 +13,6 @@
  * @version 2.1.0
  */
 
-if (!defined('SMF'))
-	die('No direct access...');
-
 /**
  * Retrieve a list and several other statistics of the users currently online.
  * Used by the board index and SSI.

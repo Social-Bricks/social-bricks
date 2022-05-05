@@ -11,9 +11,6 @@
  * @version 2.1.0
  */
 
-if (!defined('SMF'))
-	die('No direct access...');
-
 /**
  * Converts the given UTF-8 string into lowercase.
  * Equivalent to mb_strtolower($string, 'UTF-8'), except that we can keep the

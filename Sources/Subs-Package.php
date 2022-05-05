@@ -18,9 +18,6 @@
 
 use SocialBricks\Helper\XmlArray;
 
-if (!defined('SMF'))
-	die('No direct access...');
-
 /**
  * Reads an archive from either a remote location or from the local filesystem.
  *

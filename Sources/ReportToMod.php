@@ -12,9 +12,6 @@
  * @version 2.1.0
  */
 
-if (!defined('SMF'))
-	die('No direct access...');
-
 /**
  * Report a post or profile to the moderator... ask for a comment.
  * Gathers data from the user to report abuse to the moderator(s).

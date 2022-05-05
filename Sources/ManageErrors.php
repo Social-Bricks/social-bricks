@@ -14,9 +14,6 @@
  * @version 2.1.0
  */
 
-if (!defined('SMF'))
-	die('No direct access...');
-
 /**
  * View the forum's error log.
  * This function sets all the context up to show the error log for maintenance.

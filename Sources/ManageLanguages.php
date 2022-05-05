@@ -15,9 +15,6 @@
 
 use SocialBricks\Helper\XmlArray;
 
-if (!defined('SMF'))
-	die('No direct access...');
-
 /**
  * This is the main function for the languages area.
  * It dispatches the requests.

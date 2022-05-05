@@ -13,9 +13,6 @@
  * @version 2.1.0
  */
 
-if (!defined('SMF'))
-	die('No direct access...');
-
 /**
  * The main controlling function doesn't have much to do... yet.
  * Just check permissions and delegate to the rest.
