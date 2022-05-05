@@ -3032,26 +3032,7 @@ function package_create_backup($id = 'backup')
 
 if (!function_exists('smf_crc32'))
 {
-	/**
-	 * crc32 doesn't work as expected on 64-bit functions - make our own.
-	 * https://php.net/crc32#79567
-	 *
-	 * @param string $number
-	 * @return string The crc32
-	 */
-	function smf_crc32($number)
-	{
-		$crc = crc32($number);
-
-		if ($crc & 0x80000000)
-		{
-			$crc ^= 0xffffffff;
-			$crc += 1;
-			$crc = -$crc;
-		}
-
-		return $crc;
-	}
+	require_once $sourcedir . '/Subs-Compat.php';
 }
 
 /**

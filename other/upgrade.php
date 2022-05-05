@@ -667,8 +667,7 @@ function loadEssentialData()
 
 	require_once($sourcedir . '/Subs.php');
 
-	if (version_compare(PHP_VERSION, '8.0.0', '>='))
-		require_once($sourcedir . '/Subs-Compat.php');
+	require_once($sourcedir . '/Subs-Compat.php');
 
 	@set_time_limit(600);
 
