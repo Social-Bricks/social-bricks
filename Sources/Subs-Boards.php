@@ -4,9 +4,9 @@
  * This file is mainly concerned with minor tasks relating to boards, such as
  * marking them read, collapsing categories, or quick moderation.
  *
- * Simple Machines Forum (SMF)
+ * Social Bricks
  *
- * @package SMF
+ * @package SocialBricks
  * @author Simple Machines https://www.simplemachines.org
  * @copyright 2022 Simple Machines and individual contributors
  * @license https://www.simplemachines.org/about/smf/license.php BSD

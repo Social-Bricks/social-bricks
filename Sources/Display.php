@@ -4,9 +4,9 @@
  * This is perhaps the most important and probably most accessed file in all
  * of SMF.  This file controls topic, message, and attachment display.
  *
- * Simple Machines Forum (SMF)
+ * Social Bricks
  *
- * @package SMF
+ * @package SocialBricks
  * @author Simple Machines https://www.simplemachines.org
  * @copyright 2022 Simple Machines and individual contributors
  * @license https://www.simplemachines.org/about/smf/license.php BSD

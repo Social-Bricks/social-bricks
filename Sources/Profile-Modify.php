@@ -5,9 +5,9 @@
  * 	It also allows the user to change some of their or another's preferences,
  * 	and such things
  *
- * Simple Machines Forum (SMF)
+ * Social Bricks
  *
- * @package SMF
+ * @package SocialBricks
  * @author Simple Machines https://www.simplemachines.org
  * @copyright 2022 Simple Machines and individual contributors
  * @license https://www.simplemachines.org/about/smf/license.php BSD

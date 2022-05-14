@@ -4,9 +4,9 @@
  * This file has only one real task, showing the calendar.
  * Original module by Aaron O'Neil - aaron@mud-master.com
  *
- * Simple Machines Forum (SMF)
+ * Social Bricks
  *
- * @package SMF
+ * @package SocialBricks
  * @author Simple Machines https://www.simplemachines.org
  * @copyright 2022 Simple Machines and individual contributors
  * @license https://www.simplemachines.org/about/smf/license.php BSD

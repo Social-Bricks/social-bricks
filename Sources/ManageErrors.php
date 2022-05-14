@@ -4,9 +4,9 @@
  * The main purpose of this file is to show a list of all errors that were
  * logged on the forum, and allow filtering and deleting them.
  *
- * Simple Machines Forum (SMF)
+ * Social Bricks
  *
- * @package SMF
+ * @package SocialBricks
  * @author Simple Machines https://www.simplemachines.org
  * @copyright 2022 Simple Machines and individual contributors
  * @license https://www.simplemachines.org/about/smf/license.php BSD

@@ -10,9 +10,9 @@
  * Because of the way this runs, etc. we do need some of the system but not everything to try to keep this
  * running a little bit faster.
  *
- * Simple Machines Forum (SMF)
+ * Social Bricks
  *
- * @package SMF
+ * @package SocialBricks
  * @author Simple Machines https://www.simplemachines.org
  * @copyright 2022 Simple Machines and individual contributors
  * @license https://www.simplemachines.org/about/smf/license.php BSD

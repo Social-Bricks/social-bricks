@@ -10,9 +10,9 @@
  * Then, you can access the FunctionToCall() function from Source-File.php
  * with the URL index.php?action=action-in-url.  Relatively simple, no?
  *
- * Simple Machines Forum (SMF)
+ * Social Bricks
  *
- * @package SMF
+ * @package SocialBricks
  * @author Simple Machines https://www.simplemachines.org
  * @copyright 2022 Simple Machines and individual contributors
  * @license https://www.simplemachines.org/about/smf/license.php BSD
