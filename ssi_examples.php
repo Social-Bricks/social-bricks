@@ -418,7 +418,7 @@ function template_ssi_above()
 	echo '<!DOCTYPE html>
 <html>
 	<head>
-		<title>', SMF_FULL_VERSION, ' SSI.php Examples</title>
+		<title>', SB_FULL_VERSION, ' SSI.php Examples</title>
 		<link rel="stylesheet" href="', $settings['default_theme_url'], '/css/index.css">
 		<script src="', !empty($context['javascript_files']['sb_jquery']['fileUrl']) ? $context['javascript_files']['sb_jquery']['fileUrl'] : 'https://ajax.googleapis.com/ajax/libs/jquery/' . JQUERY_VERSION . '/jquery.min.js', '"></script>
 		<script src="', $settings['default_theme_url'], '/scripts/script.js"></script>
@@ -505,7 +505,7 @@ function template_ssi_above()
 	</head>
 	<body>
 		<div id="header">
-			<h1 class="forumtitle">', SMF_FULL_VERSION, ' SSI.php Examples</h1>
+			<h1 class="forumtitle">', SB_FULL_VERSION, ' SSI.php Examples</h1>
 			<img id="smflogo" src="Themes/default/images/smflogo.svg" alt="Simple Machines Forum" title="Simple Machines Forum">
 		</div>
 		<div id="wrapper">

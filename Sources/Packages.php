@@ -1395,7 +1395,7 @@ function PackageBrowse()
 
 	$context['page_title'] .= ' - ' . $txt['browse_packages'];
 
-	$context['forum_version'] = SMF_FULL_VERSION;
+	$context['forum_version'] = SB_FULL_VERSION;
 	$context['available_packages'] = 0;
 	$context['modification_types'] = array('modification', 'avatar', 'language', 'unknown');
 
@@ -1579,7 +1579,7 @@ function list_getPackages($start, $items_per_page, $sort, $params)
 	}
 	elseif (isset($_GET['version_emulate']))
 	{
-		if (($_GET['version_emulate'] === 0 || $_GET['version_emulate'] === SMF_FULL_VERSION) && isset($_SESSION['version_emulate']))
+		if (($_GET['version_emulate'] === 0 || $_GET['version_emulate'] === SB_FULL_VERSION) && isset($_SESSION['version_emulate']))
 			unset($_SESSION['version_emulate']);
 		elseif ($_GET['version_emulate'] !== 0)
 			$_SESSION['version_emulate'] = strtr($_GET['version_emulate'], array('-' => ' ', '+' => ' ', 'SMF ' => ''));

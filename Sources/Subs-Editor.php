@@ -2473,7 +2473,7 @@ function AutoSuggest_Search_SMFVersions()
 
 	// Just in case we don't have ANYthing.
 	if (empty($versions))
-		$versions = array(SMF_FULL_VERSION);
+		$versions = array(SB_FULL_VERSION);
 
 	foreach ($versions as $id => $version)
 		if (strpos($version, strtoupper($_REQUEST['search'])) !== false)

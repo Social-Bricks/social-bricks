@@ -261,7 +261,7 @@ function get_theme_info($path)
 	if (!$theme_info_xml->exists('theme-info/install'))
 	{
 		remove_dir($path);
-		fatal_lang_error('package_get_error_theme_not_compatible', false, SMF_FULL_VERSION);
+		fatal_lang_error('package_get_error_theme_not_compatible', false, SB_FULL_VERSION);
 	}
 
 	// So, we have an install tag which is cool and stuff but we also need to check it and match your current SMF version...
@@ -273,7 +273,7 @@ function get_theme_info($path)
 	if (!$install_versions || !matchPackageVersion($the_version, $install_versions))
 	{
 		remove_dir($path);
-		fatal_lang_error('package_get_error_theme_not_compatible', false, SMF_FULL_VERSION);
+		fatal_lang_error('package_get_error_theme_not_compatible', false, SB_FULL_VERSION);
 	}
 
 	$theme_info_xml = $theme_info_xml->to_array('theme-info[0]');

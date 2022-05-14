@@ -539,7 +539,7 @@ function AdminHome()
 	);
 	$context['current_versions'] = getServerVersions($checkFor);
 
-	$context['forum_version'] = SMF_FULL_VERSION;
+	$context['forum_version'] = SB_FULL_VERSION;
 
 	$context['can_admin'] = allowedTo('admin_forum');
 

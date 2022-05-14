@@ -92,7 +92,7 @@ function reloadSettings()
 
 	// Used to force browsers to download fresh CSS and JavaScript when necessary
 	$modSettings['browser_cache'] = !empty($modSettings['browser_cache']) ? (int) $modSettings['browser_cache'] : 0;
-	$context['browser_cache'] = '?' . preg_replace('~\W~', '', strtolower(SMF_FULL_VERSION)) . '_' . $modSettings['browser_cache'];
+	$context['browser_cache'] = '?' . preg_replace('~\W~', '', strtolower(SB_FULL_VERSION)) . '_' . $modSettings['browser_cache'];
 
 	// Seed the random generator.
 	if (empty($modSettings['rand_seed']) || mt_rand(1, 250) == 42)

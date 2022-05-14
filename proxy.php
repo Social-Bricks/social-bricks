@@ -19,8 +19,8 @@ if (!defined('SMF'))
 if (!defined('SMF_VERSION'))
 	define('SMF_VERSION', '2.1.2');
 
-if (!defined('SMF_FULL_VERSION'))
-	define('SMF_FULL_VERSION', 'SMF ' . SMF_VERSION);
+if (!defined('SB_FULL_VERSION'))
+	define('SB_FULL_VERSION', 'SMF ' . SMF_VERSION);
 
 if (!defined('SMF_SOFTWARE_YEAR'))
 	define('SMF_SOFTWARE_YEAR', '2022');
