@@ -18,7 +18,7 @@ if (defined('SMF'))
 define('SMF', 'SSI');
 define('SMF_VERSION', '2.1.2');
 define('SB_FULL_VERSION', 'SMF ' . SMF_VERSION);
-define('SMF_SOFTWARE_YEAR', '2022');
+define('SB_SOFTWARE_YEAR', '2022');
 define('JQUERY_VERSION', '3.6.0');
 define('SB_USER_AGENT', 'Mozilla/5.0 (' . php_uname('s') . ' ' . php_uname('m') . ') AppleWebKit/605.1.15 (KHTML, like Gecko) SocialBricks/' . strtr(SMF_VERSION, ' ', '.'));
 
@@ -255,9 +255,9 @@ function ssi_full_version($output_method = 'echo')
 function ssi_software_year($output_method = 'echo')
 {
 	if ($output_method == 'echo')
-		echo SMF_SOFTWARE_YEAR;
+		echo SB_SOFTWARE_YEAR;
 	else
-		return SMF_SOFTWARE_YEAR;
+		return SB_SOFTWARE_YEAR;
 }
 
 /**
@@ -271,9 +271,9 @@ function ssi_copyright($output_method = 'echo')
 	global $forum_copyright, $scripturl;
 
 	if ($output_method == 'echo')
-		printf($forum_copyright, SB_FULL_VERSION, SMF_SOFTWARE_YEAR, $scripturl);
+		printf($forum_copyright, SB_FULL_VERSION, SB_SOFTWARE_YEAR, $scripturl);
 	else
-		return sprintf($forum_copyright, SB_FULL_VERSION, SMF_SOFTWARE_YEAR, $scripturl);
+		return sprintf($forum_copyright, SB_FULL_VERSION, SB_SOFTWARE_YEAR, $scripturl);
 }
 
 /**

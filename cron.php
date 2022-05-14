@@ -23,7 +23,7 @@
 define('SMF', 'BACKGROUND');
 define('SMF_VERSION', '2.1.2');
 define('SB_FULL_VERSION', 'SMF ' . SMF_VERSION);
-define('SMF_SOFTWARE_YEAR', '2022');
+define('SB_SOFTWARE_YEAR', '2022');
 define('FROM_CLI', empty($_SERVER['REQUEST_METHOD']));
 
 define('JQUERY_VERSION', '3.6.0');

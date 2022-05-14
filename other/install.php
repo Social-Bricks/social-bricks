@@ -13,7 +13,7 @@
 
 define('SMF_VERSION', '2.1.2');
 define('SB_FULL_VERSION', 'SMF ' . SMF_VERSION);
-define('SMF_SOFTWARE_YEAR', '2022');
+define('SB_SOFTWARE_YEAR', '2022');
 define('DB_SCRIPT_VERSION', '2-1');
 define('SMF_INSTALLING', 1);
 
@@ -1928,7 +1928,7 @@ function template_install_below()
 	</div><!-- #footerfix -->
 	<div id="footer">
 		<ul>
-			<li class="copyright"><a href="https://www.simplemachines.org/" title="Simple Machines Forum" target="_blank" rel="noopener">' . SB_FULL_VERSION . ' &copy; ' . SMF_SOFTWARE_YEAR . ', Simple Machines</a></li>
+			<li class="copyright"><a href="https://www.simplemachines.org/" title="Simple Machines Forum" target="_blank" rel="noopener">' . SB_FULL_VERSION . ' &copy; ' . SB_SOFTWARE_YEAR . ', Simple Machines</a></li>
 		</ul>
 	</div>
 </body>

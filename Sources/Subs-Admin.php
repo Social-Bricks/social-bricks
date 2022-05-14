@@ -348,7 +348,7 @@ function get_settings_defs()
 				' *',
 				' * @package SMF',
 				' * @author Simple Machines https://www.simplemachines.org',
-				' * @copyright ' . SMF_SOFTWARE_YEAR . ' Simple Machines and individual contributors',
+				' * @copyright ' . SB_SOFTWARE_YEAR . ' Simple Machines and individual contributors',
 				' * @license https://www.simplemachines.org/about/smf/license.php BSD',
 				' *',
 				' * @version ' . SMF_VERSION,

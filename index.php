@@ -24,7 +24,7 @@
 define('SMF', 1);
 define('SMF_VERSION', '2.1.2');
 define('SB_FULL_VERSION', 'SMF ' . SMF_VERSION);
-define('SMF_SOFTWARE_YEAR', '2022');
+define('SB_SOFTWARE_YEAR', '2022');
 
 define('JQUERY_VERSION', '3.6.0');
 define('SB_USER_AGENT', 'Mozilla/5.0 (' . php_uname('s') . ' ' . php_uname('m') . ') AppleWebKit/605.1.15 (KHTML, like Gecko) SocialBricks/' . strtr(SMF_VERSION, ' ', '.'));

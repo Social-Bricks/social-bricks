@@ -22,8 +22,8 @@ if (!defined('SMF_VERSION'))
 if (!defined('SB_FULL_VERSION'))
 	define('SB_FULL_VERSION', 'SMF ' . SMF_VERSION);
 
-if (!defined('SMF_SOFTWARE_YEAR'))
-	define('SMF_SOFTWARE_YEAR', '2022');
+if (!defined('SB_SOFTWARE_YEAR'))
+	define('SB_SOFTWARE_YEAR', '2022');
 
 if (!defined('JQUERY_VERSION'))
 	define('JQUERY_VERSION', '3.6.0');
