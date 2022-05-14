@@ -44,7 +44,7 @@ function template_init()
 
 	/* $context, $options and $txt may be available for use, but may not be fully populated yet. */
 
-	// The version this template/theme is for. This should probably be the version of SMF it was created for.
+	// The version this template/theme is for. This should probably be the version of Social Bricks it was created for.
 	$settings['theme_version'] = '2.1';
 
 	// Set the following variable to true if this theme requires the optional theme strings file to be loaded.
@@ -71,7 +71,7 @@ function template_init()
 	);
 
 	// Allow css/js files to be disabled for this specific theme.
-	// Add the identifier as an array key. IE array('sb_script'); Some external files might not add identifiers, on those cases SMF uses its filename as reference.
+	// Add the identifier as an array key. IE array('sb_script'); Some external files might not add identifiers, on those cases Social Bricks uses its filename as reference.
 	if (!isset($settings['disable_files']))
 		$settings['disable_files'] = array();
 }
@@ -94,15 +94,13 @@ function template_html_above()
 		Note that RTL will also be loaded for you.
 		To load other CSS and JS files you should use the functions
 		loadCSSFile() and loadJavaScriptFile() respectively.
-		This approach will let you take advantage of SMF's automatic CSS
+		This approach will let you take advantage of the automatic CSS
 		minimization and other benefits. You can, of course, manually add any
 		other files you want after template_css() has been run.
 
 	*	Short example:
 			- CSS: loadCSSFile('filename.css', array('minimize' => true));
 			- JS:  loadJavaScriptFile('filename.js', array('minimize' => true));
-			You can also read more detailed usages of the parameters for these
-			functions on the SMF wiki.
 
 	*	Themes:
 			The most efficient way of writing multi themes is to use a master

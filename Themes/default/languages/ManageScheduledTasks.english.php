@@ -9,7 +9,7 @@ $txt['scheduled_tasks_regularity'] = 'Regularity';
 $txt['scheduled_tasks_enabled'] = 'Enabled';
 $txt['scheduled_tasks_run_now'] = 'Run now';
 $txt['scheduled_tasks_save_changes'] = 'Save Changes';
-$txt['scheduled_tasks_time_offset'] = '<strong>Note:</strong> All times given below are <em>server time</em> and do not take into account any time offsets set up within SMF.';
+$txt['scheduled_tasks_time_offset'] = '<strong>Note:</strong> All times given below are <em>server time</em> and do not take into account any time offsets set up within Social Bricks.';
 $txt['scheduled_tasks_were_run'] = 'All selected tasks were completed';
 $txt['scheduled_tasks_were_run_errors'] = 'All selected tasks were completed but some had errors:';
 
@@ -64,7 +64,7 @@ $txt['scheduled_task_prune_log_topics'] = 'Mark Boards as Read';
 $txt['scheduled_task_desc_prune_log_topics'] = 'Marks boards as read for users inactive longer than the number of days defined in the <a href="%1$s?action=admin;area=logs;sa=settings#markread_title">Read Logs settings</a> in the admin panel.';
 
 $txt['cron_is_real_cron'] = 'Disable JavaScript-based method of running scheduled tasks.';
-$txt['cron_is_real_cron_desc'] = '<strong>Do not check this box</strong> unless you are <strong><u>sure</u></strong> that you have configured another method to tell your server to run SMF\'s cron.php on a regular basis.';
+$txt['cron_is_real_cron_desc'] = '<strong>Do not check this box</strong> unless you are <strong><u>sure</u></strong> that you have configured another method to tell your server to run the cron.php file on a regular basis.';
 $txt['cron_not_working'] = 'No scheduled tasks have been run in the last 24 hours. Re-enabling JavaScript-based method of running scheduled tasks.';
 
 ?>

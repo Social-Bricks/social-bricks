@@ -233,7 +233,7 @@ $txt['setting_view_warning_any'] = 'Users who can see any warning status';
 $txt['setting_view_warning_own'] = 'Users who can see their own warning status';
 
 $txt['signature_settings'] = 'Signature Settings';
-$txt['signature_settings_desc'] = 'Use the settings on this page to decide how member signatures should be treated in SMF.';
+$txt['signature_settings_desc'] = 'Use the settings on this page to decide how member signatures should be treated in Social Bricks.';
 // argument(s): session_id, session_var, scripturl
 $txt['signature_settings_warning'] = 'Note that settings are not applied to existing signatures by default. <a href="%3$s?action=admin;area=featuresettings;sa=sig;apply;%2$s=%1$s">Apply changes now</a>';
 $txt['signature_settings_applied'] = 'The updated rules have been applied to the existing signatures.';
@@ -362,7 +362,7 @@ $txt['add_language_smf_version'] = 'Version';
 $txt['edit_language_entries_primary'] = 'Below are the primary language settings for this language pack.';
 $txt['edit_language_entries'] = 'Edit Language Entries';
 // argument(s): $scripturl, $txt['themeadmin_edit_title']
-$txt['edit_language_entries_desc'] = 'You can customize the individual text entries for this language. Select a file to load its entries, and then edit them below.<br><br>When you edit (or remove) an entry, a commented out version of the original is preserved in the file. If you ever need to restore your edited strings to their original state, or if you need more advanced access to these language files, go to <a href="%1$s?action=admin;area=theme;sa=edit">%2$s</a>, browse to the file you are looking for, and then edit it directly using SMF\'s built-in text editor.';
+$txt['edit_language_entries_desc'] = 'You can customize the individual text entries for this language. Select a file to load its entries, and then edit them below.<br><br>When you edit (or remove) an entry, a commented out version of the original is preserved in the file. If you ever need to restore your edited strings to their original state, or if you need more advanced access to these language files, go to <a href="%1$s?action=admin;area=theme;sa=edit">%2$s</a>, browse to the file you are looking for, and then edit it directly using Social Bricks\'s built-in text editor.';
 $txt['edit_language_entries_file'] = 'Select entries to edit';
 $txt['languages_dictionary'] = 'Dictionary';
 $txt['languages_rtl'] = 'Enable &quot;Right to Left&quot; Mode';
@@ -374,8 +374,8 @@ $txt['languages_download'] = 'Download Language Pack';
 $txt['languages_download_note'] = 'This page lists all the files that are contained within the language pack and some useful information about each one. All files that have their associated check box marked will be copied.';
 $txt['languages_download_info'] = '<strong>Note:</strong>
 	<ul class="normallist">
-		<li>Files which have the status &quot;Not Writable&quot; means SMF will not be able to copy this file to the directory at the present and you must make the destination writable either using an FTP client or by filling in your details at the bottom of the page.</li>
-		<li>The Version information for a file displays the last SMF version which it was updated for. If it is indicated in green then this is a newer version than you have at current. If amber this indicates it\'s the same version number as at current, red indicates you have a newer version installed than contained in the pack.</li>
+		<li>Files which have the status &quot;Not Writable&quot; means Social Bricks will not be able to copy this file to the directory at the present and you must make the destination writable either using an FTP client or by filling in your details at the bottom of the page.</li>
+		<li>The Version information for a file displays the last Social Bricks version which it was updated for. If it is indicated in green then this is a newer version than you have at current. If amber this indicates it\'s the same version number as at current, red indicates you have a newer version installed than contained in the pack.</li>
 		<li>Where a file already exists on your forum the &quot;Already Exists&quot; column will have one of two values. &quot;Identical&quot; indicates that the file already exists in an identical form and need not be overwritten. &quot;Different&quot; means that the contents vary in some way and overwriting is probably the optimum solution.</li>
 	</ul>';
 
@@ -433,7 +433,7 @@ $txt['tfa_mode_enabled'] = 'Enabled';
 $txt['tfa_mode_disabled'] = 'Disabled';
 $txt['tfa_mode_subtext'] = 'Allows users to have a second layer of security while logging in, users would need an app like Google Authenticator paired with their account';
 
-$txt['export_settings_description'] = 'Members can export copies of their profile data, optionally including their posts and personal messages.<br>To avoid overtaxing server resources, SMF slowly compiles the exported data to a downloadable file stored in a secured directory.';
+$txt['export_settings_description'] = 'Members can export copies of their profile data, optionally including their posts and personal messages.<br>To avoid overtaxing server resources, Social Bricks slowly compiles the exported data to a downloadable file stored in a secured directory.';
 $txt['export_dir'] = 'Directory for profile data export files';
 $txt['export_expiry'] = 'Automatically delete profile data export files after';
 $txt['export_min_diskspace_pct'] = 'Pause exports if free space on disk is less than';

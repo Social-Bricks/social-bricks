@@ -720,7 +720,7 @@ function template_servers()
 								<strong>' . $txt['server_name'] . ':</strong>
 							</dt>
 							<dd>
-								<input type="text" name="servername" size="44" value="SMF">
+								<input type="text" name="servername" size="44" value="Social Bricks">
 							</dd>
 							<dt>
 								<strong>' . $txt['serverurl'] . ':</strong>

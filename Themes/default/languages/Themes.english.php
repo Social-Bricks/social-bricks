@@ -72,7 +72,7 @@ $txt['theme_variants_default'] = 'Default theme variant';
 $txt['theme_variants_user_disable'] = 'Disable user variant selection';
 
 $txt['site_slogan'] = 'Site slogan';
-$txt['site_slogan_desc'] = 'Add your own text for a slogan here. It will replace the SMF logo.';
+$txt['site_slogan_desc'] = 'Add your own text for a slogan here. It will replace the Social Bricks logo.';
 
 $txt['enable_random_news'] = 'Enable random news line in the forum header';
 $txt['show_group_key'] = 'Show group key on board index';
@@ -135,7 +135,7 @@ $txt['themeadmin_edit_style'] = 'Edit this theme\'s stylesheets.';
 $txt['themeadmin_edit_copy_template'] = 'Copy a template from the theme this is based on.';
 $txt['themeadmin_edit_exists'] = 'already exists';
 $txt['themeadmin_edit_do_copy'] = 'copy';
-$txt['themeadmin_edit_copy_warning'] = 'When SMF needs a template or language file which is not in the current theme, it looks in the theme it is based on, or the default theme.<br>Unless you need to modify a template, it\'s better not to copy it.';
+$txt['themeadmin_edit_copy_warning'] = 'When Social Bricks needs a template or language file which is not in the current theme, it looks in the theme it is based on, or the default theme.<br>Unless you need to modify a template, it\'s better not to copy it.';
 $txt['themeadmin_edit_copy_confirm'] = 'Are you sure you want to copy this template?';
 $txt['themeadmin_edit_overwrite_confirm'] = 'Are you sure you want to copy this template over the one that already exists?\nThis will OVERWRITE any changes you\\\'ve made';
 $txt['themeadmin_edit_no_copy'] = '<em>(can\'t copy)</em>';

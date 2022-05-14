@@ -8,7 +8,7 @@
 $txt['manual_user_help'] = 'User Help';
 
 $txt['manual_welcome'] = 'Welcome to %s, powered by Social Bricks software!';
-$txt['manual_introduction'] = 'Social Bricks is the software solution that this site is running. It allows users to communicate in discussion topics on a given subject in a clever and organized manner. Furthermore, it has a number of powerful features which end users can take advantage of. Help for many of SMF\'s features can be found by either clicking the question mark icon next to the relevant section or by selecting one of the links on this page.';
+$txt['manual_introduction'] = 'Social Bricks is the software solution that this site is running. It allows users to communicate in discussion topics on a given subject in a clever and organized manner. Furthermore, it has a number of powerful features which end users can take advantage of. Help for many of Social Bricks\'s features can be found by either clicking the question mark icon next to the relevant section or by selecting one of the links on this page.';
 $txt['manual_docs'] = 'For more information about how to use Social Bricks, please see the <a href="%1$s" target="_blank" rel="noopener">Social Bricks website</a>.';
 
 $txt['manual_section_registering_title'] = 'Registering';

@@ -89,7 +89,7 @@ $txt['package_install_action'] = 'Action';
 $txt['package_install_desc'] = 'Description';
 $txt['install_actions'] = 'Install Actions';
 $txt['perform_actions'] = 'This will perform the following actions:';
-$txt['corrupt_compatible'] = 'The package you are trying to download or install is either corrupt or not compatible with this version of SMF.';
+$txt['corrupt_compatible'] = 'The package you are trying to download or install is either corrupt or not compatible with this version of Social Bricks.';
 $txt['package_create'] = 'Create';
 $txt['package_move'] = 'Move';
 $txt['package_delete'] = 'Delete';
@@ -113,7 +113,7 @@ $txt['execute_credits_action'] = 'Credits: %1$s';
 
 $txt['package_install_actions'] = 'Installations actions for';
 $txt['package_will_fail_title'] = 'Error in package %1$s';
-$txt['package_will_fail_warning'] = 'At least one error was encountered during a test %1$s of this package.<br>It is <strong>strongly</strong> recommended that you do not continue with %1$s unless you know what you are doing, and have made a backup very recently.<br><br>This error may be caused by a conflict between the package you\'re trying to install and another package you have already installed, an error in the package, a package which requires another package that you have not installed yet, or a package designed for another version of SMF.';
+$txt['package_will_fail_warning'] = 'At least one error was encountered during a test %1$s of this package.<br>It is <strong>strongly</strong> recommended that you do not continue with %1$s unless you know what you are doing, and have made a backup very recently.<br><br>This error may be caused by a conflict between the package you\'re trying to install and another package you have already installed, an error in the package, a package which requires another package that you have not installed yet, or a package designed for another version of Social Bricks.';
 $txt['package_will_fail_unknown_action'] = 'The package is trying to perform an unknown action: %1$s';
 // Don't use entities in the below string.
 $txt['package_will_fail_popup'] = 'Are you sure you wish to continue installing this modification, even though it will not install successfully?';
@@ -238,7 +238,7 @@ $txt['package_file_perms_pre_restricted'] = 'Restricted - minimum files writable
 $txt['package_file_perms_pre_standard'] = 'Standard - key files writable';
 $txt['package_file_perms_pre_free'] = 'Free - all files writable';
 $txt['package_file_perms_ftp_details'] = 'On most servers it is only possible to change file permissions using an FTP account. Please enter your FTP details below';
-$txt['package_file_perms_ftp_retain'] = 'Note, SMF will only retain the password information temporarily to aid operation of the package manager.';
+$txt['package_file_perms_ftp_retain'] = 'Note, Social Bricks will only retain the password information temporarily to aid operation of the package manager.';
 $txt['package_file_perms_go'] = 'Make Changes';
 
 $txt['package_file_perms_applying'] = 'Applying Changes';
@@ -262,7 +262,7 @@ $txt['package_restore_permissions_post_change'] = '%2$s (%3$s - was %2$s)';
 $txt['package_restore_permissions_action_skipped'] = '<em>Skipped</em>';
 $txt['package_restore_permissions_action_success'] = '<span class="success">Success</span>';
 $txt['package_restore_permissions_action_failure'] = '<span class="error">Failed</span>';
-$txt['package_restore_permissions_action_done'] = 'SMF has attempted to restore the selected files back to their original permissions, the results can be seen below. If a change failed, or for a more detailed view of file permissions, please see the <a href="%1$s">File Permissions</a> section.';
+$txt['package_restore_permissions_action_done'] = 'Social Bricks has attempted to restore the selected files back to their original permissions, the results can be seen below. If a change failed, or for a more detailed view of file permissions, please see the <a href="%1$s">File Permissions</a> section.';
 
 $txt['package_file_perms_warning'] = 'Please Note';
 $txt['package_file_perms_warning_desc'] = '

@@ -223,7 +223,7 @@ $txt['maintain_done'] = 'The maintenance task \'%1$s\' was executed successfully
 $txt['maintain_no_errors'] = 'Congratulations, no errors were found. Thanks for checking.';
 
 $txt['maintain_tasks'] = 'Scheduled Tasks';
-$txt['maintain_tasks_desc'] = 'Manage all the tasks scheduled by SMF.';
+$txt['maintain_tasks_desc'] = 'Manage all the tasks scheduled by Social Bricks.';
 $txt['scheduled_tasks_settings'] = 'Settings';
 $txt['scheduled_tasks_settings_desc'] = 'Settings to control how scheduled tasks are run.';
 
@@ -399,7 +399,7 @@ $txt['max_image_width'] = 'Max display width of posted or attached images';
 $txt['max_image_height'] = 'Max display height of posted or attached images';
 
 $txt['automanage_attachments'] = 'Choose the method for the management of the attachment directories';
-$txt['attachments_normal'] = '(Manual) SMF default behavior';
+$txt['attachments_normal'] = '(Manual) Default behavior';
 $txt['attachments_auto_years'] = '(Auto) Subdivide by years';
 $txt['attachments_auto_months'] = '(Auto) Subdivide by years and months';
 $txt['attachments_auto_days'] = '(Auto) Subdivide by years, months and days';
@@ -523,7 +523,7 @@ $txt['logs'] = 'Logs';
 $txt['generate_reports'] = 'Reports';
 
 $txt['update_available'] = 'Update available';
-$txt['update_message'] = 'You\'re using an outdated version of SMF, which contains some bugs which have since been fixed.
+$txt['update_message'] = 'You\'re using an outdated version of Social Bricks, which contains some bugs which have since been fixed.
 	It is recommended that you <a href="#" id="update-link">update your forum</a> to the latest version as soon as possible. It only takes a minute!';
 
 $txt['manageposts'] = 'Posts and Topics';

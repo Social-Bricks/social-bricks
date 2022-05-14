@@ -901,7 +901,7 @@ function sb_db_error_backtrace($error_message, $log_message = '', $error_type = 
 	foreach (debug_backtrace() as $step)
 	{
 		// Found it?
-		if (strpos($step['function'], 'query') === false && !in_array(substr($step['function'], 0, 7), array('sb_db_', 'preg_re', 'db_erro', 'call_us')) && strpos($step['function'], '__') !== 0)
+		if (strpos($step['function'], 'query') === false && !in_array(substr($step['function'], 0, 6), array('sb_db_', 'preg_r', 'db_err', 'call_u')) && strpos($step['function'], '__') !== 0)
 		{
 			$log_message .= '<br>Function: ' . $step['function'];
 			break;

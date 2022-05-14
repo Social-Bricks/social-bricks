@@ -13,19 +13,19 @@ $txt['install_step_databasechange'] = 'Database Population';
 $txt['install_step_admin'] = 'Admin account';
 $txt['install_step_delete'] = 'Finalize install';
 
-$txt['sb_installer'] = 'SMF Installer';
+$txt['sb_installer'] = 'Social Bricks Installer';
 $txt['installer_language'] = 'Language';
 $txt['installer_language_set'] = 'Set';
 $txt['congratulations'] = 'Congratulations, the installation process is complete!';
-$txt['congratulations_help'] = 'If at any time you need support, or SMF fails to work properly, please remember that <a href="https://www.simplemachines.org/community/index.php" target="_blank" rel="noopener">help is available</a> if you need it.';
+$txt['congratulations_help'] = 'If at any time you need support, or Social Bricks fails to work properly, please remember that <a href="https://socialbricks.org/" target="_blank" rel="noopener">help is available</a> if you need it.';
 $txt['still_writable'] = 'Your installation directory is still writable. It is a good idea to chmod it, so that it is not writable for security reasons.';
 $txt['delete_installer'] = 'Click here to delete this install.php file now.';
 $txt['delete_installer_maybe'] = '<em>(does not work on all servers.)</em>';
 $txt['go_to_your_forum'] = 'Now you can see <a href="%1$s">your newly installed forum</a> and begin to use it. You should first make sure you are logged in, after which you will be able to access the administration center.';
-$txt['good_luck'] = 'Good luck!<br>Simple Machines';
+$txt['good_luck'] = 'Good luck!<br>Social Bricks';
 
 $txt['install_welcome'] = 'Welcome';
-$txt['install_welcome_desc'] = 'Welcome to SMF. This script will guide you through the process for installing %1$s. We will gather a few details about your forum over the next few steps, and after a couple of minutes your forum will be ready for use.';
+$txt['install_welcome_desc'] = 'Welcome to Social Bricks. This script will guide you through the process for installing %1$s. We will gather a few details about your forum over the next few steps, and after a couple of minutes your forum will be ready for use.';
 $txt['install_no_https'] = 'Your environment does not support https streams.  Certain functions, e.g., receiving updates from simplemachines.org, will not work.';
 $txt['install_no_mbstring'] = 'Your environment does not support the required mbstring library.  Please enable mbstring and try again.';
 $txt['install_no_fileinfo'] = 'Your environment does not support the required fileinfo library.  Please enable fileinfo and try again.';
@@ -34,20 +34,20 @@ $txt['install_all_lovely'] = 'We have completed some initial tests on your serve
 $txt['user_refresh_install'] = 'Forum Refreshed';
 $txt['user_refresh_install_desc'] = 'While installing, the installer found that (with the details you provided) one or more of the tables this installer might create already existed.<br>Any missing tables in your installation have been recreated with the default data, but no data was deleted from existing tables.';
 
-$txt['default_topic_subject'] = 'Welcome to SMF!';
-$txt['default_topic_message'] = 'Welcome to Simple Machines Forum!<br><br>We hope you enjoy using your forum.&nbsp; If you have any problems, please feel free to [url=https://www.simplemachines.org/community/index.php]ask us for assistance[/url].<br><br>Thanks!<br>Simple Machines';
+$txt['default_topic_subject'] = 'Welcome to Social Bricks!';
+$txt['default_topic_message'] = 'Welcome to Social Bricks!<br><br>We hope you enjoy using your forum.&nbsp; If you have any problems, please feel free to [url=https://socialbricks.org/]ask us for assistance[/url].<br><br>Thanks!<br>Social Bricks';
 $txt['default_board_name'] = 'General Discussion';
 $txt['default_board_description'] = 'Feel free to talk about anything and everything in this board.';
 $txt['default_category_name'] = 'General Category';
 $txt['default_time_format'] = '%b %d, %Y, %I:%M %p';
-$txt['default_news'] = 'SMF - Just Installed!';
+$txt['default_news'] = 'Social Bricks - Just Installed!';
 $txt['default_reserved_names'] = 'Admin\nWebmaster\nGuest\nroot';
 $txt['default_fugue_smileyset_name'] = 'Fugue\'s Set';
 $txt['default_alienine_smileyset_name'] = 'Alienine\'s Set';
 $txt['default_aaron_smileyset_name'] = 'Aaron\'s Set';
 $txt['default_akyhne_smileyset_name'] = 'Akyhne\'s Set';
 $txt['default_legacy_smileyset_name'] = '2.0 Default';
-$txt['default_theme_name'] = 'SMF Default Theme - Curve2';
+$txt['default_theme_name'] = 'Social Bricks Default Theme - Curve2';
 
 $txt['default_administrator_group'] = 'Administrator';
 $txt['default_global_moderator_group'] = 'Global Moderator';
@@ -86,7 +86,7 @@ $txt['error_message_try_again'] = 'to try this step again.';
 $txt['error_message_bad_try_again'] = 'to try installing anyway, but note that this is <em>strongly</em> discouraged.';
 
 $txt['install_settings'] = 'Forum Settings';
-$txt['install_settings_info'] = 'This page requires you to define a few key settings for your forum. SMF has automatically detected key settings for you.';
+$txt['install_settings_info'] = 'This page requires you to define a few key settings for your forum. Social Bricks has automatically detected key settings for you.';
 $txt['install_settings_name'] = 'Forum name';
 $txt['install_settings_name_info'] = 'This is the name of your forum, ie. &quot;The Testing Forum&quot;.';
 $txt['install_settings_name_default'] = 'My Community';
@@ -118,7 +118,7 @@ $txt['db_settings_username_info'] = 'Fill in the username you need to connect to
 $txt['db_settings_password'] = 'Password';
 $txt['db_settings_password_info'] = 'Put the password you need to connect to your database here.<br>If you do not know this, you should try the password to your ftp account.';
 $txt['db_settings_database'] = 'Database name';
-$txt['db_settings_database_info'] = 'Fill in the name of the database you want to use for SMF to store its data in.';
+$txt['db_settings_database_info'] = 'Fill in the name of the database you want to use for Social Bricks to store its data in.';
 $txt['db_settings_database_info_note'] = 'If this database does not exist, this installer will try to create it.';
 $txt['db_settings_port'] = 'Database port';
 $txt['db_settings_port_info'] = 'Leave blank to use the default';
@@ -143,7 +143,7 @@ $txt['user_settings_again_info'] = '(just for verification).';
 $txt['user_settings_admin_email'] = 'Administrator email address';
 $txt['user_settings_admin_email_info'] = 'Provide your email address. This must be a valid email address!';
 $txt['user_settings_server_email'] = 'Webmaster email address';
-$txt['user_settings_server_email_info'] = 'Provide <strong>the email address that SMF will use to send emails</strong>. This must be a valid email address!';
+$txt['user_settings_server_email_info'] = 'Provide <strong>the email address that Social Bricks will use to send emails</strong>. This must be a valid email address!';
 $txt['user_settings_database'] = 'Database Password';
 $txt['user_settings_database_info'] = 'For security reasons, the installer requires that you supply the database password to create an administrator account.';
 $txt['user_settings_skip'] = 'Skip';
@@ -154,18 +154,18 @@ $txt['ftp_checking_writable'] = 'Checking files are writable';
 $txt['ftp_setup'] = 'FTP Connection Information';
 $txt['ftp_setup_info'] = 'This installer can connect via FTP to fix the files that need to be writable and are not. If this does not work for you, you will have to go in manually and make the files writable. Please note that this does not support SSL right now.';
 $txt['ftp_setup_why'] = 'What is this step for?';
-$txt['ftp_setup_why_info'] = 'Some files need to be writable for SMF to work properly. This step allows you to let the installer make them writable for you. However, in some cases it will not work. In this case, please make the following files 777 (writable, 755 on some hosts):';
+$txt['ftp_setup_why_info'] = 'Some files need to be writable for Social Bricks to work properly. This step allows you to let the installer make them writable for you. However, in some cases it will not work. In this case, please make the following files 777 (writable, 755 on some hosts):';
 $txt['ftp_setup_again'] = 'to test if these files are writable again.';
 
 $txt['error_missing_files'] = 'Unable to find crucial installation files in the directory of this script!<br><br>Please make sure you uploaded the entire installation package, including the sql file, and then try again.';
 $txt['error_session_save_path'] = 'Please inform your host that the <strong>session.save_path specified in php.ini</strong> is not valid!  It needs to be changed to a directory that <strong>exists</strong> and is <strong>writable</strong> by the user PHP is running under.<br>';
-$txt['error_windows_chmod'] = 'You are on a windows server and some crucial files are not writable. Please ask your host to give <strong>write permissions</strong> to the user PHP is running under for the files in your SMF installation. The following files or directories need to be writable:';
+$txt['error_windows_chmod'] = 'You are on a windows server and some crucial files are not writable. Please ask your host to give <strong>write permissions</strong> to the user PHP is running under for the files in your Social Bricks installation. The following files or directories need to be writable:';
 $txt['settings_error'] = 'Your settings could not be saved to Settings.php.';
 $txt['error_ftp_no_connect'] = 'Unable to connect to FTP server with this combination of details.';
 $txt['error_db_file'] = 'Cannot find database source script! Please check file %1$s is within your forum source directory.';
 $txt['error_db_connect'] = 'Cannot connect to the database server with the supplied data.<br><br>If you are not sure about what to type in, please contact your host.';
 $txt['error_db_connect_settings'] = 'Cannot connect to the database server.<br><br>Please check that the database info variables are correct in Settings.php.';
-$txt['error_db_database'] = 'The installer was unable to access the &quot;<em>%1$s</em>&quot; database. With some hosts, you have to create the database in your administration panel before SMF can use it. Some also add prefixes, such as your username, to your database names.';
+$txt['error_db_database'] = 'The installer was unable to access the &quot;<em>%1$s</em>&quot; database. With some hosts, you have to create the database in your administration panel before Social Bricks can use it. Some also add prefixes, such as your username, to your database names.';
 $txt['error_db_queries'] = 'Some of the queries were not executed properly. This could be caused by an unsupported (development or old) version of your database software.<br><br>Technical information about the queries:';
 $txt['error_db_queries_line'] = 'Line #';
 $txt['error_db_missing'] = 'The installer was unable to detect any database support in PHP. Please ask your host to ensure that PHP was compiled with the desired database, or that the proper extension is being loaded.';
@@ -176,16 +176,16 @@ $txt['error_user_settings_no_password'] = 'Your password must be at least four c
 $txt['error_user_settings_taken'] = 'Sorry, a member is already registered with that username and/or email address.<br><br>A new account has not been created.';
 $txt['error_user_settings_query'] = 'A database error occurred while trying to create an administrator. This error was:';
 $txt['error_sourcefile_missing'] = 'Unable to find the Sources/%1$s file. Please make sure it was uploaded properly, and then try again.';
-$txt['error_db_alter_priv'] = 'The database account you specified does not have permission to ALTER, CREATE, and/or DROP tables in the database. This is necessary for SMF to function properly.';
-$txt['error_versions_do_not_match'] = 'The installer has detected another version of SMF already installed with the specified information. If you are trying to upgrade, you should use the upgrader, not the installer.<br><br>Otherwise, you may wish to use different information, or create a backup and then delete the data currently in the database.';
-$txt['error_mod_security'] = 'The installer has detected the mod_security module is installed on your web server. Mod_security will block submitted forms even before SMF gets a say in anything. SMF has a built-in security scanner that will work more effectively than mod_security and that won\'t block submitted forms.<br><br><a href="https://www.simplemachines.org/redirect/mod_security">More information about disabling mod_security</a>';
-$txt['error_mod_security_no_write'] = 'The installer has detected the mod_security module is installed on your web server. Mod_security will block submitted forms even before SMF gets a say in anything. SMF has a built-in security scanner that will work more effectively than mod_security and that won\'t block submitted forms.<br><br><a href="https://www.simplemachines.org/redirect/mod_security">More information about disabling mod_security</a><br><br>Alternatively, you may wish to use your ftp client to chmod .htaccess in the forum directory to be writable (777), and then refresh this page.';
-$txt['error_utf8_version'] = 'The current version of your database doesn\'t support the use of the UTF-8 character set. You can still install SMF without any problems, but only with UTF-8 support unchecked. If you would like to switch over to UTF-8 in the future (e.g. after the database server of your forum has been upgraded to version >= %1$s), you can convert your forum to UTF-8 through the admin panel.';
+$txt['error_db_alter_priv'] = 'The database account you specified does not have permission to ALTER, CREATE, and/or DROP tables in the database. This is necessary for Social Bricks to function properly.';
+$txt['error_versions_do_not_match'] = 'The installer has detected another version of Social Bricks already installed with the specified information. If you are trying to upgrade, you should use the upgrader, not the installer.<br><br>Otherwise, you may wish to use different information, or create a backup and then delete the data currently in the database.';
+$txt['error_mod_security'] = 'The installer has detected the mod_security module is installed on your web server. Mod_security will block submitted forms even before Social Bricks gets a say in anything. Social Bricks has a built-in security scanner that will work more effectively than mod_security and that won\'t block submitted forms.<br><br><a href="https://www.simplemachines.org/redirect/mod_security">More information about disabling mod_security</a>';
+$txt['error_mod_security_no_write'] = 'The installer has detected the mod_security module is installed on your web server. Mod_security will block submitted forms even before Social Bricks gets a say in anything. Social Bricks has a built-in security scanner that will work more effectively than mod_security and that won\'t block submitted forms.<br><br><a href="https://www.simplemachines.org/redirect/mod_security">More information about disabling mod_security</a><br><br>Alternatively, you may wish to use your ftp client to chmod .htaccess in the forum directory to be writable (777), and then refresh this page.';
+$txt['error_utf8_version'] = 'The current version of your database doesn\'t support the use of the UTF-8 character set. You can still install Social Bricks without any problems, but only with UTF-8 support unchecked. If you would like to switch over to UTF-8 in the future (e.g. after the database server of your forum has been upgraded to version >= %1$s), you can convert your forum to UTF-8 through the admin panel.';
 $txt['error_valid_admin_email_needed'] = 'You have not entered a valid email address for your administrator account.';
 $txt['error_valid_server_email_needed'] = 'You have not entered a valid webmaster email address.';
-$txt['error_already_installed'] = 'The installer has detected that you already have SMF installed. It is strongly advised that you do <strong>not</strong> try to overwrite an existing installation, continuing with installation <strong>may result in the loss or corruption of existing data</strong>.<br><br>If you wish to upgrade please visit the <a href="https://www.simplemachines.org">Simple Machines Website</a> and download the latest <em>upgrade</em> package.<br><br>If you wish to overwrite your existing installation, including all data, it is recommended that you delete the existing database tables and replace Settings.php and try again.';
+$txt['error_already_installed'] = 'The installer has detected that you already have Social Bricks installed. It is strongly advised that you do <strong>not</strong> try to overwrite an existing installation, continuing with installation <strong>may result in the loss or corruption of existing data</strong>.<br><br>If you wish to upgrade please visit the <a href="https://www.simplemachines.org">Simple Machines Website</a> and download the latest <em>upgrade</em> package.<br><br>If you wish to overwrite your existing installation, including all data, it is recommended that you delete the existing database tables and replace Settings.php and try again.';
 $txt['error_warning_notice'] = 'Warning!';
-$txt['error_script_outdated'] = 'This install script is out of date! The current version of SMF is %1$s, but this install script is for %2$s.<br><br>
+$txt['error_script_outdated'] = 'This install script is out of date! The current version of Social Bricks is %1$s, but this install script is for %2$s.<br><br>
 	It is recommended that you visit the <a href="https://www.simplemachines.org">Simple Machines</a> website to ensure you are installing the latest version.';
 $txt['error_invalid_characters_username'] = 'Invalid character used in Username.';
 $txt['error_username_too_long'] = 'Username may only be up to 25 characters long.';
@@ -193,7 +193,7 @@ $txt['error_username_left_empty'] = 'Username field was left empty.';
 $txt['error_utf8_support'] = 'The database you are trying to use is not using UTF-8 charset';
 
 $txt['ftp_login'] = 'Your FTP connection information';
-$txt['ftp_login_info'] = 'This web installer needs your FTP information in order to automate the installation for you. Please note that none of this information is saved in your installation, it is just used to setup SMF.';
+$txt['ftp_login_info'] = 'This web installer needs your FTP information in order to automate the installation for you. Please note that none of this information is saved in your installation, it is just used to setup Social Bricks.';
 $txt['ftp_server'] = 'Server';
 $txt['ftp_server_info'] = 'The address (often localhost) and port for your FTP server.';
 $txt['ftp_port'] = 'Port';
@@ -204,7 +204,7 @@ $txt['ftp_password_info'] = 'The password to login with. <em>This will not be sa
 $txt['ftp_path'] = 'Install Path';
 $txt['ftp_path_info'] = 'This is the <em>relative</em> path you use in your FTP client.';
 $txt['ftp_path_found_info'] = 'The path in the box above was automatically detected.';
-$txt['ftp_path_help'] = 'Your FTP path is the path you see when you log in to your FTP client. It commonly starts with &quot;<pre>www</pre>&quot;, &quot;<pre>public_html</pre>&quot;, or &quot;<pre>httpdocs</pre>&quot;, but it should include the directory SMF is in too, such as &quot;/public_html/forum&quot;. It is different from your URL and full path.<br><br>Files in this path may be overwritten, so make sure it is correct.';
+$txt['ftp_path_help'] = 'Your FTP path is the path you see when you log in to your FTP client. It commonly starts with &quot;<pre>www</pre>&quot;, &quot;<pre>public_html</pre>&quot;, or &quot;<pre>httpdocs</pre>&quot;, but it should include the directory Social Bricks is in too, such as &quot;/public_html/forum&quot;. It is different from your URL and full path.<br><br>Files in this path may be overwritten, so make sure it is correct.';
 $txt['ftp_path_help_close'] = 'Close';
 $txt['ftp_connect'] = 'Connect';
 
@@ -223,7 +223,7 @@ $txt['upgrade_step_convertutf'] = 'Convert to UTF-8';
 $txt['upgrade_step_convertjson'] = 'Convert serialized strings to JSON';
 $txt['upgrade_step_delete'] = 'Delete Upgrade.php';
 
-$txt['upgrade_upgrade_utility'] = 'SMF Upgrade Utility';
+$txt['upgrade_upgrade_utility'] = 'Social Bricks Upgrade Utility';
 $txt['upgrade_warning'] = 'Warning!';
 $txt['upgrade_critical_error'] = 'Critical Error!';
 $txt['upgrade_continue'] = 'Continue';
@@ -290,11 +290,11 @@ $txt['upgrade_executing'] = 'Executing:';
 $txt['upgrade_of'] = 'of';
 $txt['upgrade_admin_login'] = 'Admin Login:';
 $txt['upgrade_admin_disabled'] = '(DISABLED)';
-$txt['upgrade_done'] = 'Upgrade complete. Now you are ready to use <a href="%1$s/index.php">your installation of SMF</a>. Hope you like it!';
+$txt['upgrade_done'] = 'Upgrade complete. Now you are ready to use <a href="%1$s/index.php">your installation of Social Bricks</a>. Hope you like it!';
 
 $txt['upgrade_delete_now'] = 'Delete upgrade.php and its data files now';
 $txt['upgrade_delete_server'] = '(does not work on all servers).';
-$txt['upgrade_problems'] = 'If you had any problems with this upgrade, or have any problems using SMF, please do not hesitate to <a href="%1$s">ask us for assistance</a>.';
+$txt['upgrade_problems'] = 'If you had any problems with this upgrade, or have any problems using Social Bricks, please do not hesitate to <a href="%1$s">ask us for assistance</a>.';
 $txt['upgrade_luck'] = 'Best of luck,';
 
 $txt['upgrade_ftp_login'] = 'Your FTP connection information';
@@ -304,10 +304,10 @@ $txt['upgrade_ftp_files'] = 'The following files need to be made writable to con
 $txt['upgrade_ftp_shell'] = 'If you have a shell account, the command below can automatically correct permissions on these files';
 $txt['upgrade_ftp_error'] = 'The following error was encountered when trying to connect:';
 
-$txt['upgrade_ready_proceed'] = 'Thank you for choosing to upgrade to SMF %1$s. All files appear to be in place and the upgrade can now proceed.';
+$txt['upgrade_ready_proceed'] = 'Thank you for choosing to upgrade to Social Bricks %1$s. All files appear to be in place and the upgrade can now proceed.';
 $txt['upgrade_error_script_js'] = 'The upgrade script cannot find script.js or it is out of date. Make sure your theme paths are correct. You can download a setting checker tool from the <a href="%1$s">Simple Machines Website</a>';
 $txt['upgrade_warning_lots_data'] = 'This upgrade script has detected that your forum contains a lot of data which needs upgrading. This process may take quite some time depending on your server and forum size, and for very large forums (~300,000 messages) may take several hours to complete.';
-$txt['upgrade_warning_out_of_date'] = 'This upgrade script is out of date! The current version of SMF is <em id="sbVersion" style="white-space: nowrap;">??</em> but this upgrade script is for <em id="yourVersion" style="white-space: nowrap;">%1$s</em>.<br><br>It is recommended that you visit the <a href="%2$s">Simple Machines Website</a> to ensure you are upgrading to the latest version.';
+$txt['upgrade_warning_out_of_date'] = 'This upgrade script is out of date! The current version of Social Bricks is <em id="sbVersion" style="white-space: nowrap;">??</em> but this upgrade script is for <em id="yourVersion" style="white-space: nowrap;">%1$s</em>.<br><br>It is recommended that you visit the <a href="%2$s">Simple Machines Website</a> to ensure you are upgrading to the latest version.';
 
 $txt['upgrade_forumdir_settings'] = 'It looks as if your forum directory settings <em>might</em> be incorrect. Your forum directory is currently set to &quot;%1$s&quot;, but should probably be &quot;%2$s&quot;. Settings.php currently lists your paths as:';
 $txt['upgrade_forumdir'] = 'Forum Directory:';
@@ -344,14 +344,14 @@ $txt['mmessage'] = 'Don\'t worry, your forum will be updated shortly. It will on
 
 // Upgrader error messages
 // argument(s): template name (if applicable)
-$txt['error_unexpected_template_call'] = 'Error: Unexpected call to use the %1$s template. Please copy and paste all the text above and visit the SMF support forum to let the developers know that there is a bug.';
+$txt['error_unexpected_template_call'] = 'Error: Unexpected call to use the %1$s template. Please copy and paste all the text above and visit the Social Bricks support forum to let the developers know that there is a bug.';
 $txt['error_invalid_template'] = 'Upgrade aborted!  Invalid template: template_%1$s';
-$txt['error_lang_index_missing'] = 'The upgrader was unable to find language files for the selected language, %1$s.<br>SMF will not work in this language without the language files installed.<br><br>Please either install them, or <a href="%2$s?step=0;lang=english">try English instead</a>.';
+$txt['error_lang_index_missing'] = 'The upgrader was unable to find language files for the selected language, %1$s.<br>Social Bricks will not work in this language without the language files installed.<br><br>Please either install them, or <a href="%2$s?step=0;lang=english">try English instead</a>.';
 $txt['error_upgrade_files_missing'] = 'The upgrader was unable to find some crucial files.<br><br>Please make sure you uploaded all of the files included in the package, including the Themes, Sources, and other directories.';
 $txt['error_upgrade_old_files'] = 'The upgrader found some old or outdated files.<br><br>Please make certain you uploaded the new versions of all the files included in the package.';
 $txt['error_upgrade_old_lang_files'] = 'The upgrader found some old or outdated language files for the selected language, %1$s.<br><br>Please make certain you uploaded the new versions of all the files included in the package, even the theme and language files for the default theme.<br>&nbsp;&nbsp;&nbsp;[<a href="%2$s?skiplang">SKIP</a>] [<a href="%2$s?lang=english">Try English</a>]';
-$txt['error_php_too_low'] = 'Warning!  You do not appear to have a version of PHP installed on your webserver that meets SMF\'s minimum installations requirements.<br><br>Please ask your host to upgrade.';
-$txt['error_db_too_low'] = 'Your %1$s version does not meet the minimum requirements of SMF.<br><br>Please ask your host to upgrade.';
+$txt['error_php_too_low'] = 'Warning!  You do not appear to have a version of PHP installed on your webserver that meets Social Bricks\'s minimum installations requirements.<br><br>Please ask your host to upgrade.';
+$txt['error_db_too_low'] = 'Your %1$s version does not meet the minimum requirements of Social Bricks.<br><br>Please ask your host to upgrade.';
 $txt['error_db_privileges'] = 'The %1$s user you have set in Settings.php does not have proper privileges.<br><br>Please ask your host to give this user the ALTER, CREATE, and DROP privileges.';
 $txt['error_dir_not_writable'] = 'The directory: %1$s has to be writable to continue the upgrade. Please make sure permissions are correctly set to allow this.';
 $txt['error_cache_not_found'] = 'The cache directory could not be found.<br><br>Please make sure you have a directory called &quot;cache&quot; in your forum directory before continuing.';
@@ -362,7 +362,7 @@ $txt['warning_lang_old'] = 'The language files for your selected language, %1$s,
 $txt['warning_lang_missing'] = 'The upgrader could not find the &quot;Install&quot; language file for your selected language, %1$s. Upgrade will continue with the forum default, %2$s.';
 
 // Page titles
-$txt['updating_smf_installation'] = 'Updating Your SMF Installation!';
+$txt['updating_smf_installation'] = 'Updating Your Social Bricks Installation!';
 $txt['upgrade_options'] = 'Upgrade Options';
 $txt['backup_database'] = 'Backup Database';
 $txt['database_changes'] = 'Database Changes';

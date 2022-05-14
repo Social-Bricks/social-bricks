@@ -20,12 +20,12 @@ abstract class CacheApi
 	const APIS_DEFAULT = 'FileBased';
 
 	/**
-	 * @var string The maximum SMF version that this will work with.
+	 * @var string The maximum Social Bricks version that this will work with.
 	 */
 	protected $version_compatible = '2.1.999';
 
 	/**
-	 * @var string The minimum SMF version that this will work with.
+	 * @var string The minimum Social Bricks version that this will work with.
 	 */
 	protected $min_version = '2.1 RC1';
 
@@ -105,7 +105,7 @@ abstract class CacheApi
 			$mtime = filemtime(realpath($_SERVER['SCRIPT_FILENAME']));
 		}
 
-		$this->prefix = md5($boardurl . $mtime) . '-SMF-';
+		$this->prefix = md5($boardurl . $mtime) . '-SOCIALBRICKS-';
 
 		return true;
 	}
@@ -185,7 +185,7 @@ abstract class CacheApi
 	}
 
 	/**
-	 * Gets the latest version of SMF this is compatible with.
+	 * Gets the latest version of Social Bricks this is compatible with.
 	 *
 	 * @access public
 	 * @return string the value of $key.

@@ -152,7 +152,7 @@ class Sqlite extends CacheApi implements CacheApiInterface
 	}
 
 	/**
-	 * Sets the $cachedir or uses the SMF default $cachedir..
+	 * Sets the $cachedir or uses our default $cachedir..
 	 *
 	 * @access public
 	 *
@@ -164,7 +164,7 @@ class Sqlite extends CacheApi implements CacheApiInterface
 	{
 		global $cachedir, $cachedir_sqlite, $sourcedir;
 
-		// If its invalid, use SMF's.
+		// If its invalid, use ours.
 		if (!isset($dir) || !is_writable($dir))
 		{
 			if (!isset($cachedir_sqlite) || !is_writable($cachedir_sqlite))
