@@ -427,7 +427,7 @@ function buildXmlFeed($xml_format, $xml_data, $feed_meta, $subaction)
 	<updated>' . smf_gmstrftime('%Y-%m-%dT%H:%M:%SZ') . '</updated>
 	<id>' . $feed_meta['source'] . '</id>
 	<subtitle>' . $feed_meta['desc'] . '</subtitle>
-	<generator uri="https://www.simplemachines.org" version="' . SMF_VERSION . '">SMF</generator>';
+	<generator uri="https://www.simplemachines.org" version="' . SB_VERSION . '">SMF</generator>';
 
 		if (!empty($feed_meta['icon']))
 			$context['feed']['header'] .= '
@@ -494,7 +494,7 @@ function buildXmlFeed($xml_format, $xml_data, $feed_meta, $subaction)
 	else
 	{
 		$context['feed']['header'] .= '
-<smf:xml-feed xml:lang="' . strtr($txt['lang_locale'], '_', '-') . '"' . $ns_string . ' version="' . SMF_VERSION . '" forum-name="' . $context['forum_name'] . '" forum-url="' . $scripturl . '"' . (!empty($feed_meta['title']) && $feed_meta['title'] != $context['forum_name'] ? ' title="' . $feed_meta['title'] . '"' : '') . (!empty($feed_meta['desc']) ? ' description="' . $feed_meta['desc'] . '"' : '') . ' source="' . $feed_meta['source'] . '" generated-date-localized="' . strip_tags(timeformat(time(), false, 'forum')) . '" generated-date-UTC="' . smf_gmstrftime('%F %T') . '"' . (!empty($feed_meta['page']) ? ' page="' . $feed_meta['page'] . '"' : '') . '>';
+<smf:xml-feed xml:lang="' . strtr($txt['lang_locale'], '_', '-') . '"' . $ns_string . ' version="' . SB_VERSION . '" forum-name="' . $context['forum_name'] . '" forum-url="' . $scripturl . '"' . (!empty($feed_meta['title']) && $feed_meta['title'] != $context['forum_name'] ? ' title="' . $feed_meta['title'] . '"' : '') . (!empty($feed_meta['desc']) ? ' description="' . $feed_meta['desc'] . '"' : '') . ' source="' . $feed_meta['source'] . '" generated-date-localized="' . strip_tags(timeformat(time(), false, 'forum')) . '" generated-date-UTC="' . smf_gmstrftime('%F %T') . '"' . (!empty($feed_meta['page']) ? ' page="' . $feed_meta['page'] . '"' : '') . '>';
 
 		// Hard to imagine anyone wanting to add these for the proprietary format, but just in case...
 		$context['feed']['header'] .= $extraFeedTags_string;

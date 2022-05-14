@@ -11,14 +11,14 @@
  * @version 2.1.2
  */
 
-define('SMF_VERSION', '2.1.2');
-define('SB_FULL_VERSION', 'SMF ' . SMF_VERSION);
+define('SB_VERSION', '2.1.2');
+define('SB_FULL_VERSION', 'SMF ' . SB_VERSION);
 define('SB_SOFTWARE_YEAR', '2022');
 define('DB_SCRIPT_VERSION', '2-1');
 define('SMF_INSTALLING', 1);
 
 define('JQUERY_VERSION', '3.6.0');
-define('SB_USER_AGENT', 'Mozilla/5.0 (' . php_uname('s') . ' ' . php_uname('m') . ') AppleWebKit/605.1.15 (KHTML, like Gecko) SocialBricks/' . strtr(SMF_VERSION, ' ', '.'));
+define('SB_USER_AGENT', 'Mozilla/5.0 (' . php_uname('s') . ' ' . php_uname('m') . ') AppleWebKit/605.1.15 (KHTML, like Gecko) SocialBricks/' . strtr(SB_VERSION, ' ', '.'));
 if (!defined('TIME_START'))
 	define('TIME_START', microtime(true));
 
@@ -131,7 +131,7 @@ function initialize_inputs()
 		$_SERVER['PHP_SELF'] = isset($GLOBALS['HTTP_SERVER_VARS']['PHP_SELF']) ? $GLOBALS['HTTP_SERVER_VARS']['PHP_SELF'] : 'install.php';
 
 	// In pre-release versions, report all errors.
-	if (strspn(SMF_VERSION, '1234567890.') !== strlen(SMF_VERSION))
+	if (strspn(SB_VERSION, '1234567890.') !== strlen(SB_VERSION))
 		error_reporting(E_ALL);
 	// Otherwise, report all errors except for deprecation notices.
 	else
@@ -1066,7 +1066,7 @@ function DatabasePopulation()
 		$smcFunc['db_free_result']($result);
 
 		// Do they match?  If so, this is just a refresh so charge on!
-		if (!isset($modSettings['smfVersion']) || $modSettings['smfVersion'] != SMF_VERSION)
+		if (!isset($modSettings['smfVersion']) || $modSettings['smfVersion'] != SB_VERSION)
 		{
 			$incontext['error'] = $txt['error_versions_do_not_match'];
 			return false;
@@ -1096,7 +1096,7 @@ function DatabasePopulation()
 		'{$boardurl}' => $boardurl,
 		'{$enableCompressedOutput}' => isset($_POST['compress']) ? '1' : '0',
 		'{$databaseSession_enable}' => isset($_POST['dbsession']) ? '1' : '0',
-		'{$smf_version}' => SMF_VERSION,
+		'{$smf_version}' => SB_VERSION,
 		'{$current_time}' => time(),
 		'{$sched_task_offset}' => 82800 + mt_rand(0, 86399),
 		'{$registration_method}' => isset($_POST['reg_mode']) ? $_POST['reg_mode'] : 0,
@@ -1941,12 +1941,12 @@ function template_welcome_message()
 	global $incontext, $txt;
 
 	echo '
-	<script src="https://www.simplemachines.org/smf/current-version.js?version=' . urlencode(SMF_VERSION) . '"></script>
+	<script src="https://www.simplemachines.org/smf/current-version.js?version=' . urlencode(SB_VERSION) . '"></script>
 	<form action="', $incontext['form_url'], '" method="post">
-		<p>', sprintf($txt['install_welcome_desc'], SMF_VERSION), '</p>
+		<p>', sprintf($txt['install_welcome_desc'], SB_VERSION), '</p>
 		<div id="version_warning" class="noticebox hidden">
 			<h3>', $txt['error_warning_notice'], '</h3>
-			', sprintf($txt['error_script_outdated'], '<em id="smfVersion" style="white-space: nowrap;">??</em>', '<em id="yourVersion" style="white-space: nowrap;">' . SMF_VERSION . '</em>'), '
+			', sprintf($txt['error_script_outdated'], '<em id="smfVersion" style="white-space: nowrap;">??</em>', '<em id="yourVersion" style="white-space: nowrap;">' . SB_VERSION . '</em>'), '
 		</div>';
 
 	// Show the warnings, or not.

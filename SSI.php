@@ -16,11 +16,11 @@ if (defined('SMF'))
 	return true;
 
 define('SMF', 'SSI');
-define('SMF_VERSION', '2.1.2');
-define('SB_FULL_VERSION', 'SMF ' . SMF_VERSION);
+define('SB_VERSION', '2.1.2');
+define('SB_FULL_VERSION', 'SMF ' . SB_VERSION);
 define('SB_SOFTWARE_YEAR', '2022');
 define('JQUERY_VERSION', '3.6.0');
-define('SB_USER_AGENT', 'Mozilla/5.0 (' . php_uname('s') . ' ' . php_uname('m') . ') AppleWebKit/605.1.15 (KHTML, like Gecko) SocialBricks/' . strtr(SMF_VERSION, ' ', '.'));
+define('SB_USER_AGENT', 'Mozilla/5.0 (' . php_uname('s') . ' ' . php_uname('m') . ') AppleWebKit/605.1.15 (KHTML, like Gecko) SocialBricks/' . strtr(SB_VERSION, ' ', '.'));
 
 // Just being safe...  Do this before defining globals as otherwise it unsets the global.
 foreach (array('db_character_set', 'cachedir') as $variable)
@@ -227,9 +227,9 @@ function ssi_shutdown()
 function ssi_version($output_method = 'echo')
 {
 	if ($output_method == 'echo')
-		echo SMF_VERSION;
+		echo SB_VERSION;
 	else
-		return SMF_VERSION;
+		return SB_VERSION;
 }
 
 /**

@@ -22,12 +22,12 @@
 
 // Get everything started up...
 define('SMF', 1);
-define('SMF_VERSION', '2.1.2');
-define('SB_FULL_VERSION', 'SMF ' . SMF_VERSION);
+define('SB_VERSION', '2.1.2');
+define('SB_FULL_VERSION', 'SMF ' . SB_VERSION);
 define('SB_SOFTWARE_YEAR', '2022');
 
 define('JQUERY_VERSION', '3.6.0');
-define('SB_USER_AGENT', 'Mozilla/5.0 (' . php_uname('s') . ' ' . php_uname('m') . ') AppleWebKit/605.1.15 (KHTML, like Gecko) SocialBricks/' . strtr(SMF_VERSION, ' ', '.'));
+define('SB_USER_AGENT', 'Mozilla/5.0 (' . php_uname('s') . ' ' . php_uname('m') . ') AppleWebKit/605.1.15 (KHTML, like Gecko) SocialBricks/' . strtr(SB_VERSION, ' ', '.'));
 
 if (!defined('TIME_START'))
 	define('TIME_START', microtime(true));

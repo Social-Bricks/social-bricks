@@ -1531,7 +1531,7 @@ function PackageBrowse()
 	$context['emulation_versions'] = preg_replace('~^SMF ~', '', $items);
 
 	// Current SMF version, which is selected by default
-	$context['default_version'] = SMF_VERSION;
+	$context['default_version'] = SB_VERSION;
 
 	if (!in_array($context['default_version'], $context['emulation_versions']))
 	{
@@ -1570,7 +1570,7 @@ function list_getPackages($start, $items_per_page, $sort, $params)
 	if (!@is_writable($packagesdir))
 		create_chmod_control(array($packagesdir), array('destination_url' => $scripturl . '?action=admin;area=packages', 'crash_on_error' => true));
 
-	$the_version = SMF_VERSION;
+	$the_version = SB_VERSION;
 
 	// Here we have a little code to help those who class themselves as something of gods, version emulation ;)
 	if (isset($_GET['version_emulate']) && strtr($_GET['version_emulate'], array('SMF ' => '')) == $the_version)

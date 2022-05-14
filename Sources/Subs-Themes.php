@@ -265,7 +265,7 @@ function get_theme_info($path)
 	}
 
 	// So, we have an install tag which is cool and stuff but we also need to check it and match your current SMF version...
-	$the_version = SMF_VERSION;
+	$the_version = SB_VERSION;
 	$install_versions = $theme_info_xml->fetch('theme-info/install/@for');
 
 	// The theme isn't compatible with the current SMF version.

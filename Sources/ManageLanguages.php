@@ -143,7 +143,7 @@ function list_getLanguagesList()
 	global $context, $sourcedir, $smcFunc, $txt, $scripturl;
 
 	// We're going to use this URL.
-	$url = 'https://download.simplemachines.org/fetch_language.php?version=' . urlencode(SMF_VERSION);
+	$url = 'https://download.simplemachines.org/fetch_language.php?version=' . urlencode(SB_VERSION);
 
 	// Load the class file and stick it into an array.
 	$language_list = new XmlArray(fetch_web_data($url), true);
@@ -236,7 +236,7 @@ function DownloadLanguage()
 		// Otherwise, go go go!
 		elseif (!empty($install_files))
 		{
-			read_tgz_file('https://download.simplemachines.org/fetch_language.php?version=' . urlencode(SMF_VERSION) . ';fetch=' . urlencode($_GET['did']), $boarddir, false, true, $install_files);
+			read_tgz_file('https://download.simplemachines.org/fetch_language.php?version=' . urlencode(SB_VERSION) . ';fetch=' . urlencode($_GET['did']), $boarddir, false, true, $install_files);
 
 			// Make sure the files aren't stuck in the cache.
 			package_flush_cache();
@@ -248,7 +248,7 @@ function DownloadLanguage()
 
 	// Open up the old china.
 	if (!isset($archive_content))
-		$archive_content = read_tgz_file('https://download.simplemachines.org/fetch_language.php?version=' . urlencode(SMF_VERSION) . ';fetch=' . urlencode($_GET['did']), null);
+		$archive_content = read_tgz_file('https://download.simplemachines.org/fetch_language.php?version=' . urlencode(SB_VERSION) . ';fetch=' . urlencode($_GET['did']), null);
 
 	if (empty($archive_content))
 		fatal_error($txt['add_language_error_no_response']);

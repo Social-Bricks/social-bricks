@@ -351,7 +351,7 @@ function get_settings_defs()
 				' * @copyright ' . SB_SOFTWARE_YEAR . ' Simple Machines and individual contributors',
 				' * @license https://www.simplemachines.org/about/smf/license.php BSD',
 				' *',
-				' * @version ' . SMF_VERSION,
+				' * @version ' . SB_VERSION,
 				' */',
 				'',
 			)),

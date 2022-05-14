@@ -33,7 +33,7 @@ if (isset($_GET['view']) && $_GET['view'] == 'home1')
 template_ssi_above();
 ?>
 			<h2>SSI.php Functions</h2>
-			<p><strong>Current Version:</strong> <?php echo SMF_VERSION; ?></p>
+			<p><strong>Current Version:</strong> <?php echo SB_VERSION; ?></p>
 			<p>This file is used to demonstrate the capabilities of SSI.php using PHP include functions. The examples show the include tag, then the results of it.</p>
 
 			<h2>Include Code</h2>

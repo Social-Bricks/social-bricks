@@ -264,7 +264,7 @@ class FileBased extends CacheApi implements CacheApiInterface
 	 */
 	public function getVersion()
 	{
-		return SMF_VERSION;
+		return SB_VERSION;
 	}
 }
 

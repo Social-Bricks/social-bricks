@@ -1039,7 +1039,7 @@ function parsePackageInfo(&$packageXML, $testing_only = true, $method = 'install
 
 	// We haven't found the package script yet...
 	$script = false;
-	$the_version = SMF_VERSION;
+	$the_version = SB_VERSION;
 
 	// Emulation support...
 	if (!empty($_SESSION['version_emulate']))
@@ -3122,7 +3122,7 @@ function package_validate_send($sendData)
 		$smcFunc['db_free_result']($request);
 	}
 
-	$the_version = SMF_VERSION;
+	$the_version = SB_VERSION;
 	if (!empty($_SESSION['version_emulate']))
 		$the_version = $_SESSION['version_emulate'];
 
@@ -3134,7 +3134,7 @@ function package_validate_send($sendData)
 
 		// Sub out any variables we support in the validation url.
 		$validate_url = strtr($server['validation_url'], array(
-			'{SMF_VERSION}' => urlencode($the_version)
+			'{SB_VERSION}' => urlencode($the_version)
 		));
 
 		$results = fetch_web_data($validate_url, 'data=' . json_encode($sendData));

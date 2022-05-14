@@ -21,13 +21,13 @@
  */
 
 define('SMF', 'BACKGROUND');
-define('SMF_VERSION', '2.1.2');
-define('SB_FULL_VERSION', 'SMF ' . SMF_VERSION);
+define('SB_VERSION', '2.1.2');
+define('SB_FULL_VERSION', 'SMF ' . SB_VERSION);
 define('SB_SOFTWARE_YEAR', '2022');
 define('FROM_CLI', empty($_SERVER['REQUEST_METHOD']));
 
 define('JQUERY_VERSION', '3.6.0');
-define('SB_USER_AGENT', 'Mozilla/5.0 (' . php_uname('s') . ' ' . php_uname('m') . ') AppleWebKit/605.1.15 (KHTML, like Gecko) SocialBricks/' . strtr(SMF_VERSION, ' ', '.'));
+define('SB_USER_AGENT', 'Mozilla/5.0 (' . php_uname('s') . ' ' . php_uname('m') . ') AppleWebKit/605.1.15 (KHTML, like Gecko) SocialBricks/' . strtr(SB_VERSION, ' ', '.'));
 
 // This one setting is worth bearing in mind. If you are running this from proper cron, make sure you
 // don't run this file any more frequently than indicated here. It might turn ugly if you do.

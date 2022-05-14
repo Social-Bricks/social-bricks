@@ -227,13 +227,13 @@ function PackageGBrowse()
 		if (isset($_GET['relative']))
 			$url = $url . (substr($url, -1) == '/' ? '' : '/') . $_GET['relative'];
 
-		$the_version = SMF_VERSION;
+		$the_version = SB_VERSION;
 		if (!empty($_SESSION['version_emulate']))
 			$the_version = $_SESSION['version_emulate'];
 
 		// Sub out any variables we support in the url.
 		$url = strtr($url, array(
-			'{SMF_VERSION}' => urlencode($the_version)
+			'{SB_VERSION}' => urlencode($the_version)
 		));
 
 		// Clear any "absolute" URL.  Since "server" is present, "absolute" is garbage.
@@ -325,7 +325,7 @@ function PackageGBrowse()
 			$default_title = $smcFunc['htmlspecialchars']($listing->fetch('default-website/@title'));
 	}
 
-	$the_version = SMF_VERSION;
+	$the_version = SB_VERSION;
 	if (!empty($_SESSION['version_emulate']))
 		$the_version = $_SESSION['version_emulate'];
 
@@ -569,13 +569,13 @@ function PackageDownload()
 		if (empty($url))
 			fatal_lang_error('couldnt_connect', false);
 
-		$the_version = SMF_VERSION;
+		$the_version = SB_VERSION;
 		if (!empty($_SESSION['version_emulate']))
 			$the_version = $_SESSION['version_emulate'];
 
 		// Sub out any variables we support in the url.
 		$url = strtr($url, array(
-			'{SMF_VERSION}' => urlencode($the_version)
+			'{SB_VERSION}' => urlencode($the_version)
 		));
 
 		$url = $url . '/';
