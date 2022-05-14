@@ -201,14 +201,10 @@ $txt['package_db_remove_table'] = 'Drop table &quot;%1$s&quot;';
 $txt['package_db_remove_column'] = 'Remove column &quot;%2$s&quot; from &quot;%1$s&quot;';
 $txt['package_db_remove_index'] = 'Remove index &quot;%2$s&quot; from &quot;%1$s&quot;';
 
-$txt['package_advanced_button'] = 'Emulation Support';
 $txt['package_advanced_options'] = 'Advanced Options';
-$txt['package_apply'] = 'Apply';
-$txt['package_emulate'] = 'Emulate Version';
+
 $txt['package_emulate_install'] = 'Install Emulating:';
 $txt['package_emulate_uninstall'] = 'Uninstall Emulating:';
-$txt['package_emulate_revert'] = 'Revert';
-$txt['package_emulate_desc'] = 'Sometimes packages are locked to early versions of SMF but remain compatible with a newer version. Here you can choose to &quot;emulate&quot; a different SMF version within the package manager.';
 
 // Operations.
 $txt['operation_find'] = 'Find';

@@ -1513,33 +1513,6 @@ function PackageBrowse()
 
 	$context['sub_template'] = 'browse';
 	$context['default_list'] = 'packages_lists';
-
-	$get_versions = $smcFunc['db_query']('', '
-		SELECT data FROM {db_prefix}admin_info_files WHERE filename={string:versionsfile} AND path={string:smf}',
-		array(
-			'versionsfile' => 'latest-versions.txt',
-			'smf' => '/smf/',
-		)
-	);
-
-	$data = $smcFunc['db_fetch_assoc']($get_versions);
-	$smcFunc['db_free_result']($get_versions);
-
-	// Decode the data.
-	$items = $smcFunc['json_decode']($data['data'], true);
-
-	$context['emulation_versions'] = preg_replace('~^Social Bricks ~', '', $items);
-
-	// Current Social Bricks version, which is selected by default
-	$context['default_version'] = SB_VERSION;
-
-	if (!in_array($context['default_version'], $context['emulation_versions']))
-	{
-		$context['emulation_versions'][] = $context['default_version'];
-	}
-
-	// Version we're currently emulating, if any
-	$context['selected_version'] = preg_replace('~^Social Bricks ~', '', $context['forum_version']);
 }
 
 /**
@@ -1571,26 +1544,6 @@ function list_getPackages($start, $items_per_page, $sort, $params)
 		create_chmod_control(array($packagesdir), array('destination_url' => $scripturl . '?action=admin;area=packages', 'crash_on_error' => true));
 
 	$the_version = SB_VERSION;
-
-	// Here we have a little code to help those who class themselves as something of gods, version emulation ;)
-	if (isset($_GET['version_emulate']) && strtr($_GET['version_emulate'], array('Social Bricks ' => '')) == $the_version)
-	{
-		unset($_SESSION['version_emulate']);
-	}
-	elseif (isset($_GET['version_emulate']))
-	{
-		if (($_GET['version_emulate'] === 0 || $_GET['version_emulate'] === SB_FULL_VERSION) && isset($_SESSION['version_emulate']))
-			unset($_SESSION['version_emulate']);
-		elseif ($_GET['version_emulate'] !== 0)
-			$_SESSION['version_emulate'] = strtr($_GET['version_emulate'], array('-' => ' ', '+' => ' ', 'Social Bricks ' => ''));
-	}
-	if (!empty($_SESSION['version_emulate']))
-	{
-		$context['forum_version'] = 'Social Bricks ' . $_SESSION['version_emulate'];
-		$the_version = $_SESSION['version_emulate'];
-	}
-	if (isset($_SESSION['single_version_emulate']))
-		unset($_SESSION['single_version_emulate']);
 
 	if (empty($installed_mods))
 	{
