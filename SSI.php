@@ -11,13 +11,13 @@
  * @version 2.1.2
  */
 
-// Don't do anything if SMF is already loaded.
-if (defined('SMF'))
+// Don't do anything if Social Bricks is already loaded.
+if (defined('SOCIALBRICKS'))
 	return true;
 
-define('SMF', 'SSI');
+define('SOCIALBRICKS', 'SSI');
 define('SB_VERSION', '2.1.2');
-define('SB_FULL_VERSION', 'SMF ' . SB_VERSION);
+define('SB_FULL_VERSION', 'Social Bricks ' . SB_VERSION);
 define('SB_SOFTWARE_YEAR', '2022');
 define('JQUERY_VERSION', '3.6.0');
 define('SB_USER_AGENT', 'Mozilla/5.0 (' . php_uname('s') . ' ' . php_uname('m') . ') AppleWebKit/605.1.15 (KHTML, like Gecko) SocialBricks/' . strtr(SB_VERSION, ' ', '.'));
@@ -55,7 +55,7 @@ if (empty($cachedir) || !is_dir($cachedir) || !is_writable($cachedir))
 $ssi_error_reporting = error_reporting(!empty($db_show_debug) ? E_ALL : E_ALL & ~E_DEPRECATED);
 /* Set this to one of three values depending on what you want to happen in the case of a fatal error.
 	false:	Default, will just load the error sub template and die - not putting any theme layers around it.
-	true:	Will load the error sub template AND put the SMF layers around it (Not useful if on total custom pages).
+	true:	Will load the error sub template AND put the Social Bricks layers around it (Not useful if on total custom pages).
 	string:	Name of a callback function to call in the event of an error to allow you to define your own methods. Will die after function returns.
 */
 $ssi_on_error_method = false;
@@ -219,7 +219,7 @@ function ssi_shutdown()
 }
 
 /**
- * Show the SMF version.
+ * Show the Social Bricks version.
  *
  * @param string $output_method If 'echo', displays the version, otherwise returns it
  * @return void|string Returns nothing if output_method is 'echo', otherwise returns the version
@@ -233,7 +233,7 @@ function ssi_version($output_method = 'echo')
 }
 
 /**
- * Show the full SMF version string.
+ * Show the full Social Bricks version string.
  *
  * @param string $output_method If 'echo', displays the full version string, otherwise returns it
  * @return void|string Returns nothing if output_method is 'echo', otherwise returns the version string
@@ -247,7 +247,7 @@ function ssi_full_version($output_method = 'echo')
 }
 
 /**
- * Show the SMF software year.
+ * Show the Social Bricks software year.
  *
  * @param string $output_method If 'echo', displays the software year, otherwise returns it
  * @return void|string Returns nothing if output_method is 'echo', otherwise returns the software year

@@ -642,7 +642,7 @@ function sendmail($to, $subject, $message, $from = null, $message_id = null, $se
 
 	if ($message_id !== null && empty($modSettings['mail_no_message_id']))
 		$headers .= 'Message-ID: <' . md5($scripturl . microtime()) . '-' . $message_id . strstr(empty($modSettings['mail_from']) ? $webmaster_email : $modSettings['mail_from'], '@') . '>' . $line_break;
-	$headers .= 'X-Mailer: SMF' . $line_break;
+	$headers .= 'X-Mailer: Social Bricks' . $line_break;
 
 	// Pass this to the integration before we start modifying the output -- it'll make it easier later.
 	if (in_array(false, call_integration_hook('integrate_outgoing_email', array(&$subject, &$message, &$headers, &$to_array)), true))
@@ -652,7 +652,7 @@ function sendmail($to, $subject, $message, $from = null, $message_id = null, $se
 	$orig_message = $message;
 
 	// The mime boundary separates the different alternative versions.
-	$mime_boundary = 'SMF-' . md5($message . time());
+	$mime_boundary = 'SocialBricks-' . md5($message . time());
 
 	// Using mime, as it allows to send a plain unencoded alternative.
 	$headers .= 'Mime-Version: 1.0' . $line_break;
@@ -857,7 +857,7 @@ function AddMailQueue($flush = false, $to_array = array(), $subject = '', $messa
 	}
 
 	// If they are using SSI there is a good chance obExit will never be called.  So lets be nice and flush it for them.
-	if (SMF === 'SSI' || SMF === 'BACKGROUND')
+	if (SOCIALBRICKS === 'SSI' || SOCIALBRICKS === 'BACKGROUND')
 		return AddMailQueue(true);
 
 	return true;

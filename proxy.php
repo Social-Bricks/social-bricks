@@ -13,14 +13,14 @@
  * @version 2.1.2
  */
 
-if (!defined('SMF'))
-	define('SMF', 'PROXY');
+if (!defined('SOCIALBRICKS'))
+	define('SOCIALBRICKS', 'PROXY');
 
 if (!defined('SB_VERSION'))
 	define('SB_VERSION', '2.1.2');
 
 if (!defined('SB_FULL_VERSION'))
-	define('SB_FULL_VERSION', 'SMF ' . SB_VERSION);
+	define('SB_FULL_VERSION', 'Social Bricks ' . SB_VERSION);
 
 if (!defined('SB_SOFTWARE_YEAR'))
 	define('SB_SOFTWARE_YEAR', '2022');
@@ -313,7 +313,7 @@ class ProxyServer
 	}
 }
 
-if (SMF == 'PROXY')
+if (SOCIALBRICKS == 'PROXY')
 {
 	$proxy = new ProxyServer();
 	$proxy->serve();

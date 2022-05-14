@@ -295,7 +295,7 @@ function loadProfileFields($force_reload = false)
 						validateUsername($context['id_member'], trim(normalize_spaces(sanitize_chars($value, 1, ' '), true, true, array('no_breaks' => true, 'replace_tabs' => true, 'collapse_hspace' => true))));
 						updateMemberData($context['id_member'], array('member_name' => $value));
 
-						// Call this here so any integrated systems will know about the name change (resetPassword() takes care of this if we're letting SMF generate the password)
+						// Call this here so any integrated systems will know about the name change (resetPassword() takes care of this if we're letting Social Bricks generate the password)
 						call_integration_hook('integrate_reset_pass', array($cur_profile['member_name'], $value, $_POST['passwrd1']));
 					}
 				}
@@ -4280,7 +4280,7 @@ function groupMembership2($profile_vars, $post_errors, $memID)
 }
 
 /**
- * Provides interface to setup Two Factor Auth in SMF
+ * Provides interface to setup Two Factor Auth in Social Bricks
  *
  * @param int $memID The ID of the member
  */
@@ -4360,7 +4360,7 @@ function tfasetup($memID)
 }
 
 /**
- * Provides interface to disable two-factor authentication in SMF
+ * Provides interface to disable two-factor authentication in Social Bricks
  *
  * @param int $memID The ID of the member
  */

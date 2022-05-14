@@ -1779,7 +1779,7 @@ function export_load_css_js()
 	global $context, $modSettings, $sourcedir, $smcFunc, $user_info;
 
 	// If we're not running a background task, we need to preserve any existing CSS and JavaScript.
-	if (SMF != 'BACKGROUND')
+	if (SOCIALBRICKS != 'BACKGROUND')
 	{
 		foreach (array('css_files', 'css_header', 'javascript_vars', 'javascript_files', 'javascript_inline') as $var)
 		{
@@ -1950,7 +1950,7 @@ function export_load_css_js()
 	}
 
 	// Finally, restore the real values.
-	if (SMF !== 'BACKGROUND')
+	if (SOCIALBRICKS !== 'BACKGROUND')
 	{
 		foreach (array('css_files', 'css_header', 'javascript_vars', 'javascript_files', 'javascript_inline') as $var)
 		{

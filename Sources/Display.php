@@ -2,7 +2,7 @@
 
 /**
  * This is perhaps the most important and probably most accessed file in all
- * of SMF.  This file controls topic, message, and attachment display.
+ * of Social Bricks.  This file controls topic, message, and attachment display.
  *
  * Social Bricks
  *

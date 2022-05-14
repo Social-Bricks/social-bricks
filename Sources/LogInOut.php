@@ -46,7 +46,7 @@ function Login()
 	 * We have a valid header indicating a JQXHR request.  This is not sent during a cross domain request.
 	 * OR we have found:
 	 *		1. valid cors host
-	 *  	2. A header indicating a SMF request
+	 *  	2. A header indicating a Social Bricks request
 	 *  	3. The url has a ajax in either the GET or POST
 	 *  These are not intended for security, but ensuring the request is intended for a JQXHR response.
 	*/
@@ -119,7 +119,7 @@ function Login2()
 	 * We have a valid header indicating a JQXHR request.  This is not sent during a cross domain request.
 	 * OR we have found:
 	 *		1. valid cors host
-	 *  	2. A header indicating a SMF request
+	 *  	2. A header indicating a Social Bricks request
 	 *  	3. The url has a ajax in either the GET or POST
 	 *  These are not intended for security, but ensuring the request is intended for a JQXHR response.
 	*/
@@ -421,7 +421,7 @@ function Login2()
 		// Allows mods to easily extend the $other_passwords array
 		call_integration_hook('integrate_other_passwords', array(&$other_passwords));
 
-		// Whichever encryption it was using, let's make it use SMF's now ;).
+		// Whichever encryption it was using, let's make it use bcrypt now.
 		if (in_array($user_settings['passwd'], $other_passwords))
 		{
 			$user_settings['passwd'] = hash_password($user_settings['member_name'], un_htmlspecialchars($_POST['passwrd']));
@@ -499,7 +499,7 @@ function LoginTFA()
 	 * We have a valid header indicating a JQXHR request.  This is not sent during a cross domain request.
 	 * OR we have found:
 	 *		1. valid cors host
-	 *  	2. A header indicating a SMF request
+	 *  	2. A header indicating a Social Bricks request
 	 *  	3. The url has a ajax in either the GET or POST
 	 *  These are not intended for security, but ensuring the request is intended for a JQXHR response.
 	*/

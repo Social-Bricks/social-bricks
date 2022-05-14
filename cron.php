@@ -20,9 +20,9 @@
  * @version 2.1.2
  */
 
-define('SMF', 'BACKGROUND');
+define('SOCIALBRICKS', 'BACKGROUND');
 define('SB_VERSION', '2.1.2');
-define('SB_FULL_VERSION', 'SMF ' . SB_VERSION);
+define('SB_FULL_VERSION', 'Social Bricks ' . SB_VERSION);
 define('SB_SOFTWARE_YEAR', '2022');
 define('FROM_CLI', empty($_SERVER['REQUEST_METHOD']));
 

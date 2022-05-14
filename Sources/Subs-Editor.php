@@ -451,7 +451,7 @@ function html_to_bbc($text)
 		// Keep track of the number of nested list levels.
 		$listDepth = 0;
 
-		// Map what we can expect from the HTML to what is supported by SMF.
+		// Map what we can expect from the HTML to what is supported by Social Bricks.
 		$listTypeMapping = array(
 			'1' => 'decimal',
 			'A' => 'upper-alpha',
@@ -2308,7 +2308,7 @@ function AutoSuggestHandler($checkRegistered = null)
 	$searchTypes = array(
 		'member' => 'Member',
 		'membergroups' => 'MemberGroups',
-		'versions' => 'SMFVersions',
+		'versions' => 'SBVersions',
 	);
 
 	call_integration_hook('integrate_autosuggest', array(&$searchTypes));
@@ -2431,11 +2431,11 @@ function AutoSuggest_Search_MemberGroups()
 }
 
 /**
- * Provides a list of possible SMF versions to use in emulation
+ * Provides a list of possible Social Bricks versions to use in emulation
  *
  * @return array An array of data for displaying the suggestions
  */
-function AutoSuggest_Search_SMFVersions()
+function AutoSuggest_Search_SBVersions()
 {
 	global $smcFunc;
 
@@ -2465,7 +2465,7 @@ function AutoSuggest_Search_SMFVersions()
 		foreach ($possible_versions as $ver)
 		{
 			$ver = trim($ver);
-			if (strpos($ver, 'SMF') === 0)
+			if (strpos($ver, 'Social Bricks') === 0)
 				$versions[] = $ver;
 		}
 	}

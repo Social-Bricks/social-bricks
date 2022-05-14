@@ -97,7 +97,7 @@ function showAttachment()
 				WHERE a.id_attach = {int:attach}
 				LIMIT 1',
 				array(
-					'source' => 'SMF',
+					'source' => 'Social Bricks',
 					'attach' => $attachId,
 				)
 			);
@@ -164,10 +164,10 @@ function showAttachment()
 	// No access if you don't have permission to see this attachment.
 	if
 	(
-		// This was from SMF or a hook didn't claim it.
+		// This was from Social Bricks or a hook didn't claim it.
 		(
 			empty($file['source'])
-			|| $file['source'] == 'SMF'
+			|| $file['source'] == 'Social Bricks'
 		)
 		&& (
 			// No id_msg and no id_member, so we don't know where its from.

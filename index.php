@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This, as you have probably guessed, is the crux on which SMF functions.
+ * This, as you have probably guessed, is the crux on which Social Bricks functions.
  * Everything should start here, so all the setup and security is done
  * properly.  The most interesting part of this file is the action array in
  * the sb_main() function.  It is formatted as so:
@@ -21,9 +21,9 @@
  */
 
 // Get everything started up...
-define('SMF', 1);
+define('SOCIALBRICKS', 1);
 define('SB_VERSION', '2.1.2');
-define('SB_FULL_VERSION', 'SMF ' . SB_VERSION);
+define('SB_FULL_VERSION', 'Social Bricks ' . SB_VERSION);
 define('SB_SOFTWARE_YEAR', '2022');
 
 define('JQUERY_VERSION', '3.6.0');

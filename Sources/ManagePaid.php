@@ -1990,7 +1990,7 @@ function loadSubscriptions()
  * Load all the payment gateways.
  * Checks the Sources directory for any files fitting the format of a payment gateway,
  * loads each file to check it's valid, includes each file and returns the
- * function name and whether it should work with this version of SMF.
+ * function name and whether it should work with this version of Social Bricks.
  *
  * @return array An array of information about available payment gateways
  */
@@ -2010,7 +2010,7 @@ function loadPaymentGateways()
 				$header = fread($fp, 4096);
 				fclose($fp);
 
-				if (strpos($header, '// SMF Payment Gateway: ' . strtolower($matches[1])) !== false)
+				if (strpos($header, '// Social Bricks Payment Gateway: ' . strtolower($matches[1])) !== false)
 				{
 					require_once($sourcedir . '/' . $file);
 

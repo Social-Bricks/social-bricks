@@ -92,7 +92,7 @@ function AutoTask()
 			if (!empty($row['callable']))
 				$task_string = $row['callable'];
 
-			// Default SMF task or old mods?
+			// Default Social Bricks task or old mods?
 			elseif (function_exists('scheduled_' . $row['task']))
 				$task_string = 'scheduled_' . $row['task'];
 
@@ -1048,7 +1048,7 @@ function loadEssentialThemeData()
 }
 
 /**
- * This retieves data (e.g. last version of SMF) from sm.org
+ * This retieves data (e.g. last version of Social Bricks) from sm.org
  */
 function scheduled_fetchSMfiles()
 {

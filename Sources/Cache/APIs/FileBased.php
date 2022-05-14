@@ -123,7 +123,7 @@ class FileBased extends CacheApi implements CacheApiInterface
 			$this->prefix . strtr($key, ':/', '-_')
 		);
 
-		// SMF Data returns $value and $expired.  $expired has a unix timestamp of when this expires.
+		// Cache data returns $value and $expired.  $expired has a unix timestamp of when this expires.
 		if (file_exists($file) && ($raw = $this->readFile($file)) !== false)
 		{
 			if (($value = sb_json_decode($raw, true, false)) !== array() && $value['expiration'] >= time())
@@ -179,7 +179,7 @@ class FileBased extends CacheApi implements CacheApiInterface
 		if (!is_dir($this->cachedir))
 			return;
 
-		// Remove the files in SMF's own disk cache, if any
+		// Remove the files in the disk cache, if any
 		$files = new GlobIterator($this->cachedir . '/' . $type . '*.cache', FilesystemIterator::NEW_CURRENT_AND_KEY);
 
 		foreach ($files as $file => $info)
@@ -199,7 +199,7 @@ class FileBased extends CacheApi implements CacheApiInterface
 		// We don't worry about $cachedir here, since the key is based on the real $cachedir.
 		parent::invalidateCache();
 
-		// Since SMF is file based, be sure to clear the statcache.
+		// Since this is file based, be sure to clear the statcache.
 		clearstatcache();
 
 		return true;
@@ -230,7 +230,7 @@ class FileBased extends CacheApi implements CacheApiInterface
 	}
 
 	/**
-	 * Sets the $cachedir or uses the SMF default $cachedir..
+	 * Sets the $cachedir or uses the default $cachedir..
 	 *
 	 * @access public
 	 * @param string $dir A valid path
@@ -240,7 +240,7 @@ class FileBased extends CacheApi implements CacheApiInterface
 	{
 		global $cachedir;
 
-		// If its invalid, use SMF's.
+		// If its invalid, use the default.
 		if (is_null($dir) || !is_writable($dir))
 			$this->cachedir = $cachedir;
 

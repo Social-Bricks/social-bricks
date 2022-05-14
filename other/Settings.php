@@ -56,7 +56,7 @@ $language = 'english';
  *
  * @var string
  */
-$boardurl = 'http://127.0.0.1/smf';
+$boardurl = 'http://127.0.0.1/socialbricks';
 /**
  * Email address to send emails from. (like noreply@yourdomain.com.)
  *
@@ -68,7 +68,7 @@ $webmaster_email = 'noreply@myserver.com';
  *
  * @var string
  */
-$cookiename = 'SMFCookie11';
+$cookiename = 'SBCookie11';
 
 ########## Database Info ##########
 /**

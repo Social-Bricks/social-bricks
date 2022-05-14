@@ -1061,7 +1061,7 @@ function parsePackageInfo(&$packageXML, $testing_only = true, $method = 'install
 		// They specified certain versions this part is for.
 		if ($this_method->exists('@for'))
 		{
-			// Don't keep going if this won't work for this version of SMF.
+			// Don't keep going if this won't work for this version of Social Bricks.
 			if (!matchPackageVersion($the_version, $this_method->fetch('@for')))
 				continue;
 		}

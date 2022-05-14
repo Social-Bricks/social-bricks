@@ -139,7 +139,7 @@ function pauseRepairProcess($to_fix, $current_step_description, $max_substep = 0
 	$return = true;
 
 	// If we are from a SSI/cron job, we can allow this through, if enabled.
-	if ((SMF === 'SSI' || SMF === 'BACKGROUND') && php_sapi_name() == 'cli' && !empty($context['no_pause_process']))
+	if ((SOCIALBRICKS === 'SSI' || SOCIALBRICKS === 'BACKGROUND') && php_sapi_name() == 'cli' && !empty($context['no_pause_process']))
 		$return = true;
 	elseif ($force)
 		$return = false;

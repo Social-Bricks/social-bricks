@@ -1528,9 +1528,9 @@ function PackageBrowse()
 	// Decode the data.
 	$items = $smcFunc['json_decode']($data['data'], true);
 
-	$context['emulation_versions'] = preg_replace('~^SMF ~', '', $items);
+	$context['emulation_versions'] = preg_replace('~^Social Bricks ~', '', $items);
 
-	// Current SMF version, which is selected by default
+	// Current Social Bricks version, which is selected by default
 	$context['default_version'] = SB_VERSION;
 
 	if (!in_array($context['default_version'], $context['emulation_versions']))
@@ -1539,7 +1539,7 @@ function PackageBrowse()
 	}
 
 	// Version we're currently emulating, if any
-	$context['selected_version'] = preg_replace('~^SMF ~', '', $context['forum_version']);
+	$context['selected_version'] = preg_replace('~^Social Bricks ~', '', $context['forum_version']);
 }
 
 /**
@@ -1573,7 +1573,7 @@ function list_getPackages($start, $items_per_page, $sort, $params)
 	$the_version = SB_VERSION;
 
 	// Here we have a little code to help those who class themselves as something of gods, version emulation ;)
-	if (isset($_GET['version_emulate']) && strtr($_GET['version_emulate'], array('SMF ' => '')) == $the_version)
+	if (isset($_GET['version_emulate']) && strtr($_GET['version_emulate'], array('Social Bricks ' => '')) == $the_version)
 	{
 		unset($_SESSION['version_emulate']);
 	}
@@ -1582,11 +1582,11 @@ function list_getPackages($start, $items_per_page, $sort, $params)
 		if (($_GET['version_emulate'] === 0 || $_GET['version_emulate'] === SB_FULL_VERSION) && isset($_SESSION['version_emulate']))
 			unset($_SESSION['version_emulate']);
 		elseif ($_GET['version_emulate'] !== 0)
-			$_SESSION['version_emulate'] = strtr($_GET['version_emulate'], array('-' => ' ', '+' => ' ', 'SMF ' => ''));
+			$_SESSION['version_emulate'] = strtr($_GET['version_emulate'], array('-' => ' ', '+' => ' ', 'Social Bricks ' => ''));
 	}
 	if (!empty($_SESSION['version_emulate']))
 	{
-		$context['forum_version'] = 'SMF ' . $_SESSION['version_emulate'];
+		$context['forum_version'] = 'Social Bricks ' . $_SESSION['version_emulate'];
 		$the_version = $_SESSION['version_emulate'];
 	}
 	if (isset($_SESSION['single_version_emulate']))
@@ -1675,7 +1675,7 @@ function list_getPackages($start, $items_per_page, $sort, $params)
 				// This package is currently NOT installed.  Check if it can be.
 				if (!$packageInfo['is_installed'] && $packageInfo['xml']->exists('install'))
 				{
-					// Check if there's an install for *THIS* version of SMF.
+					// Check if there's an install for *THIS* version of Social Bricks.
 					$installs = $packageInfo['xml']->set('install');
 					foreach ($installs as $install)
 					{
@@ -1705,10 +1705,10 @@ function list_getPackages($start, $items_per_page, $sort, $params)
 				{
 					$upgrades = $packageInfo['xml']->set('upgrade');
 
-					// First go through, and check against the current version of SMF.
+					// First go through, and check against the current version of Social Bricks.
 					foreach ($upgrades as $upgrade)
 					{
-						// Even if it is for this SMF, is it for the installed version of the mod?
+						// Even if it is for this Social Bricks, is it for the installed version of the mod?
 						if (!$upgrade->exists('@for') || matchPackageVersion($the_version, $upgrade->fetch('@for')))
 							if (!$upgrade->exists('@from') || matchPackageVersion($installed_mods[$packageInfo['id']]['version'], $upgrade->fetch('@from')))
 							{
@@ -1722,7 +1722,7 @@ function list_getPackages($start, $items_per_page, $sort, $params)
 				{
 					$uninstalls = $packageInfo['xml']->set('uninstall');
 
-					// Can we find any uninstallation methods that work for this SMF version?
+					// Can we find any uninstallation methods that work for this Social Bricks version?
 					foreach ($uninstalls as $uninstall)
 					{
 						if (!$uninstall->exists('@for') || matchPackageVersion($the_version, $uninstall->fetch('@for')))

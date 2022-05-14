@@ -66,7 +66,7 @@ function template_control_richedit($editor_id, $smileyContainer = null, $bbcCont
 				oSmileyBox: null,
 				oBBCBox: null
 			});
-			smf_editorArray[smf_editorArray.length] = oEditorHandle_', $editor_id, ';
+			sb_editorArray[sb_editorArray.length] = oEditorHandle_', $editor_id, ';
 		</script>';
 }
 

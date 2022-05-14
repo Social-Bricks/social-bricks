@@ -143,12 +143,12 @@ interface search_api_interface
 abstract class search_api implements search_api_interface
 {
 	/**
-	 * @var string The maximum SMF version that this will work with.
+	 * @var string The maximum Social Bricks version that this will work with.
 	 */
 	public $version_compatible = '2.1.999';
 
 	/**
-	 * @var string The minimum SMF version that this will work with.
+	 * @var string The minimum Social Bricks version that this will work with.
 	 */
 	public $min_version = '2.1 RC1';
 

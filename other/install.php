@@ -12,7 +12,7 @@
  */
 
 define('SB_VERSION', '2.1.2');
-define('SB_FULL_VERSION', 'SMF ' . SB_VERSION);
+define('SB_FULL_VERSION', 'Social Bricks ' . SB_VERSION);
 define('SB_SOFTWARE_YEAR', '2022');
 define('DB_SCRIPT_VERSION', '2-1');
 define('SB_INSTALLING', 1);
@@ -28,8 +28,8 @@ $GLOBALS['required_php_version'] = '8.0.0';
 // ><html dir="ltr"><head><title>Error!</title></head><body>Sorry, this installer requires PHP!<div style="display: none;">
 
 // Let's pull in useful classes
-if (!defined('SMF'))
-	define('SMF', 1);
+if (!defined('SOCIALBRICKS'))
+	define('SOCIALBRICKS', 1);
 
 require_once('Sources/Class-Package.php');
 require_once('Sources/Subs-Compat.php');
@@ -344,8 +344,8 @@ function load_database()
 
 	// Need this to check whether we need the database password.
 	require(dirname(__FILE__) . '/Settings.php');
-	if (!defined('SMF'))
-		define('SMF', 1);
+	if (!defined('SOCIALBRICKS'))
+		define('SOCIALBRICKS', 1);
 	if (empty($smcFunc))
 		$smcFunc = array();
 
@@ -779,7 +779,7 @@ function DatabaseSettings()
 			'db_server' => $_POST['db_server'],
 			'db_prefix' => $db_prefix,
 			// The cookiename is special; we want it to be the same if it ever needs to be reinstalled with the same info.
-			'cookiename' => 'SMFCookie' . abs(crc32($_POST['db_name'] . preg_replace('~[^A-Za-z0-9_$]~', '', $_POST['db_prefix'])) % 1000),
+			'cookiename' => 'SBCookie' . abs(crc32($_POST['db_name'] . preg_replace('~[^A-Za-z0-9_$]~', '', $_POST['db_prefix'])) % 1000),
 		);
 
 		// Only set the port if we're not using the default
@@ -811,8 +811,8 @@ function DatabaseSettings()
 		}
 
 		// Now include it for database functions!
-		if (!defined('SMF'))
-			define('SMF', 1);
+		if (!defined('SOCIALBRICKS'))
+			define('SOCIALBRICKS', 1);
 
 		$modSettings['disableQueryCheck'] = true;
 		if (empty($smcFunc))
@@ -1083,7 +1083,7 @@ function DatabasePopulation()
 		)
 	);
 
-	// Windows likes to leave the trailing slash, which yields to C:\path\to\SMF\/attachments...
+	// Windows likes to leave the trailing slash, which yields to C:\path\to\SocialBricks\/attachments...
 	if (substr(__DIR__, -1) == '\\')
 		$attachdir = __DIR__ . 'attachments';
 	else
@@ -1765,12 +1765,12 @@ function installer_updateSettingsFile($vars, $rebuild = false)
 	return updateSettingsFile($vars, false, $rebuild);
 }
 
-// Create an .htaccess file to prevent mod_security. SMF has filtering built-in.
+// Create an .htaccess file to prevent mod_security. Social Bricks has filtering built-in.
 function fixModSecurity()
 {
 	$htaccess_addition = '
 <IfModule mod_security.c>
-	# Turn off mod_security filtering.  SMF is a big boy, it doesn\'t need its hands held.
+	# Turn off mod_security filtering.  Social Bricks does its own contextually-appropriate filtering.
 	SecFilterEngine Off
 
 	# The below probably isn\'t needed, but better safe than sorry.
@@ -1935,7 +1935,7 @@ function template_install_below()
 </html>';
 }
 
-// Welcome them to the wonderful world of SMF!
+// Welcome them to the wonderful world of Social Bricks!
 function template_welcome_message()
 {
 	global $incontext, $txt;
@@ -1969,7 +1969,7 @@ function template_welcome_message()
 				if (!(\'sbVersion\' in window))
 					return;
 
-				window.sbVersion = window.sbVersion.replace(/SMF\s?/g, \'\');
+				window.sbVersion = window.sbVersion.replace(/Social Bricks\s?/g, \'\');
 
 				smfVer = document.getElementById("sbVersion");
 				yourVer = document.getElementById("yourVersion");

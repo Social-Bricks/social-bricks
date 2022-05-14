@@ -884,8 +884,8 @@ function get_date_or_time_format($type = '', $format = '')
  * This does not use the system's strftime library or locale setting,
  * so results may vary in a few cases from the results of strftime():
  *
- *  - %a, %A, %b, %B, %p, %P: Output will use SMF's language strings
- *    to localize these values. If SMF's language strings have not
+ *  - %a, %A, %b, %B, %p, %P: Output will use Social Bricks's language strings
+ *    to localize these values. If Social Bricks's language strings have not
  *    been loaded, PHP's default English strings will be used.
  *
  *  - %c, %x, %X: Output will always use ISO format.
@@ -3965,7 +3965,7 @@ function parsesmileys(&$message)
 function highlight_php_code($code)
 {
 	// Remove special characters.
-	$code = un_htmlspecialchars(strtr($code, array('<br />' => "\n", '<br>' => "\n", "\t" => 'SMF_TAB();', '&#91;' => '[')));
+	$code = un_htmlspecialchars(strtr($code, array('<br />' => "\n", '<br>' => "\n", "\t" => 'SB_TAB();', '&#91;' => '[')));
 
 	$oldlevel = error_reporting(0);
 
@@ -3974,7 +3974,7 @@ function highlight_php_code($code)
 	error_reporting($oldlevel);
 
 	// Yes, I know this is kludging it, but this is the best way to preserve tabs from PHP :P.
-	$buffer = preg_replace('~SMF_TAB(?:</(?:font|span)><(?:font color|span style)="[^"]*?">)?\\(\\);~', '<pre style="display: inline;">' . "\t" . '</pre>', $buffer);
+	$buffer = preg_replace('~SB_TAB(?:</(?:font|span)><(?:font color|span style)="[^"]*?">)?\\(\\);~', '<pre style="display: inline;">' . "\t" . '</pre>', $buffer);
 
 	return strtr($buffer, array('\'' => '&#039;', '<code>' => '', '</code>' => ''));
 }
@@ -4006,7 +4006,7 @@ function get_proxied_url($url)
 	if ($parsedurl['host'] === parse_iri($boardurl, PHP_URL_HOST))
 		return strtr($url, array('http://' => 'https://'));
 
-	// By default, use SMF's own image proxy script
+	// By default, use Social Bricks's own image proxy script
 	$proxied_url = strtr($boardurl, array('http://' => 'https://')) . '/proxy.php?request=' . urlencode($url) . '&hash=' . hash_hmac('sha1', $url, $image_proxy_secret);
 
 	// Allow mods to easily implement an alternative proxy
@@ -4649,7 +4649,7 @@ function theme_copyright()
 	global $forum_copyright;
 
 	// Don't display copyright for things like SSI.
-	if (SMF !== 1)
+	if (SOCIALBRICKS !== 1)
 		return;
 
 	// Put in the version...
@@ -5894,7 +5894,7 @@ function remove_integration_function($hook, $function, $permanent = true, $file 
 
 /**
  * Receives a string and tries to figure it out if its a method or a function.
- * If a method is found, it looks for a "#" which indicates SMF should create a new instance of the given class.
+ * If a method is found, it looks for a "#" which indicates Social Bricks should create a new instance of the given class.
  * Checks the string/array for is_callable() and return false/fatal_lang_error is the given value results in a non callable string/array.
  * Prepare and returns a callable depending on the type of method/function found.
  *
@@ -7216,7 +7216,7 @@ function sb_chmod($file, $value = 0)
  * Wrapper function for json_decode() with error handling.
  *
  * @param string $json The string to decode.
- * @param bool $returnAsArray To return the decoded string as an array or an object, SMF only uses Arrays but to keep on compatibility with json_decode its set to false as default.
+ * @param bool $returnAsArray To return the decoded string as an array or an object, Social Bricks only uses Arrays but to keep on compatibility with json_decode its set to false as default.
  * @param bool $logIt To specify if the error will be logged if theres any.
  * @return array Either an empty array or the decoded data as an array.
  */
@@ -7675,8 +7675,8 @@ function ssl_cert_found($url)
  * Check if the passed url has a redirect to https:// by querying headers.
  *
  * Returns true if a redirect was found & false if not.
- * Note that when force_ssl = 2, SMF issues its own redirect...  So if this
- * returns true, it may be caused by SMF, not necessarily an .htaccess redirect.
+ * Note that when force_ssl = 2, Social Bricks issues its own redirect...  So if this
+ * returns true, it may be caused by Social Bricks, not necessarily an .htaccess redirect.
  *
  * @param string $url to check, in $boardurl format (no trailing slash).
  */
@@ -7721,7 +7721,7 @@ function build_query_board($userid)
 	$query_part = array();
 
 	// If we come from cron, we can't have a $user_info.
-	if (isset($user_info['id']) && $user_info['id'] == $userid && SMF != 'BACKGROUND')
+	if (isset($user_info['id']) && $user_info['id'] == $userid && SOCIALBRICKS != 'BACKGROUND')
 	{
 		$groups = $user_info['groups'];
 		$can_see_all_boards = $user_info['is_admin'] || $user_info['can_manage_boards'];
@@ -8061,10 +8061,10 @@ function url_to_iri($url)
 }
 
 /**
- * Ensures SMF's scheduled tasks are being run as intended
+ * Ensures Social Bricks's scheduled tasks are being run as intended
  *
  * If the admin activated the cron_is_real_cron setting, but the cron job is
- * not running things at least once per day, we need to go back to SMF's default
+ * not running things at least once per day, we need to go back to Social Bricks's default
  * behaviour using "web cron" JavaScript calls.
  */
 function check_cron()

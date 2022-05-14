@@ -716,7 +716,7 @@ function OptimizeTables()
 	// If there aren't any tables then I believe that would mean the world has exploded...
 	$context['num_tables'] = count($tables);
 	if ($context['num_tables'] == 0)
-		fatal_error('You appear to be running SMF in a flat file mode... fantastic!', false);
+		fatal_error('You appear to be running Social Bricks in a flat file mode... fantastic!', false);
 
 	$_REQUEST['start'] = empty($_REQUEST['start']) ? 0 : (int) $_REQUEST['start'];
 

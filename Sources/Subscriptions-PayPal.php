@@ -12,7 +12,7 @@
  */
 
 // This won't be dedicated without this - this must exist in each gateway!
-// SMF Payment Gateway: paypal
+// Social Bricks Payment Gateway: paypal
 
 /**
  * Class for returning available form data for this gateway

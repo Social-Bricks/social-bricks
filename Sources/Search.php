@@ -2283,7 +2283,7 @@ function findSearchAPI()
 		fatal_lang_error('search_api_missing');
 	require_once($sourcedir . '/SearchAPI-' . ucwords($modSettings['search_index']) . '.php');
 
-	// Create an instance of the search API and check it is valid for this version of SMF.
+	// Create an instance of the search API and check it is valid for this version of Social Bricks.
 	$search_class_name = $modSettings['search_index'] . '_search';
 	$searchAPI = new $search_class_name();
 

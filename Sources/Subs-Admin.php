@@ -114,7 +114,7 @@ function getServerVersions($checkFor)
 
 /**
  * Search through source, theme and language files to determine their version.
- * Get detailed version information about the physical SMF files on the server.
+ * Get detailed version information about the physical Social Bricks files on the server.
  *
  * - the input parameter allows to set whether to include SSI.php and whether
  *   the results should be sorted.
@@ -314,7 +314,7 @@ function get_settings_defs()
 	 *   code, e.g. 'dirname(__FILE__)'
 	 *
 	 * - If 'required' is true and a value for the variable is undefined,
-	 *   the update will be aborted. (The only exception is during the SMF
+	 *   the update will be aborted. (The only exception is during the
 	 *   installation process.)
 	 *
 	 * - If 'auto_delete' is 1 or true and the variable is empty, the variable
@@ -325,7 +325,7 @@ function get_settings_defs()
 	 *   behaves like 'auto_delete' == 0.
 	 *
 	 * - The 'is_password' element indicates that a value is a password. This
-	 *   is used primarily to tell SMF how to interpret input when the value
+	 *   is used primarily to tell Social Bricks how to interpret input when the value
 	 *   is being set to a new value.
 	 *
 	 * - The optional 'search_pattern' element defines a custom regular
@@ -354,7 +354,7 @@ function get_settings_defs()
 				' */',
 				'',
 			)),
-			'search_pattern' => '~/\*\*.*?@package\h+SMF\b.*?\*/\n{0,2}~s',
+			'search_pattern' => '~/\*\*.*?@package\h+SocialBricks\b.*?\*/\n{0,2}~s',
 		),
 		'maintenance' => array(
 			'text' => implode("\n", array(
@@ -450,7 +450,7 @@ function get_settings_defs()
 				' * @var string',
 				' */',
 			)),
-			'default' => 'SMFCookie11',
+			'default' => 'SBCookie11',
 			'type' => 'string',
 		),
 		'auth_secret' => array(
@@ -1032,7 +1032,7 @@ function updateSettingsFile($config_vars, $keep_quotes = null, $rebuild = false)
 
 	if (defined('SB_INSTALLING'))
 		$substitutions[$neg_index--] = array(
-			'search_pattern' => '~/\*.*?SMF\s+1\.\d.*?\*/~s',
+			'search_pattern' => '~/\*.*?SB\s+1\.\d.*?\*/~s',
 			'placeholder' => '',
 		);
 
@@ -1753,8 +1753,8 @@ function updateSettingsFile($config_vars, $keep_quotes = null, $rebuild = false)
  * and it performs safety checks before acting. The result is an array of the
  * values as recorded in the settings file.
  *
- * @param int $mtime Timestamp of last known good configuration. Defaults to time SMF started.
- * @param string $settingsFile The settings file. Defaults to SMF's standard Settings.php.
+ * @param int $mtime Timestamp of last known good configuration. Defaults to time Social Bricks started.
+ * @param string $settingsFile The settings file. Defaults to the standard Settings.php.
  * @return array An array of name/value pairs for all the settings in the file.
  */
 function get_current_settings($mtime = null, $settingsFile = null)
@@ -1936,7 +1936,7 @@ function safe_file_write($file, $data, $backup_file = null, $mtime = null, $appe
 }
 
 /**
- * A wrapper around var_export whose output matches SMF coding conventions.
+ * A wrapper around var_export whose output matches Social Bricks coding conventions.
  *
  * @todo Add special handling for objects?
  *

@@ -264,11 +264,11 @@ function get_theme_info($path)
 		fatal_lang_error('package_get_error_theme_not_compatible', false, SB_FULL_VERSION);
 	}
 
-	// So, we have an install tag which is cool and stuff but we also need to check it and match your current SMF version...
+	// So, we have an install tag which is cool and stuff but we also need to check it and match your current Social Bricks version...
 	$the_version = SB_VERSION;
 	$install_versions = $theme_info_xml->fetch('theme-info/install/@for');
 
-	// The theme isn't compatible with the current SMF version.
+	// The theme isn't compatible with the current Social Bricks version.
 	require_once($sourcedir . '/Subs-Package.php');
 	if (!$install_versions || !matchPackageVersion($the_version, $install_versions))
 	{

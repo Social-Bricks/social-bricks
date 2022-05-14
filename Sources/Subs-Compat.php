@@ -175,7 +175,7 @@ if (!function_exists('mb_ord'))
 	 *
 	 * @param string $string A character.
 	 * @param string|null $encoding The character encoding.
-	 *     If null, the current SMF encoding will be used, falling back to UTF-8.
+	 *     If null, the current Social Bricks encoding will be used, falling back to UTF-8.
 	 * @return int|bool The Unicode code point of the character, or false on failure.
 	 */
 	function mb_ord($string, $encoding = null)
@@ -288,7 +288,7 @@ if (!function_exists('mb_chr'))
 	 *
 	 * @param int $codepoint A Unicode codepoint value.
 	 * @param string|null $encoding The character encoding.
-	 *     If null, the current SMF encoding will be used, falling back to UTF-8.
+	 *     If null, the current Social Bricks encoding will be used, falling back to UTF-8.
 	 * @return string|bool The requested character, or false on failure.
 	 */
 	function mb_chr($codepoint, $encoding = null)
@@ -500,7 +500,7 @@ if (!function_exists('idn_to_utf8'))
  * Before PHP 8, calling a disabled internal function merely generated a
  * warning that could be easily suppressed by the @ operator. But as of PHP 8
  * a disabled internal function is treated like it is undefined, which means
- * a fatal error will be thrown and execution will halt. SMF expects the old
+ * a fatal error will be thrown and execution will halt. We expect the old
  * behaviour, so these no-op polyfills make sure that is what happens.
  */
 if (version_compare(PHP_VERSION, '8.0.0', '>='))
@@ -508,12 +508,12 @@ if (version_compare(PHP_VERSION, '8.0.0', '>='))
 	/*
 	 * This array contains function names that meet the following conditions:
 	 *
-	 * 1. SMF assumes they are defined, even if disabled. Note that prior to
+	 * 1. We assume they are defined, even if disabled. Note that prior to
 	 *    PHP 8, this was always true for internal functions.
 	 *
 	 * 2. Some hosts are known to disable them.
 	 *
-	 * 3. SMF can get by without them (as opposed to missing functions that
+	 * 3. We can get by without them (as opposed to missing functions that
 	 *    really SHOULD cause execution to halt).
 	 */
 	foreach (array('set_time_limit') as $func)

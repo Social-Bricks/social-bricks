@@ -1,6 +1,6 @@
 var sb_formSubmitted = false;
 var lastKeepAliveCheck = new Date().getTime();
-var smf_editorArray = new Array();
+var sb_editorArray = new Array();
 
 // Some very basic browser detection - from Mozilla's sniffer page.
 var ua = navigator.userAgent.toLowerCase();
@@ -638,8 +638,8 @@ function submitonce(theform)
 	sb_formSubmitted = true;
 
 	// If there are any editors warn them submit is coming!
-	for (var i = 0; i < smf_editorArray.length; i++)
-		smf_editorArray[i].doSubmit();
+	for (var i = 0; i < sb_editorArray.length; i++)
+		sb_editorArray[i].doSubmit();
 }
 function submitThisOnce(oControl)
 {
@@ -1853,7 +1853,7 @@ if (document.addEventListener)
 else
     document.attachEvent("error", avatar_fallback);
 
-// SMF Preview handler.
+// Social Bricks Preview handler.
 function sb_previewPost(oOptions)
 {
 	this.opts = oOptions;

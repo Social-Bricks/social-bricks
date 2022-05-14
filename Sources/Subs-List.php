@@ -1,7 +1,8 @@
 <?php
 
 /**
- * This file contains a standard way of displaying lists for SMF.
+ * This file contains a standard way of displaying lists for Social Bricks.
+ *
  * Social Bricks
  *
  * @package SocialBricks

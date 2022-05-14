@@ -85,7 +85,7 @@ function reloadSettings()
 		if (file_exists($boarddir . '/upgrade.php'))
 			header('location: ' . $boardurl . '/upgrade.php');
 
-		die('SMF file version (' . SB_VERSION . ') does not match SMF database version (' . $modSettings['sbVersion'] . ').<br>Run the SMF upgrader to fix this.<br><a href="https://wiki.simplemachines.org/smf/Upgrading">More information</a>.');
+		die('Social Bricks file version (' . SB_VERSION . ') does not match Social Bricks database version (' . $modSettings['sbVersion'] . ').<br>Run the Social Bricks upgrader to fix this.<br><a href="https://wiki.simplemachines.org/smf/Upgrading">More information</a>.');
 	}
 
 	$modSettings['cache_enable'] = $cache_enable;
@@ -435,7 +435,7 @@ function reloadSettings()
 		'<div>',
 	);
 
-	// These are the only valid image types for SMF attachments, by default anyway.
+	// These are the only valid image types for Social Bricks attachments, by default anyway.
 	// Note: The values are for image mime types, not file extensions.
 	$context['valid_image_types'] = array(
 		IMAGETYPE_GIF => 'gif',
@@ -592,7 +592,7 @@ function loadUserSettings()
 			$id_member = 0;
 
 		// Check if we are forcing TFA
-		$force_tfasetup = !empty($modSettings['tfa_mode']) && $modSettings['tfa_mode'] >= 2 && $id_member && empty($user_settings['tfa_secret']) && SMF != 'SSI' && !isset($_REQUEST['xml']) && (!isset($_REQUEST['action']) || $_REQUEST['action'] != '.xml');
+		$force_tfasetup = !empty($modSettings['tfa_mode']) && $modSettings['tfa_mode'] >= 2 && $id_member && empty($user_settings['tfa_secret']) && SOCIALBRICKS != 'SSI' && !isset($_REQUEST['xml']) && (!isset($_REQUEST['action']) || $_REQUEST['action'] != '.xml');
 
 		// Don't force TFA on popups
 		if ($force_tfasetup)
@@ -699,7 +699,7 @@ function loadUserSettings()
 		// 3. If it was set within this session, no need to set it again.
 		// 4. New session, yet updated < five hours ago? Maybe cache can help.
 		// 5. We're still logging in or authenticating
-		if (SMF != 'SSI' && !isset($_REQUEST['xml']) && (!isset($_REQUEST['action']) || !in_array($_REQUEST['action'], array('.xml', 'login2', 'logintfa'))) && empty($_SESSION['id_msg_last_visit']) && (empty($cache_enable) || ($_SESSION['id_msg_last_visit'] = cache_get_data('user_last_visit-' . $id_member, 5 * 3600)) === null))
+		if (SOCIALBRICKS != 'SSI' && !isset($_REQUEST['xml']) && (!isset($_REQUEST['action']) || !in_array($_REQUEST['action'], array('.xml', 'login2', 'logintfa'))) && empty($_SESSION['id_msg_last_visit']) && (empty($cache_enable) || ($_SESSION['id_msg_last_visit'] = cache_get_data('user_last_visit-' . $id_member, 5 * 3600)) === null))
 		{
 			// @todo can this be cached?
 			// Do a quick query to make sure this isn't a mistake.
@@ -2156,7 +2156,7 @@ function loadTheme($id_theme = 0, $initialize = true)
 		'xmlhttp' => true,
 		'.xml' => true,
 	);
-	if (empty($user_info['is_guest']) && empty($user_info['is_admin']) && SMF != 'SSI' && !isset($_REQUEST['xml']) && !is_filtered_request($agreement_actions, 'action'))
+	if (empty($user_info['is_guest']) && empty($user_info['is_admin']) && SOCIALBRICKS != 'SSI' && !isset($_REQUEST['xml']) && !is_filtered_request($agreement_actions, 'action'))
 	{
 		require_once($sourcedir . '/Agreement.php');
 		$can_accept_agreement = !empty($modSettings['requireAgreement']) && canRequireAgreement();
@@ -2168,7 +2168,7 @@ function loadTheme($id_theme = 0, $initialize = true)
 
 	// Check to see if we're forcing SSL
 	if (!empty($modSettings['force_ssl']) && empty($maintenance) &&
-		!httpsOn() && SMF != 'SSI')
+		!httpsOn() && SOCIALBRICKS != 'SSI')
 	{
 		if (isset($_GET['sslRedirect']))
 		{
@@ -2204,7 +2204,7 @@ function loadTheme($id_theme = 0, $initialize = true)
 		}
 
 		// Hmm... check #2 - is it just different by a www?  Send them to the correct place!!
-		if (empty($do_fix) && strtr($detected_url, array('://' => '://www.')) == $boardurl && (empty($_GET) || count($_GET) == 1) && SMF != 'SSI')
+		if (empty($do_fix) && strtr($detected_url, array('://' => '://www.')) == $boardurl && (empty($_GET) || count($_GET) == 1) && SOCIALBRICKS != 'SSI')
 		{
 			// Okay, this seems weird, but we don't want an endless loop - this will make $_GET not empty ;).
 			if (empty($_GET))
@@ -3639,7 +3639,7 @@ function loadDatabase()
 		$db_options['db_mb4'] = $db_mb4;
 
 	// If we are in SSI try them first, but don't worry if it doesn't work, we have the normal username and password we can use.
-	if (SMF == 'SSI' && !empty($ssi_db_user) && !empty($ssi_db_passwd))
+	if (SOCIALBRICKS == 'SSI' && !empty($ssi_db_user) && !empty($ssi_db_passwd))
 	{
 		$options = array_merge($db_options, array('persist' => $db_persist, 'non_fatal' => true, 'dont_select_db' => true));
 
@@ -3649,7 +3649,7 @@ function loadDatabase()
 	// Either we aren't in SSI mode, or it failed.
 	if (empty($db_connection))
 	{
-		$options = array_merge($db_options, array('persist' => $db_persist, 'dont_select_db' => SMF == 'SSI'));
+		$options = array_merge($db_options, array('persist' => $db_persist, 'dont_select_db' => SOCIALBRICKS == 'SSI'));
 
 		$db_connection = sb_db_initiate($db_server, $db_name, $db_user, $db_passwd, $db_prefix, $options);
 	}
@@ -3659,7 +3659,7 @@ function loadDatabase()
 		display_db_error();
 
 	// If in SSI mode fix up the prefix.
-	if (SMF == 'SSI')
+	if (SOCIALBRICKS == 'SSI')
 		db_fix_prefix($db_prefix, $db_name);
 }
 
@@ -3716,10 +3716,10 @@ function registerAutoLoader()
  * Try to load up a supported caching method. This is saved in $cacheAPI if we are not overriding it.
  *
  * @param string $overrideCache Try to use a different cache method other than that defined in $cache_accelerator.
- * @param bool $fallbackSMF Use the default SMF method if the accelerator fails.
+ * @param bool $fallbackfile Use the default file method if the accelerator fails.
  * @return object|false A object of $cacheAPI, or False on failure.
  */
-function loadCacheAccelerator($overrideCache = '', $fallbackSMF = true)
+function loadCacheAccelerator($overrideCache = '', $fallbackfile = true)
 {
 	global $cacheAPI, $cache_accelerator, $cache_enable;
 	global $sourcedir;
@@ -3757,7 +3757,7 @@ function loadCacheAccelerator($overrideCache = '', $fallbackSMF = true)
 		if (!$cache_api->isSupported())
 		{
 			// Can we save ourselves?
-			if (!empty($fallbackSMF) && $overrideCache == '' &&
+			if (!empty($fallbackfile) && $overrideCache == '' &&
 				$cache_class_name !== CacheApi::APIS_DEFAULT)
 				return loadCacheAccelerator(CacheApi::APIS_NAMESPACE . CacheApi::APIS_DEFAULT, false);
 
@@ -3920,7 +3920,7 @@ function cache_get_data($key, $ttl = 120)
  *  - If no type is specified will perform a complete cache clearing
  * For cache engines that do not distinguish on types, a full cache flush will be done
  *
- * @param string $type The cache type ('memcached', 'zend' or something else for SMF's file cache)
+ * @param string $type The cache type ('memcached', 'zend' or something else for Social Bricks's file cache)
  */
 function clean_cache($type = '')
 {

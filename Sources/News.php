@@ -427,7 +427,7 @@ function buildXmlFeed($xml_format, $xml_data, $feed_meta, $subaction)
 	<updated>' . sb_gmstrftime('%Y-%m-%dT%H:%M:%SZ') . '</updated>
 	<id>' . $feed_meta['source'] . '</id>
 	<subtitle>' . $feed_meta['desc'] . '</subtitle>
-	<generator uri="https://www.simplemachines.org" version="' . SB_VERSION . '">SMF</generator>';
+	<generator uri="https://socialbricks.org" version="' . SB_VERSION . '">Social Bricks</generator>';
 
 		if (!empty($feed_meta['icon']))
 			$context['feed']['header'] .= '

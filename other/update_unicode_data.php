@@ -2,7 +2,7 @@
 
 /**
  * This is an internal development file. It should NOT be included in
- * any SMF distribution packages.
+ * any distribution packages.
  *
  * This file exists to make it easy for developers to update the
  * Unicode data in Subs-Charset.php whenever a new version of the

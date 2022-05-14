@@ -171,7 +171,7 @@ function sessionWrite($session_id, $data)
 		if (!empty($db_mb4))
 			$db_options['db_mb4'] = $db_mb4;
 
-		$options = array_merge($db_options, array('persist' => $db_persist, 'dont_select_db' => SMF == 'SSI'));
+		$options = array_merge($db_options, array('persist' => $db_persist, 'dont_select_db' => SOCIALBRICKS == 'SSI'));
 
 		$db_connection = sb_db_initiate($db_server, $db_name, $db_user, $db_passwd, $db_prefix, $options);
 	}

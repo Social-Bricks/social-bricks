@@ -110,7 +110,7 @@ function is_not_guest($message = '')
 		obExit(false);
 
 	// Attempt to detect if they came from dlattach.
-	if (SMF != 'SSI' && empty($context['theme_loaded']))
+	if (SOCIALBRICKS != 'SSI' && empty($context['theme_loaded']))
 		loadTheme();
 
 	// Never redirect to an attachment
@@ -379,7 +379,7 @@ function is_not_banned($forceCheck = false)
 			'language' => $user_info['language'],
 		);
 
-		// SMF's Wipe 'n Clean(r) erases all traces.
+		// erases all trace.
 		$_GET['action'] = '';
 		$_GET['board'] = '';
 		$_GET['topic'] = '';

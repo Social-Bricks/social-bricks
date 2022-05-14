@@ -119,7 +119,7 @@ $txt['enable_likes'] = 'Enable Likes';
 // Mention settings.
 $txt['enable_mentions'] = 'Enable Mentions';
 
-$txt['caching_information'] = 'SMF supports caching through the use of accelerators. The currently supported accelerators include:
+$txt['caching_information'] = 'Social Bricks supports caching through the use of accelerators. The currently supported accelerators include:
 <ul class="normallist">
 	<li>APCu</li>
 	<li>Memcached</li>
@@ -127,8 +127,8 @@ $txt['caching_information'] = 'SMF supports caching through the use of accelerat
 	<li>Zend Platform/Performance Suite (Not Zend Optimizer)</li>
 </ul>
 Caching will work best if you have PHP compiled with one of the above optimizers, or have memcached available. If you do not have any optimizer installed SMF will do file based caching.';
-$txt['detected_no_caching'] = 'SMF has not been able to detect a compatible accelerator on your server. File based caching can be used instead.';
-$txt['detected_accelerators'] = 'SMF has detected the following accelerators: %1$s';
+$txt['detected_no_caching'] = 'Social Bricks has not been able to detect a compatible accelerator on your server. File based caching can be used instead.';
+$txt['detected_accelerators'] = 'Social Bricks has detected the following accelerators: %1$s';
 
 $txt['cache_enable'] = 'Caching Level';
 $txt['cache_off'] = 'No caching';
@@ -136,14 +136,14 @@ $txt['cache_level1'] = 'Level 1 Caching (Recommended)';
 $txt['cache_level2'] = 'Level 2 Caching';
 $txt['cache_level3'] = 'Level 3 Caching (Not Recommended)';
 $txt['cache_accelerator'] = 'Caching Accelerator';
-$txt['filebased_cache'] = 'SMF file based caching';
+$txt['filebased_cache'] = 'File based caching';
 $txt['sqlite_cache'] = 'SQLite3 database based caching';
 $txt['cachedir_sqlite'] = 'SQLite3 database cache directory';
 $txt['apcu_cache'] = 'APCu';
 $txt['memcacheimplementation_cache'] = 'Memcache';
 $txt['memcachedimplementation_cache'] = 'Memcached';
 $txt['zend_cache'] = 'Zend Platform/Performance Suite';
-$txt['cache_filebased_settings'] = 'SMF file based caching settings';
+$txt['cache_filebased_settings'] = 'File based caching settings';
 $txt['cache_sqlite_settings'] = 'SQLite3 database caching settings';
 $txt['cache_memcached_settings'] = 'Memcache/Memcached settings';
 $txt['cache_memcached_servers'] = 'Memcache/Memcached servers';
