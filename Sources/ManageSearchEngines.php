@@ -3,12 +3,12 @@
 /**
  * This file contains all the screens that relate to search engines.
  *
- * Simple Machines Forum (SMF)
+ * Social Bricks
  *
- * @package SMF
- * @author Simple Machines https://www.simplemachines.org
- * @copyright 2022 Simple Machines and individual contributors
- * @license https://www.simplemachines.org/about/smf/license.php BSD
+ * @package SocialBricks
+ * @author Social Bricks and others (see CONTRIBUTORS.md)
+ * @copyright 2022 Social Bricks contributors (full details see LICENSE file)
+ * @license 3-clause BSD (see accompanying LICENSE file)
  *
  * @version 2.1.2
  */
@@ -555,7 +555,7 @@ function logSpider()
 	// Attempt to update today's entry.
 	if ($modSettings['spider_mode'] == 1)
 	{
-		$date = smf_strftime('%Y-%m-%d', time());
+		$date = sb_strftime('%Y-%m-%d', time());
 		$smcFunc['db_query']('', '
 			UPDATE {db_prefix}log_spider_stats
 			SET last_seen = {int:current_time}, page_hits = page_hits + 1
@@ -633,7 +633,7 @@ function consolidateSpiderStats()
 	foreach ($spider_hits as $stat)
 	{
 		// We assume the max date is within the right day.
-		$date = smf_strftime('%Y-%m-%d', $stat['last_seen']);
+		$date = sb_strftime('%Y-%m-%d', $stat['last_seen']);
 		$smcFunc['db_query']('', '
 			UPDATE {db_prefix}log_spider_stats
 			SET page_hits = page_hits + {int:hits},

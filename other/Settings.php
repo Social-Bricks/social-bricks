@@ -3,12 +3,12 @@
 /**
  * The settings file contains all of the basic settings that need to be present when a database/cache is not available.
  *
- * Simple Machines Forum (SMF)
+ * Social Bricks
  *
- * @package SMF
- * @author Simple Machines https://www.simplemachines.org
- * @copyright 2022 Simple Machines and individual contributors
- * @license https://www.simplemachines.org/about/smf/license.php BSD
+ * @package SocialBricks
+ * @author Social Bricks and others (see CONTRIBUTORS.md)
+ * @copyright 2022 Social Bricks contributors (full details see LICENSE file)
+ * @license 3-clause BSD (see accompanying LICENSE file)
  *
  * @version 2.1.2
  */
@@ -56,7 +56,7 @@ $language = 'english';
  *
  * @var string
  */
-$boardurl = 'http://127.0.0.1/smf';
+$boardurl = 'http://127.0.0.1/socialbricks';
 /**
  * Email address to send emails from. (like noreply@yourdomain.com.)
  *
@@ -68,7 +68,7 @@ $webmaster_email = 'noreply@myserver.com';
  *
  * @var string
  */
-$cookiename = 'SMFCookie11';
+$cookiename = 'SBCookie11';
 
 ########## Database Info ##########
 /**
@@ -127,7 +127,7 @@ $ssi_db_passwd = '';
  *
  * @var string
  */
-$db_prefix = 'smf_';
+$db_prefix = 'sb_';
 /**
  * Use a persistent database connection
  *

@@ -1,12 +1,12 @@
 <?php
 
 /**
- * Simple Machines Forum (SMF)
+ * Social Bricks
  *
- * @package SMF
- * @author Simple Machines https://www.simplemachines.org
- * @copyright 2022 Simple Machines and individual contributors
- * @license https://www.simplemachines.org/about/smf/license.php BSD
+ * @package SocialBricks
+ * @author Social Bricks and others (see CONTRIBUTORS.md)
+ * @copyright 2022 Social Bricks contributors (full details see LICENSE file)
+ * @license 3-clause BSD (see accompanying LICENSE file)
  *
  * @version 2.1.0
  */
@@ -143,14 +143,14 @@ interface search_api_interface
 abstract class search_api implements search_api_interface
 {
 	/**
-	 * @var string The maximum SMF version that this will work with.
+	 * @var string The maximum Social Bricks version that this will work with.
 	 */
 	public $version_compatible = '2.1.999';
 
 	/**
-	 * @var string The minimum SMF version that this will work with.
+	 * @var string The minimum Social Bricks version that this will work with.
 	 */
-	public $min_smf_version = '2.1 RC1';
+	public $min_version = '2.1 RC1';
 
 	/**
 	 * @var bool Whether or not it's supported

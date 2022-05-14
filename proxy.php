@@ -3,33 +3,33 @@
 /**
  * This is a lightweight proxy for serving images, generally meant to be used alongside SSL
  *
- * Simple Machines Forum (SMF)
+ * Social Bricks
  *
- * @package SMF
- * @author Simple Machines https://www.simplemachines.org
- * @copyright 2022 Simple Machines and individual contributors
- * @license https://www.simplemachines.org/about/smf/license.php BSD
+ * @package SocialBricks
+ * @author Social Bricks and others (see CONTRIBUTORS.md)
+ * @copyright 2022 Social Bricks contributors (full details see LICENSE file)
+ * @license 3-clause BSD (see accompanying LICENSE file)
  *
  * @version 2.1.2
  */
 
-if (!defined('SMF'))
-	define('SMF', 'PROXY');
+if (!defined('SOCIALBRICKS'))
+	define('SOCIALBRICKS', 'PROXY');
 
-if (!defined('SMF_VERSION'))
-	define('SMF_VERSION', '2.1.2');
+if (!defined('SB_VERSION'))
+	define('SB_VERSION', '2.1.2');
 
-if (!defined('SMF_FULL_VERSION'))
-	define('SMF_FULL_VERSION', 'SMF ' . SMF_VERSION);
+if (!defined('SB_FULL_VERSION'))
+	define('SB_FULL_VERSION', 'Social Bricks ' . SB_VERSION);
 
-if (!defined('SMF_SOFTWARE_YEAR'))
-	define('SMF_SOFTWARE_YEAR', '2022');
+if (!defined('SB_SOFTWARE_YEAR'))
+	define('SB_SOFTWARE_YEAR', '2022');
 
 if (!defined('JQUERY_VERSION'))
 	define('JQUERY_VERSION', '3.6.0');
 
 if (!defined('SB_USER_AGENT'))
-	define('SB_USER_AGENT', 'Mozilla/5.0 (' . php_uname('s') . ' ' . php_uname('m') . ') AppleWebKit/605.1.15 (KHTML, like Gecko) SocialBricks/' . strtr(SMF_VERSION, ' ', '.'));
+	define('SB_USER_AGENT', 'Mozilla/5.0 (' . php_uname('s') . ' ' . php_uname('m') . ') AppleWebKit/605.1.15 (KHTML, like Gecko) SocialBricks/' . strtr(SB_VERSION, ' ', '.'));
 
 /**
  * Class ProxyServer
@@ -313,7 +313,7 @@ class ProxyServer
 	}
 }
 
-if (SMF == 'PROXY')
+if (SOCIALBRICKS == 'PROXY')
 {
 	$proxy = new ProxyServer();
 	$proxy->serve();

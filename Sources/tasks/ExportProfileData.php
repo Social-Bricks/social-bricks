@@ -4,12 +4,12 @@
  * This file contains code used to incrementally export a member's profile data
  * to one or more downloadable files.
  *
- * Simple Machines Forum (SMF)
+ * Social Bricks
  *
- * @package SMF
- * @author Simple Machines https://www.simplemachines.org
- * @copyright 2022 Simple Machines and individual contributors
- * @license https://www.simplemachines.org/about/smf/license.php BSD
+ * @package SocialBricks
+ * @author Social Bricks and others (see CONTRIBUTORS.md)
+ * @copyright 2022 Social Bricks contributors (full details see LICENSE file)
+ * @license 3-clause BSD (see accompanying LICENSE file)
  *
  * @version 2.1.0
  */
@@ -180,7 +180,7 @@ class ExportProfileData_Background extends SB_BackgroundTask
 		$query_this_board = '{query_see_message_board}' . (!empty($modSettings['recycle_enable']) && $modSettings['recycle_board'] > 0 ? ' AND m.id_board != ' . $modSettings['recycle_board'] : '');
 
 		// We need a valid export directory.
-		if (empty($modSettings['export_dir']) || !is_dir($modSettings['export_dir']) || !smf_chmod($modSettings['export_dir']))
+		if (empty($modSettings['export_dir']) || !is_dir($modSettings['export_dir']) || !sb_chmod($modSettings['export_dir']))
 		{
 			require_once($sourcedir . DIRECTORY_SEPARATOR . 'Profile-Export.php');
 			if (create_export_dir() === false)

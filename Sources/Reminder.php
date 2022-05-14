@@ -2,12 +2,12 @@
 
 /**
  * Handle sending out reminders, and checking the secret answer and question.  It uses just a few functions to do this, which are:
- * Simple Machines Forum (SMF)
+ * Social Bricks
  *
- * @package SMF
- * @author Simple Machines https://www.simplemachines.org
- * @copyright 2022 Simple Machines and individual contributors
- * @license https://www.simplemachines.org/about/smf/license.php BSD
+ * @package SocialBricks
+ * @author Social Bricks and others (see CONTRIBUTORS.md)
+ * @copyright 2022 Social Bricks contributors (full details see LICENSE file)
+ * @license 3-clause BSD (see accompanying LICENSE file)
  *
  * @version 2.1.0
  */
@@ -185,7 +185,7 @@ function setPassword()
 		'memID' => (int) $_REQUEST['u']
 	);
 
-	loadJavaScriptFile('register.js', array('defer' => false, 'minimize' => true), 'smf_register');
+	loadJavaScriptFile('register.js', array('defer' => false, 'minimize' => true), 'sb_register');
 
 	// Tokens!
 	createToken('remind-sp');
@@ -322,7 +322,7 @@ function SecretAnswerInput()
 
 	$context['sub_template'] = 'ask';
 	createToken('remind-sai');
-	loadJavaScriptFile('register.js', array('defer' => false, 'minimize' => true), 'smf_register');
+	loadJavaScriptFile('register.js', array('defer' => false, 'minimize' => true), 'sb_register');
 }
 
 /**

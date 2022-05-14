@@ -1,11 +1,11 @@
 <?php
 /**
- * Simple Machines Forum (SMF)
+ * Social Bricks
  *
- * @package SMF
- * @author Simple Machines https://www.simplemachines.org
- * @copyright 2022 Simple Machines and individual contributors
- * @license https://www.simplemachines.org/about/smf/license.php BSD
+ * @package SocialBricks
+ * @author Social Bricks and others (see CONTRIBUTORS.md)
+ * @copyright 2022 Social Bricks contributors (full details see LICENSE file)
+ * @license 3-clause BSD (see accompanying LICENSE file)
  *
  * @version 2.1.2
  */
@@ -44,7 +44,7 @@ function template_init()
 
 	/* $context, $options and $txt may be available for use, but may not be fully populated yet. */
 
-	// The version this template/theme is for. This should probably be the version of SMF it was created for.
+	// The version this template/theme is for. This should probably be the version of Social Bricks it was created for.
 	$settings['theme_version'] = '2.1';
 
 	// Set the following variable to true if this theme requires the optional theme strings file to be loaded.
@@ -71,7 +71,7 @@ function template_init()
 	);
 
 	// Allow css/js files to be disabled for this specific theme.
-	// Add the identifier as an array key. IE array('sb_script'); Some external files might not add identifiers, on those cases SMF uses its filename as reference.
+	// Add the identifier as an array key. IE array('sb_script'); Some external files might not add identifiers, on those cases Social Bricks uses its filename as reference.
 	if (!isset($settings['disable_files']))
 		$settings['disable_files'] = array();
 }
@@ -94,15 +94,13 @@ function template_html_above()
 		Note that RTL will also be loaded for you.
 		To load other CSS and JS files you should use the functions
 		loadCSSFile() and loadJavaScriptFile() respectively.
-		This approach will let you take advantage of SMF's automatic CSS
+		This approach will let you take advantage of the automatic CSS
 		minimization and other benefits. You can, of course, manually add any
 		other files you want after template_css() has been run.
 
 	*	Short example:
 			- CSS: loadCSSFile('filename.css', array('minimize' => true));
 			- JS:  loadJavaScriptFile('filename.js', array('minimize' => true));
-			You can also read more detailed usages of the parameters for these
-			functions on the SMF wiki.
 
 	*	Themes:
 			The most efficient way of writing multi themes is to use a master
@@ -375,7 +373,7 @@ function template_body_above()
 		</h1>';
 
 	echo '
-		', empty($settings['site_slogan']) ? '<img id="smflogo" src="' . $settings['images_url'] . '/smflogo.svg" alt="Simple Machines Forum" title="Simple Machines Forum">' : '<div id="siteslogan">' . $settings['site_slogan'] . '</div>', '';
+		', empty($settings['site_slogan']) ? '<img id="smflogo" src="' . $settings['images_url'] . '/smflogo.svg" alt="Social Bricks" title="Social Bricks">' : '<div id="siteslogan">' . $settings['site_slogan'] . '</div>', '';
 
 	echo '
 	</div>
@@ -384,7 +382,7 @@ function template_body_above()
 			<div id="inner_section">
 				<div id="inner_wrap"', !$context['user']['is_logged'] ? ' class="hide_720"' : '', '>
 					<div class="user">
-						<time datetime="', smf_gmstrftime('%FT%TZ'), '">', $context['current_time'], '</time>';
+						<time datetime="', sb_gmstrftime('%FT%TZ'), '">', $context['current_time'], '</time>';
 
 	if ($context['user']['is_logged'])
 		echo '

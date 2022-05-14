@@ -3,12 +3,12 @@
 /**
  * Forum maintenance. Important stuff.
  *
- * Simple Machines Forum (SMF)
+ * Social Bricks
  *
- * @package SMF
- * @author Simple Machines https://www.simplemachines.org
- * @copyright 2022 Simple Machines and individual contributors
- * @license https://www.simplemachines.org/about/smf/license.php BSD
+ * @package SocialBricks
+ * @author Social Bricks and others (see CONTRIBUTORS.md)
+ * @copyright 2022 Social Bricks contributors (full details see LICENSE file)
+ * @license 3-clause BSD (see accompanying LICENSE file)
  *
  * @version 2.1.0
  */
@@ -716,7 +716,7 @@ function OptimizeTables()
 	// If there aren't any tables then I believe that would mean the world has exploded...
 	$context['num_tables'] = count($tables);
 	if ($context['num_tables'] == 0)
-		fatal_error('You appear to be running SMF in a flat file mode... fantastic!', false);
+		fatal_error('You appear to be running Social Bricks in a flat file mode... fantastic!', false);
 
 	$_REQUEST['start'] = empty($_REQUEST['start']) ? 0 : (int) $_REQUEST['start'];
 
@@ -1310,7 +1310,7 @@ function VersionDetail()
 	);
 
 	// Make it easier to manage for the template.
-	$context['forum_version'] = SMF_FULL_VERSION;
+	$context['forum_version'] = SB_FULL_VERSION;
 
 	$context['sub_template'] = 'view_versions';
 	$context['page_title'] = $txt['admin_version_check'];

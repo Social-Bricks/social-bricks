@@ -5,12 +5,12 @@
  * 	It also allows the user to change some of their or another's preferences,
  * 	and such things
  *
- * Simple Machines Forum (SMF)
+ * Social Bricks
  *
- * @package SMF
- * @author Simple Machines https://www.simplemachines.org
- * @copyright 2022 Simple Machines and individual contributors
- * @license https://www.simplemachines.org/about/smf/license.php BSD
+ * @package SocialBricks
+ * @author Social Bricks and others (see CONTRIBUTORS.md)
+ * @copyright 2022 Social Bricks contributors (full details see LICENSE file)
+ * @license 3-clause BSD (see accompanying LICENSE file)
  *
  * @version 2.1.2
  */
@@ -134,7 +134,7 @@ function loadProfileFields($force_reload = false)
 		),
 		'date_registered' => array(
 			'type' => 'date',
-			'value' => empty($cur_profile['date_registered']) ? $txt['not_applicable'] : smf_strftime('%Y-%m-%d', $cur_profile['date_registered']),
+			'value' => empty($cur_profile['date_registered']) ? $txt['not_applicable'] : sb_strftime('%Y-%m-%d', $cur_profile['date_registered']),
 			'label' => $txt['date_registered'],
 			'log_change' => true,
 			'permission' => 'moderate_forum',
@@ -144,13 +144,13 @@ function loadProfileFields($force_reload = false)
 				if (($value = strtotime($value)) === false)
 				{
 					$value = $cur_profile['date_registered'];
-					return $txt['invalid_registration'] . ' ' . smf_strftime('%d %b %Y ' . (strpos($user_info['time_format'], '%H') !== false ? '%I:%M:%S %p' : '%H:%M:%S'), time());
+					return $txt['invalid_registration'] . ' ' . sb_strftime('%d %b %Y ' . (strpos($user_info['time_format'], '%H') !== false ? '%I:%M:%S %p' : '%H:%M:%S'), time());
 				}
 
 				// As long as it doesn't equal "N/A"...
-				elseif ($value != $txt['not_applicable'] && $value != strtotime(smf_strftime('%Y-%m-%d', $cur_profile['date_registered'])))
+				elseif ($value != $txt['not_applicable'] && $value != strtotime(sb_strftime('%Y-%m-%d', $cur_profile['date_registered'])))
 				{
-					$diff = $cur_profile['date_registered'] - strtotime(smf_strftime('%Y-%m-%d', $cur_profile['date_registered']));
+					$diff = $cur_profile['date_registered'] - strtotime(sb_strftime('%Y-%m-%d', $cur_profile['date_registered']));
 					$value = $value + $diff;
 				}
 
@@ -295,7 +295,7 @@ function loadProfileFields($force_reload = false)
 						validateUsername($context['id_member'], trim(normalize_spaces(sanitize_chars($value, 1, ' '), true, true, array('no_breaks' => true, 'replace_tabs' => true, 'collapse_hspace' => true))));
 						updateMemberData($context['id_member'], array('member_name' => $value));
 
-						// Call this here so any integrated systems will know about the name change (resetPassword() takes care of this if we're letting SMF generate the password)
+						// Call this here so any integrated systems will know about the name change (resetPassword() takes care of this if we're letting Social Bricks generate the password)
 						call_integration_hook('integrate_reset_pass', array($cur_profile['member_name'], $value, $_POST['passwrd1']));
 					}
 				}
@@ -595,21 +595,21 @@ function loadProfileFields($force_reload = false)
 
 				$context['member']['time_format'] = $cur_profile['time_format'];
 				$context['current_forum_time'] = timeformat(time(), false, 'forum');
-				$context['current_forum_time_js'] = smf_strftime('%Y,' . ((int) smf_strftime('%m', time()) - 1) . ',%d,%H,%M,%S', time());
-				$context['current_forum_time_hour'] = (int) smf_strftime('%H', time());
+				$context['current_forum_time_js'] = sb_strftime('%Y,' . ((int) sb_strftime('%m', time()) - 1) . ',%d,%H,%M,%S', time());
+				$context['current_forum_time_hour'] = (int) sb_strftime('%H', time());
 				return true;
 			},
 		),
 		'timezone' => array(
 			'type' => 'select',
-			'options' => smf_list_timezones(),
-			'disabled_options' => array_filter(array_keys(smf_list_timezones()), 'is_int'),
+			'options' => sb_list_timezones(),
+			'disabled_options' => array_filter(array_keys(sb_list_timezones()), 'is_int'),
 			'permission' => 'profile_extra',
 			'label' => $txt['timezone'],
 			'value' => empty($cur_profile['timezone']) ? $modSettings['default_timezone'] : $cur_profile['timezone'],
 			'input_validate' => function($value)
 			{
-				$tz = smf_list_timezones();
+				$tz = sb_list_timezones();
 				if (!isset($tz[$value]))
 					return 'bad_timezone';
 
@@ -1991,7 +1991,7 @@ function alert_configuration($memID, $defaultSettings = false)
 
 	// What options are set
 	loadThemeOptions($memID, $defaultSettings);
-	loadJavaScriptFile('alertSettings.js', array('minimize' => true), 'smf_alertSettings');
+	loadJavaScriptFile('alertSettings.js', array('minimize' => true), 'sb_alertSettings');
 
 	// Now load all the values for this user.
 	require_once($sourcedir . '/Subs-Notify.php');
@@ -3203,7 +3203,7 @@ function profileLoadSignatureData()
 
 	// Load the spell checker?
 	if ($context['show_spellchecking'])
-		loadJavaScriptFile('spellcheck.js', array('defer' => false, 'minimize' => true), 'smf_spellcheck');
+		loadJavaScriptFile('spellcheck.js', array('defer' => false, 'minimize' => true), 'sb_spellcheck');
 
 	return true;
 }
@@ -3557,7 +3557,7 @@ function profileSaveAvatarData(&$value)
 				if (!empty($modSettings['avatar_resize_upload']))
 				{
 					// Attempt to chmod it.
-					smf_chmod($_FILES['attachment']['tmp_name'], 0644);
+					sb_chmod($_FILES['attachment']['tmp_name'], 0644);
 
 					// @todo remove this require when appropriate
 					require_once($sourcedir . '/Subs-Graphics.php');
@@ -3646,7 +3646,7 @@ function profileSaveAvatarData(&$value)
 				}
 
 				// Attempt to chmod it.
-				smf_chmod($uploadDir . '/' . $destinationPath, 0644);
+				sb_chmod($uploadDir . '/' . $destinationPath, 0644);
 			}
 			$profile_vars['avatar'] = '';
 
@@ -4280,7 +4280,7 @@ function groupMembership2($profile_vars, $post_errors, $memID)
 }
 
 /**
- * Provides interface to setup Two Factor Auth in SMF
+ * Provides interface to setup Two Factor Auth in Social Bricks
  *
  * @param int $memID The ID of the member
  */
@@ -4360,7 +4360,7 @@ function tfasetup($memID)
 }
 
 /**
- * Provides interface to disable two-factor authentication in SMF
+ * Provides interface to disable two-factor authentication in Social Bricks
  *
  * @param int $memID The ID of the member
  */

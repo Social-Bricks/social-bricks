@@ -49,18 +49,18 @@
  *  - PLUS you can override label and help parameters by forcing their keys in the array, for example:
  *  	array('text', 'invalidlabel', 3, 'label' => 'Actual Label')
  *
- * Simple Machines Forum (SMF)
+ * Social Bricks
  *
- * @package SMF
- * @author Simple Machines https://www.simplemachines.org
- * @copyright 2022 Simple Machines and individual contributors
- * @license https://www.simplemachines.org/about/smf/license.php BSD
+ * @package SocialBricks
+ * @author Social Bricks and others (see CONTRIBUTORS.md)
+ * @copyright 2022 Social Bricks contributors (full details see LICENSE file)
+ * @license 3-clause BSD (see accompanying LICENSE file)
  *
  * @version 2.1.2
  */
 
-use SMF\Cache\CacheApi;
-use SMF\Cache\CacheApiInterface;
+use SocialBricks\Cache\CacheApi;
+use SocialBricks\Cache\CacheApiInterface;
 
 /**
  * This is the main dispatcher. Sets up all the available sub-actions, all the tabs and selects
@@ -101,7 +101,7 @@ function ModifySettings()
 		'cache' => 'ModifyCacheSettings',
 		'export' => 'ModifyExportSettings',
 		'loads' => 'ModifyLoadBalancingSettings',
-		'phpinfo' => 'ShowPHPinfoSettings',
+		'serverinfo' => 'ShowServerInfoSettings',
 	);
 
 	// By default we're editing the core settings
@@ -1701,11 +1701,28 @@ function saveDBSettings(&$config_vars)
  * - loads the settings into an array for display in a template
  * - drops cookie values just in case
  */
-function ShowPHPinfoSettings()
+function ShowServerInfoSettings()
 {
-	global $context, $txt;
+	global $context, $txt, $sourcedir;
 
 	$category = $txt['phpinfo_settings'];
+
+	// Get a list of current server versions.
+	require_once($sourcedir . '/Subs-Admin.php');
+	$checkFor = array(
+		'gd',
+		'imagemagick',
+		'db_server',
+		'apcu',
+		'memcacheimplementation',
+		'memcachedimplementation',
+		'sqlite',
+		'zend',
+		'filebased',
+		'php',
+		'server',
+	);
+	$context['current_versions'] = getServerVersions($checkFor);
 
 	// get the data
 	ob_start();
@@ -1739,7 +1756,7 @@ function ShowPHPinfoSettings()
 	// load it in to context and display it
 	$context['pinfo'] = $pinfo;
 	$context['page_title'] = $txt['admin_server_settings'];
-	$context['sub_template'] = 'php_info';
+	$context['sub_template'] = 'server_info';
 	return;
 }
 
@@ -1751,7 +1768,7 @@ function loadCacheAPIs()
 {
 	global $sourcedir;
 
-	$cacheAPIdir = $sourcedir . '/Cache';
+	$cacheAPIdir = $sourcedir . '/SocialBricks/Cache';
 
 	$loadedApis = array();
 	$apis_dir = $cacheAPIdir .'/'. CacheApi::APIS_FOLDER;

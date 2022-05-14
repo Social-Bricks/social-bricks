@@ -3,18 +3,18 @@
 /**
  * This file has functions in it to do with authentication, user handling, and the like.
  *
- * Simple Machines Forum (SMF)
+ * Social Bricks
  *
- * @package SMF
- * @author Simple Machines https://www.simplemachines.org
- * @copyright 2022 Simple Machines and individual contributors
- * @license https://www.simplemachines.org/about/smf/license.php BSD
+ * @package SocialBricks
+ * @author Social Bricks and others (see CONTRIBUTORS.md)
+ * @copyright 2022 Social Bricks contributors (full details see LICENSE file)
+ * @license 3-clause BSD (see accompanying LICENSE file)
  *
  * @version 2.1.2
  */
 
 /**
- * Sets the SMF-style login cookie and session based on the id_member and password passed.
+ * Sets our login cookie and session based on the id_member and password passed.
  * - password should be already encrypted with the cookie salt.
  * - logs the user out if id_member is zero.
  * - sets the cookie and session to last the number of seconds specified by cookie_length, or
@@ -917,7 +917,7 @@ function hash_salt($password, $salt)
 }
 
 /**
- * Verifies a raw SMF password against the bcrypt'd string
+ * Verifies a raw Social Bricks password against the bcrypt'd string
  *
  * @param string $username The username
  * @param string $password The password

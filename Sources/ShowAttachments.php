@@ -3,12 +3,12 @@
 /**
  * This file handles avatar and attachment requests. The whole point of this file is to reduce the loaded stuff to show an image.
  *
- * Simple Machines Forum (SMF)
+ * Social Bricks
  *
- * @package SMF
- * @author Simple Machines https://www.simplemachines.org
- * @copyright 2022 Simple Machines and individual contributors
- * @license https://www.simplemachines.org/about/smf/license.php BSD
+ * @package SocialBricks
+ * @author Social Bricks and others (see CONTRIBUTORS.md)
+ * @copyright 2022 Social Bricks contributors (full details see LICENSE file)
+ * @license 3-clause BSD (see accompanying LICENSE file)
  *
  * @version 2.1.2
  */
@@ -97,7 +97,7 @@ function showAttachment()
 				WHERE a.id_attach = {int:attach}
 				LIMIT 1',
 				array(
-					'source' => 'SMF',
+					'source' => 'Social Bricks',
 					'attach' => $attachId,
 				)
 			);
@@ -164,10 +164,10 @@ function showAttachment()
 	// No access if you don't have permission to see this attachment.
 	if
 	(
-		// This was from SMF or a hook didn't claim it.
+		// This was from Social Bricks or a hook didn't claim it.
 		(
 			empty($file['source'])
-			|| $file['source'] == 'SMF'
+			|| $file['source'] == 'Social Bricks'
 		)
 		&& (
 			// No id_msg and no id_member, so we don't know where its from.

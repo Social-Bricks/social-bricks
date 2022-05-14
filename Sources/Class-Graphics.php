@@ -9,12 +9,12 @@
  * from the original author. To get it, please navigate to:
  * http://www.yamasoft.com/php-gif.zip
  *
- * Simple Machines Forum (SMF)
+ * Social Bricks
  *
- * @package SMF
- * @author Simple Machines https://www.simplemachines.org
- * @copyright 2022 Simple Machines and individual contributors
- * @license https://www.simplemachines.org/about/smf/license.php BSD
+ * @package SocialBricks
+ * @author Social Bricks and others (see CONTRIBUTORS.md)
+ * @copyright 2022 Social Bricks contributors (full details see LICENSE file)
+ * @license 3-clause BSD (see accompanying LICENSE file)
  *
  * @version 2.1.0
  */
@@ -658,14 +658,14 @@ class gif_file
 		// Now, we want the header...
 		$out .= "\x00\x00\x00\x0D";
 		$tmp = 'IHDR' . pack('N', (int) $this->header->m_nWidth) . pack('N', (int) $this->header->m_nHeight) . "\x08\x03\x00\x00\x00";
-		$out .= $tmp . pack('N', smf_crc32($tmp));
+		$out .= $tmp . pack('N', sb_crc32($tmp));
 
 		// The palette, assuming we have one to speak of...
 		if ($colors > 0)
 		{
 			$out .= pack('N', (int) $colors * 3);
 			$tmp = 'PLTE' . $pal;
-			$out .= $tmp . pack('N', smf_crc32($tmp));
+			$out .= $tmp . pack('N', sb_crc32($tmp));
 		}
 
 		// Do we have any transparency we want to make available?
@@ -678,13 +678,13 @@ class gif_file
 			for ($i = 0; $i < $colors; $i++)
 				$tmp .= $i == $this->image->m_nTrans ? "\x00" : "\xFF";
 
-			$out .= $tmp . pack('N', smf_crc32($tmp));
+			$out .= $tmp . pack('N', sb_crc32($tmp));
 		}
 
 		// Here's the data itself!
 		$out .= pack('N', strlen($bmp));
 		$tmp = 'IDAT' . $bmp;
-		$out .= $tmp . pack('N', smf_crc32($tmp));
+		$out .= $tmp . pack('N', sb_crc32($tmp));
 
 		// EOF marker...
 		$out .= "\x00\x00\x00\x00" . 'IEND' . "\xAE\x42\x60\x82";
@@ -694,7 +694,7 @@ class gif_file
 }
 
 // 64-bit only functions?
-if (!function_exists('smf_crc32'))
+if (!function_exists('sb_crc32'))
 {
 	require_once $sourcedir . '/Subs-Compat.php';
 }

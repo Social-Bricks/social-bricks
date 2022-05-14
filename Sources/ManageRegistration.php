@@ -4,12 +4,12 @@
  * This file helps the administrator setting registration settings and policy
  * as well as allow the administrator to register new members themselves.
  *
- * Simple Machines Forum (SMF)
+ * Social Bricks
  *
- * @package SMF
- * @author Simple Machines https://www.simplemachines.org
- * @copyright 2022 Simple Machines and individual contributors
- * @license https://www.simplemachines.org/about/smf/license.php BSD
+ * @package SocialBricks
+ * @author Social Bricks and others (see CONTRIBUTORS.md)
+ * @copyright 2022 Social Bricks contributors (full details see LICENSE file)
+ * @license 3-clause BSD (see accompanying LICENSE file)
  *
  * @version 2.1.0
  */
@@ -172,7 +172,7 @@ function AdminRegister()
 	$context['sub_template'] = 'admin_register';
 	$context['page_title'] = $txt['registration_center'];
 	createToken('admin-regc');
-	loadJavaScriptFile('register.js', array('defer' => false, 'minimize' => true), 'smf_register');
+	loadJavaScriptFile('register.js', array('defer' => false, 'minimize' => true), 'sb_register');
 }
 
 /**

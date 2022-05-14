@@ -3,12 +3,12 @@
 /**
  * ManagePermissions handles all possible permission stuff.
  *
- * Simple Machines Forum (SMF)
+ * Social Bricks
  *
- * @package SMF
- * @author Simple Machines https://www.simplemachines.org
- * @copyright 2022 Simple Machines and individual contributors
- * @license https://www.simplemachines.org/about/smf/license.php BSD
+ * @package SocialBricks
+ * @author Social Bricks and others (see CONTRIBUTORS.md)
+ * @copyright 2022 Social Bricks contributors (full details see LICENSE file)
+ * @license 3-clause BSD (see accompanying LICENSE file)
  *
  * @version 2.1.2
  */
@@ -1437,7 +1437,7 @@ function loadAllPermissions()
 	global $context, $txt, $modSettings;
 
 	// List of all the groups dependant on the currently selected view - for the order so it looks pretty, yea?
-	// Note to Mod authors - you don't need to stick your permission group here if you don't mind SMF sticking it the last group of the page.
+	// Note to Mod authors - you don't need to stick your permission group here if you don't mind Social Bricks sticking it the last group of the page.
 	$permissionGroups = array(
 		'membergroup' => array(
 			'general',

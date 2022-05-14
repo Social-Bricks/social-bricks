@@ -1,12 +1,12 @@
 <?php
 
 /**
- * Simple Machines Forum (SMF)
+ * Social Bricks
  *
- * @package SMF
- * @author Simple Machines https://www.simplemachines.org
- * @copyright 2022 Simple Machines and individual contributors
- * @license https://www.simplemachines.org/about/smf/license.php BSD
+ * @package SocialBricks
+ * @author Social Bricks and others (see CONTRIBUTORS.md)
+ * @copyright 2022 Social Bricks contributors (full details see LICENSE file)
+ * @license 3-clause BSD (see accompanying LICENSE file)
  *
  * @version 2.1.0
  */
@@ -402,7 +402,7 @@ class browser_detector
 				'is_konqueror' => 'konqueror',
 			);
 
-			$context['browser_body_id'] = 'smf';
+			$context['browser_body_id'] = 'socialbricks';
 			$active = array_reverse(array_keys($this->_browsers, true));
 			foreach ($active as $browser)
 			{

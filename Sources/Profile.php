@@ -5,12 +5,12 @@
  * It also allows the user to change some of their or another's preferences,
  * and such things.
  *
- * Simple Machines Forum (SMF)
+ * Social Bricks
  *
- * @package SMF
- * @author Simple Machines https://www.simplemachines.org
- * @copyright 2022 Simple Machines and individual contributors
- * @license https://www.simplemachines.org/about/smf/license.php BSD
+ * @package SocialBricks
+ * @author Social Bricks and others (see CONTRIBUTORS.md)
+ * @copyright 2022 Social Bricks contributors (full details see LICENSE file)
+ * @license 3-clause BSD (see accompanying LICENSE file)
  *
  * @version 2.1.0
  */
@@ -89,7 +89,7 @@ function ModifyProfile($post_errors = array())
 	}
 
 	/* Define all the sections within the profile area!
-		We start by defining the permission required - then SMF takes this and turns it into the relevant context ;)
+		We start by defining the permission required - then Social Bricks takes this and turns it into the relevant context.
 		Possible fields:
 			For Section:
 				string $title:		Section title.
@@ -100,7 +100,7 @@ function ModifyProfile($post_errors = array())
 				string $file:		Optional text string that may contain a file name that's needed for inclusion in order to display the area properly.
 				string $custom_url:	Optional href for area.
 				string $function:	Function to execute for this section. Can be a call to an static method: class::method
-				string $class		If your function is a method, set the class field with your class's name and SMF will create a new instance for it.
+				string $class		If your function is a method, set the class field with your class's name and Social Bricks will create a new instance for it.
 				bool $enabled:		Should area be shown?
 				string $sc:			Session check validation to do on save - note without this save will get unset - if set.
 				bool $hidden:		Does this not actually appear on the menu?
@@ -646,7 +646,7 @@ function ModifyProfile($post_errors = array())
 	$check_password = $context['user']['is_owner'] && in_array($profile_include_data['current_area'], $context['password_areas']);
 	$context['require_password'] = $check_password;
 
-	loadJavaScriptFile('profile.js', array('defer' => false, 'minimize' => true), 'smf_profile');
+	loadJavaScriptFile('profile.js', array('defer' => false, 'minimize' => true), 'sb_profile');
 
 	// These will get populated soon!
 	$post_errors = array();

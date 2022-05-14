@@ -7,12 +7,12 @@
  *   prevent any default browser actions
  * - attempts to keep the tooltip on screen
  *
- * Simple Machines Forum (SMF)
+ * Social Bricks
  *
- * @package SMF
- * @author Simple Machines https://www.simplemachines.org
- * @copyright 2022 Simple Machines and individual contributors
- * @license https://www.simplemachines.org/about/smf/license.php BSD
+ * @package SocialBricks
+ * @author Social Bricks and others (see CONTRIBUTORS.md)
+ * @copyright 2022 Social Bricks contributors (full details see LICENSE file)
+ * @license 3-clause BSD (see accompanying LICENSE file)
  *
  * @version 2.1.0
  *
@@ -712,7 +712,7 @@ $(function() {
 		$('div.boardindex_table div.cat_bar').each(function(index, el)
 		{
 			var catid = el.id.replace('category_', '');
-			new smc_Toggle({
+			new sb_toggle({
 				bToggleEnabled: true,
 				bCurrentlyCollapsed: $('#category_' + catid + '_upshrink').data('collapsed'),
 				aHeader: $('#category_' + catid),

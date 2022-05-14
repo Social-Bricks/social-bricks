@@ -3,12 +3,12 @@
 /**
  * This file has the important job of taking care of help messages and the help center.
  *
- * Simple Machines Forum (SMF)
+ * Social Bricks
  *
- * @package SMF
- * @author Simple Machines https://www.simplemachines.org
- * @copyright 2022 Simple Machines and individual contributors
- * @license https://www.simplemachines.org/about/smf/license.php BSD
+ * @package SocialBricks
+ * @author Social Bricks and others (see CONTRIBUTORS.md)
+ * @copyright 2022 Social Bricks contributors (full details see LICENSE file)
+ * @license 3-clause BSD (see accompanying LICENSE file)
  *
  * @version 2.1.0
  */
@@ -70,7 +70,7 @@ function HelpIndex()
 	);
 
 	// Lastly, some minor template stuff.
-	$context['page_title'] = $txt['manual_smf_user_help'];
+	$context['page_title'] = $txt['manual_user_help'];
 	$context['sub_template'] = 'manual';
 }
 

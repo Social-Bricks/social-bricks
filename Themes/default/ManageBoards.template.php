@@ -1,11 +1,11 @@
 <?php
 /**
- * Simple Machines Forum (SMF)
+ * Social Bricks
  *
- * @package SMF
- * @author Simple Machines https://www.simplemachines.org
- * @copyright 2022 Simple Machines and individual contributors
- * @license https://www.simplemachines.org/about/smf/license.php BSD
+ * @package SocialBricks
+ * @author Social Bricks and others (see CONTRIBUTORS.md)
+ * @copyright 2022 Social Bricks contributors (full details see LICENSE file)
+ * @license 3-clause BSD (see accompanying LICENSE file)
  *
  * @version 2.1.0
  */
@@ -606,7 +606,7 @@ function template_modify_board()
 	</div><!-- #manage_boards -->
 
 	<script>
-		var oModeratorSuggest = new smc_AutoSuggest({
+		var oModeratorSuggest = new sb_autoSuggest({
 			sSelf: \'oModeratorSuggest\',
 			sSessionId: sb_session_id,
 			sSessionVar: sb_session_var,
@@ -631,7 +631,7 @@ function template_modify_board()
 			]
 		});
 
-		var oModeratorGroupSuggest = new smc_AutoSuggest({
+		var oModeratorGroupSuggest = new sb_autoSuggest({
 			sSelf: \'oModeratorGroupSuggest\',
 			sSessionId: sb_session_id,
 			sSessionVar: sb_session_var,

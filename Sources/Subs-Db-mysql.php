@@ -3,12 +3,12 @@
 /**
  * This file has all the main functions in it that relate to the database.
  *
- * Simple Machines Forum (SMF)
+ * Social Bricks
  *
- * @package SMF
- * @author Simple Machines https://www.simplemachines.org
- * @copyright 2022 Simple Machines and individual contributors
- * @license https://www.simplemachines.org/about/smf/license.php BSD
+ * @package SocialBricks
+ * @author Social Bricks and others (see CONTRIBUTORS.md)
+ * @copyright 2022 Social Bricks contributors (full details see LICENSE file)
+ * @license 3-clause BSD (see accompanying LICENSE file)
  *
  * @version 2.1.0
  */
@@ -53,7 +53,7 @@ function sb_db_initiate($db_server, $db_name, $db_user, $db_passwd, $db_prefix, 
 			'db_sybase'                 => false,
 			'db_case_sensitive'         => false,
 			'db_escape_wildcard_string' => 'sb_db_escape_wildcard_string',
-			'db_is_resource'            => 'smf_is_resource',
+			'db_is_resource'            => 'sb_is_resource',
 			'db_mb4'                    => false,
 			'db_ping'                   => 'mysqli_ping',
 			'db_fetch_all'              => 'sb_db_fetch_all',
@@ -278,7 +278,7 @@ function sb_db_replacement__callback($matches)
 			break;
 
 		case 'identifier':
-			// Backticks inside identifiers are supported as of MySQL 4.1. We don't need them for SMF.
+			// Backticks inside identifiers are supported as of MySQL 4.1. We don't need them for Social Bricks.
 			return '`' . implode('`.`', array_filter(explode('.', strtr($replacement, array('`' => ''))), 'strlen')) . '`';
 			break;
 
@@ -901,7 +901,7 @@ function sb_db_error_backtrace($error_message, $log_message = '', $error_type = 
 	foreach (debug_backtrace() as $step)
 	{
 		// Found it?
-		if (strpos($step['function'], 'query') === false && !in_array(substr($step['function'], 0, 7), array('sb_db_', 'preg_re', 'db_erro', 'call_us')) && strpos($step['function'], '__') !== 0)
+		if (strpos($step['function'], 'query') === false && !in_array(substr($step['function'], 0, 6), array('sb_db_', 'preg_r', 'db_err', 'call_u')) && strpos($step['function'], '__') !== 0)
 		{
 			$log_message .= '<br>Function: ' . $step['function'];
 			break;
@@ -965,7 +965,7 @@ function sb_db_escape_wildcard_string($string, $translate_human_wildcards = fals
  * @param mixed $result The string to test
  * @return bool True if it is, false otherwise
  */
-function smf_is_resource($result)
+function sb_is_resource($result)
 {
 	if ($result instanceof mysqli_result)
 		return true;

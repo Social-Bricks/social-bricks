@@ -3,17 +3,17 @@
 /**
  * This file contains functions that are specifically done by administrators.
  *
- * Simple Machines Forum (SMF)
+ * Social Bricks
  *
- * @package SMF
- * @author Simple Machines https://www.simplemachines.org
- * @copyright 2022 Simple Machines and individual contributors
- * @license https://www.simplemachines.org/about/smf/license.php BSD
+ * @package SocialBricks
+ * @author Social Bricks and others (see CONTRIBUTORS.md)
+ * @copyright 2022 Social Bricks contributors (full details see LICENSE file)
+ * @license 3-clause BSD (see accompanying LICENSE file)
  *
  * @version 2.1.2
  */
 
-use SMF\Cache\CacheApiInterface;
+use SocialBricks\Cache\CacheApiInterface;
 
 /**
  * Get a list of versions that are currently installed on the server.
@@ -101,7 +101,6 @@ function getServerVersions($checkFor)
 		$versions['php'] = array(
 			'title' => 'PHP',
 			'version' => PHP_VERSION,
-			'more' => '?action=admin;area=serversettings;sa=phpinfo',
 		);
 
 	if (in_array('server', $checkFor))
@@ -115,7 +114,7 @@ function getServerVersions($checkFor)
 
 /**
  * Search through source, theme and language files to determine their version.
- * Get detailed version information about the physical SMF files on the server.
+ * Get detailed version information about the physical Social Bricks files on the server.
  *
  * - the input parameter allows to set whether to include SSI.php and whether
  *   the results should be sorted.
@@ -315,7 +314,7 @@ function get_settings_defs()
 	 *   code, e.g. 'dirname(__FILE__)'
 	 *
 	 * - If 'required' is true and a value for the variable is undefined,
-	 *   the update will be aborted. (The only exception is during the SMF
+	 *   the update will be aborted. (The only exception is during the
 	 *   installation process.)
 	 *
 	 * - If 'auto_delete' is 1 or true and the variable is empty, the variable
@@ -326,7 +325,7 @@ function get_settings_defs()
 	 *   behaves like 'auto_delete' == 0.
 	 *
 	 * - The 'is_password' element indicates that a value is a password. This
-	 *   is used primarily to tell SMF how to interpret input when the value
+	 *   is used primarily to tell Social Bricks how to interpret input when the value
 	 *   is being set to a new value.
 	 *
 	 * - The optional 'search_pattern' element defines a custom regular
@@ -344,18 +343,18 @@ function get_settings_defs()
 				'/**',
 				' * The settings file contains all of the basic settings that need to be present when a database/cache is not available.',
 				' *',
-				' * Simple Machines Forum (SMF)',
+				' * Social Bricks',
 				' *',
-				' * @package SMF',
-				' * @author Simple Machines https://www.simplemachines.org',
-				' * @copyright ' . SMF_SOFTWARE_YEAR . ' Simple Machines and individual contributors',
-				' * @license https://www.simplemachines.org/about/smf/license.php BSD',
+				' * @package SocialBricks',
+				' * @author Social Bricks and others (see CONTRIBUTORS.md)',
+				' * @copyright ' . SB_SOFTWARE_YEAR . ' Social Bricks contributors (full details see LICENSE file)',
+				' * @license 3-clause BSD (see accompanying LICENSE file)',
 				' *',
-				' * @version ' . SMF_VERSION,
+				' * @version ' . SB_VERSION,
 				' */',
 				'',
 			)),
-			'search_pattern' => '~/\*\*.*?@package\h+SMF\b.*?\*/\n{0,2}~s',
+			'search_pattern' => '~/\*\*.*?@package\h+SocialBricks\b.*?\*/\n{0,2}~s',
 		),
 		'maintenance' => array(
 			'text' => implode("\n", array(
@@ -451,7 +450,7 @@ function get_settings_defs()
 				' * @var string',
 				' */',
 			)),
-			'default' => 'SMFCookie11',
+			'default' => 'SBCookie11',
 			'type' => 'string',
 		),
 		'auth_secret' => array(
@@ -578,7 +577,7 @@ function get_settings_defs()
 				' * @var string',
 				' */',
 			)),
-			'default' => 'smf_',
+			'default' => 'sb_',
 			'required' => true,
 			'type' => 'string',
 		),
@@ -853,7 +852,7 @@ function get_settings_defs()
  * - Expects config_vars to be an associative array, with the keys as the
  *   variable names in Settings.php, and the values the variable values.
  *
- * - Correctly formats the values using smf_var_export().
+ * - Correctly formats the values using sb_var_export().
  *
  * - Restores standard formatting of the file, if $rebuild is true.
  *
@@ -962,7 +961,7 @@ function updateSettingsFile($config_vars, $keep_quotes = null, $rebuild = false)
 	}
 
 	// During install/upgrade, don't set anything until we're ready for it.
-	if (defined('SMF_INSTALLING') && empty($rebuild))
+	if (defined('SB_INSTALLING') && empty($rebuild))
 	{
 		foreach ($settings_defs as $var => $setting_def)
 			if (!in_array($var, array_keys($new_settings_vars)) && !is_int($var))
@@ -1031,9 +1030,9 @@ function updateSettingsFile($config_vars, $keep_quotes = null, $rebuild = false)
 		),
 	);
 
-	if (defined('SMF_INSTALLING'))
+	if (defined('SB_INSTALLING'))
 		$substitutions[$neg_index--] = array(
-			'search_pattern' => '~/\*.*?SMF\s+1\.\d.*?\*/~s',
+			'search_pattern' => '~/\*.*?SB\s+1\.\d.*?\*/~s',
 			'placeholder' => '',
 		);
 
@@ -1045,7 +1044,7 @@ function updateSettingsFile($config_vars, $keep_quotes = null, $rebuild = false)
 		if (!empty($setting_def['text']))
 		{
 			// Special handling for the license block: always at the beginning.
-			if (strpos($setting_def['text'], "* @package SMF\n") !== false)
+			if (strpos($setting_def['text'], "* @package SocialBricks\n") !== false)
 			{
 				$substitutions[$var]['search_pattern'] = $setting_def['search_pattern'];
 				$substitutions[$var]['placeholder'] = '';
@@ -1135,7 +1134,7 @@ function updateSettingsFile($config_vars, $keep_quotes = null, $rebuild = false)
 				}
 			}
 			// Abort if a required one is undefined (unless we're installing).
-			elseif (!empty($setting_def['required']) && !defined('SMF_INSTALLING'))
+			elseif (!empty($setting_def['required']) && !defined('SB_INSTALLING'))
 				return false;
 
 			// Create the search pattern.
@@ -1197,7 +1196,7 @@ function updateSettingsFile($config_vars, $keep_quotes = null, $rebuild = false)
 			{
 				if ($setting_def['auto_delete'] === 2 && empty($rebuild) && in_array($var, array_keys($new_settings_vars)))
 				{
-					$replacement .= '$' . $var . ' = ' . ($new_settings_vars[$var] === $setting_def['default'] && !empty($setting_def['raw_default']) ? sprintf($new_settings_vars[$var]) : smf_var_export($new_settings_vars[$var], true)) . ";";
+					$replacement .= '$' . $var . ' = ' . ($new_settings_vars[$var] === $setting_def['default'] && !empty($setting_def['raw_default']) ? sprintf($new_settings_vars[$var]) : sb_var_export($new_settings_vars[$var], true)) . ";";
 				}
 				else
 				{
@@ -1211,12 +1210,12 @@ function updateSettingsFile($config_vars, $keep_quotes = null, $rebuild = false)
 			// Add this setting's value.
 			elseif (in_array($var, array_keys($new_settings_vars)))
 			{
-				$replacement .= '$' . $var . ' = ' . ($new_settings_vars[$var] === $setting_def['default'] && !empty($setting_def['raw_default']) ? sprintf($new_settings_vars[$var]) : smf_var_export($new_settings_vars[$var], true)) . ";";
+				$replacement .= '$' . $var . ' = ' . ($new_settings_vars[$var] === $setting_def['default'] && !empty($setting_def['raw_default']) ? sprintf($new_settings_vars[$var]) : sb_var_export($new_settings_vars[$var], true)) . ";";
 			}
 			// Fall back to the default value.
 			elseif (isset($setting_def['default']))
 			{
-				$replacement .= '$' . $var . ' = ' . (!empty($setting_def['raw_default']) ? sprintf($setting_def['default']) : smf_var_export($setting_def['default'], true)) . ';';
+				$replacement .= '$' . $var . ' = ' . (!empty($setting_def['raw_default']) ? sprintf($setting_def['default']) : sb_var_export($setting_def['default'], true)) . ';';
 			}
 			// This shouldn't happen, but we've got nothing.
 			else
@@ -1248,11 +1247,11 @@ function updateSettingsFile($config_vars, $keep_quotes = null, $rebuild = false)
 
 		$substitutions[$var]['search_pattern'] = '~(?<=^|\s)\h*\$' . preg_quote($var, '~') . '\s*=\s*' . $var_pattern . ';~' . (!empty($utf8) ? 'u' : '');
 		$substitutions[$var]['placeholder'] = $placeholder;
-		$substitutions[$var]['replacement'] = '$' . $var . ' = ' . smf_var_export($val, true) . ";";
+		$substitutions[$var]['replacement'] = '$' . $var . ' = ' . sb_var_export($val, true) . ";";
 	}
 
 	// During an upgrade, some of the path variables may not have been declared yet.
-	if (defined('SMF_INSTALLING') && empty($rebuild))
+	if (defined('SB_INSTALLING') && empty($rebuild))
 	{
 		preg_match_all('~^\h*\$(\w+)\s*=\s*~m', $substitutions[$pathcode_var]['replacement'], $matches);
 		$missing_pathvars = array_diff($matches[1], array_keys($substitutions));
@@ -1754,8 +1753,8 @@ function updateSettingsFile($config_vars, $keep_quotes = null, $rebuild = false)
  * and it performs safety checks before acting. The result is an array of the
  * values as recorded in the settings file.
  *
- * @param int $mtime Timestamp of last known good configuration. Defaults to time SMF started.
- * @param string $settingsFile The settings file. Defaults to SMF's standard Settings.php.
+ * @param int $mtime Timestamp of last known good configuration. Defaults to time Social Bricks started.
+ * @param string $settingsFile The settings file. Defaults to the standard Settings.php.
  * @return array An array of name/value pairs for all the settings in the file.
  */
 function get_current_settings($mtime = null, $settingsFile = null)
@@ -1857,7 +1856,7 @@ function safe_file_write($file, $data, $backup_file = null, $mtime = null, $appe
 			$failed = true;
 
 		if (!$failed)
-			$failed = !smf_chmod($sf);
+			$failed = !sb_chmod($sf);
 	}
 
 	// Now let's see if writing to a temp file succeeds.
@@ -1937,14 +1936,14 @@ function safe_file_write($file, $data, $backup_file = null, $mtime = null, $appe
 }
 
 /**
- * A wrapper around var_export whose output matches SMF coding conventions.
+ * A wrapper around var_export whose output matches Social Bricks coding conventions.
  *
  * @todo Add special handling for objects?
  *
  * @param mixed $var The variable to export
  * @return mixed A PHP-parseable representation of the variable's value
  */
-function smf_var_export($var)
+function sb_var_export($var)
 {
 	/*
 	 * Old versions of updateSettingsFile couldn't handle multi-line values.
@@ -1956,7 +1955,7 @@ function smf_var_export($var)
 		$return = array();
 
 		foreach ($var as $key => $value)
-			$return[] = var_export($key, true) . ' => ' . smf_var_export($value);
+			$return[] = var_export($key, true) . ' => ' . sb_var_export($value);
 
 		return 'array(' . implode(', ', $return) . ')';
 	}

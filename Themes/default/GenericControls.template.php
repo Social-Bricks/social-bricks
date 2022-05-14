@@ -1,11 +1,11 @@
 <?php
 /**
- * Simple Machines Forum (SMF)
+ * Social Bricks
  *
- * @package SMF
- * @author Simple Machines https://www.simplemachines.org
- * @copyright 2022 Simple Machines and individual contributors
- * @license https://www.simplemachines.org/about/smf/license.php BSD
+ * @package SocialBricks
+ * @author Social Bricks and others (see CONTRIBUTORS.md)
+ * @copyright 2022 Social Bricks contributors (full details see LICENSE file)
+ * @license 3-clause BSD (see accompanying LICENSE file)
  *
  * @version 2.1.0
  */
@@ -58,7 +58,7 @@ function template_control_richedit($editor_id, $smileyContainer = null, $bbcCont
 
 	// Now for backward compatibility let's collect few infos in the good ol' style
 	echo '
-			var oEditorHandle_', $editor_id, ' = new smc_Editor({
+			var oEditorHandle_', $editor_id, ' = new sb_editor({
 				sUniqueId: ', JavaScriptEscape($editor_id), ',
 				sEditWidth: ', JavaScriptEscape($editor_context['width']), ',
 				sEditHeight: ', JavaScriptEscape($editor_context['height']), ',
@@ -66,7 +66,7 @@ function template_control_richedit($editor_id, $smileyContainer = null, $bbcCont
 				oSmileyBox: null,
 				oBBCBox: null
 			});
-			smf_editorArray[smf_editorArray.length] = oEditorHandle_', $editor_id, ';
+			sb_editorArray[sb_editorArray.length] = oEditorHandle_', $editor_id, ';
 		</script>';
 }
 
@@ -130,7 +130,7 @@ function template_control_richedit_buttons($editor_id)
 			<span id="draft_lastautosave" ></span>
 		</span>
 		<script>
-			var oDraftAutoSave = new smf_DraftAutoSave({
+			var oDraftAutoSave = new sb_draftAutoSave({
 				sSelf: \'oDraftAutoSave\',
 				sLastNote: \'draft_lastautosave\',
 				sLastID: \'id_pm_draft\',
@@ -150,7 +150,7 @@ function template_control_richedit_buttons($editor_id)
 			<span id="draft_lastautosave" ></span>
 		</span>
 		<script>
-			var oDraftAutoSave = new smf_DraftAutoSave({
+			var oDraftAutoSave = new sb_draftAutoSave({
 				sSelf: \'oDraftAutoSave\',
 				sLastNote: \'draft_lastautosave\',
 				sLastID: \'id_draft\',

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This, as you have probably guessed, is the crux on which SMF functions.
+ * This, as you have probably guessed, is the crux on which Social Bricks functions.
  * Everything should start here, so all the setup and security is done
  * properly.  The most interesting part of this file is the action array in
  * the sb_main() function.  It is formatted as so:
@@ -10,24 +10,24 @@
  * Then, you can access the FunctionToCall() function from Source-File.php
  * with the URL index.php?action=action-in-url.  Relatively simple, no?
  *
- * Simple Machines Forum (SMF)
+ * Social Bricks
  *
- * @package SMF
- * @author Simple Machines https://www.simplemachines.org
- * @copyright 2022 Simple Machines and individual contributors
- * @license https://www.simplemachines.org/about/smf/license.php BSD
+ * @package SocialBricks
+ * @author Social Bricks and others (see CONTRIBUTORS.md)
+ * @copyright 2022 Social Bricks contributors (full details see LICENSE file)
+ * @license 3-clause BSD (see accompanying LICENSE file)
  *
  * @version 2.1.2
  */
 
 // Get everything started up...
-define('SMF', 1);
-define('SMF_VERSION', '2.1.2');
-define('SMF_FULL_VERSION', 'SMF ' . SMF_VERSION);
-define('SMF_SOFTWARE_YEAR', '2022');
+define('SOCIALBRICKS', 1);
+define('SB_VERSION', '2.1.2');
+define('SB_FULL_VERSION', 'Social Bricks ' . SB_VERSION);
+define('SB_SOFTWARE_YEAR', '2022');
 
 define('JQUERY_VERSION', '3.6.0');
-define('SB_USER_AGENT', 'Mozilla/5.0 (' . php_uname('s') . ' ' . php_uname('m') . ') AppleWebKit/605.1.15 (KHTML, like Gecko) SocialBricks/' . strtr(SMF_VERSION, ' ', '.'));
+define('SB_USER_AGENT', 'Mozilla/5.0 (' . php_uname('s') . ' ' . php_uname('m') . ') AppleWebKit/605.1.15 (KHTML, like Gecko) SocialBricks/' . strtr(SB_VERSION, ' ', '.'));
 
 if (!defined('TIME_START'))
 	define('TIME_START', microtime(true));
@@ -299,7 +299,6 @@ function sb_main()
 		'buddy' => array('Subs-Members.php', 'BuddyListToggle'),
 		'calendar' => array('Calendar.php', 'CalendarMain'),
 		'coppa' => array('Register.php', 'CoppaForm'),
-		'credits' => array('Who.php', 'Credits'),
 		'deletemsg' => array('RemoveTopic.php', 'DeleteMessage'),
 		'dlattach' => array('ShowAttachments.php', 'showAttachment'),
 		'editpoll' => array('Poll.php', 'EditPoll'),

@@ -5,12 +5,12 @@
  * members, and it helps the administrator moderate member registrations.
  * Similarly, it handles account activation as well.
  *
- * Simple Machines Forum (SMF)
+ * Social Bricks
  *
- * @package SMF
- * @author Simple Machines https://www.simplemachines.org
- * @copyright 2022 Simple Machines and individual contributors
- * @license https://www.simplemachines.org/about/smf/license.php BSD
+ * @package SocialBricks
+ * @author Social Bricks and others (see CONTRIBUTORS.md)
+ * @copyright 2022 Social Bricks contributors (full details see LICENSE file)
+ * @license 3-clause BSD (see accompanying LICENSE file)
  *
  * @version 2.1.2
  */
@@ -100,7 +100,7 @@ function Register($reg_errors = array())
 
 	// Kinda need this.
 	if ($context['sub_template'] == 'registration_form')
-		loadJavaScriptFile('register.js', array('defer' => false, 'minimize' => true), 'smf_register');
+		loadJavaScriptFile('register.js', array('defer' => false, 'minimize' => true), 'sb_register');
 
 	// Add the register chain to the link tree.
 	$context['linktree'][] = array(
@@ -395,7 +395,7 @@ function Register2()
 
 	// Handle a string as a birthdate...
 	if (isset($_POST['birthdate']) && $_POST['birthdate'] != '')
-		$_POST['birthdate'] = smf_strftime('%Y-%m-%d', strtotime($_POST['birthdate']));
+		$_POST['birthdate'] = sb_strftime('%Y-%m-%d', strtotime($_POST['birthdate']));
 	// Or birthdate parts...
 	elseif (!empty($_POST['bday1']) && !empty($_POST['bday2']))
 		$_POST['birthdate'] = sprintf('%04d-%02d-%02d', empty($_POST['bday3']) ? 0 : (int) $_POST['bday3'], (int) $_POST['bday1'], (int) $_POST['bday2']);

@@ -57,7 +57,7 @@ $txt['paypal_sandbox_email_desc'] = 'Can be left blank if test mode is disabled 
 
 // argument(s): $boardurl
 $txt['paid_note'] = '<strong class="alert">Note:</strong><br>
-SMF currently supports <strong>PayPal</strong> as the installed payment method.
+Social Bricks currently supports <strong>PayPal</strong> as the installed payment method.
 <ul class="bbc_list">
 	<li>It is not necessary to enable IPN in your PayPal account; but if you do, the forum will receive payment notifications for all payments made to your account, and this will generate Paid Subscriptions errors for payments that are not subscription related.</li>
 	<li>You must have a business or premier account to use recurring payments.</li>

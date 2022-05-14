@@ -2,19 +2,19 @@
 
 /**
  * This is an internal development file. It should NOT be included in
- * any SMF distribution packages.
+ * any distribution packages.
  *
  * This file exists to make it easy for developers to update the
  * Unicode data in Subs-Charset.php whenever a new version of the
  * Unicode Character Database is released. Just run this file from the
  * command line in order to perform the update.
  *
- * Simple Machines Forum (SMF)
+ * Social Bricks
  *
- * @package SMF
- * @author Simple Machines https://www.simplemachines.org
- * @copyright 2022 Simple Machines and individual contributors
- * @license https://www.simplemachines.org/about/smf/license.php BSD
+ * @package SocialBricks
+ * @author Social Bricks and others (see CONTRIBUTORS.md)
+ * @copyright 2022 Social Bricks contributors (full details see LICENSE file)
+ * @license 3-clause BSD (see accompanying LICENSE file)
  *
  * @version 2.1.2
  */

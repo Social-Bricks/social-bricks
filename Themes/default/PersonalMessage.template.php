@@ -1,11 +1,11 @@
 <?php
 /**
- * Simple Machines Forum (SMF)
+ * Social Bricks
  *
- * @package SMF
- * @author Simple Machines https://www.simplemachines.org
- * @copyright 2022 Simple Machines and individual contributors
- * @license https://www.simplemachines.org/about/smf/license.php BSD
+ * @package SocialBricks
+ * @author Social Bricks and others (see CONTRIBUTORS.md)
+ * @copyright 2022 Social Bricks contributors (full details see LICENSE file)
+ * @license 3-clause BSD (see accompanying LICENSE file)
  *
  * @version 2.1.2
  */
@@ -861,7 +861,7 @@ function template_search()
 		// Some javascript for the advanced toggling
 		echo '
 		<script>
-			var oAdvancedPanelToggle = new smc_Toggle({
+			var oAdvancedPanelToggle = new sb_toggle({
 				bToggleEnabled: true,
 				bCurrentlyCollapsed: true,
 				aSwappableContainers: [
@@ -1233,7 +1233,7 @@ function template_send()
 	// Code for showing and hiding drafts
 	if (!empty($context['drafts']))
 		echo '
-			var oSwapDraftOptions = new smc_Toggle({
+			var oSwapDraftOptions = new sb_toggle({
 				bToggleEnabled: true,
 				bCurrentlyCollapsed: true,
 				aSwappableContainers: [
@@ -1277,7 +1277,7 @@ function template_send()
 
 	echo '
 		<script>
-			var oPersonalMessageSend = new smf_PersonalMessageSend({
+			var oPersonalMessageSend = new sb_PersonalMessageSend({
 				sSelf: \'oPersonalMessageSend\',
 				sSessionId: sb_session_id,
 				sSessionVar: sb_session_var,

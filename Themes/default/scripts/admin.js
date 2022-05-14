@@ -8,7 +8,7 @@
 		public checkUpdateAvailable()
 	}
 
-	smf_ViewVersions(oOptions)
+	sb_viewVersions(oOptions)
 	{
 		public init()
 		public loadViewVersions
@@ -64,14 +64,14 @@ sb_adminIndex.prototype.checkUpdateAvailable = function ()
 
 
 
-function smf_ViewVersions (oOptions)
+function sb_viewVersions (oOptions)
 {
 	this.opt = oOptions;
 	this.oSwaps = {};
 	this.init();
 }
 
-smf_ViewVersions.prototype.init = function ()
+sb_viewVersions.prototype.init = function ()
 {
 	// Load this on loading of the page.
 	window.viewVersionsInstanceRef = this;
@@ -81,12 +81,12 @@ smf_ViewVersions.prototype.init = function ()
 	addLoadEvent(fHandlePageLoaded);
 }
 
-smf_ViewVersions.prototype.loadViewVersions = function ()
+sb_viewVersions.prototype.loadViewVersions = function ()
 {
 	this.determineVersions();
 }
 
-smf_ViewVersions.prototype.swapOption = function (oSendingElement, sName)
+sb_viewVersions.prototype.swapOption = function (oSendingElement, sName)
 {
 	// If it is undefined, or currently off, turn it on - otherwise off.
 	this.oSwaps[sName] = !(sName in this.oSwaps) || !this.oSwaps[sName];
@@ -100,7 +100,7 @@ smf_ViewVersions.prototype.swapOption = function (oSendingElement, sName)
 	return false;
 }
 
-smf_ViewVersions.prototype.compareVersions = function (sCurrent, sTarget)
+sb_viewVersions.prototype.compareVersions = function (sCurrent, sTarget)
 {
 	var aVersions = aParts = new Array();
 	var aCompare = new Array(sCurrent, sTarget);
@@ -149,7 +149,7 @@ smf_ViewVersions.prototype.compareVersions = function (sCurrent, sTarget)
 	return false;
 }
 
-smf_ViewVersions.prototype.determineVersions = function ()
+sb_viewVersions.prototype.determineVersions = function ()
 {
 	var oHighYour = {
 		Sources: '??',
@@ -201,10 +201,10 @@ smf_ViewVersions.prototype.determineVersions = function ()
 		}
 	}
 
-	if (!('smfVersions' in window))
-		window.smfVersions = {};
+	if (!('sbVersions' in window))
+		window.sbVersions = {};
 
-	for (var sFilename in window.smfVersions)
+	for (var sFilename in window.sbVersions)
 	{
 		if (!document.getElementById('current' + sFilename))
 			continue;
@@ -223,19 +223,19 @@ smf_ViewVersions.prototype.determineVersions = function ()
 		{
 			if ((this.compareVersions(oHighYour[sCurVersionType], sYourVersion) || oHighYour[sCurVersionType] == '??') && !oLowVersion[sCurVersionType])
 				oHighYour[sCurVersionType] = sYourVersion;
-			if (this.compareVersions(oHighCurrent[sCurVersionType], smfVersions[sFilename]) || oHighCurrent[sCurVersionType] == '??')
-				oHighCurrent[sCurVersionType] = smfVersions[sFilename];
+			if (this.compareVersions(oHighCurrent[sCurVersionType], sbVersions[sFilename]) || oHighCurrent[sCurVersionType] == '??')
+				oHighCurrent[sCurVersionType] = sbVersions[sFilename];
 
-			if (this.compareVersions(sYourVersion, smfVersions[sFilename]))
+			if (this.compareVersions(sYourVersion, sbVersions[sFilename]))
 			{
 				oLowVersion[sCurVersionType] = sYourVersion;
 				document.getElementById('your' + sFilename).className = 'alert';
 			}
 		}
-		else if (this.compareVersions(sYourVersion, smfVersions[sFilename]))
+		else if (this.compareVersions(sYourVersion, sbVersions[sFilename]))
 			oLowVersion[sCurVersionType] = sYourVersion;
 
-		setInnerHTML(document.getElementById('current' + sFilename), smfVersions[sFilename]);
+		setInnerHTML(document.getElementById('current' + sFilename), sbVersions[sFilename]);
 		setInnerHTML(document.getElementById('your' + sFilename), sYourVersion);
 	}
 
@@ -374,15 +374,6 @@ function createNamedElement(type, name, customFields)
 	}
 
 	return element;
-}
-
-function smfSetLatestThemes()
-{
-	if (typeof(window.smfLatestThemes) != "undefined")
-		setInnerHTML(document.getElementById("themeLatest"), window.smfLatestThemes);
-
-	if (tempOldOnload)
-		tempOldOnload();
 }
 
 function changeVariant(sVariant)

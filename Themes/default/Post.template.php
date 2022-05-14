@@ -1,11 +1,11 @@
 <?php
 /**
- * Simple Machines Forum (SMF)
+ * Social Bricks
  *
- * @package SMF
- * @author Simple Machines https://www.simplemachines.org
- * @copyright 2022 Simple Machines and individual contributors
- * @license https://www.simplemachines.org/about/smf/license.php BSD
+ * @package SocialBricks
+ * @author Social Bricks and others (see CONTRIBUTORS.md)
+ * @copyright 2022 Social Bricks contributors (full details see LICENSE file)
+ * @license 3-clause BSD (see accompanying LICENSE file)
  *
  * @version 2.1.2
  */
@@ -539,7 +539,7 @@ function template_main()
 
 	// The functions used to preview a posts without loading a new page.
 	echo '
-			var oPreviewPost = new smc_preview_post({
+			var oPreviewPost = new sb_previewPost({
 				sPreviewSectionContainerID: "preview_section",
 				sPreviewSubjectContainerID: "preview_subject",
 				sPreviewBodyContainerID: "preview_body",
@@ -565,7 +565,7 @@ function template_main()
 	// Code for showing and hiding additional options.
 	if (!empty($modSettings['additional_options_collapsable']))
 		echo '
-			var oSwapAdditionalOptions = new smc_Toggle({
+			var oSwapAdditionalOptions = new sb_toggle({
 				bToggleEnabled: true,
 				bCurrentlyCollapsed: ', $context['show_additional_options'] ? 'false' : 'true', ',
 				funcOnBeforeCollapse: function () {
@@ -596,7 +596,7 @@ function template_main()
 	// Code for showing and hiding drafts
 	if (!empty($context['drafts']))
 		echo '
-			var oSwapDraftOptions = new smc_Toggle({
+			var oSwapDraftOptions = new sb_toggle({
 				bToggleEnabled: true,
 				bCurrentlyCollapsed: true,
 				aSwappableContainers: [
@@ -680,7 +680,7 @@ function template_main()
 		foreach ($ignored_posts as $post_id)
 		{
 			echo '
-			aIgnoreToggles[', $post_id, '] = new smc_Toggle({
+			aIgnoreToggles[', $post_id, '] = new sb_toggle({
 				bToggleEnabled: true,
 				bCurrentlyCollapsed: true,
 				aSwappableContainers: [

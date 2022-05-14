@@ -1,11 +1,11 @@
 <?php
 /**
- * Simple Machines Forum (SMF)
+ * Social Bricks
  *
- * @package SMF
- * @author Simple Machines https://www.simplemachines.org
- * @copyright 2022 Simple Machines and individual contributors
- * @license https://www.simplemachines.org/about/smf/license.php BSD
+ * @package SocialBricks
+ * @author Social Bricks and others (see CONTRIBUTORS.md)
+ * @copyright 2022 Social Bricks contributors (full details see LICENSE file)
+ * @license 3-clause BSD (see accompanying LICENSE file)
  *
  * @version 2.1.0
  */
@@ -140,7 +140,7 @@ function template_set_password()
 			"password_no_match": "', $txt['registration_password_no_match'], '",
 			"password_valid": "', $txt['registration_password_valid'], '"
 		};
-		var verificationHandle = new smfRegister("reminder_form", ', empty($modSettings['password_strength']) ? 0 : $modSettings['password_strength'], ', regTextStrings);
+		var verificationHandle = new sb_Register("reminder_form", ', empty($modSettings['password_strength']) ? 0 : $modSettings['password_strength'], ', regTextStrings);
 	</script>';
 }
 
@@ -197,7 +197,7 @@ function template_ask()
 			"password_no_match": "', $txt['registration_password_no_match'], '",
 			"password_valid": "', $txt['registration_password_valid'], '"
 		};
-		var verificationHandle = new smfRegister("creator", ', empty($modSettings['password_strength']) ? 0 : $modSettings['password_strength'], ', regTextStrings);
+		var verificationHandle = new sb_Register("creator", ', empty($modSettings['password_strength']) ? 0 : $modSettings['password_strength'], ', regTextStrings);
 	</script>';
 
 }

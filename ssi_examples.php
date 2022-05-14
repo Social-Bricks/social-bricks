@@ -1,12 +1,12 @@
 <?php
 
 /**
- * Simple Machines Forum (SMF)
+ * Social Bricks
  *
- * @package SMF
- * @author Simple Machines https://www.simplemachines.org
- * @copyright 2022 Simple Machines and individual contributors
- * @license https://www.simplemachines.org/about/smf/license.php BSD
+ * @package SocialBricks
+ * @author Social Bricks and others (see CONTRIBUTORS.md)
+ * @copyright 2022 Social Bricks contributors (full details see LICENSE file)
+ * @license 3-clause BSD (see accompanying LICENSE file)
  *
  * @version 2.1.0
  */
@@ -33,7 +33,7 @@ if (isset($_GET['view']) && $_GET['view'] == 'home1')
 template_ssi_above();
 ?>
 			<h2>SSI.php Functions</h2>
-			<p><strong>Current Version:</strong> <?php echo SMF_VERSION; ?></p>
+			<p><strong>Current Version:</strong> <?php echo SB_VERSION; ?></p>
 			<p>This file is used to demonstrate the capabilities of SSI.php using PHP include functions. The examples show the include tag, then the results of it.</p>
 
 			<h2>Include Code</h2>
@@ -43,7 +43,7 @@ template_ssi_above();
 			<h2>Some notes on usage</h2>
 			<p>All the functions have an output method parameter.  This can either be &quot;echo&quot; (the default) or &quot;array&quot;</p>
 			<p>If it is &quot;echo&quot;, the function will act normally - otherwise, it will return an array containing information about the requested task. For example, it might return a list of topics for ssi_recentTopics.</p>
-			<p onclick="if (getInnerHTML(this).indexOf('Bird') == -1) setInnerHTML(this, getInnerHTML(this) + '<br><img src=&quot;https://www.simplemachines.org/images/chocobo.jpg&quot; title=&quot;Bird-san&quot; alt=&quot;Chocobo!&quot;>'); return false;">This functionality can be used to allow you to present the information in any way you wish.</p>
+			<p>This functionality can be used to allow you to present the information in any way you wish.</p>
 
 			<h2>Additional Guides &amp; FAQ</h2>
 			<p>Need more information on using SSI.php? Check out <a href="https://wiki.simplemachines.org/smf/Category:SSI">Using SSI.php article</a>.</p>
@@ -418,7 +418,7 @@ function template_ssi_above()
 	echo '<!DOCTYPE html>
 <html>
 	<head>
-		<title>', SMF_FULL_VERSION, ' SSI.php Examples</title>
+		<title>', SB_FULL_VERSION, ' SSI.php Examples</title>
 		<link rel="stylesheet" href="', $settings['default_theme_url'], '/css/index.css">
 		<script src="', !empty($context['javascript_files']['sb_jquery']['fileUrl']) ? $context['javascript_files']['sb_jquery']['fileUrl'] : 'https://ajax.googleapis.com/ajax/libs/jquery/' . JQUERY_VERSION . '/jquery.min.js', '"></script>
 		<script src="', $settings['default_theme_url'], '/scripts/script.js"></script>
@@ -505,8 +505,8 @@ function template_ssi_above()
 	</head>
 	<body>
 		<div id="header">
-			<h1 class="forumtitle">', SMF_FULL_VERSION, ' SSI.php Examples</h1>
-			<img id="smflogo" src="Themes/default/images/smflogo.svg" alt="Simple Machines Forum" title="Simple Machines Forum">
+			<h1 class="forumtitle">', SB_FULL_VERSION, ' SSI.php Examples</h1>
+			<img id="smflogo" src="Themes/default/images/smflogo.svg" alt="Social Bricks" title="Social Bricks">
 		</div>
 		<div id="wrapper">
 			<div id="upper_section"><p><br></p></div>

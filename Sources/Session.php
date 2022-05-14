@@ -7,12 +7,12 @@
  * 	- it uses the databaseSession_lifetime setting for garbage collection.
  * 	- the custom session handler is set by loadSession().
  *
- * Simple Machines Forum (SMF)
+ * Social Bricks
  *
- * @package SMF
- * @author Simple Machines https://www.simplemachines.org
- * @copyright 2022 Simple Machines and individual contributors
- * @license https://www.simplemachines.org/about/smf/license.php BSD
+ * @package SocialBricks
+ * @author Social Bricks and others (see CONTRIBUTORS.md)
+ * @copyright 2022 Social Bricks contributors (full details see LICENSE file)
+ * @license 3-clause BSD (see accompanying LICENSE file)
  *
  * @version 2.1.0
  */
@@ -171,7 +171,7 @@ function sessionWrite($session_id, $data)
 		if (!empty($db_mb4))
 			$db_options['db_mb4'] = $db_mb4;
 
-		$options = array_merge($db_options, array('persist' => $db_persist, 'dont_select_db' => SMF == 'SSI'));
+		$options = array_merge($db_options, array('persist' => $db_persist, 'dont_select_db' => SOCIALBRICKS == 'SSI'));
 
 		$db_connection = sb_db_initiate($db_server, $db_name, $db_user, $db_passwd, $db_prefix, $options);
 	}

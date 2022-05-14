@@ -1,11 +1,11 @@
 <?php
 /**
- * Simple Machines Forum (SMF)
+ * Social Bricks
  *
- * @package SMF
- * @author Simple Machines https://www.simplemachines.org
- * @copyright 2022 Simple Machines and individual contributors
- * @license https://www.simplemachines.org/about/smf/license.php BSD
+ * @package SocialBricks
+ * @author Social Bricks and others (see CONTRIBUTORS.md)
+ * @copyright 2022 Social Bricks contributors (full details see LICENSE file)
+ * @license 3-clause BSD (see accompanying LICENSE file)
  *
  * @version 2.1.0
  */
@@ -135,7 +135,7 @@ function template_reported_posts_block()
 		</div><!-- #reported_posts_panel -->
 
 		<script>
-			var oReportedPostsPanelToggle = new smc_Toggle({
+			var oReportedPostsPanelToggle = new sb_toggle({
 				bToggleEnabled: true,
 				bCurrentlyCollapsed: ', !empty($context['admin_prefs']['mcrp']) ? 'true' : 'false', ',
 				aSwappableContainers: [
@@ -349,7 +349,7 @@ function template_reported_members_block()
 		</div><!-- #reported_users_panel -->
 
 		<script>
-			var oReportedPostsPanelToggle = new smc_Toggle({
+			var oReportedPostsPanelToggle = new sb_toggle({
 				bToggleEnabled: true,
 				bCurrentlyCollapsed: ', !empty($context['admin_prefs']['mcrm']) ? 'true' : 'false', ',
 				aSwappableContainers: [

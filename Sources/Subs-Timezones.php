@@ -3,12 +3,12 @@
 /**
  * This file provides some functions to simplify working with time zones.
  *
- * Simple Machines Forum (SMF)
+ * Social Bricks
  *
- * @package SMF
- * @author Simple Machines https://www.simplemachines.org
- * @copyright 2022 Simple Machines and individual contributors
- * @license https://www.simplemachines.org/about/smf/license.php BSD
+ * @package SocialBricks
+ * @author Social Bricks and others (see CONTRIBUTORS.md)
+ * @copyright 2022 Social Bricks contributors (full details see LICENSE file)
+ * @license 3-clause BSD (see accompanying LICENSE file)
  *
  * @version 2.1.2
  */
@@ -17,7 +17,7 @@ if (!defined('PHP_INT_MIN'))
 	define('PHP_INT_MIN', ~PHP_INT_MAX);
 
 /**
- * Returns an array that instructs SMF how to map specific time zones
+ * Returns an array that instructs Social Bricks how to map specific time zones
  * (e.g. "America/Denver") onto the user-friendly "meta-zone" labels that
  * most people think of as time zones (e.g. "Mountain Time").
  *
@@ -61,7 +61,7 @@ function get_tzid_metazones($when = 'now')
 		If you are adding a new meta-zone to this list because the TZDB
 		added a new time zone that doesn't fit any existing meta-zone,
 		please also add a fallback in the get_tzid_fallbacks() function.
-		This helps support SMF installs on servers using outdated
+		This helps support Social Bricks installs on servers using outdated
 		versions of the TZDB.
 	 */
 	$tzid_metazones = array(
@@ -614,7 +614,7 @@ function get_sorted_tzids_for_country($country_code, $when = 'now')
 
 		If future versions of the time zone database add new time zone
 		identifiers beyond those included here, they should be added to this
-		list as appropriate. However, SMF will gracefully handle unexpected
+		list as appropriate. However, Social Bricks will gracefully handle unexpected
 		new time zones, so nothing will break in the meantime.
 	 */
 	$sorted_tzids = array(

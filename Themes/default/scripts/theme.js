@@ -36,7 +36,7 @@ if (is_ie || is_webkit || is_ff)
 	addLoadEvent(sb_codeBoxFix);
 
 // Toggles the element height and width styles of an image.
-function smc_toggleImageDimensions()
+function sb_toggleImageDimensions()
 {
 	$('.postarea .bbc_img.resized').each(function(index, item)
 	{
@@ -48,7 +48,7 @@ function smc_toggleImageDimensions()
 }
 
 // Add a load event for the function above.
-addLoadEvent(smc_toggleImageDimensions);
+addLoadEvent(sb_toggleImageDimensions);
 
 function sb_addButton(stripId, image, options)
 {

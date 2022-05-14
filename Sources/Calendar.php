@@ -4,12 +4,12 @@
  * This file has only one real task, showing the calendar.
  * Original module by Aaron O'Neil - aaron@mud-master.com
  *
- * Simple Machines Forum (SMF)
+ * Social Bricks
  *
- * @package SMF
- * @author Simple Machines https://www.simplemachines.org
- * @copyright 2022 Simple Machines and individual contributors
- * @license https://www.simplemachines.org/about/smf/license.php BSD
+ * @package SocialBricks
+ * @author Social Bricks and others (see CONTRIBUTORS.md)
+ * @copyright 2022 Social Bricks contributors (full details see LICENSE file)
+ * @license 3-clause BSD (see accompanying LICENSE file)
  *
  * @version 2.1.2
  */
@@ -54,7 +54,7 @@ function CalendarMain()
 
 	// This is gonna be needed...
 	loadTemplate('Calendar');
-	loadCSSFile('calendar.css', array('force_current' => false, 'validate' => true, 'rtl' => 'calendar.rtl.css'), 'smf_calendar');
+	loadCSSFile('calendar.css', array('force_current' => false, 'validate' => true, 'rtl' => 'calendar.rtl.css'), 'sb_calendar');
 
 	// Did the specify an individual event ID? If so, let's splice the year/month in to what we would otherwise be doing.
 	if (isset($_GET['event']))
@@ -396,7 +396,7 @@ function CalendarPost()
 		$eventDatetimes = getNewEventDatetimes();
 		$context['event'] = array_merge($context['event'], $eventDatetimes);
 
-		$context['event']['last_day'] = (int) smf_strftime('%d', mktime(0, 0, 0, $context['event']['month'] == 12 ? 1 : $context['event']['month'] + 1, 0, $context['event']['month'] == 12 ? $context['event']['year'] + 1 : $context['event']['year']));
+		$context['event']['last_day'] = (int) sb_strftime('%d', mktime(0, 0, 0, $context['event']['month'] == 12 ? 1 : $context['event']['month'] + 1, 0, $context['event']['month'] == 12 ? $context['event']['year'] + 1 : $context['event']['year']));
 	}
 	else
 	{
@@ -435,9 +435,9 @@ function CalendarPost()
 	}
 
 	// Need this so the user can select a timezone for the event.
-	$context['all_timezones'] = smf_list_timezones($context['event']['start_date']);
+	$context['all_timezones'] = sb_list_timezones($context['event']['start_date']);
 
-	// If the event's timezone is not in SMF's standard list of time zones, try to fix it.
+	// If the event's timezone is not in our standard list of time zones, try to fix it.
 	if (!isset($context['all_timezones'][$context['event']['tz']]))
 	{
 		$later = strtotime('@' . $context['event']['start_timestamp'] . ' + 1 year');
@@ -570,7 +570,7 @@ function iCalDownload()
 	$filecontents = '';
 	$filecontents .= 'BEGIN:VCALENDAR' . "\n";
 	$filecontents .= 'METHOD:PUBLISH' . "\n";
-	$filecontents .= 'PRODID:-//SocialBricks//' . SMF_FULL_VERSION . '//EN' . "\n";
+	$filecontents .= 'PRODID:-//SocialBricks//' . SB_FULL_VERSION . '//EN' . "\n";
 	$filecontents .= 'VERSION:2.0' . "\n";
 	$filecontents .= 'BEGIN:VEVENT' . "\n";
 	// @TODO - Should be the members email who created the event rather than $webmaster_email.

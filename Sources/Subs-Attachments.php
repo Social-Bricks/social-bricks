@@ -4,12 +4,12 @@
  * This file handles the uploading and creation of attachments
  * as well as the auto management of the attachment directories.
  *
- * Simple Machines Forum (SMF)
+ * Social Bricks
  *
- * @package SMF
- * @author Simple Machines https://www.simplemachines.org
- * @copyright 2022 Simple Machines and individual contributors
- * @license https://www.simplemachines.org/about/smf/license.php BSD
+ * @package SocialBricks
+ * @author Social Bricks and others (see CONTRIBUTORS.md)
+ * @copyright 2022 Social Bricks contributors (full details see LICENSE file)
+ * @license 3-clause BSD (see accompanying LICENSE file)
  *
  * @version 2.1.2
  */
@@ -158,7 +158,7 @@ function automanage_attachments_create_directory($updir)
 	}
 
 	// Check if the dir is writable.
-	if (!smf_chmod($directory))
+	if (!sb_chmod($directory))
 	{
 		$context['dir_creation_error'] = 'attachments_no_write';
 		return false;
@@ -463,7 +463,7 @@ function processAttachments()
 
 			// Move the file to the attachments folder with a temp name for now.
 			if (@move_uploaded_file($_FILES['attachment']['tmp_name'][$n], $destName))
-				smf_chmod($destName, 0644);
+				sb_chmod($destName, 0644);
 			else
 			{
 				$_SESSION['temp_attachments'][$attachID]['errors'][] = 'attach_timeout';

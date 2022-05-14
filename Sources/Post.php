@@ -4,12 +4,12 @@
  * The job of this file is to handle everything related to posting replies,
  * new topics, quotes, and modifications to existing posts.  It also handles
  * quoting posts by way of javascript.
- * Simple Machines Forum (SMF)
+ * Social Bricks
  *
- * @package SMF
- * @author Simple Machines https://www.simplemachines.org
- * @copyright 2022 Simple Machines and individual contributors
- * @license https://www.simplemachines.org/about/smf/license.php BSD
+ * @package SocialBricks
+ * @author Social Bricks and others (see CONTRIBUTORS.md)
+ * @copyright 2022 Social Bricks contributors (full details see LICENSE file)
+ * @license 3-clause BSD (see accompanying LICENSE file)
  *
  * @version 2.1.2
  */
@@ -325,7 +325,7 @@ function Post($post_errors = array())
 		}
 
 		// Find the last day of the month.
-		$context['event']['last_day'] = (int) smf_strftime('%d', mktime(0, 0, 0, $context['event']['month'] == 12 ? 1 : $context['event']['month'] + 1, 0, $context['event']['month'] == 12 ? $context['event']['year'] + 1 : $context['event']['year']));
+		$context['event']['last_day'] = (int) sb_strftime('%d', mktime(0, 0, 0, $context['event']['month'] == 12 ? 1 : $context['event']['month'] + 1, 0, $context['event']['month'] == 12 ? $context['event']['year'] + 1 : $context['event']['year']));
 
 		// An all day event? Set up some nice defaults in case the user wants to change that
 		if ($context['event']['allday'] == true)
@@ -342,9 +342,9 @@ function Post($post_errors = array())
 		}
 
 		// Need this so the user can select a timezone for the event.
-		$context['all_timezones'] = smf_list_timezones($context['event']['start_date']);
+		$context['all_timezones'] = sb_list_timezones($context['event']['start_date']);
 
-		// If the event's timezone is not in SMF's standard list of time zones, try to fix it.
+		// If the event's timezone is not in our standard list of time zones, try to fix it.
 		if (!isset($context['all_timezones'][$context['event']['tz']]))
 		{
 			$later = strtotime('@' . $context['event']['start_timestamp'] . ' + 1 year');
@@ -1259,17 +1259,17 @@ function Post($post_errors = array())
 	// Mentions
 	if (!empty($modSettings['enable_mentions']) && allowedTo('mention'))
 	{
-		loadJavaScriptFile('jquery.caret.min.js', array('defer' => true), 'smf_caret');
-		loadJavaScriptFile('jquery.atwho.min.js', array('defer' => true), 'smf_atwho');
-		loadJavaScriptFile('mentions.js', array('defer' => true, 'minimize' => true), 'smf_mentions');
+		loadJavaScriptFile('jquery.caret.min.js', array('defer' => true), 'sb_caret');
+		loadJavaScriptFile('jquery.atwho.min.js', array('defer' => true), 'sb_atwho');
+		loadJavaScriptFile('mentions.js', array('defer' => true, 'minimize' => true), 'sb_mentions');
 	}
 
 	// Load the drafts js file
 	if ($context['drafts_autosave'])
-		loadJavaScriptFile('drafts.js', array('defer' => false, 'minimize' => true), 'smf_drafts');
+		loadJavaScriptFile('drafts.js', array('defer' => false, 'minimize' => true), 'sb_drafts');
 
 	// quotedText.js
-	loadJavaScriptFile('quotedText.js', array('defer' => true, 'minimize' => true), 'smf_quotedText');
+	loadJavaScriptFile('quotedText.js', array('defer' => true, 'minimize' => true), 'sb_quotedText');
 
 	addInlineJavaScript('
 	var current_attachments = [];');
@@ -1300,7 +1300,7 @@ function Post($post_errors = array())
 			explode(',', $context['allowed_extensions'])
 		));
 
-		loadJavaScriptFile('dropzone.min.js', array('defer' => true), 'smf_dropzone');
+		loadJavaScriptFile('dropzone.min.js', array('defer' => true), 'sb_dropzone');
 		loadJavaScriptFile('sb_fileUpload.js', array('defer' => true, 'minimize' => true), 'sb_fileUpload');
 		addInlineJavaScript('
 	$(function() {

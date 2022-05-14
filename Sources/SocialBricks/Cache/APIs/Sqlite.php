@@ -1,20 +1,20 @@
 <?php
 
 /**
- * Simple Machines Forum (SMF)
+ * Social Bricks
  *
- * @package SMF
- * @author Simple Machines https://www.simplemachines.org
- * @copyright 2022 Simple Machines and individual contributors
- * @license https://www.simplemachines.org/about/smf/license.php BSD
+ * @package SocialBricks
+ * @author Social Bricks and others (see CONTRIBUTORS.md)
+ * @copyright 2022 Social Bricks contributors (full details see LICENSE file)
+ * @license 3-clause BSD (see accompanying LICENSE file)
  *
  * @version 2.1.2
  */
 
-namespace SMF\Cache\APIs;
+namespace SocialBricks\Cache\APIs;
 
-use SMF\Cache\CacheApi;
-use SMF\Cache\CacheApiInterface;
+use SocialBricks\Cache\CacheApi;
+use SocialBricks\Cache\CacheApiInterface;
 use SQLite3;
 
 /**
@@ -152,7 +152,7 @@ class Sqlite extends CacheApi implements CacheApiInterface
 	}
 
 	/**
-	 * Sets the $cachedir or uses the SMF default $cachedir..
+	 * Sets the $cachedir or uses our default $cachedir..
 	 *
 	 * @access public
 	 *
@@ -164,7 +164,7 @@ class Sqlite extends CacheApi implements CacheApiInterface
 	{
 		global $cachedir, $cachedir_sqlite, $sourcedir;
 
-		// If its invalid, use SMF's.
+		// If its invalid, use ours.
 		if (!isset($dir) || !is_writable($dir))
 		{
 			if (!isset($cachedir_sqlite) || !is_writable($cachedir_sqlite))

@@ -3,12 +3,12 @@
 /**
  * This file is automatically called and handles all manner of scheduled things.
  *
- * Simple Machines Forum (SMF)
+ * Social Bricks
  *
- * @package SMF
- * @author Simple Machines https://www.simplemachines.org
- * @copyright 2022 Simple Machines and individual contributors
- * @license https://www.simplemachines.org/about/smf/license.php BSD
+ * @package SocialBricks
+ * @author Social Bricks and others (see CONTRIBUTORS.md)
+ * @copyright 2022 Social Bricks contributors (full details see LICENSE file)
+ * @license 3-clause BSD (see accompanying LICENSE file)
  *
  * @version 2.1.0
  */
@@ -25,7 +25,7 @@ function AutoTask()
 	corsPolicyHeader();
 
 	// Requests from a CORS response may send a options to find if the requst is valid.  Simply bail out here, the cors header have been sent already.
-	if (isset($_SERVER['HTTP_X_SMF_AJAX']) && isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] === 'OPTIONS')
+	if (isset($_SERVER['HTTP_X_SOCIALBRICKS_AJAX']) && isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] === 'OPTIONS')
 	{
 		send_http_status(204);
 		die;
@@ -92,7 +92,7 @@ function AutoTask()
 			if (!empty($row['callable']))
 				$task_string = $row['callable'];
 
-			// Default SMF task or old mods?
+			// Default Social Bricks task or old mods?
 			elseif (function_exists('scheduled_' . $row['task']))
 				$task_string = 'scheduled_' . $row['task'];
 
@@ -1048,7 +1048,7 @@ function loadEssentialThemeData()
 }
 
 /**
- * This retieves data (e.g. last version of SMF) from sm.org
+ * This retieves data (e.g. last version of Social Bricks) from sm.org
  */
 function scheduled_fetchSMfiles()
 {
@@ -1069,7 +1069,7 @@ function scheduled_fetchSMfiles()
 		$js_files[$row['id_file']] = array(
 			'filename' => $row['filename'],
 			'path' => $row['path'],
-			'parameters' => sprintf($row['parameters'], $language, urlencode($modSettings['time_format']), urlencode(SMF_FULL_VERSION)),
+			'parameters' => sprintf($row['parameters'], $language, urlencode($modSettings['time_format']), urlencode(SB_FULL_VERSION)),
 		);
 	}
 

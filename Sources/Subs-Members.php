@@ -3,12 +3,12 @@
 /**
  * This file contains some useful functions for members and membergroups.
  *
- * Simple Machines Forum (SMF)
+ * Social Bricks
  *
- * @package SMF
- * @author Simple Machines https://www.simplemachines.org
- * @copyright 2022 Simple Machines and individual contributors
- * @license https://www.simplemachines.org/about/smf/license.php BSD
+ * @package SocialBricks
+ * @author Social Bricks and others (see CONTRIBUTORS.md)
+ * @copyright 2022 Social Bricks contributors (full details see LICENSE file)
+ * @license 3-clause BSD (see accompanying LICENSE file)
  *
  * @version 2.1.2
  */
@@ -615,7 +615,7 @@ function registerMember(&$regOptions, $return_errors = false)
 		'additional_groups' => '',
 		'ignore_boards' => '',
 		'smiley_set' => '',
-		'timezone' => empty($modSettings['default_timezone']) || !array_key_exists($modSettings['default_timezone'], smf_list_timezones()) ? 'UTC' : $modSettings['default_timezone'],
+		'timezone' => empty($modSettings['default_timezone']) || !array_key_exists($modSettings['default_timezone'], sb_list_timezones()) ? 'UTC' : $modSettings['default_timezone'],
 	);
 
 	// Setup the activation status on this new account so it is correct - firstly is it an under age account?
@@ -662,7 +662,7 @@ function registerMember(&$regOptions, $return_errors = false)
 
 	// Verify that timezone is correct, if provided.
 	if (!empty($regOptions['extra_register_vars']) && !empty($regOptions['extra_register_vars']['timezone']) &&
-		!array_key_exists($regOptions['extra_register_vars']['timezone'], smf_list_timezones()))
+		!array_key_exists($regOptions['extra_register_vars']['timezone'], sb_list_timezones()))
 		unset($regOptions['extra_register_vars']['timezone']);
 
 	// Integrate optional member settings to be set.

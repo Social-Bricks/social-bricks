@@ -4,12 +4,12 @@
  * This file has the very important job of ensuring forum security.
  * This task includes banning and permissions, namely.
  *
- * Simple Machines Forum (SMF)
+ * Social Bricks
  *
- * @package SMF
- * @author Simple Machines https://www.simplemachines.org
- * @copyright 2022 Simple Machines and individual contributors
- * @license https://www.simplemachines.org/about/smf/license.php BSD
+ * @package SocialBricks
+ * @author Social Bricks and others (see CONTRIBUTORS.md)
+ * @copyright 2022 Social Bricks contributors (full details see LICENSE file)
+ * @license 3-clause BSD (see accompanying LICENSE file)
  *
  * @version 2.1.0
  */
@@ -110,7 +110,7 @@ function is_not_guest($message = '')
 		obExit(false);
 
 	// Attempt to detect if they came from dlattach.
-	if (SMF != 'SSI' && empty($context['theme_loaded']))
+	if (SOCIALBRICKS != 'SSI' && empty($context['theme_loaded']))
 		loadTheme();
 
 	// Never redirect to an attachment
@@ -379,7 +379,7 @@ function is_not_banned($forceCheck = false)
 			'language' => $user_info['language'],
 		);
 
-		// SMF's Wipe 'n Clean(r) erases all traces.
+		// erases all trace.
 		$_GET['action'] = '';
 		$_GET['board'] = '';
 		$_GET['topic'] = '';
@@ -1490,7 +1490,7 @@ function corsPolicyHeader($set_header = true)
 		$context['valid_cors_found'] = 'same';
 	}
 
-	$context['cors_headers'] = 'X-SMF-AJAX';
+	$context['cors_headers'] = 'X-SOCIALBRICKS-AJAX';
 
 	// Any additional headers?
 	if (!empty($modSettings['cors_headers']))

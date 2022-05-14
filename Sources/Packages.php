@@ -3,12 +3,12 @@
 /**
  * This file is the main Package Manager.
  *
- * Simple Machines Forum (SMF)
+ * Social Bricks
  *
- * @package SMF
- * @author Simple Machines https://www.simplemachines.org
- * @copyright 2022 Simple Machines and individual contributors
- * @license https://www.simplemachines.org/about/smf/license.php BSD
+ * @package SocialBricks
+ * @author Social Bricks and others (see CONTRIBUTORS.md)
+ * @copyright 2022 Social Bricks contributors (full details see LICENSE file)
+ * @license 3-clause BSD (see accompanying LICENSE file)
  *
  * @version 2.1.0
  */
@@ -1378,7 +1378,7 @@ function PackageRemove()
 			deltree($packagesdir . '/' . $_GET['package']);
 		else
 		{
-			smf_chmod($packagesdir . '/' . $_GET['package'], 0777);
+			sb_chmod($packagesdir . '/' . $_GET['package'], 0777);
 			unlink($packagesdir . '/' . $_GET['package']);
 		}
 	}
@@ -1395,7 +1395,7 @@ function PackageBrowse()
 
 	$context['page_title'] .= ' - ' . $txt['browse_packages'];
 
-	$context['forum_version'] = SMF_FULL_VERSION;
+	$context['forum_version'] = SB_FULL_VERSION;
 	$context['available_packages'] = 0;
 	$context['modification_types'] = array('modification', 'avatar', 'language', 'unknown');
 
@@ -1513,33 +1513,6 @@ function PackageBrowse()
 
 	$context['sub_template'] = 'browse';
 	$context['default_list'] = 'packages_lists';
-
-	$get_versions = $smcFunc['db_query']('', '
-		SELECT data FROM {db_prefix}admin_info_files WHERE filename={string:versionsfile} AND path={string:smf}',
-		array(
-			'versionsfile' => 'latest-versions.txt',
-			'smf' => '/smf/',
-		)
-	);
-
-	$data = $smcFunc['db_fetch_assoc']($get_versions);
-	$smcFunc['db_free_result']($get_versions);
-
-	// Decode the data.
-	$items = $smcFunc['json_decode']($data['data'], true);
-
-	$context['emulation_versions'] = preg_replace('~^SMF ~', '', $items);
-
-	// Current SMF version, which is selected by default
-	$context['default_version'] = SMF_VERSION;
-
-	if (!in_array($context['default_version'], $context['emulation_versions']))
-	{
-		$context['emulation_versions'][] = $context['default_version'];
-	}
-
-	// Version we're currently emulating, if any
-	$context['selected_version'] = preg_replace('~^SMF ~', '', $context['forum_version']);
 }
 
 /**
@@ -1570,27 +1543,7 @@ function list_getPackages($start, $items_per_page, $sort, $params)
 	if (!@is_writable($packagesdir))
 		create_chmod_control(array($packagesdir), array('destination_url' => $scripturl . '?action=admin;area=packages', 'crash_on_error' => true));
 
-	$the_version = SMF_VERSION;
-
-	// Here we have a little code to help those who class themselves as something of gods, version emulation ;)
-	if (isset($_GET['version_emulate']) && strtr($_GET['version_emulate'], array('SMF ' => '')) == $the_version)
-	{
-		unset($_SESSION['version_emulate']);
-	}
-	elseif (isset($_GET['version_emulate']))
-	{
-		if (($_GET['version_emulate'] === 0 || $_GET['version_emulate'] === SMF_FULL_VERSION) && isset($_SESSION['version_emulate']))
-			unset($_SESSION['version_emulate']);
-		elseif ($_GET['version_emulate'] !== 0)
-			$_SESSION['version_emulate'] = strtr($_GET['version_emulate'], array('-' => ' ', '+' => ' ', 'SMF ' => ''));
-	}
-	if (!empty($_SESSION['version_emulate']))
-	{
-		$context['forum_version'] = 'SMF ' . $_SESSION['version_emulate'];
-		$the_version = $_SESSION['version_emulate'];
-	}
-	if (isset($_SESSION['single_version_emulate']))
-		unset($_SESSION['single_version_emulate']);
+	$the_version = SB_VERSION;
 
 	if (empty($installed_mods))
 	{
@@ -1675,7 +1628,7 @@ function list_getPackages($start, $items_per_page, $sort, $params)
 				// This package is currently NOT installed.  Check if it can be.
 				if (!$packageInfo['is_installed'] && $packageInfo['xml']->exists('install'))
 				{
-					// Check if there's an install for *THIS* version of SMF.
+					// Check if there's an install for *THIS* version of Social Bricks.
 					$installs = $packageInfo['xml']->set('install');
 					foreach ($installs as $install)
 					{
@@ -1705,10 +1658,10 @@ function list_getPackages($start, $items_per_page, $sort, $params)
 				{
 					$upgrades = $packageInfo['xml']->set('upgrade');
 
-					// First go through, and check against the current version of SMF.
+					// First go through, and check against the current version of Social Bricks.
 					foreach ($upgrades as $upgrade)
 					{
-						// Even if it is for this SMF, is it for the installed version of the mod?
+						// Even if it is for this Social Bricks, is it for the installed version of the mod?
 						if (!$upgrade->exists('@for') || matchPackageVersion($the_version, $upgrade->fetch('@for')))
 							if (!$upgrade->exists('@from') || matchPackageVersion($installed_mods[$packageInfo['id']]['version'], $upgrade->fetch('@from')))
 							{
@@ -1722,7 +1675,7 @@ function list_getPackages($start, $items_per_page, $sort, $params)
 				{
 					$uninstalls = $packageInfo['xml']->set('uninstall');
 
-					// Can we find any uninstallation methods that work for this SMF version?
+					// Can we find any uninstallation methods that work for this Social Bricks version?
 					foreach ($uninstalls as $uninstall)
 					{
 						if (!$uninstall->exists('@for') || matchPackageVersion($the_version, $uninstall->fetch('@for')))
@@ -1946,7 +1899,7 @@ function ViewOperations()
 	);
 
 	// Since the alerts code is loaded very late in the process, it must be disabled seperately.
-	$settings['disable_files'] = ['smf_alerts'];
+	$settings['disable_files'] = ['sb_alerts'];
 }
 
 /**
@@ -2525,7 +2478,7 @@ function PackagePermissionsAction()
 					$package_ftp->chmod($ftp_file, $custom_value);
 				}
 				else
-					smf_chmod($path, $custom_value);
+					sb_chmod($path, $custom_value);
 			}
 
 			// This fish is fried...

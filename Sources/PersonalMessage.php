@@ -5,12 +5,12 @@
  * messages. It allows viewing, sending, deleting, and marking personal
  * messages. For compatibility reasons, they are often called "instant messages".
  *
- * Simple Machines Forum (SMF)
+ * Social Bricks
  *
- * @package SMF
- * @author Simple Machines https://www.simplemachines.org
- * @copyright 2022 Simple Machines and individual contributors
- * @license https://www.simplemachines.org/about/smf/license.php BSD
+ * @package SocialBricks
+ * @author Social Bricks and others (see CONTRIBUTORS.md)
+ * @copyright 2022 Social Bricks contributors (full details see LICENSE file)
+ * @license 3-clause BSD (see accompanying LICENSE file)
  *
  * @version 2.1.0
  */
@@ -497,7 +497,7 @@ function MessageFolder()
 	$labelQuery = '';
 	$labelQuery2 = '';
 
-	// SMF logic: If you're viewing a label, it's still the inbox
+	// Social Bricks logic: If you're viewing a label, it's still the inbox
 	if ($context['folder'] == 'inbox' && $context['current_label_id'] == -1)
 	{
 		$labelQuery = '
@@ -1817,10 +1817,10 @@ function MessagePost()
 	loadLanguage('PersonalMessage');
 	// Just in case it was loaded from somewhere else.
 	loadTemplate('PersonalMessage');
-	loadJavaScriptFile('PersonalMessage.js', array('defer' => false, 'minimize' => true), 'smf_pms');
+	loadJavaScriptFile('PersonalMessage.js', array('defer' => false, 'minimize' => true), 'sb_pms');
 	loadJavaScriptFile('suggest.js', array('defer' => false, 'minimize' => true), 'sb_suggest');
 	if ($context['drafts_autosave'])
-		loadJavaScriptFile('drafts.js', array('defer' => false, 'minimize' => true), 'smf_drafts');
+		loadJavaScriptFile('drafts.js', array('defer' => false, 'minimize' => true), 'sb_drafts');
 	$context['sub_template'] = 'send';
 
 	// Extract out the spam settings - cause it's neat.
@@ -2129,7 +2129,7 @@ function messagePostError($error_types, $named_recipients, $recipient_ids = arra
 	{
 		$context['menu_data_' . $context['pm_menu_id']]['current_area'] = 'send';
 		$context['sub_template'] = 'send';
-		loadJavaScriptFile('PersonalMessage.js', array('defer' => false, 'minimize' => true), 'smf_pms');
+		loadJavaScriptFile('PersonalMessage.js', array('defer' => false, 'minimize' => true), 'sb_pms');
 		loadJavaScriptFile('suggest.js', array('defer' => false, 'minimize' => true), 'sb_suggest');
 	}
 	else

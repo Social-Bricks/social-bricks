@@ -4,12 +4,12 @@
  * This file is what shows the listing of topics in a board.
  * It's just one or two functions, but don't under estimate it ;).
  *
- * Simple Machines Forum (SMF)
+ * Social Bricks
  *
- * @package SMF
- * @author Simple Machines https://www.simplemachines.org
- * @copyright 2022 Simple Machines and individual contributors
- * @license https://www.simplemachines.org/about/smf/license.php BSD
+ * @package SocialBricks
+ * @author Social Bricks and others (see CONTRIBUTORS.md)
+ * @copyright 2022 Social Bricks contributors (full details see LICENSE file)
+ * @license 3-clause BSD (see accompanying LICENSE file)
  *
  * @version 2.1.2
  */
@@ -734,7 +734,7 @@ function MessageIndex()
 		);
 
 	// Javascript for inline editing.
-	loadJavaScriptFile('topic.js', array('defer' => false, 'minimize' => true), 'smf_topic');
+	loadJavaScriptFile('topic.js', array('defer' => false, 'minimize' => true), 'sb_topic');
 
 	// Allow adding new buttons easily.
 	// Note: $context['normal_buttons'] is added for backward compatibility with 2.0, but is deprecated and should not be used

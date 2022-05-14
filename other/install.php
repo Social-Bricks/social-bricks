@@ -1,24 +1,24 @@
 <?php
 
 /**
- * Simple Machines Forum (SMF)
+ * Social Bricks
  *
- * @package SMF
- * @author Simple Machines https://www.simplemachines.org
- * @copyright 2022 Simple Machines and individual contributors
- * @license https://www.simplemachines.org/about/smf/license.php BSD
+ * @package SocialBricks
+ * @author Social Bricks and others (see CONTRIBUTORS.md)
+ * @copyright 2022 Social Bricks contributors (full details see LICENSE file)
+ * @license 3-clause BSD (see accompanying LICENSE file)
  *
  * @version 2.1.2
  */
 
-define('SMF_VERSION', '2.1.2');
-define('SMF_FULL_VERSION', 'SMF ' . SMF_VERSION);
-define('SMF_SOFTWARE_YEAR', '2022');
+define('SB_VERSION', '2.1.2');
+define('SB_FULL_VERSION', 'Social Bricks ' . SB_VERSION);
+define('SB_SOFTWARE_YEAR', '2022');
 define('DB_SCRIPT_VERSION', '2-1');
-define('SMF_INSTALLING', 1);
+define('SB_INSTALLING', 1);
 
 define('JQUERY_VERSION', '3.6.0');
-define('SB_USER_AGENT', 'Mozilla/5.0 (' . php_uname('s') . ' ' . php_uname('m') . ') AppleWebKit/605.1.15 (KHTML, like Gecko) SocialBricks/' . strtr(SMF_VERSION, ' ', '.'));
+define('SB_USER_AGENT', 'Mozilla/5.0 (' . php_uname('s') . ' ' . php_uname('m') . ') AppleWebKit/605.1.15 (KHTML, like Gecko) SocialBricks/' . strtr(SB_VERSION, ' ', '.'));
 if (!defined('TIME_START'))
 	define('TIME_START', microtime(true));
 
@@ -28,8 +28,8 @@ $GLOBALS['required_php_version'] = '8.0.0';
 // ><html dir="ltr"><head><title>Error!</title></head><body>Sorry, this installer requires PHP!<div style="display: none;">
 
 // Let's pull in useful classes
-if (!defined('SMF'))
-	define('SMF', 1);
+if (!defined('SOCIALBRICKS'))
+	define('SOCIALBRICKS', 1);
 
 require_once('Sources/Class-Package.php');
 require_once('Sources/Subs-Compat.php');
@@ -131,7 +131,7 @@ function initialize_inputs()
 		$_SERVER['PHP_SELF'] = isset($GLOBALS['HTTP_SERVER_VARS']['PHP_SELF']) ? $GLOBALS['HTTP_SERVER_VARS']['PHP_SELF'] : 'install.php';
 
 	// In pre-release versions, report all errors.
-	if (strspn(SMF_VERSION, '1234567890.') !== strlen(SMF_VERSION))
+	if (strspn(SB_VERSION, '1234567890.') !== strlen(SB_VERSION))
 		error_reporting(E_ALL);
 	// Otherwise, report all errors except for deprecation notices.
 	else
@@ -344,8 +344,8 @@ function load_database()
 
 	// Need this to check whether we need the database password.
 	require(dirname(__FILE__) . '/Settings.php');
-	if (!defined('SMF'))
-		define('SMF', 1);
+	if (!defined('SOCIALBRICKS'))
+		define('SOCIALBRICKS', 1);
 	if (empty($smcFunc))
 		$smcFunc = array();
 
@@ -423,7 +423,7 @@ function Welcome()
 		{
 			if (preg_match('~^\$db_passwd\s=\s\'([^\']+)\';$~', $line))
 				$probably_installed++;
-			if (preg_match('~^\$boardurl\s=\s\'([^\']+)\';~', $line) && !preg_match('~^\$boardurl\s=\s\'http://127\.0\.0\.1/smf\';~', $line))
+			if (preg_match('~^\$boardurl\s=\s\'([^\']+)\';~', $line) && !preg_match('~^\$boardurl\s=\s\'http://127\.0\.0\.1/socialbricks\';~', $line))
 				$probably_installed++;
 		}
 
@@ -752,7 +752,7 @@ function DatabaseSettings()
 	}
 	else
 	{
-		$incontext['db']['prefix'] = 'smf_';
+		$incontext['db']['prefix'] = 'sb_';
 	}
 
 	// Are we submitting?
@@ -779,7 +779,7 @@ function DatabaseSettings()
 			'db_server' => $_POST['db_server'],
 			'db_prefix' => $db_prefix,
 			// The cookiename is special; we want it to be the same if it ever needs to be reinstalled with the same info.
-			'cookiename' => 'SMFCookie' . abs(crc32($_POST['db_name'] . preg_replace('~[^A-Za-z0-9_$]~', '', $_POST['db_prefix'])) % 1000),
+			'cookiename' => 'SBCookie' . abs(crc32($_POST['db_name'] . preg_replace('~[^A-Za-z0-9_$]~', '', $_POST['db_prefix'])) % 1000),
 		);
 
 		// Only set the port if we're not using the default
@@ -811,8 +811,8 @@ function DatabaseSettings()
 		}
 
 		// Now include it for database functions!
-		if (!defined('SMF'))
-			define('SMF', 1);
+		if (!defined('SOCIALBRICKS'))
+			define('SOCIALBRICKS', 1);
 
 		$modSettings['disableQueryCheck'] = true;
 		if (empty($smcFunc))
@@ -1066,7 +1066,7 @@ function DatabasePopulation()
 		$smcFunc['db_free_result']($result);
 
 		// Do they match?  If so, this is just a refresh so charge on!
-		if (!isset($modSettings['smfVersion']) || $modSettings['smfVersion'] != SMF_VERSION)
+		if (!isset($modSettings['sbVersion']) || $modSettings['sbVersion'] != SB_VERSION)
 		{
 			$incontext['error'] = $txt['error_versions_do_not_match'];
 			return false;
@@ -1083,7 +1083,7 @@ function DatabasePopulation()
 		)
 	);
 
-	// Windows likes to leave the trailing slash, which yields to C:\path\to\SMF\/attachments...
+	// Windows likes to leave the trailing slash, which yields to C:\path\to\SocialBricks\/attachments...
 	if (substr(__DIR__, -1) == '\\')
 		$attachdir = __DIR__ . 'attachments';
 	else
@@ -1096,7 +1096,7 @@ function DatabasePopulation()
 		'{$boardurl}' => $boardurl,
 		'{$enableCompressedOutput}' => isset($_POST['compress']) ? '1' : '0',
 		'{$databaseSession_enable}' => isset($_POST['dbsession']) ? '1' : '0',
-		'{$smf_version}' => SMF_VERSION,
+		'{$sb_version}' => SB_VERSION,
 		'{$current_time}' => time(),
 		'{$sched_task_offset}' => 82800 + mt_rand(0, 86399),
 		'{$registration_method}' => isset($_POST['reg_mode']) ? $_POST['reg_mode'] : 0,
@@ -1623,7 +1623,7 @@ function DeleteInstall()
 	$smcFunc['db_insert']('ignore',
 		'{db_prefix}log_activity',
 		array('date' => 'date', 'topics' => 'int', 'posts' => 'int', 'registers' => 'int'),
-		array(smf_strftime('%Y-%m-%d', time()), 1, 1, (!empty($incontext['member_id']) ? 1 : 0)),
+		array(sb_strftime('%Y-%m-%d', time()), 1, 1, (!empty($incontext['member_id']) ? 1 : 0)),
 		array('date')
 	);
 
@@ -1717,7 +1717,7 @@ function DeleteInstall()
 		// We've just installed!
 		$user_info['ip'] = $_SERVER['REMOTE_ADDR'];
 		$user_info['id'] = isset($incontext['member_id']) ? $incontext['member_id'] : 0;
-		logAction('install', array('version' => SMF_FULL_VERSION), 'admin');
+		logAction('install', array('version' => SB_FULL_VERSION), 'admin');
 	}
 
 	// Disable the legacy BBC by default for new installs
@@ -1765,12 +1765,12 @@ function installer_updateSettingsFile($vars, $rebuild = false)
 	return updateSettingsFile($vars, false, $rebuild);
 }
 
-// Create an .htaccess file to prevent mod_security. SMF has filtering built-in.
+// Create an .htaccess file to prevent mod_security. Social Bricks has filtering built-in.
 function fixModSecurity()
 {
 	$htaccess_addition = '
 <IfModule mod_security.c>
-	# Turn off mod_security filtering.  SMF is a big boy, it doesn\'t need its hands held.
+	# Turn off mod_security filtering.  Social Bricks does its own contextually-appropriate filtering.
 	SecFilterEngine Off
 
 	# The below probably isn\'t needed, but better safe than sorry.
@@ -1836,7 +1836,7 @@ function template_install_above()
 	<div id="footerfix">
 	<div id="header">
 		<h1 class="forumtitle">', $txt['sb_installer'], '</h1>
-		<img id="smflogo" src="Themes/default/images/smflogo.svg" alt="Simple Machines Forum" title="Simple Machines Forum">
+		<img id="smflogo" src="Themes/default/images/smflogo.svg" alt="Social Bricks" title="Social Bricks">
 	</div>
 	<div id="wrapper">';
 
@@ -1928,25 +1928,25 @@ function template_install_below()
 	</div><!-- #footerfix -->
 	<div id="footer">
 		<ul>
-			<li class="copyright"><a href="https://www.simplemachines.org/" title="Simple Machines Forum" target="_blank" rel="noopener">' . SMF_FULL_VERSION . ' &copy; ' . SMF_SOFTWARE_YEAR . ', Simple Machines</a></li>
+			<li class="copyright"><a href="https://socialbricks.org/" title="Social Bricks" target="_blank" rel="noopener">' . SB_FULL_VERSION . ' &copy; ' . SB_SOFTWARE_YEAR . ', Social Bricks</a></li>
 		</ul>
 	</div>
 </body>
 </html>';
 }
 
-// Welcome them to the wonderful world of SMF!
+// Welcome them to the wonderful world of Social Bricks!
 function template_welcome_message()
 {
 	global $incontext, $txt;
 
 	echo '
-	<script src="https://www.simplemachines.org/smf/current-version.js?version=' . urlencode(SMF_VERSION) . '"></script>
+	<script src="https://www.simplemachines.org/smf/current-version.js?version=' . urlencode(SB_VERSION) . '"></script>
 	<form action="', $incontext['form_url'], '" method="post">
-		<p>', sprintf($txt['install_welcome_desc'], SMF_VERSION), '</p>
+		<p>', sprintf($txt['install_welcome_desc'], SB_VERSION), '</p>
 		<div id="version_warning" class="noticebox hidden">
 			<h3>', $txt['error_warning_notice'], '</h3>
-			', sprintf($txt['error_script_outdated'], '<em id="smfVersion" style="white-space: nowrap;">??</em>', '<em id="yourVersion" style="white-space: nowrap;">' . SMF_VERSION . '</em>'), '
+			', sprintf($txt['error_script_outdated'], '<em id="sbVersion" style="white-space: nowrap;">??</em>', '<em id="yourVersion" style="white-space: nowrap;">' . SB_VERSION . '</em>'), '
 		</div>';
 
 	// Show the warnings, or not.
@@ -1962,25 +1962,25 @@ function template_welcome_message()
 	echo '
 		<script>
 			// Latest version?
-			function smfCurrentVersion()
+			function sbCurrentVersion()
 			{
 				var smfVer, yourVer;
 
-				if (!(\'smfVersion\' in window))
+				if (!(\'sbVersion\' in window))
 					return;
 
-				window.smfVersion = window.smfVersion.replace(/SMF\s?/g, \'\');
+				window.sbVersion = window.sbVersion.replace(/Social Bricks\s?/g, \'\');
 
-				smfVer = document.getElementById("smfVersion");
+				smfVer = document.getElementById("sbVersion");
 				yourVer = document.getElementById("yourVersion");
 
-				setInnerHTML(smfVer, window.smfVersion);
+				setInnerHTML(smfVer, window.sbVersion);
 
 				var currentVersion = getInnerHTML(yourVer);
-				if (currentVersion < window.smfVersion)
+				if (currentVersion < window.sbVersion)
 					document.getElementById(\'version_warning\').classList.remove(\'hidden\');
 			}
-			addLoadEvent(smfCurrentVersion);
+			addLoadEvent(sbCurrentVersion);
 		</script>';
 }
 

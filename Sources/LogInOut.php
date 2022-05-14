@@ -4,12 +4,12 @@
  * This file is concerned pretty entirely, as you see from its name, with
  * logging in and out members, and the validation of that.
  *
- * Simple Machines Forum (SMF)
+ * Social Bricks
  *
- * @package SMF
- * @author Simple Machines https://www.simplemachines.org
- * @copyright 2022 Simple Machines and individual contributors
- * @license https://www.simplemachines.org/about/smf/license.php BSD
+ * @package SocialBricks
+ * @author Social Bricks and others (see CONTRIBUTORS.md)
+ * @copyright 2022 Social Bricks contributors (full details see LICENSE file)
+ * @license 3-clause BSD (see accompanying LICENSE file)
  *
  * @version 2.1.0
  */
@@ -46,7 +46,7 @@ function Login()
 	 * We have a valid header indicating a JQXHR request.  This is not sent during a cross domain request.
 	 * OR we have found:
 	 *		1. valid cors host
-	 *  	2. A header indicating a SMF request
+	 *  	2. A header indicating a Social Bricks request
 	 *  	3. The url has a ajax in either the GET or POST
 	 *  These are not intended for security, but ensuring the request is intended for a JQXHR response.
 	*/
@@ -58,7 +58,7 @@ function Login()
 		||
 		(
 			!empty($context['valid_cors_found'])
-			&& !empty($_SERVER['HTTP_X_SMF_AJAX'])
+			&& !empty($_SERVER['HTTP_X_SOCIALBRICKS_AJAX'])
 			&& isset($_REQUEST['ajax'])
 		)
 	)
@@ -119,7 +119,7 @@ function Login2()
 	 * We have a valid header indicating a JQXHR request.  This is not sent during a cross domain request.
 	 * OR we have found:
 	 *		1. valid cors host
-	 *  	2. A header indicating a SMF request
+	 *  	2. A header indicating a Social Bricks request
 	 *  	3. The url has a ajax in either the GET or POST
 	 *  These are not intended for security, but ensuring the request is intended for a JQXHR response.
 	*/
@@ -131,7 +131,7 @@ function Login2()
 		||
 		(
 			!empty($context['valid_cors_found'])
-			&& !empty($_SERVER['HTTP_X_SMF_AJAX'])
+			&& !empty($_SERVER['HTTP_X_SOCIALBRICKS_AJAX'])
 			&& isset($_REQUEST['ajax'])
 		)
 	)
@@ -421,7 +421,7 @@ function Login2()
 		// Allows mods to easily extend the $other_passwords array
 		call_integration_hook('integrate_other_passwords', array(&$other_passwords));
 
-		// Whichever encryption it was using, let's make it use SMF's now ;).
+		// Whichever encryption it was using, let's make it use bcrypt now.
 		if (in_array($user_settings['passwd'], $other_passwords))
 		{
 			$user_settings['passwd'] = hash_password($user_settings['member_name'], un_htmlspecialchars($_POST['passwrd']));
@@ -499,7 +499,7 @@ function LoginTFA()
 	 * We have a valid header indicating a JQXHR request.  This is not sent during a cross domain request.
 	 * OR we have found:
 	 *		1. valid cors host
-	 *  	2. A header indicating a SMF request
+	 *  	2. A header indicating a Social Bricks request
 	 *  	3. The url has a ajax in either the GET or POST
 	 *  These are not intended for security, but ensuring the request is intended for a JQXHR response.
 	*/
@@ -511,7 +511,7 @@ function LoginTFA()
 		||
 		(
 			!empty($context['valid_cors_found'])
-			&& !empty($_SERVER['HTTP_X_SMF_AJAX'])
+			&& !empty($_SERVER['HTTP_X_SOCIALBRICKS_AJAX'])
 			&& isset($_REQUEST['ajax'])
 		)
 	)

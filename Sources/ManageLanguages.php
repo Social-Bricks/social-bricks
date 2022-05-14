@@ -3,12 +3,12 @@
 /**
  * This file handles the administration of languages tasks.
  *
- * Simple Machines Forum (SMF)
+ * Social Bricks
  *
- * @package SMF
- * @author Simple Machines https://www.simplemachines.org
- * @copyright 2022 Simple Machines and individual contributors
- * @license https://www.simplemachines.org/about/smf/license.php BSD
+ * @package SocialBricks
+ * @author Social Bricks and others (see CONTRIBUTORS.md)
+ * @copyright 2022 Social Bricks contributors (full details see LICENSE file)
+ * @license 3-clause BSD (see accompanying LICENSE file)
  *
  * @version 2.1.0
  */
@@ -67,7 +67,7 @@ function AddLanguage()
 {
 	global $context, $sourcedir, $txt, $smcFunc;
 
-	// Are we searching for new languages courtesy of Simple Machines?
+	// Are we searching for new languages courtesy of Social Bricks?
 	if (!empty($_POST['smf_add_sub']))
 	{
 		$context['smf_search_term'] = $smcFunc['htmlspecialchars'](trim($_POST['smf_add']));
@@ -143,7 +143,7 @@ function list_getLanguagesList()
 	global $context, $sourcedir, $smcFunc, $txt, $scripturl;
 
 	// We're going to use this URL.
-	$url = 'https://download.simplemachines.org/fetch_language.php?version=' . urlencode(SMF_VERSION);
+	$url = 'https://download.simplemachines.org/fetch_language.php?version=' . urlencode(SB_VERSION);
 
 	// Load the class file and stick it into an array.
 	$language_list = new XmlArray(fetch_web_data($url), true);
@@ -181,7 +181,7 @@ function list_getLanguagesList()
 }
 
 /**
- * Download a language file from the Simple Machines website.
+ * Download a language file from the Social Bricks website.
  * Requires a valid download ID ("did") in the URL.
  * Also handles installing language files.
  * Attempts to chmod things as needed.
@@ -236,7 +236,7 @@ function DownloadLanguage()
 		// Otherwise, go go go!
 		elseif (!empty($install_files))
 		{
-			read_tgz_file('https://download.simplemachines.org/fetch_language.php?version=' . urlencode(SMF_VERSION) . ';fetch=' . urlencode($_GET['did']), $boarddir, false, true, $install_files);
+			read_tgz_file('https://download.simplemachines.org/fetch_language.php?version=' . urlencode(SB_VERSION) . ';fetch=' . urlencode($_GET['did']), $boarddir, false, true, $install_files);
 
 			// Make sure the files aren't stuck in the cache.
 			package_flush_cache();
@@ -248,7 +248,7 @@ function DownloadLanguage()
 
 	// Open up the old china.
 	if (!isset($archive_content))
-		$archive_content = read_tgz_file('https://download.simplemachines.org/fetch_language.php?version=' . urlencode(SMF_VERSION) . ';fetch=' . urlencode($_GET['did']), null);
+		$archive_content = read_tgz_file('https://download.simplemachines.org/fetch_language.php?version=' . urlencode(SB_VERSION) . ';fetch=' . urlencode($_GET['did']), null);
 
 	if (empty($archive_content))
 		fatal_error($txt['add_language_error_no_response']);

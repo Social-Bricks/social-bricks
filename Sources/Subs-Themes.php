@@ -3,12 +3,12 @@
 /**
  * Helper file for handling themes.
  *
- * Simple Machines Forum (SMF)
+ * Social Bricks
  *
- * @package SMF
- * @author Simple Machines https://www.simplemachines.org
- * @copyright 2022 Simple Machines and individual contributors
- * @license https://www.simplemachines.org/about/smf/license.php BSD
+ * @package SocialBricks
+ * @author Social Bricks and others (see CONTRIBUTORS.md)
+ * @copyright 2022 Social Bricks contributors (full details see LICENSE file)
+ * @license 3-clause BSD (see accompanying LICENSE file)
  *
  * @version 2.1.0
  */
@@ -261,19 +261,19 @@ function get_theme_info($path)
 	if (!$theme_info_xml->exists('theme-info/install'))
 	{
 		remove_dir($path);
-		fatal_lang_error('package_get_error_theme_not_compatible', false, SMF_FULL_VERSION);
+		fatal_lang_error('package_get_error_theme_not_compatible', false, SB_FULL_VERSION);
 	}
 
-	// So, we have an install tag which is cool and stuff but we also need to check it and match your current SMF version...
-	$the_version = SMF_VERSION;
+	// So, we have an install tag which is cool and stuff but we also need to check it and match your current Social Bricks version...
+	$the_version = SB_VERSION;
 	$install_versions = $theme_info_xml->fetch('theme-info/install/@for');
 
-	// The theme isn't compatible with the current SMF version.
+	// The theme isn't compatible with the current Social Bricks version.
 	require_once($sourcedir . '/Subs-Package.php');
 	if (!$install_versions || !matchPackageVersion($the_version, $install_versions))
 	{
 		remove_dir($path);
-		fatal_lang_error('package_get_error_theme_not_compatible', false, SMF_FULL_VERSION);
+		fatal_lang_error('package_get_error_theme_not_compatible', false, SB_FULL_VERSION);
 	}
 
 	$theme_info_xml = $theme_info_xml->to_array('theme-info[0]');

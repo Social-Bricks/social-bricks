@@ -3,12 +3,12 @@
 /**
  * This is here for the "repair any errors" feature in the admin center.
  *
- * Simple Machines Forum (SMF)
+ * Social Bricks
  *
- * @package SMF
- * @author Simple Machines https://www.simplemachines.org
- * @copyright 2022 Simple Machines and individual contributors
- * @license https://www.simplemachines.org/about/smf/license.php BSD
+ * @package SocialBricks
+ * @author Social Bricks and others (see CONTRIBUTORS.md)
+ * @copyright 2022 Social Bricks contributors (full details see LICENSE file)
+ * @license 3-clause BSD (see accompanying LICENSE file)
  *
  * @version 2.1.0
  */
@@ -139,7 +139,7 @@ function pauseRepairProcess($to_fix, $current_step_description, $max_substep = 0
 	$return = true;
 
 	// If we are from a SSI/cron job, we can allow this through, if enabled.
-	if ((SMF === 'SSI' || SMF === 'BACKGROUND') && php_sapi_name() == 'cli' && !empty($context['no_pause_process']))
+	if ((SOCIALBRICKS === 'SSI' || SOCIALBRICKS === 'BACKGROUND') && php_sapi_name() == 'cli' && !empty($context['no_pause_process']))
 		$return = true;
 	elseif ($force)
 		$return = false;

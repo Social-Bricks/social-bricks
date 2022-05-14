@@ -3,12 +3,12 @@
 /**
  * This file contains database functionality specifically designed for packages (mods) to utilize.
  *
- * Simple Machines Forum (SMF)
+ * Social Bricks
  *
- * @package SMF
- * @author Simple Machines https://www.simplemachines.org
- * @copyright 2022 Simple Machines and individual contributors
- * @license https://www.simplemachines.org/about/smf/license.php BSD
+ * @package SocialBricks
+ * @author Social Bricks and others (see CONTRIBUTORS.md)
+ * @copyright 2022 Social Bricks contributors (full details see LICENSE file)
+ * @license 3-clause BSD (see accompanying LICENSE file)
  *
  * @version 2.1.0
  */
@@ -76,13 +76,13 @@ function db_packages_init()
  *  	'name' = Column name
  *  	'type' = Type of column - values from (smallint, mediumint, int, text, varchar, char, tinytext, mediumtext, largetext)
  *  	'size' => Size of column (If applicable) - for example 255 for a large varchar, 10 for an int etc.
- *  		If not set SMF will pick a size.
+ *  		If not set Social Bricks will pick a size.
  *  	- 'default' = Default value - do not set if no default required.
  *  	- 'not_null' => Can it be null (true or false) - if not set default will be false.
  *  	- 'auto' => Set to true to make it an auto incrementing column. Set to a numerical value to set from what
  *  		 it should begin counting.
  *  - Adds indexes as specified within indexes parameter. Each index should be a member of $indexes. Values are:
- *  	- 'name' => Index name (If left empty SMF will generate).
+ *  	- 'name' => Index name (If left empty Social Bricks will generate).
  *  	- 'type' => Type of index. Choose from 'primary', 'unique' or 'index'. If not set will default to 'index'.
  *  	- 'columns' => Array containing columns that form part of key - in the order the index is to be created.
  *  - parameters: (None yet)
@@ -115,7 +115,7 @@ function sb_db_create_table($table_name, $columns, $indexes = array(), $paramete
 	$full_table_name = str_replace('{db_prefix}', $real_prefix, $table_name);
 	$table_name = str_replace('{db_prefix}', $db_prefix, $table_name);
 
-	// First - no way do we touch SMF tables.
+	// First - no way do we touch Social Bricks tables.
 	if (in_array(strtolower($table_name), $reservedTables))
 		return false;
 

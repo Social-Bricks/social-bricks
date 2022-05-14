@@ -119,16 +119,16 @@ $txt['enable_likes'] = 'Enable Likes';
 // Mention settings.
 $txt['enable_mentions'] = 'Enable Mentions';
 
-$txt['caching_information'] = 'SMF supports caching through the use of accelerators. The currently supported accelerators include:
+$txt['caching_information'] = 'Social Bricks supports caching through the use of accelerators. The currently supported accelerators include:
 <ul class="normallist">
 	<li>APCu</li>
 	<li>Memcached</li>
 	<li>SQLite3</li>
 	<li>Zend Platform/Performance Suite (Not Zend Optimizer)</li>
 </ul>
-Caching will work best if you have PHP compiled with one of the above optimizers, or have memcached available. If you do not have any optimizer installed SMF will do file based caching.';
-$txt['detected_no_caching'] = 'SMF has not been able to detect a compatible accelerator on your server. File based caching can be used instead.';
-$txt['detected_accelerators'] = 'SMF has detected the following accelerators: %1$s';
+Caching will work best if you have PHP compiled with one of the above optimizers, or have memcached available. If you do not have any optimizer installed Social Bricks will do file based caching.';
+$txt['detected_no_caching'] = 'Social Bricks has not been able to detect a compatible accelerator on your server. File based caching can be used instead.';
+$txt['detected_accelerators'] = 'Social Bricks has detected the following accelerators: %1$s';
 
 $txt['cache_enable'] = 'Caching Level';
 $txt['cache_off'] = 'No caching';
@@ -136,14 +136,14 @@ $txt['cache_level1'] = 'Level 1 Caching (Recommended)';
 $txt['cache_level2'] = 'Level 2 Caching';
 $txt['cache_level3'] = 'Level 3 Caching (Not Recommended)';
 $txt['cache_accelerator'] = 'Caching Accelerator';
-$txt['filebased_cache'] = 'SMF file based caching';
+$txt['filebased_cache'] = 'File based caching';
 $txt['sqlite_cache'] = 'SQLite3 database based caching';
 $txt['cachedir_sqlite'] = 'SQLite3 database cache directory';
 $txt['apcu_cache'] = 'APCu';
 $txt['memcacheimplementation_cache'] = 'Memcache';
 $txt['memcachedimplementation_cache'] = 'Memcached';
 $txt['zend_cache'] = 'Zend Platform/Performance Suite';
-$txt['cache_filebased_settings'] = 'SMF file based caching settings';
+$txt['cache_filebased_settings'] = 'File based caching settings';
 $txt['cache_sqlite_settings'] = 'SQLite3 database caching settings';
 $txt['cache_memcached_settings'] = 'Memcache/Memcached settings';
 $txt['cache_memcached_servers'] = 'Memcache/Memcached servers';
@@ -233,7 +233,7 @@ $txt['setting_view_warning_any'] = 'Users who can see any warning status';
 $txt['setting_view_warning_own'] = 'Users who can see their own warning status';
 
 $txt['signature_settings'] = 'Signature Settings';
-$txt['signature_settings_desc'] = 'Use the settings on this page to decide how member signatures should be treated in SMF.';
+$txt['signature_settings_desc'] = 'Use the settings on this page to decide how member signatures should be treated in Social Bricks.';
 // argument(s): session_id, session_var, scripturl
 $txt['signature_settings_warning'] = 'Note that settings are not applied to existing signatures by default. <a href="%3$s?action=admin;area=featuresettings;sa=sig;apply;%2$s=%1$s">Apply changes now</a>';
 $txt['signature_settings_applied'] = 'The updated rules have been applied to the existing signatures.';
@@ -348,12 +348,12 @@ $txt['lang_entries_not_writable'] = '<strong>Warning:</strong> The language file
 $txt['languages_ltr'] = 'Right to Left';
 
 $txt['add_language'] = 'Add Language';
-$txt['add_language_smf'] = 'Download from Simple Machines';
+$txt['add_language_smf'] = 'Download from Social Bricks';
 $txt['add_language_smf_browse'] = 'Type name of language to search for or leave blank to search for all.';
 $txt['add_language_smf_install'] = 'Install';
 $txt['add_language_found_title'] = 'Found Languages';
 $txt['add_language_smf_found'] = 'The following languages were found. Click the install link next to the language you wish to install. You will then be taken to the package manager to install.';
-$txt['add_language_error_no_response'] = 'The Simple Machines site is not responding. Please try again later.';
+$txt['add_language_error_no_response'] = 'The Social Bricks site is not responding. Please try again later.';
 $txt['add_language_error_no_files'] = 'No files could be found.';
 $txt['add_language_smf_desc'] = 'Description';
 $txt['add_language_smf_utf8'] = 'UTF-8';
@@ -362,7 +362,7 @@ $txt['add_language_smf_version'] = 'Version';
 $txt['edit_language_entries_primary'] = 'Below are the primary language settings for this language pack.';
 $txt['edit_language_entries'] = 'Edit Language Entries';
 // argument(s): $scripturl, $txt['themeadmin_edit_title']
-$txt['edit_language_entries_desc'] = 'You can customize the individual text entries for this language. Select a file to load its entries, and then edit them below.<br><br>When you edit (or remove) an entry, a commented out version of the original is preserved in the file. If you ever need to restore your edited strings to their original state, or if you need more advanced access to these language files, go to <a href="%1$s?action=admin;area=theme;sa=edit">%2$s</a>, browse to the file you are looking for, and then edit it directly using SMF\'s built-in text editor.';
+$txt['edit_language_entries_desc'] = 'You can customize the individual text entries for this language. Select a file to load its entries, and then edit them below.<br><br>When you edit (or remove) an entry, a commented out version of the original is preserved in the file. If you ever need to restore your edited strings to their original state, or if you need more advanced access to these language files, go to <a href="%1$s?action=admin;area=theme;sa=edit">%2$s</a>, browse to the file you are looking for, and then edit it directly using Social Bricks\'s built-in text editor.';
 $txt['edit_language_entries_file'] = 'Select entries to edit';
 $txt['languages_dictionary'] = 'Dictionary';
 $txt['languages_rtl'] = 'Enable &quot;Right to Left&quot; Mode';
@@ -374,8 +374,8 @@ $txt['languages_download'] = 'Download Language Pack';
 $txt['languages_download_note'] = 'This page lists all the files that are contained within the language pack and some useful information about each one. All files that have their associated check box marked will be copied.';
 $txt['languages_download_info'] = '<strong>Note:</strong>
 	<ul class="normallist">
-		<li>Files which have the status &quot;Not Writable&quot; means SMF will not be able to copy this file to the directory at the present and you must make the destination writable either using an FTP client or by filling in your details at the bottom of the page.</li>
-		<li>The Version information for a file displays the last SMF version which it was updated for. If it is indicated in green then this is a newer version than you have at current. If amber this indicates it\'s the same version number as at current, red indicates you have a newer version installed than contained in the pack.</li>
+		<li>Files which have the status &quot;Not Writable&quot; means Social Bricks will not be able to copy this file to the directory at the present and you must make the destination writable either using an FTP client or by filling in your details at the bottom of the page.</li>
+		<li>The Version information for a file displays the last Social Bricks version which it was updated for. If it is indicated in green then this is a newer version than you have at current. If amber this indicates it\'s the same version number as at current, red indicates you have a newer version installed than contained in the pack.</li>
 		<li>Where a file already exists on your forum the &quot;Already Exists&quot; column will have one of two values. &quot;Identical&quot; indicates that the file already exists in an identical form and need not be overwritten. &quot;Different&quot; means that the contents vary in some way and overwriting is probably the optimum solution.</li>
 	</ul>';
 
@@ -390,7 +390,7 @@ $txt['languages_download_exists_same'] = 'Identical';
 $txt['languages_download_exists_different'] = 'Different';
 $txt['languages_download_overwrite'] = 'Overwrite';
 $txt['languages_download_not_chmod'] = 'You cannot proceed with the installation until all files selected to be copied are writable.';
-$txt['languages_download_illegal_paths'] = 'Package contains illegal paths - please contact Simple Machines';
+$txt['languages_download_illegal_paths'] = 'Package contains illegal paths - please contact Social Bricks';
 $txt['languages_download_complete'] = 'Installation Complete';
 $txt['languages_download_complete_desc'] = 'Language pack installed successfully. Please click <a href="%1$s">here</a> to return to the languages page';
 $txt['languages_delete_confirm'] = 'Are you sure you want to delete this language?';
@@ -433,7 +433,7 @@ $txt['tfa_mode_enabled'] = 'Enabled';
 $txt['tfa_mode_disabled'] = 'Disabled';
 $txt['tfa_mode_subtext'] = 'Allows users to have a second layer of security while logging in, users would need an app like Google Authenticator paired with their account';
 
-$txt['export_settings_description'] = 'Members can export copies of their profile data, optionally including their posts and personal messages.<br>To avoid overtaxing server resources, SMF slowly compiles the exported data to a downloadable file stored in a secured directory.';
+$txt['export_settings_description'] = 'Members can export copies of their profile data, optionally including their posts and personal messages.<br>To avoid overtaxing server resources, Social Bricks slowly compiles the exported data to a downloadable file stored in a secured directory.';
 $txt['export_dir'] = 'Directory for profile data export files';
 $txt['export_expiry'] = 'Automatically delete profile data export files after';
 $txt['export_min_diskspace_pct'] = 'Pause exports if free space on disk is less than';

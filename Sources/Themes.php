@@ -20,12 +20,12 @@
  * - tar and gzip the directory - and you're done!
  * - please include any special license in a license.txt file.
  *
- * Simple Machines Forum (SMF)
+ * Social Bricks
  *
- * @package SMF
- * @author Simple Machines https://www.simplemachines.org
- * @copyright 2022 Simple Machines and individual contributors
- * @license https://www.simplemachines.org/about/smf/license.php BSD
+ * @package SocialBricks
+ * @author Social Bricks and others (see CONTRIBUTORS.md)
+ * @copyright 2022 Social Bricks contributors (full details see LICENSE file)
+ * @license 3-clause BSD (see accompanying LICENSE file)
  *
  * @version 2.1.0
  */
@@ -1132,7 +1132,7 @@ function PickTheme()
 			$context['available_themes']
 		))
 	);
-	loadJavaScriptFile('profile.js', array('defer' => false, 'minimize' => true), 'smf_profile');
+	loadJavaScriptFile('profile.js', array('defer' => false, 'minimize' => true), 'sb_profile');
 	$settings['images_url'] = $current_images_url;
 	$settings['theme_variants'] = $current_theme_variants;
 
@@ -1241,7 +1241,7 @@ function InstallFile()
 	if (!is_writable($dirtemp))
 	{
 		// Lets give it a try.
-		smf_chmod($dirtemp, '0755');
+		sb_chmod($dirtemp, '0755');
 
 		// How about now?
 		if (!is_writable($dirtemp))
@@ -1320,7 +1320,7 @@ function InstallCopy()
 		'name' => $name,
 		'images_url' => $themeurl . '/' . $name . '/images',
 		'version' => '1.0',
-		'install_for' => '2.1 - 2.1.99, ' . SMF_VERSION,
+		'install_for' => '2.1 - 2.1.99, ' . SB_VERSION,
 		'based_on' => '',
 		'based_on_dir' => $themedir . '/default',
 		'theme_layers' => 'html,body',
@@ -1361,7 +1361,7 @@ function InstallCopy()
 	foreach ($to_copy as $file)
 	{
 		copy($settings['default_theme_dir'] . $file, $context['to_install']['theme_dir'] . $file);
-		smf_chmod($context['to_install']['theme_dir'] . $file, 0777);
+		sb_chmod($context['to_install']['theme_dir'] . $file, 0777);
 	}
 
 	// And now the entire images directory!
@@ -1385,9 +1385,9 @@ function InstallCopy()
 <!-- Theme name, used purely for aesthetics. -->
 <name>' . $context['to_install']['name'] . '</name>
 <!-- Author: your email address or contact information. The name attribute is optional. -->
-<author name="Simple Machines">info@simplemachines.org</author>
+<author name="Social Bricks">noreply@socialbricks.org</author>
 <!-- Website... where to get updates and more information. -->
-<website>https://www.simplemachines.org/</website>
+<website>https://socialbricks.org/</website>
 <!-- Template layers to use, defaults to "html,body". -->
 <layers>' . $context['to_install']['theme_layers'] . '</layers>
 <!-- Templates to load on startup. Default is "index". -->

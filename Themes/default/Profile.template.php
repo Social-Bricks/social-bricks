@@ -1,11 +1,11 @@
 <?php
 /**
- * Simple Machines Forum (SMF)
+ * Social Bricks
  *
- * @package SMF
- * @author Simple Machines https://www.simplemachines.org
- * @copyright 2022 Simple Machines and individual contributors
- * @license https://www.simplemachines.org/about/smf/license.php BSD
+ * @package SocialBricks
+ * @author Social Bricks and others (see CONTRIBUTORS.md)
+ * @copyright 2022 Social Bricks contributors (full details see LICENSE file)
+ * @license 3-clause BSD (see accompanying LICENSE file)
  *
  * @version 2.1.2
  */
@@ -820,7 +820,7 @@ function template_editBuddies()
 		<input type="hidden" name="', $context['session_var'], '" value="', $context['session_id'], '">
 	</form>
 	<script>
-		var oAddBuddySuggest = new smc_AutoSuggest({
+		var oAddBuddySuggest = new sb_autoSuggest({
 			sSelf: \'oAddBuddySuggest\',
 			sSessionId: sb_session_id,
 			sSessionVar: sb_session_var,
@@ -933,7 +933,7 @@ function template_editIgnoreList()
 		<input type="hidden" name="', $context['session_var'], '" value="', $context['session_id'], '">
 	</form>
 	<script>
-		var oAddIgnoreSuggest = new smc_AutoSuggest({
+		var oAddIgnoreSuggest = new sb_autoSuggest({
 			sSelf: \'oAddIgnoreSuggest\',
 			sSessionId: \'', $context['session_id'], '\',
 			sSessionVar: \'', $context['session_var'], '\',
@@ -2529,7 +2529,7 @@ function template_issueWarning()
 			$.ajax({
 				type: "POST",
 				headers: {
-					"X-SMF-AJAX": 1
+					"X-SOCIALBRICKS-AJAX": 1
 				},
 				xhrFields: {
 					withCredentials: typeof allow_xhjr_credentials !== "undefined" ? allow_xhjr_credentials : false

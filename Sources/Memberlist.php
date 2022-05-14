@@ -4,12 +4,12 @@
  * This file contains the functions for displaying and searching in the
  * members list.
  *
- * Simple Machines Forum (SMF)
+ * Social Bricks
  *
- * @package SMF
- * @author Simple Machines https://www.simplemachines.org
- * @copyright 2022 Simple Machines and individual contributors
- * @license https://www.simplemachines.org/about/smf/license.php BSD
+ * @package SocialBricks
+ * @author Social Bricks and others (see CONTRIBUTORS.md)
+ * @copyright 2022 Social Bricks contributors (full details see LICENSE file)
+ * @license 3-clause BSD (see accompanying LICENSE file)
  *
  * @version 2.1.2
  */
@@ -639,7 +639,7 @@ function printMemberListRows($request)
 
 		$context['members'][$member] = $memberContext[$member];
 		$context['members'][$member]['post_percent'] = round(($context['members'][$member]['real_posts'] * 100) / $most_posts);
-		$context['members'][$member]['registered_date'] = smf_strftime('%Y-%m-%d', $context['members'][$member]['registered_timestamp']);
+		$context['members'][$member]['registered_date'] = sb_strftime('%Y-%m-%d', $context['members'][$member]['registered_timestamp']);
 
 		if (!empty($context['custom_profile_fields']['columns']))
 		{

@@ -4,12 +4,12 @@
  * This file contains those functions specific to the editing box and is
  * generally used for WYSIWYG type functionality.
  *
- * Simple Machines Forum (SMF)
+ * Social Bricks
  *
- * @package SMF
- * @author Simple Machines https://www.simplemachines.org
- * @copyright 2022 Simple Machines and individual contributors
- * @license https://www.simplemachines.org/about/smf/license.php BSD
+ * @package SocialBricks
+ * @author Social Bricks and others (see CONTRIBUTORS.md)
+ * @copyright 2022 Social Bricks contributors (full details see LICENSE file)
+ * @license 3-clause BSD (see accompanying LICENSE file)
  *
  * @version 2.1.2
  */
@@ -113,7 +113,7 @@ function html_to_bbc($text)
 	// Remove any formatting within code tags.
 	if (strpos($text, '[code') !== false)
 	{
-		$text = preg_replace('~<br\s?/?' . '>~i', '#smf_br_spec_grudge_cool!#', $text);
+		$text = preg_replace('~<br\s?/?' . '>~i', '#sb_br_spec_grudge_cool!#', $text);
 		$parts = preg_split('~(\[/code\]|\[code(?:=[^\]]+)?\])~i', $text, -1, PREG_SPLIT_DELIM_CAPTURE);
 
 		// Only mess with stuff outside [code] tags.
@@ -124,7 +124,7 @@ function html_to_bbc($text)
 				$parts[$i] = strip_tags($parts[$i]);
 		}
 
-		$text = strtr(implode('', $parts), array('#smf_br_spec_grudge_cool!#' => '<br>'));
+		$text = strtr(implode('', $parts), array('#sb_br_spec_grudge_cool!#' => '<br>'));
 	}
 
 	// Remove scripts, style and comment blocks.
@@ -152,7 +152,7 @@ function html_to_bbc($text)
 			$possible_code = un_htmlspecialchars($possible_code);
 
 			if (in_array($possible_code, $smiley_codes))
-				$matches[1][$k] = '-[]-smf_smily_start#|#' . $possible_code . '-[]-smf_smily_end#|#';
+				$matches[1][$k] = '-[]-sb_smily_start#|#' . $possible_code . '-[]-sb_smily_end#|#';
 			else
 				$matches[1][$k] = $matches[0][$k];
 		}
@@ -161,7 +161,7 @@ function html_to_bbc($text)
 		$text = str_replace($matches[0], $matches[1], $text);
 
 		// Now sort out spaces
-		$text = str_replace(array('-[]-smf_smily_end#|#-[]-smf_smily_start#|#', '-[]-smf_smily_end#|#', '-[]-smf_smily_start#|#'), ' ', $text);
+		$text = str_replace(array('-[]-sb_smily_end#|#-[]-sb_smily_start#|#', '-[]-sb_smily_end#|#', '-[]-sb_smily_start#|#'), ' ', $text);
 	}
 
 	// Only try to buy more time if the client didn't quit.
@@ -451,7 +451,7 @@ function html_to_bbc($text)
 		// Keep track of the number of nested list levels.
 		$listDepth = 0;
 
-		// Map what we can expect from the HTML to what is supported by SMF.
+		// Map what we can expect from the HTML to what is supported by Social Bricks.
 		$listTypeMapping = array(
 			'1' => 'decimal',
 			'A' => 'upper-alpha',
@@ -1530,9 +1530,9 @@ function create_control_richedit($editorOptions)
 		loadCSSFile('jquery.sceditor.theme.css', array('force_current' => true, 'validate' => true,), 'sb_jquery_sceditor_theme');
 
 		// JS makes the editor go round
-		loadJavaScriptFile('editor.js', array('minimize' => true), 'smf_editor');
-		loadJavaScriptFile('jquery.sceditor.bbcode.min.js', array(), 'smf_sceditor_bbcode');
-		loadJavaScriptFile('jquery.sceditor.smf.js', array('minimize' => true), 'smf_sceditor_smf');
+		loadJavaScriptFile('editor.js', array('minimize' => true), 'sb_editor');
+		loadJavaScriptFile('jquery.sceditor.bbcode.min.js', array(), 'sb_sceditor_bbcode');
+		loadJavaScriptFile('jquery.sceditor.smf.js', array('minimize' => true), 'sb_sceditor_smf');
 
 		$scExtraLangs = '
 		$.sceditor.locale["' . $txt['lang_dictionary'] . '"] = {
@@ -1562,7 +1562,7 @@ function create_control_richedit($editorOptions)
 
 		if ($context['show_spellchecking'])
 		{
-			loadJavaScriptFile('spellcheck.js', array('minimize' => true), 'smf_spellcheck');
+			loadJavaScriptFile('spellcheck.js', array('minimize' => true), 'sb_spellcheck');
 
 			// Some hidden information is needed in order to make the spell checking work.
 			if (!isset($_REQUEST['xml']))
@@ -2005,7 +2005,7 @@ function create_control_verification(&$verificationOptions, $do_test = false)
 
 		// Some javascript ma'am?
 		if (!empty($verificationOptions['override_visual']) || (!empty($modSettings['visual_verification_type']) && !isset($verificationOptions['override_visual'])))
-			loadJavaScriptFile('captcha.js', array('minimize' => true), 'smf_captcha');
+			loadJavaScriptFile('captcha.js', array('minimize' => true), 'sb_captcha');
 
 		$context['use_graphic_library'] = in_array('gd', get_loaded_extensions());
 
@@ -2055,7 +2055,7 @@ function create_control_verification(&$verificationOptions, $do_test = false)
 	if ($context['controls']['verification'][$verificationOptions['id']]['show_visual'])
 		$context['insert_after_template'] .= '
 			<script>
-				var verification' . $verificationOptions['id'] . 'Handle = new smfCaptcha("' . $thisVerification['image_href'] . '", "' . $verificationOptions['id'] . '", ' . ($context['use_graphic_library'] ? 1 : 0) . ');
+				var verification' . $verificationOptions['id'] . 'Handle = new sb_captcha("' . $thisVerification['image_href'] . '", "' . $verificationOptions['id'] . '", ' . ($context['use_graphic_library'] ? 1 : 0) . ');
 			</script>';
 
 	// If we want questions do we have a cache of all the IDs?
@@ -2308,7 +2308,6 @@ function AutoSuggestHandler($checkRegistered = null)
 	$searchTypes = array(
 		'member' => 'Member',
 		'membergroups' => 'MemberGroups',
-		'versions' => 'SMFVersions',
 	);
 
 	call_integration_hook('integrate_autosuggest', array(&$searchTypes));
@@ -2426,63 +2425,6 @@ function AutoSuggest_Search_MemberGroups()
 		);
 	}
 	$smcFunc['db_free_result']($request);
-
-	return $xml_data;
-}
-
-/**
- * Provides a list of possible SMF versions to use in emulation
- *
- * @return array An array of data for displaying the suggestions
- */
-function AutoSuggest_Search_SMFVersions()
-{
-	global $smcFunc;
-
-	$xml_data = array(
-		'items' => array(
-			'identifier' => 'item',
-			'children' => array(),
-		),
-	);
-
-	// First try and get it from the database.
-	$versions = array();
-	$request = $smcFunc['db_query']('', '
-		SELECT data
-		FROM {db_prefix}admin_info_files
-		WHERE filename = {string:latest_versions}
-			AND path = {string:path}',
-		array(
-			'latest_versions' => 'latest-versions.txt',
-			'path' => '/smf/',
-		)
-	);
-	if (($smcFunc['db_num_rows']($request) > 0) && ($row = $smcFunc['db_fetch_assoc']($request)) && !empty($row['data']))
-	{
-		// The file can be either Windows or Linux line endings, but let's ensure we clean it as best we can.
-		$possible_versions = explode("\n", $row['data']);
-		foreach ($possible_versions as $ver)
-		{
-			$ver = trim($ver);
-			if (strpos($ver, 'SMF') === 0)
-				$versions[] = $ver;
-		}
-	}
-	$smcFunc['db_free_result']($request);
-
-	// Just in case we don't have ANYthing.
-	if (empty($versions))
-		$versions = array(SMF_FULL_VERSION);
-
-	foreach ($versions as $id => $version)
-		if (strpos($version, strtoupper($_REQUEST['search'])) !== false)
-			$xml_data['items']['children'][] = array(
-				'attributes' => array(
-					'id' => $id,
-				),
-				'value' => $version,
-			);
 
 	return $xml_data;
 }

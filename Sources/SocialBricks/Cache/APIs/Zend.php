@@ -1,20 +1,20 @@
 <?php
 
 /**
- * Simple Machines Forum (SMF)
+ * Social Bricks
  *
- * @package SMF
- * @author Simple Machines https://www.simplemachines.org
- * @copyright 2022 Simple Machines and individual contributors
- * @license https://www.simplemachines.org/about/smf/license.php BSD
+ * @package SocialBricks
+ * @author Social Bricks and others (see CONTRIBUTORS.md)
+ * @copyright 2022 Social Bricks contributors (full details see LICENSE file)
+ * @license 3-clause BSD (see accompanying LICENSE file)
  *
  * @version 2.1.0
  */
 
-namespace SMF\Cache\APIs;
+namespace SocialBricks\Cache\APIs;
 
-use SMF\Cache\CacheApi;
-use SMF\Cache\CacheApiInterface;
+use SocialBricks\Cache\CacheApi;
+use SocialBricks\Cache\CacheApiInterface;
 
 /**
  * Our Cache API class
@@ -50,7 +50,7 @@ class Zend extends CacheApi implements CacheApiInterface
 
 		// Zend's pricey stuff.
 		if (function_exists('zend_shm_cache_fetch'))
-			return zend_shm_cache_fetch('SMF::' . $key);
+			return zend_shm_cache_fetch('SB::' . $key);
 
 		elseif (function_exists('output_cache_get'))
 			return output_cache_get($key, $ttl);
@@ -64,7 +64,7 @@ class Zend extends CacheApi implements CacheApiInterface
 		$key = $this->prefix . strtr($key, ':/', '-_');
 
 		if (function_exists('zend_shm_cache_store'))
-			return zend_shm_cache_store('SMF::' . $key, $value, $ttl);
+			return zend_shm_cache_store('SB::' . $key, $value, $ttl);
 
 		elseif (function_exists('output_cache_put'))
 			return output_cache_put($key, $value);
@@ -77,7 +77,7 @@ class Zend extends CacheApi implements CacheApiInterface
 	{
 		$this->invalidateCache();
 
-		return zend_shm_cache_clear('SMF');
+		return zend_shm_cache_clear('SB');
 	}
 
 	/**

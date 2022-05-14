@@ -4,12 +4,12 @@
  * This file contains functions to export a member's profile data to a
  * downloadable file.
  *
- * Simple Machines Forum (SMF)
+ * Social Bricks
  *
- * @package SMF
- * @author Simple Machines https://www.simplemachines.org
- * @copyright 2022 Simple Machines and individual contributors
- * @license https://www.simplemachines.org/about/smf/license.php BSD
+ * @package SocialBricks
+ * @author Social Bricks and others (see CONTRIBUTORS.md)
+ * @copyright 2022 Social Bricks contributors (full details see LICENSE file)
+ * @license 3-clause BSD (see accompanying LICENSE file)
  *
  * @version 2.1.2
  */
@@ -177,7 +177,7 @@ function export_profile_data($uid)
 		),
 	);
 
-	if (empty($modSettings['export_dir']) || !is_dir($modSettings['export_dir']) || !smf_chmod($modSettings['export_dir']))
+	if (empty($modSettings['export_dir']) || !is_dir($modSettings['export_dir']) || !sb_chmod($modSettings['export_dir']))
 		create_export_dir();
 
 	$export_dir_slash = $modSettings['export_dir'] . DIRECTORY_SEPARATOR;
@@ -745,7 +745,7 @@ function create_export_dir($fallback = '')
 		@mkdir($modSettings['export_dir'], null, true);
 
 	// Make sure the directory has the correct permissions.
-	if (!is_dir($modSettings['export_dir']) || !smf_chmod($modSettings['export_dir']))
+	if (!is_dir($modSettings['export_dir']) || !sb_chmod($modSettings['export_dir']))
 	{
 		loadLanguage('Errors');
 
@@ -845,7 +845,7 @@ function get_xslt_stylesheet($format, $uid)
 				'value' => $export_formats[$format]['extension'],
 			),
 			'forum_copyright' => array(
-				'value' => sprintf($forum_copyright, SMF_FULL_VERSION, SMF_SOFTWARE_YEAR, $scripturl),
+				'value' => sprintf($forum_copyright, SB_FULL_VERSION, SB_SOFTWARE_YEAR),
 			),
 			'txt_summary_heading' => array(
 				'value' => $txt['summary'],
@@ -1779,7 +1779,7 @@ function export_load_css_js()
 	global $context, $modSettings, $sourcedir, $smcFunc, $user_info;
 
 	// If we're not running a background task, we need to preserve any existing CSS and JavaScript.
-	if (SMF != 'BACKGROUND')
+	if (SOCIALBRICKS != 'BACKGROUND')
 	{
 		foreach (array('css_files', 'css_header', 'javascript_vars', 'javascript_files', 'javascript_inline') as $var)
 		{
@@ -1818,11 +1818,11 @@ function export_load_css_js()
 	}
 
 	// Load our standard CSS files.
-	loadCSSFile('index.css', array('minimize' => true, 'order_pos' => 1), 'smf_index');
-	loadCSSFile('responsive.css', array('force_current' => false, 'validate' => true, 'minimize' => true, 'order_pos' => 9000), 'smf_responsive');
+	loadCSSFile('index.css', array('minimize' => true, 'order_pos' => 1), 'sb_index');
+	loadCSSFile('responsive.css', array('force_current' => false, 'validate' => true, 'minimize' => true, 'order_pos' => 9000), 'sb_responsive');
 
 	if ($context['right_to_left'])
-		loadCSSFile('rtl.css', array('order_pos' => 4000), 'smf_rtl');
+		loadCSSFile('rtl.css', array('order_pos' => 4000), 'sb_rtl');
 
 	// In case any mods added relevant CSS.
 	call_integration_hook('integrate_pre_css_output');
@@ -1950,7 +1950,7 @@ function export_load_css_js()
 	}
 
 	// Finally, restore the real values.
-	if (SMF !== 'BACKGROUND')
+	if (SOCIALBRICKS !== 'BACKGROUND')
 	{
 		foreach (array('css_files', 'css_header', 'javascript_vars', 'javascript_files', 'javascript_inline') as $var)
 		{

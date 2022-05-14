@@ -1,33 +1,33 @@
 <?php
 
 /**
- * Simple Machines Forum (SMF)
+ * Social Bricks
  *
- * @package SMF
- * @author Simple Machines https://www.simplemachines.org
- * @copyright 2022 Simple Machines and individual contributors
- * @license https://www.simplemachines.org/about/smf/license.php BSD
+ * @package SocialBricks
+ * @author Social Bricks and others (see CONTRIBUTORS.md)
+ * @copyright 2022 Social Bricks contributors (full details see LICENSE file)
+ * @license 3-clause BSD (see accompanying LICENSE file)
  *
  * @version 2.1.0
  */
 
-namespace SMF\Cache;
+namespace SocialBricks\Cache;
 
 abstract class CacheApi
 {
 	const APIS_FOLDER = 'APIs';
-	const APIS_NAMESPACE = 'SMF\Cache\APIs\\';
+	const APIS_NAMESPACE = 'SocialBricks\Cache\APIs\\';
 	const APIS_DEFAULT = 'FileBased';
 
 	/**
-	 * @var string The maximum SMF version that this will work with.
+	 * @var string The maximum Social Bricks version that this will work with.
 	 */
 	protected $version_compatible = '2.1.999';
 
 	/**
-	 * @var string The minimum SMF version that this will work with.
+	 * @var string The minimum Social Bricks version that this will work with.
 	 */
-	protected $min_smf_version = '2.1 RC1';
+	protected $min_version = '2.1 RC1';
 
 	/**
 	 * @var string The prefix for all keys.
@@ -105,7 +105,7 @@ abstract class CacheApi
 			$mtime = filemtime(realpath($_SERVER['SCRIPT_FILENAME']));
 		}
 
-		$this->prefix = md5($boardurl . $mtime) . '-SMF-';
+		$this->prefix = md5($boardurl . $mtime) . '-SOCIALBRICKS-';
 
 		return true;
 	}
@@ -185,7 +185,7 @@ abstract class CacheApi
 	}
 
 	/**
-	 * Gets the latest version of SMF this is compatible with.
+	 * Gets the latest version of Social Bricks this is compatible with.
 	 *
 	 * @access public
 	 * @return string the value of $key.
@@ -203,7 +203,7 @@ abstract class CacheApi
 	 */
 	public function getMinimumVersion()
 	{
-		return $this->min_smf_version;
+		return $this->min_version;
 	}
 
 	/**
@@ -214,7 +214,7 @@ abstract class CacheApi
 	 */
 	public function getVersion()
 	{
-		return $this->min_smf_version;
+		return $this->min_version;
 	}
 
 	/**

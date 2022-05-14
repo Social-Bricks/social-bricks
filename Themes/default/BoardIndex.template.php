@@ -1,11 +1,11 @@
 <?php
 /**
- * Simple Machines Forum (SMF)
+ * Social Bricks
  *
- * @package SMF
- * @author Simple Machines https://www.simplemachines.org
- * @copyright 2022 Simple Machines and individual contributors
- * @license https://www.simplemachines.org/about/smf/license.php BSD
+ * @package SocialBricks
+ * @author Social Bricks and others (see CONTRIBUTORS.md)
+ * @copyright 2022 Social Bricks contributors (full details see LICENSE file)
+ * @license 3-clause BSD (see accompanying LICENSE file)
  *
  * @version 2.1.0
  */
@@ -29,7 +29,7 @@ function template_newsfader()
 	if (!empty($settings['show_newsfader']) && !empty($context['news_lines']))
 	{
 		echo '
-		<ul id="smf_slider" class="roundframe">';
+		<ul id="sb_slider" class="roundframe">';
 
 		foreach ($context['news_lines'] as $news)
 			echo '
@@ -38,7 +38,7 @@ function template_newsfader()
 		echo '
 		</ul>
 		<script>
-			jQuery("#smf_slider").slippry({
+			jQuery("#sb_slider").slippry({
 				pause: ', $settings['newsfader_time'], ',
 				adaptiveHeight: 0,
 				captions: 0,
@@ -314,7 +314,7 @@ function template_info_center()
 	// Info center collapse object.
 	echo '
 	<script>
-		var oInfoCenterToggle = new smc_Toggle({
+		var oInfoCenterToggle = new sb_toggle({
 			bToggleEnabled: true,
 			bCurrentlyCollapsed: ', empty($options['collapse_header_ic']) ? 'false' : 'true', ',
 			aSwappableContainers: [

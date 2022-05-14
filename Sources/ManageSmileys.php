@@ -3,12 +3,12 @@
 /**
  * This file takes care of all administration of smileys.
  *
- * Simple Machines Forum (SMF)
+ * Social Bricks
  *
- * @package SMF
- * @author Simple Machines https://www.simplemachines.org
- * @copyright 2022 Simple Machines and individual contributors
- * @license https://www.simplemachines.org/about/smf/license.php BSD
+ * @package SocialBricks
+ * @author Social Bricks and others (see CONTRIBUTORS.md)
+ * @copyright 2022 Social Bricks contributors (full details see LICENSE file)
+ * @license 3-clause BSD (see accompanying LICENSE file)
  *
  * @version 2.1.0
  */
@@ -679,7 +679,7 @@ function AddSmiley()
 				{
 					$smileyLocation = $context['smileys_dir'] . '/' . $context['smiley_sets'][$i]['raw_path'] . '/' . $destName;
 					move_uploaded_file($_FILES['uploadSmiley']['tmp_name'], $smileyLocation);
-					smf_chmod($smileyLocation, 0644);
+					sb_chmod($smileyLocation, 0644);
 					break;
 				}
 			}
@@ -693,7 +693,7 @@ function AddSmiley()
 				if (!empty($smileyLocation) && !file_exists($currentPath))
 				{
 					copy($smileyLocation, $currentPath);
-					smf_chmod($currentPath, 0644);
+					sb_chmod($currentPath, 0644);
 				}
 
 				// Double-check
@@ -750,7 +750,7 @@ function AddSmiley()
 				{
 					// Finally - move the image!
 					move_uploaded_file($_FILES['individual_' . $set['raw_path']]['tmp_name'], $smileyLocation);
-					smf_chmod($smileyLocation, 0644);
+					sb_chmod($smileyLocation, 0644);
 				}
 
 				// Double-check
@@ -806,7 +806,7 @@ function AddSmiley()
 				else
 				{
 					copy($context['smileys_dir'] . '/' . $pathinfo['dirname'] . '/' . $pathinfo['basename'], $context['smileys_dir'] . '/' . $set . '/' . $pathinfo['basename']);
-					smf_chmod($context['smileys_dir'] . '/' . $set . '/' . $pathinfo['basename'], 0644);
+					sb_chmod($context['smileys_dir'] . '/' . $set . '/' . $pathinfo['basename'], 0644);
 
 					$basename = $pathinfo['basename'];
 				}
@@ -1058,7 +1058,7 @@ function EditSmileys()
 					{
 						// Finally - move the image!
 						move_uploaded_file($_FILES['smiley_upload']['tmp_name'][$set], $smileyLocation);
-						smf_chmod($smileyLocation, 0644);
+						sb_chmod($smileyLocation, 0644);
 					}
 
 					// Double-check
@@ -2035,7 +2035,7 @@ function ImportSmileys($smileyPath, $create = false)
 				{
 					// Copy the file into the set's folder
 					copy($modSettings['smileys_dir'] . '/' . $p . '/' . $smiley_files[$key], $modSettings['smileys_dir'] . '/' . $set . '/' . $smiley_files[$key]);
-					smf_chmod($modSettings['smileys_dir'] . '/' . $set . '/' . $smiley_files[$key], 0644);
+					sb_chmod($modSettings['smileys_dir'] . '/' . $set . '/' . $smiley_files[$key], 0644);
 				}
 
 				// Double-check that everything went as expected
@@ -2108,7 +2108,7 @@ function ImportSmileys($smileyPath, $create = false)
 				else
 				{
 					copy($modSettings['smileys_dir'] . '/' . $smileyPath . '/' . $smiley_file, $modSettings['smileys_dir'] . '/' . $set . '/' . $smiley_file);
-					smf_chmod($modSettings['smileys_dir'] . '/' . $set . '/' . $smiley_file, 0644);
+					sb_chmod($modSettings['smileys_dir'] . '/' . $set . '/' . $smiley_file, 0644);
 
 					$basename = $smiley_file;
 				}

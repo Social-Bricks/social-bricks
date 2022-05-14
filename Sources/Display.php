@@ -2,14 +2,14 @@
 
 /**
  * This is perhaps the most important and probably most accessed file in all
- * of SMF.  This file controls topic, message, and attachment display.
+ * of Social Bricks.  This file controls topic, message, and attachment display.
  *
- * Simple Machines Forum (SMF)
+ * Social Bricks
  *
- * @package SMF
- * @author Simple Machines https://www.simplemachines.org
- * @copyright 2022 Simple Machines and individual contributors
- * @license https://www.simplemachines.org/about/smf/license.php BSD
+ * @package SocialBricks
+ * @author Social Bricks and others (see CONTRIBUTORS.md)
+ * @copyright 2022 Social Bricks contributors (full details see LICENSE file)
+ * @license 3-clause BSD (see accompanying LICENSE file)
  *
  * @version 2.1.0
  */
@@ -1360,24 +1360,24 @@ function Display()
 
 	// Load the drafts js file
 	if ($context['drafts_autosave'])
-		loadJavaScriptFile('drafts.js', array('defer' => false, 'minimize' => true), 'smf_drafts');
+		loadJavaScriptFile('drafts.js', array('defer' => false, 'minimize' => true), 'sb_drafts');
 
 	// Spellcheck
 	if ($context['show_spellchecking'])
-		loadJavaScriptFile('spellcheck.js', array('defer' => false, 'minimize' => true), 'smf_spellcheck');
+		loadJavaScriptFile('spellcheck.js', array('defer' => false, 'minimize' => true), 'sb_spellcheck');
 
 	// topic.js
-	loadJavaScriptFile('topic.js', array('defer' => false, 'minimize' => true), 'smf_topic');
+	loadJavaScriptFile('topic.js', array('defer' => false, 'minimize' => true), 'sb_topic');
 
 	// quotedText.js
-	loadJavaScriptFile('quotedText.js', array('defer' => true, 'minimize' => true), 'smf_quotedText');
+	loadJavaScriptFile('quotedText.js', array('defer' => true, 'minimize' => true), 'sb_quotedText');
 
 	// Mentions
 	if (!empty($modSettings['enable_mentions']) && allowedTo('mention'))
 	{
-		loadJavaScriptFile('jquery.atwho.min.js', array('defer' => true), 'smf_atwho');
-		loadJavaScriptFile('jquery.caret.min.js', array('defer' => true), 'smf_caret');
-		loadJavaScriptFile('mentions.js', array('defer' => true, 'minimize' => true), 'smf_mentions');
+		loadJavaScriptFile('jquery.atwho.min.js', array('defer' => true), 'sb_atwho');
+		loadJavaScriptFile('jquery.caret.min.js', array('defer' => true), 'sb_caret');
+		loadJavaScriptFile('mentions.js', array('defer' => true, 'minimize' => true), 'sb_mentions');
 	}
 }
 

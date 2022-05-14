@@ -1,11 +1,11 @@
 <?php
 /**
- * Simple Machines Forum (SMF)
+ * Social Bricks
  *
- * @package SMF
- * @author Simple Machines https://www.simplemachines.org
- * @copyright 2022 Simple Machines and individual contributors
- * @license https://www.simplemachines.org/about/smf/license.php BSD
+ * @package SocialBricks
+ * @author Social Bricks and others (see CONTRIBUTORS.md)
+ * @copyright 2022 Social Bricks contributors (full details see LICENSE file)
+ * @license 3-clause BSD (see accompanying LICENSE file)
  *
  * @version 2.1.0
  */
@@ -368,7 +368,7 @@ function template_view_package()
 	if (!empty($js_operations))
 		foreach ($js_operations as $key => $operation)
 			echo '
-		new smc_Toggle({
+		new sb_toggle({
 			bToggleEnabled: true,
 			bNoAnimate: true,
 			bCurrentlyCollapsed: ', $operation ? 'false' : 'true', ',
@@ -562,7 +562,7 @@ function template_browse()
 	// Make a list of already installed mods so nothing is listed twice ;).
 	echo '
 				window.smfInstalledPackages = ["', implode('", "', $context['installed_mods']), '"];
-				window.smfVersion = "', $context['forum_version'], '";
+				window.sbVersion = "', $context['forum_version'], '";
 			</script>
 			<div id="yourVersion" style="display:none">', $context['forum_version'], '</div>';
 
@@ -606,80 +606,6 @@ function template_browse()
 		echo '
 		<br>';
 	}
-
-	// The advanced (emulation) box, collapsed by default
-	echo '
-		<form action="', $scripturl, '?action=admin;area=packages;sa=browse" method="get">
-			<div id="advanced_box">
-				<div class="cat_bar">
-					<h3 class="catbg">
-						<span id="advanced_panel_toggle" class="floatright" style="display: none;"></span>
-						<a href="#" id="advanced_panel_link">', $txt['package_advanced_button'], '</a>
-					</h3>
-				</div>
-				<div id="advanced_panel_div" class="windowbg">
-					<p>
-						', $txt['package_emulate_desc'], '
-					</p>
-					<dl class="settings">
-						<dt>
-							<strong>', $txt['package_emulate'], ':</strong><br>
-							<span class="smalltext">
-								<a href="#" onclick="return revert();">', $txt['package_emulate_revert'], '</a>
-							</span>
-						</dt>
-						<dd>
-							<a id="revert" name="revert"></a>
-							<select name="version_emulate" id="ve">';
-
-	foreach ($context['emulation_versions'] as $version)
-		echo '
-								<option value="', $version, '"', ($version == $context['selected_version'] ? ' selected="selected"' : ''), '>', $version, '</option>';
-
-	echo '
-							</select>
-						</dd>
-					</dl>
-					<div class="righttext padding">
-						<input type="submit" value="', $txt['package_apply'], '" class="button">
-					</div>
-				</div><!-- #advanced_panel_div -->
-			</div><!-- #advanced_box -->
-			<input type="hidden" name="action" value="admin">
-			<input type="hidden" name="area" value="packages">
-			<input type="hidden" name="sa" value="browse">
-		</form>
-	<script>
-		var oAdvancedPanelToggle = new smc_Toggle({
-			bToggleEnabled: true,
-			bCurrentlyCollapsed: true,
-			aSwappableContainers: [
-				\'advanced_panel_div\'
-			],
-			aSwapImages: [
-				{
-					sId: \'advanced_panel_toggle\',
-					altExpanded: ', JavaScriptEscape($txt['hide']), ',
-					altCollapsed: ', JavaScriptEscape($txt['show']), '
-				}
-			],
-			aSwapLinks: [
-				{
-					sId: \'advanced_panel_link\',
-					msgExpanded: ', JavaScriptEscape($txt['package_advanced_button']), ',
-					msgCollapsed: ', JavaScriptEscape($txt['package_advanced_button']), '
-				}
-			]
-		});
-		function revert()
-		{
-			var default_version = "', $context['default_version'], '";
-			$("#ve").find("option").filter(function(index) {
-				return default_version === $(this).text();
-			}).attr("selected", "selected");
-			return false;
-		}
-	</script>';
 }
 
 /**
@@ -794,7 +720,7 @@ function template_servers()
 								<strong>' . $txt['server_name'] . ':</strong>
 							</dt>
 							<dd>
-								<input type="text" name="servername" size="44" value="SMF">
+								<input type="text" name="servername" size="44" value="Social Bricks">
 							</dd>
 							<dt>
 								<strong>' . $txt['serverurl'] . ':</strong>
@@ -993,7 +919,7 @@ function template_package_list()
 		foreach ($context['package_list'] as $section => $ps)
 		{
 			echo '
-		var oPackageServerToggle_', $section, ' = new smc_Toggle({
+		var oPackageServerToggle_', $section, ' = new sb_toggle({
 			bToggleEnabled: true,
 			bCurrentlyCollapsed: ', count($ps['items']) == 1 || $section_count == 1 ? 'false' : 'true', ',
 			aSwappableContainers: [
@@ -1012,7 +938,7 @@ function template_package_list()
 			{
 				if (!$package['is_text'] && !$package['is_line'] && !$package['is_remote'])
 					echo '
-		var oPackageToggle_', $section, '_pkg_', $id, ' = new smc_Toggle({
+		var oPackageToggle_', $section, '_pkg_', $id, ' = new sb_toggle({
 			bToggleEnabled: true,
 			bCurrentlyCollapsed: true,
 			aSwappableContainers: [

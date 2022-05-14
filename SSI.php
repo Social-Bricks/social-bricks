@@ -1,26 +1,26 @@
 <?php
 
 /**
- * Simple Machines Forum (SMF)
+ * Social Bricks
  *
- * @package SMF
- * @author Simple Machines https://www.simplemachines.org
- * @copyright 2022 Simple Machines and individual contributors
- * @license https://www.simplemachines.org/about/smf/license.php BSD
+ * @package SocialBricks
+ * @author Social Bricks and others (see CONTRIBUTORS.md)
+ * @copyright 2022 Social Bricks contributors (full details see LICENSE file)
+ * @license 3-clause BSD (see accompanying LICENSE file)
  *
  * @version 2.1.2
  */
 
-// Don't do anything if SMF is already loaded.
-if (defined('SMF'))
+// Don't do anything if Social Bricks is already loaded.
+if (defined('SOCIALBRICKS'))
 	return true;
 
-define('SMF', 'SSI');
-define('SMF_VERSION', '2.1.2');
-define('SMF_FULL_VERSION', 'SMF ' . SMF_VERSION);
-define('SMF_SOFTWARE_YEAR', '2022');
+define('SOCIALBRICKS', 'SSI');
+define('SB_VERSION', '2.1.2');
+define('SB_FULL_VERSION', 'Social Bricks ' . SB_VERSION);
+define('SB_SOFTWARE_YEAR', '2022');
 define('JQUERY_VERSION', '3.6.0');
-define('SB_USER_AGENT', 'Mozilla/5.0 (' . php_uname('s') . ' ' . php_uname('m') . ') AppleWebKit/605.1.15 (KHTML, like Gecko) SocialBricks/' . strtr(SMF_VERSION, ' ', '.'));
+define('SB_USER_AGENT', 'Mozilla/5.0 (' . php_uname('s') . ' ' . php_uname('m') . ') AppleWebKit/605.1.15 (KHTML, like Gecko) SocialBricks/' . strtr(SB_VERSION, ' ', '.'));
 
 // Just being safe...  Do this before defining globals as otherwise it unsets the global.
 foreach (array('db_character_set', 'cachedir') as $variable)
@@ -55,7 +55,7 @@ if (empty($cachedir) || !is_dir($cachedir) || !is_writable($cachedir))
 $ssi_error_reporting = error_reporting(!empty($db_show_debug) ? E_ALL : E_ALL & ~E_DEPRECATED);
 /* Set this to one of three values depending on what you want to happen in the case of a fatal error.
 	false:	Default, will just load the error sub template and die - not putting any theme layers around it.
-	true:	Will load the error sub template AND put the SMF layers around it (Not useful if on total custom pages).
+	true:	Will load the error sub template AND put the Social Bricks layers around it (Not useful if on total custom pages).
 	string:	Name of a callback function to call in the event of an error to allow you to define your own methods. Will die after function returns.
 */
 $ssi_on_error_method = false;
@@ -219,7 +219,7 @@ function ssi_shutdown()
 }
 
 /**
- * Show the SMF version.
+ * Show the Social Bricks version.
  *
  * @param string $output_method If 'echo', displays the version, otherwise returns it
  * @return void|string Returns nothing if output_method is 'echo', otherwise returns the version
@@ -227,13 +227,13 @@ function ssi_shutdown()
 function ssi_version($output_method = 'echo')
 {
 	if ($output_method == 'echo')
-		echo SMF_VERSION;
+		echo SB_VERSION;
 	else
-		return SMF_VERSION;
+		return SB_VERSION;
 }
 
 /**
- * Show the full SMF version string.
+ * Show the full Social Bricks version string.
  *
  * @param string $output_method If 'echo', displays the full version string, otherwise returns it
  * @return void|string Returns nothing if output_method is 'echo', otherwise returns the version string
@@ -241,13 +241,13 @@ function ssi_version($output_method = 'echo')
 function ssi_full_version($output_method = 'echo')
 {
 	if ($output_method == 'echo')
-		echo SMF_FULL_VERSION;
+		echo SB_FULL_VERSION;
 	else
-		return SMF_FULL_VERSION;
+		return SB_FULL_VERSION;
 }
 
 /**
- * Show the SMF software year.
+ * Show the Social Bricks software year.
  *
  * @param string $output_method If 'echo', displays the software year, otherwise returns it
  * @return void|string Returns nothing if output_method is 'echo', otherwise returns the software year
@@ -255,9 +255,9 @@ function ssi_full_version($output_method = 'echo')
 function ssi_software_year($output_method = 'echo')
 {
 	if ($output_method == 'echo')
-		echo SMF_SOFTWARE_YEAR;
+		echo SB_SOFTWARE_YEAR;
 	else
-		return SMF_SOFTWARE_YEAR;
+		return SB_SOFTWARE_YEAR;
 }
 
 /**
@@ -268,12 +268,12 @@ function ssi_software_year($output_method = 'echo')
  */
 function ssi_copyright($output_method = 'echo')
 {
-	global $forum_copyright, $scripturl;
+	global $forum_copyright;
 
 	if ($output_method == 'echo')
-		printf($forum_copyright, SMF_FULL_VERSION, SMF_SOFTWARE_YEAR, $scripturl);
+		printf($forum_copyright, SB_FULL_VERSION, SB_SOFTWARE_YEAR);
 	else
-		return sprintf($forum_copyright, SMF_FULL_VERSION, SMF_SOFTWARE_YEAR, $scripturl);
+		return sprintf($forum_copyright, SB_FULL_VERSION, SB_SOFTWARE_YEAR);
 }
 
 /**
@@ -2248,7 +2248,7 @@ function ssi_recentEvents($max_events = 7, $output_method = 'echo')
 		ORDER BY cal.start_date DESC
 		LIMIT ' . $max_events,
 		array(
-			'current_date' => smf_strftime('%Y-%m-%d', time()),
+			'current_date' => sb_strftime('%Y-%m-%d', time()),
 			'no_board' => 0,
 		)
 	);
@@ -2263,8 +2263,8 @@ function ssi_recentEvents($max_events = 7, $output_method = 'echo')
 		// Censor the title.
 		censorText($row['title']);
 
-		if ($row['start_date'] < smf_strftime('%Y-%m-%d', time()))
-			$date = smf_strftime('%Y-%m-%d', time());
+		if ($row['start_date'] < sb_strftime('%Y-%m-%d', time()))
+			$date = sb_strftime('%Y-%m-%d', time());
 		else
 			$date = $row['start_date'];
 

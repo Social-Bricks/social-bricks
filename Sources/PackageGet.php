@@ -3,12 +3,12 @@
 /**
  * This file handles the package servers and packages download from Package Manager.
  *
- * Simple Machines Forum (SMF)
+ * Social Bricks
  *
- * @package SMF
- * @author Simple Machines https://www.simplemachines.org
- * @copyright 2022 Simple Machines and individual contributors
- * @license https://www.simplemachines.org/about/smf/license.php BSD
+ * @package SocialBricks
+ * @author Social Bricks and others (see CONTRIBUTORS.md)
+ * @copyright 2022 Social Bricks contributors (full details see LICENSE file)
+ * @license 3-clause BSD (see accompanying LICENSE file)
  *
  * @version 2.1.1
  */
@@ -111,7 +111,7 @@ function PackageServers()
 
 	if ($context['package_download_broken'])
 	{
-		smf_chmod($packagesdir, 0777);
+		sb_chmod($packagesdir, 0777);
 	}
 
 	$context['package_download_broken'] = !is_writable($packagesdir);
@@ -227,13 +227,13 @@ function PackageGBrowse()
 		if (isset($_GET['relative']))
 			$url = $url . (substr($url, -1) == '/' ? '' : '/') . $_GET['relative'];
 
-		$the_version = SMF_VERSION;
+		$the_version = SB_VERSION;
 		if (!empty($_SESSION['version_emulate']))
 			$the_version = $_SESSION['version_emulate'];
 
 		// Sub out any variables we support in the url.
 		$url = strtr($url, array(
-			'{SMF_VERSION}' => urlencode($the_version)
+			'{SB_VERSION}' => urlencode($the_version)
 		));
 
 		// Clear any "absolute" URL.  Since "server" is present, "absolute" is garbage.
@@ -325,7 +325,7 @@ function PackageGBrowse()
 			$default_title = $smcFunc['htmlspecialchars']($listing->fetch('default-website/@title'));
 	}
 
-	$the_version = SMF_VERSION;
+	$the_version = SB_VERSION;
 	if (!empty($_SESSION['version_emulate']))
 		$the_version = $_SESSION['version_emulate'];
 
@@ -409,7 +409,7 @@ function PackageGBrowse()
 				$package['is_current'] = $package['is_installed'] && ($installed_mods[$package['id']] == $package['version']);
 				$package['is_newer'] = $package['is_installed'] && ($installed_mods[$package['id']] > $package['version']);
 
-				// This package is either not installed, or installed but old.  Is it supported on this version of SMF?
+				// This package is either not installed, or installed but old.  Is it supported on this version of Social Bricks?
 				if (!$package['is_installed'] || (!$package['is_current'] && !$package['is_newer']))
 				{
 					if ($thisPackage->exists('version/@for'))
@@ -569,13 +569,13 @@ function PackageDownload()
 		if (empty($url))
 			fatal_lang_error('couldnt_connect', false);
 
-		$the_version = SMF_VERSION;
+		$the_version = SB_VERSION;
 		if (!empty($_SESSION['version_emulate']))
 			$the_version = $_SESSION['version_emulate'];
 
 		// Sub out any variables we support in the url.
 		$url = strtr($url, array(
-			'{SMF_VERSION}' => urlencode($the_version)
+			'{SB_VERSION}' => urlencode($the_version)
 		));
 
 		$url = $url . '/';
@@ -680,7 +680,7 @@ function PackageUpload()
 
 	// Now move the file.
 	move_uploaded_file($_FILES['package']['tmp_name'], $destination);
-	smf_chmod($destination, 0777);
+	sb_chmod($destination, 0777);
 
 	// If we got this far that should mean it's available.
 	$context['package'] = getPackageInfo($packageFileName);

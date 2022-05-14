@@ -3,18 +3,18 @@
 /**
  * This file has the hefty job of loading information for the forum.
  *
- * Simple Machines Forum (SMF)
+ * Social Bricks
  *
- * @package SMF
- * @author Simple Machines https://www.simplemachines.org
- * @copyright 2022 Simple Machines and individual contributors
- * @license https://www.simplemachines.org/about/smf/license.php BSD
+ * @package SocialBricks
+ * @author Social Bricks and others (see CONTRIBUTORS.md)
+ * @copyright 2022 Social Bricks contributors (full details see LICENSE file)
+ * @license 3-clause BSD (see accompanying LICENSE file)
  *
  * @version 2.1.2
  */
 
-use SMF\Cache\CacheApi;
-use SMF\Cache\CacheApiInterface;
+use SocialBricks\Cache\CacheApi;
+use SocialBricks\Cache\CacheApiInterface;
 
 /**
  * Load the $modSettings array.
@@ -67,7 +67,7 @@ function reloadSettings()
 		// We explicitly do not use $smcFunc['json_decode'] here yet, as $smcFunc is not fully loaded.
 		if (!is_array($modSettings['attachmentUploadDir']))
 		{
-			$attachmentUploadDir = smf_json_decode($modSettings['attachmentUploadDir'], true, false);
+			$attachmentUploadDir = sb_json_decode($modSettings['attachmentUploadDir'], true, false);
 			$modSettings['attachmentUploadDir'] = !empty($attachmentUploadDir) ? $attachmentUploadDir : $modSettings['attachmentUploadDir'];
 		}
 
@@ -76,7 +76,7 @@ function reloadSettings()
 	}
 
 	// Going anything further when the files don't match the database can make nasty messes (unless we're actively installing or upgrading)
-	if (!defined('SMF_INSTALLING') && (!isset($_REQUEST['action']) || $_REQUEST['action'] !== 'admin' || !isset($_REQUEST['area']) || $_REQUEST['area'] !== 'packages') && !empty($modSettings['smfVersion']) && version_compare(strtolower(strtr($modSettings['smfVersion'], array(' ' => '.'))), strtolower(strtr(SMF_VERSION, array(' ' => '.'))), '!='))
+	if (!defined('SB_INSTALLING') && (!isset($_REQUEST['action']) || $_REQUEST['action'] !== 'admin' || !isset($_REQUEST['area']) || $_REQUEST['area'] !== 'packages') && !empty($modSettings['sbVersion']) && version_compare(strtolower(strtr($modSettings['sbVersion'], array(' ' => '.'))), strtolower(strtr(SB_VERSION, array(' ' => '.'))), '!='))
 	{
 		// Wipe the cached $modSettings values so they don't interfere with anything later
 		cache_put_data('modSettings', null);
@@ -85,14 +85,14 @@ function reloadSettings()
 		if (file_exists($boarddir . '/upgrade.php'))
 			header('location: ' . $boardurl . '/upgrade.php');
 
-		die('SMF file version (' . SMF_VERSION . ') does not match SMF database version (' . $modSettings['smfVersion'] . ').<br>Run the SMF upgrader to fix this.<br><a href="https://wiki.simplemachines.org/smf/Upgrading">More information</a>.');
+		die('Social Bricks file version (' . SB_VERSION . ') does not match Social Bricks database version (' . $modSettings['sbVersion'] . ').<br>Run the Social Bricks upgrader to fix this.<br><a href="https://wiki.simplemachines.org/smf/Upgrading">More information</a>.');
 	}
 
 	$modSettings['cache_enable'] = $cache_enable;
 
 	// Used to force browsers to download fresh CSS and JavaScript when necessary
 	$modSettings['browser_cache'] = !empty($modSettings['browser_cache']) ? (int) $modSettings['browser_cache'] : 0;
-	$context['browser_cache'] = '?' . preg_replace('~\W~', '', strtolower(SMF_FULL_VERSION)) . '_' . $modSettings['browser_cache'];
+	$context['browser_cache'] = '?' . preg_replace('~\W~', '', strtolower(SB_FULL_VERSION)) . '_' . $modSettings['browser_cache'];
 
 	// Seed the random generator.
 	if (empty($modSettings['rand_seed']) || mt_rand(1, 250) == 42)
@@ -254,7 +254,7 @@ function reloadSettings()
 				$words[$i] = $smcFunc['ucfirst']($words[$i]);
 			return implode('', $words);
 		} : 'ucwords',
-		'json_decode' => 'smf_json_decode',
+		'json_decode' => 'sb_json_decode',
 		'json_encode' => 'json_encode',
 		'random_int' => function($min = 0, $max = PHP_INT_MAX)
 		{
@@ -377,9 +377,9 @@ function reloadSettings()
 	$modSettings['attachmentSizeLimit'] = empty($modSettings['attachmentSizeLimit']) ? $file_max_kb : min($modSettings['attachmentSizeLimit'], $file_max_kb);
 
 	// Integration is cool.
-	if (defined('SMF_INTEGRATION_SETTINGS'))
+	if (defined('SB_INTEGRATION_SETTINGS'))
 	{
-		$integration_settings = $smcFunc['json_decode'](SMF_INTEGRATION_SETTINGS, true);
+		$integration_settings = $smcFunc['json_decode'](SB_INTEGRATION_SETTINGS, true);
 		foreach ($integration_settings as $hook => $function)
 			add_integration_function($hook, $function, false);
 	}
@@ -435,7 +435,7 @@ function reloadSettings()
 		'<div>',
 	);
 
-	// These are the only valid image types for SMF attachments, by default anyway.
+	// These are the only valid image types for Social Bricks attachments, by default anyway.
 	// Note: The values are for image mime types, not file extensions.
 	$context['valid_image_types'] = array(
 		IMAGETYPE_GIF => 'gif',
@@ -592,7 +592,7 @@ function loadUserSettings()
 			$id_member = 0;
 
 		// Check if we are forcing TFA
-		$force_tfasetup = !empty($modSettings['tfa_mode']) && $modSettings['tfa_mode'] >= 2 && $id_member && empty($user_settings['tfa_secret']) && SMF != 'SSI' && !isset($_REQUEST['xml']) && (!isset($_REQUEST['action']) || $_REQUEST['action'] != '.xml');
+		$force_tfasetup = !empty($modSettings['tfa_mode']) && $modSettings['tfa_mode'] >= 2 && $id_member && empty($user_settings['tfa_secret']) && SOCIALBRICKS != 'SSI' && !isset($_REQUEST['xml']) && (!isset($_REQUEST['action']) || $_REQUEST['action'] != '.xml');
 
 		// Don't force TFA on popups
 		if ($force_tfasetup)
@@ -699,7 +699,7 @@ function loadUserSettings()
 		// 3. If it was set within this session, no need to set it again.
 		// 4. New session, yet updated < five hours ago? Maybe cache can help.
 		// 5. We're still logging in or authenticating
-		if (SMF != 'SSI' && !isset($_REQUEST['xml']) && (!isset($_REQUEST['action']) || !in_array($_REQUEST['action'], array('.xml', 'login2', 'logintfa'))) && empty($_SESSION['id_msg_last_visit']) && (empty($cache_enable) || ($_SESSION['id_msg_last_visit'] = cache_get_data('user_last_visit-' . $id_member, 5 * 3600)) === null))
+		if (SOCIALBRICKS != 'SSI' && !isset($_REQUEST['xml']) && (!isset($_REQUEST['action']) || !in_array($_REQUEST['action'], array('.xml', 'login2', 'logintfa'))) && empty($_SESSION['id_msg_last_visit']) && (empty($cache_enable) || ($_SESSION['id_msg_last_visit'] = cache_get_data('user_last_visit-' . $id_member, 5 * 3600)) === null))
 		{
 			// @todo can this be cached?
 			// Do a quick query to make sure this isn't a mistake.
@@ -2156,7 +2156,7 @@ function loadTheme($id_theme = 0, $initialize = true)
 		'xmlhttp' => true,
 		'.xml' => true,
 	);
-	if (empty($user_info['is_guest']) && empty($user_info['is_admin']) && SMF != 'SSI' && !isset($_REQUEST['xml']) && !is_filtered_request($agreement_actions, 'action'))
+	if (empty($user_info['is_guest']) && empty($user_info['is_admin']) && SOCIALBRICKS != 'SSI' && !isset($_REQUEST['xml']) && !is_filtered_request($agreement_actions, 'action'))
 	{
 		require_once($sourcedir . '/Agreement.php');
 		$can_accept_agreement = !empty($modSettings['requireAgreement']) && canRequireAgreement();
@@ -2168,7 +2168,7 @@ function loadTheme($id_theme = 0, $initialize = true)
 
 	// Check to see if we're forcing SSL
 	if (!empty($modSettings['force_ssl']) && empty($maintenance) &&
-		!httpsOn() && SMF != 'SSI')
+		!httpsOn() && SOCIALBRICKS != 'SSI')
 	{
 		if (isset($_GET['sslRedirect']))
 		{
@@ -2204,7 +2204,7 @@ function loadTheme($id_theme = 0, $initialize = true)
 		}
 
 		// Hmm... check #2 - is it just different by a www?  Send them to the correct place!!
-		if (empty($do_fix) && strtr($detected_url, array('://' => '://www.')) == $boardurl && (empty($_GET) || count($_GET) == 1) && SMF != 'SSI')
+		if (empty($do_fix) && strtr($detected_url, array('://' => '://www.')) == $boardurl && (empty($_GET) || count($_GET) == 1) && SOCIALBRICKS != 'SSI')
 		{
 			// Okay, this seems weird, but we don't want an endless loop - this will make $_GET not empty ;).
 			if (empty($_GET))
@@ -2473,13 +2473,13 @@ function loadTheme($id_theme = 0, $initialize = true)
 	$settings['lang_images_url'] = $settings['images_url'] . '/' . (!empty($txt['image_lang']) ? $txt['image_lang'] : $user_info['language']);
 
 	// And of course, let's load the default CSS file.
-	loadCSSFile('index.css', array('minimize' => true, 'order_pos' => 1), 'smf_index');
+	loadCSSFile('index.css', array('minimize' => true, 'order_pos' => 1), 'sb_index');
 
 	// Here is my luvly Responsive CSS
-	loadCSSFile('responsive.css', array('force_current' => false, 'validate' => true, 'minimize' => true, 'order_pos' => 9000), 'smf_responsive');
+	loadCSSFile('responsive.css', array('force_current' => false, 'validate' => true, 'minimize' => true, 'order_pos' => 9000), 'sb_responsive');
 
 	if ($context['right_to_left'])
-		loadCSSFile('rtl.css', array('order_pos' => 4000), 'smf_rtl');
+		loadCSSFile('rtl.css', array('order_pos' => 4000), 'sb_rtl');
 
 	// We allow theme variants, because we're cool.
 	$context['theme_variant'] = '';
@@ -2502,9 +2502,9 @@ function loadTheme($id_theme = 0, $initialize = true)
 
 		if (!empty($context['theme_variant']))
 		{
-			loadCSSFile('index' . $context['theme_variant'] . '.css', array('order_pos' => 300), 'smf_index' . $context['theme_variant']);
+			loadCSSFile('index' . $context['theme_variant'] . '.css', array('order_pos' => 300), 'sb_index' . $context['theme_variant']);
 			if ($context['right_to_left'])
-				loadCSSFile('rtl' . $context['theme_variant'] . '.css', array('order_pos' => 4200), 'smf_rtl' . $context['theme_variant']);
+				loadCSSFile('rtl' . $context['theme_variant'] . '.css', array('order_pos' => 4200), 'sb_rtl' . $context['theme_variant']);
 		}
 	}
 
@@ -2563,12 +2563,12 @@ function loadTheme($id_theme = 0, $initialize = true)
 	if (!$user_info['is_guest'])
 	{
 		loadJavaScriptFile('jquery.custom-scrollbar.js', array('minimize' => true), 'sb_jquery_scrollbar');
-		loadCSSFile('jquery.custom-scrollbar.css', array('force_current' => false, 'validate' => true), 'smf_scrollbar');
+		loadCSSFile('jquery.custom-scrollbar.css', array('force_current' => false, 'validate' => true), 'sb_scrollbar');
 	}
 
 	// script.js and theme.js, always required, so always add them! Makes index.template.php cleaner and all.
 	loadJavaScriptFile('script.js', array('defer' => false, 'minimize' => true), 'sb_script');
-	loadJavaScriptFile('theme.js', array('minimize' => true), 'smf_theme');
+	loadJavaScriptFile('theme.js', array('minimize' => true), 'sb_theme');
 
 	// If we think we have mail to send, let's offer up some possibilities... robots get pain (Now with scheduled task support!)
 	if ((!empty($modSettings['mail_next_send']) && $modSettings['mail_next_send'] < time() && empty($modSettings['mail_queue_use_cron'])) || empty($modSettings['next_task_time']) || $modSettings['next_task_time'] < time())
@@ -3639,7 +3639,7 @@ function loadDatabase()
 		$db_options['db_mb4'] = $db_mb4;
 
 	// If we are in SSI try them first, but don't worry if it doesn't work, we have the normal username and password we can use.
-	if (SMF == 'SSI' && !empty($ssi_db_user) && !empty($ssi_db_passwd))
+	if (SOCIALBRICKS == 'SSI' && !empty($ssi_db_user) && !empty($ssi_db_passwd))
 	{
 		$options = array_merge($db_options, array('persist' => $db_persist, 'non_fatal' => true, 'dont_select_db' => true));
 
@@ -3649,7 +3649,7 @@ function loadDatabase()
 	// Either we aren't in SSI mode, or it failed.
 	if (empty($db_connection))
 	{
-		$options = array_merge($db_options, array('persist' => $db_persist, 'dont_select_db' => SMF == 'SSI'));
+		$options = array_merge($db_options, array('persist' => $db_persist, 'dont_select_db' => SOCIALBRICKS == 'SSI'));
 
 		$db_connection = sb_db_initiate($db_server, $db_name, $db_user, $db_passwd, $db_prefix, $options);
 	}
@@ -3659,7 +3659,7 @@ function loadDatabase()
 		display_db_error();
 
 	// If in SSI mode fix up the prefix.
-	if (SMF == 'SSI')
+	if (SOCIALBRICKS == 'SSI')
 		db_fix_prefix($db_prefix, $db_name);
 }
 
@@ -3677,8 +3677,7 @@ function registerAutoLoader()
 			'ReCaptcha\\' => 'ReCaptcha/',
 			'MatthiasMullie\\Minify\\' => 'minify/src/',
 			'MatthiasMullie\\PathConverter\\' => 'minify/path-converter/src/',
-			'SMF\\Cache\\' => 'Cache/',
-			'SocialBricks\\Helper\\' => 'SocialBricks/Helper/',
+			'SocialBricks\\' => 'SocialBricks/',
 		);
 
 		// Do any third-party scripts want in on the fun?
@@ -3716,10 +3715,10 @@ function registerAutoLoader()
  * Try to load up a supported caching method. This is saved in $cacheAPI if we are not overriding it.
  *
  * @param string $overrideCache Try to use a different cache method other than that defined in $cache_accelerator.
- * @param bool $fallbackSMF Use the default SMF method if the accelerator fails.
+ * @param bool $fallbackfile Use the default file method if the accelerator fails.
  * @return object|false A object of $cacheAPI, or False on failure.
  */
-function loadCacheAccelerator($overrideCache = '', $fallbackSMF = true)
+function loadCacheAccelerator($overrideCache = '', $fallbackfile = true)
 {
 	global $cacheAPI, $cache_accelerator, $cache_enable;
 	global $sourcedir;
@@ -3734,9 +3733,6 @@ function loadCacheAccelerator($overrideCache = '', $fallbackSMF = true)
 
 	elseif (is_null($cacheAPI))
 		$cacheAPI = false;
-
-	require_once($sourcedir . '/Cache/CacheApi.php');
-	require_once($sourcedir . '/Cache/CacheApiInterface.php');
 
 	// What accelerator we are going to try.
 	$cache_class_name = !empty($cache_accelerator) ? $cache_accelerator : CacheApi::APIS_DEFAULT;
@@ -3757,7 +3753,7 @@ function loadCacheAccelerator($overrideCache = '', $fallbackSMF = true)
 		if (!$cache_api->isSupported())
 		{
 			// Can we save ourselves?
-			if (!empty($fallbackSMF) && $overrideCache == '' &&
+			if (!empty($fallbackfile) && $overrideCache == '' &&
 				$cache_class_name !== CacheApi::APIS_DEFAULT)
 				return loadCacheAccelerator(CacheApi::APIS_NAMESPACE . CacheApi::APIS_DEFAULT, false);
 
@@ -3907,7 +3903,7 @@ function cache_get_data($key, $ttl = 120)
 	if (function_exists('call_integration_hook') && isset($value))
 		call_integration_hook('cache_get_data', array(&$key, &$ttl, &$value));
 
-	return empty($value) ? null : (isset($smcFunc['json_decode']) ? $smcFunc['json_decode']($value, true) : smf_json_decode($value, true));
+	return empty($value) ? null : (isset($smcFunc['json_decode']) ? $smcFunc['json_decode']($value, true) : sb_json_decode($value, true));
 }
 
 /**
@@ -3920,7 +3916,7 @@ function cache_get_data($key, $ttl = 120)
  *  - If no type is specified will perform a complete cache clearing
  * For cache engines that do not distinguish on types, a full cache flush will be done
  *
- * @param string $type The cache type ('memcached', 'zend' or something else for SMF's file cache)
+ * @param string $type The cache type ('memcached', 'zend' or something else for Social Bricks's file cache)
  */
 function clean_cache($type = '')
 {
