@@ -111,7 +111,7 @@ function PackageServers()
 
 	if ($context['package_download_broken'])
 	{
-		smf_chmod($packagesdir, 0777);
+		sb_chmod($packagesdir, 0777);
 	}
 
 	$context['package_download_broken'] = !is_writable($packagesdir);
@@ -680,7 +680,7 @@ function PackageUpload()
 
 	// Now move the file.
 	move_uploaded_file($_FILES['package']['tmp_name'], $destination);
-	smf_chmod($destination, 0777);
+	sb_chmod($destination, 0777);
 
 	// If we got this far that should mean it's available.
 	$context['package'] = getPackageInfo($packageFileName);

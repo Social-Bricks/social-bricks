@@ -15,7 +15,7 @@ define('SB_VERSION', '2.1.2');
 define('SB_FULL_VERSION', 'SMF ' . SB_VERSION);
 define('SB_SOFTWARE_YEAR', '2022');
 define('DB_SCRIPT_VERSION', '2-1');
-define('SMF_INSTALLING', 1);
+define('SB_INSTALLING', 1);
 
 define('JQUERY_VERSION', '3.6.0');
 define('SB_USER_AGENT', 'Mozilla/5.0 (' . php_uname('s') . ' ' . php_uname('m') . ') AppleWebKit/605.1.15 (KHTML, like Gecko) SocialBricks/' . strtr(SB_VERSION, ' ', '.'));
@@ -752,7 +752,7 @@ function DatabaseSettings()
 	}
 	else
 	{
-		$incontext['db']['prefix'] = 'smf_';
+		$incontext['db']['prefix'] = 'sb_';
 	}
 
 	// Are we submitting?
@@ -1066,7 +1066,7 @@ function DatabasePopulation()
 		$smcFunc['db_free_result']($result);
 
 		// Do they match?  If so, this is just a refresh so charge on!
-		if (!isset($modSettings['smfVersion']) || $modSettings['smfVersion'] != SB_VERSION)
+		if (!isset($modSettings['sbVersion']) || $modSettings['sbVersion'] != SB_VERSION)
 		{
 			$incontext['error'] = $txt['error_versions_do_not_match'];
 			return false;
@@ -1096,7 +1096,7 @@ function DatabasePopulation()
 		'{$boardurl}' => $boardurl,
 		'{$enableCompressedOutput}' => isset($_POST['compress']) ? '1' : '0',
 		'{$databaseSession_enable}' => isset($_POST['dbsession']) ? '1' : '0',
-		'{$smf_version}' => SB_VERSION,
+		'{$sb_version}' => SB_VERSION,
 		'{$current_time}' => time(),
 		'{$sched_task_offset}' => 82800 + mt_rand(0, 86399),
 		'{$registration_method}' => isset($_POST['reg_mode']) ? $_POST['reg_mode'] : 0,
@@ -1623,7 +1623,7 @@ function DeleteInstall()
 	$smcFunc['db_insert']('ignore',
 		'{db_prefix}log_activity',
 		array('date' => 'date', 'topics' => 'int', 'posts' => 'int', 'registers' => 'int'),
-		array(smf_strftime('%Y-%m-%d', time()), 1, 1, (!empty($incontext['member_id']) ? 1 : 0)),
+		array(sb_strftime('%Y-%m-%d', time()), 1, 1, (!empty($incontext['member_id']) ? 1 : 0)),
 		array('date')
 	);
 
@@ -1946,7 +1946,7 @@ function template_welcome_message()
 		<p>', sprintf($txt['install_welcome_desc'], SB_VERSION), '</p>
 		<div id="version_warning" class="noticebox hidden">
 			<h3>', $txt['error_warning_notice'], '</h3>
-			', sprintf($txt['error_script_outdated'], '<em id="smfVersion" style="white-space: nowrap;">??</em>', '<em id="yourVersion" style="white-space: nowrap;">' . SB_VERSION . '</em>'), '
+			', sprintf($txt['error_script_outdated'], '<em id="sbVersion" style="white-space: nowrap;">??</em>', '<em id="yourVersion" style="white-space: nowrap;">' . SB_VERSION . '</em>'), '
 		</div>';
 
 	// Show the warnings, or not.
@@ -1962,25 +1962,25 @@ function template_welcome_message()
 	echo '
 		<script>
 			// Latest version?
-			function smfCurrentVersion()
+			function sbCurrentVersion()
 			{
 				var smfVer, yourVer;
 
-				if (!(\'smfVersion\' in window))
+				if (!(\'sbVersion\' in window))
 					return;
 
-				window.smfVersion = window.smfVersion.replace(/SMF\s?/g, \'\');
+				window.sbVersion = window.sbVersion.replace(/SMF\s?/g, \'\');
 
-				smfVer = document.getElementById("smfVersion");
+				smfVer = document.getElementById("sbVersion");
 				yourVer = document.getElementById("yourVersion");
 
-				setInnerHTML(smfVer, window.smfVersion);
+				setInnerHTML(smfVer, window.sbVersion);
 
 				var currentVersion = getInnerHTML(yourVer);
-				if (currentVersion < window.smfVersion)
+				if (currentVersion < window.sbVersion)
 					document.getElementById(\'version_warning\').classList.remove(\'hidden\');
 			}
-			addLoadEvent(smfCurrentVersion);
+			addLoadEvent(sbCurrentVersion);
 		</script>';
 }
 

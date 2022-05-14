@@ -187,7 +187,7 @@ $txt['pm_rule_sel_label'] = 'Select label';
 $txt['pm_rule_delete'] = 'Delete message';
 $txt['pm_rule_no_name'] = 'You forgot to enter a name for the rule.';
 $txt['pm_rule_no_criteria'] = 'A rule must have at least one criteria and one action set.';
-$txt['pm_rule_too_complex'] = 'The rule you are creating is too long for SMF to store. Try breaking it up into smaller rules.';
+$txt['pm_rule_too_complex'] = 'The rule you are creating is too long for Social Bricks to store. Try breaking it up into smaller rules.';
 
 $txt['pm_readable_and'] = 'and';
 $txt['pm_readable_or'] = 'or';

@@ -158,7 +158,7 @@ function automanage_attachments_create_directory($updir)
 	}
 
 	// Check if the dir is writable.
-	if (!smf_chmod($directory))
+	if (!sb_chmod($directory))
 	{
 		$context['dir_creation_error'] = 'attachments_no_write';
 		return false;
@@ -463,7 +463,7 @@ function processAttachments()
 
 			// Move the file to the attachments folder with a temp name for now.
 			if (@move_uploaded_file($_FILES['attachment']['tmp_name'][$n], $destName))
-				smf_chmod($destName, 0644);
+				sb_chmod($destName, 0644);
 			else
 			{
 				$_SESSION['temp_attachments'][$attachID]['errors'][] = 'attach_timeout';

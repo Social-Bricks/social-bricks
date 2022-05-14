@@ -177,7 +177,7 @@ function export_profile_data($uid)
 		),
 	);
 
-	if (empty($modSettings['export_dir']) || !is_dir($modSettings['export_dir']) || !smf_chmod($modSettings['export_dir']))
+	if (empty($modSettings['export_dir']) || !is_dir($modSettings['export_dir']) || !sb_chmod($modSettings['export_dir']))
 		create_export_dir();
 
 	$export_dir_slash = $modSettings['export_dir'] . DIRECTORY_SEPARATOR;
@@ -745,7 +745,7 @@ function create_export_dir($fallback = '')
 		@mkdir($modSettings['export_dir'], null, true);
 
 	// Make sure the directory has the correct permissions.
-	if (!is_dir($modSettings['export_dir']) || !smf_chmod($modSettings['export_dir']))
+	if (!is_dir($modSettings['export_dir']) || !sb_chmod($modSettings['export_dir']))
 	{
 		loadLanguage('Errors');
 
@@ -1818,11 +1818,11 @@ function export_load_css_js()
 	}
 
 	// Load our standard CSS files.
-	loadCSSFile('index.css', array('minimize' => true, 'order_pos' => 1), 'smf_index');
-	loadCSSFile('responsive.css', array('force_current' => false, 'validate' => true, 'minimize' => true, 'order_pos' => 9000), 'smf_responsive');
+	loadCSSFile('index.css', array('minimize' => true, 'order_pos' => 1), 'sb_index');
+	loadCSSFile('responsive.css', array('force_current' => false, 'validate' => true, 'minimize' => true, 'order_pos' => 9000), 'sb_responsive');
 
 	if ($context['right_to_left'])
-		loadCSSFile('rtl.css', array('order_pos' => 4000), 'smf_rtl');
+		loadCSSFile('rtl.css', array('order_pos' => 4000), 'sb_rtl');
 
 	// In case any mods added relevant CSS.
 	call_integration_hook('integrate_pre_css_output');

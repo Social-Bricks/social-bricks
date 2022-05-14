@@ -1132,7 +1132,7 @@ function PickTheme()
 			$context['available_themes']
 		))
 	);
-	loadJavaScriptFile('profile.js', array('defer' => false, 'minimize' => true), 'smf_profile');
+	loadJavaScriptFile('profile.js', array('defer' => false, 'minimize' => true), 'sb_profile');
 	$settings['images_url'] = $current_images_url;
 	$settings['theme_variants'] = $current_theme_variants;
 
@@ -1241,7 +1241,7 @@ function InstallFile()
 	if (!is_writable($dirtemp))
 	{
 		// Lets give it a try.
-		smf_chmod($dirtemp, '0755');
+		sb_chmod($dirtemp, '0755');
 
 		// How about now?
 		if (!is_writable($dirtemp))
@@ -1361,7 +1361,7 @@ function InstallCopy()
 	foreach ($to_copy as $file)
 	{
 		copy($settings['default_theme_dir'] . $file, $context['to_install']['theme_dir'] . $file);
-		smf_chmod($context['to_install']['theme_dir'] . $file, 0777);
+		sb_chmod($context['to_install']['theme_dir'] . $file, 0777);
 	}
 
 	// And now the entire images directory!

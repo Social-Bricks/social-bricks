@@ -53,7 +53,7 @@ function sb_db_initiate($db_server, $db_name, $db_user, $db_passwd, $db_prefix, 
 			'db_sybase'                 => false,
 			'db_case_sensitive'         => false,
 			'db_escape_wildcard_string' => 'sb_db_escape_wildcard_string',
-			'db_is_resource'            => 'smf_is_resource',
+			'db_is_resource'            => 'sb_is_resource',
 			'db_mb4'                    => false,
 			'db_ping'                   => 'mysqli_ping',
 			'db_fetch_all'              => 'sb_db_fetch_all',
@@ -278,7 +278,7 @@ function sb_db_replacement__callback($matches)
 			break;
 
 		case 'identifier':
-			// Backticks inside identifiers are supported as of MySQL 4.1. We don't need them for SMF.
+			// Backticks inside identifiers are supported as of MySQL 4.1. We don't need them for Social Bricks.
 			return '`' . implode('`.`', array_filter(explode('.', strtr($replacement, array('`' => ''))), 'strlen')) . '`';
 			break;
 
@@ -965,7 +965,7 @@ function sb_db_escape_wildcard_string($string, $translate_human_wildcards = fals
  * @param mixed $result The string to test
  * @return bool True if it is, false otherwise
  */
-function smf_is_resource($result)
+function sb_is_resource($result)
 {
 	if ($result instanceof mysqli_result)
 		return true;

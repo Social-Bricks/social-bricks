@@ -577,7 +577,7 @@ function get_settings_defs()
 				' * @var string',
 				' */',
 			)),
-			'default' => 'smf_',
+			'default' => 'sb_',
 			'required' => true,
 			'type' => 'string',
 		),
@@ -852,7 +852,7 @@ function get_settings_defs()
  * - Expects config_vars to be an associative array, with the keys as the
  *   variable names in Settings.php, and the values the variable values.
  *
- * - Correctly formats the values using smf_var_export().
+ * - Correctly formats the values using sb_var_export().
  *
  * - Restores standard formatting of the file, if $rebuild is true.
  *
@@ -961,7 +961,7 @@ function updateSettingsFile($config_vars, $keep_quotes = null, $rebuild = false)
 	}
 
 	// During install/upgrade, don't set anything until we're ready for it.
-	if (defined('SMF_INSTALLING') && empty($rebuild))
+	if (defined('SB_INSTALLING') && empty($rebuild))
 	{
 		foreach ($settings_defs as $var => $setting_def)
 			if (!in_array($var, array_keys($new_settings_vars)) && !is_int($var))
@@ -1030,7 +1030,7 @@ function updateSettingsFile($config_vars, $keep_quotes = null, $rebuild = false)
 		),
 	);
 
-	if (defined('SMF_INSTALLING'))
+	if (defined('SB_INSTALLING'))
 		$substitutions[$neg_index--] = array(
 			'search_pattern' => '~/\*.*?SMF\s+1\.\d.*?\*/~s',
 			'placeholder' => '',
@@ -1134,7 +1134,7 @@ function updateSettingsFile($config_vars, $keep_quotes = null, $rebuild = false)
 				}
 			}
 			// Abort if a required one is undefined (unless we're installing).
-			elseif (!empty($setting_def['required']) && !defined('SMF_INSTALLING'))
+			elseif (!empty($setting_def['required']) && !defined('SB_INSTALLING'))
 				return false;
 
 			// Create the search pattern.
@@ -1196,7 +1196,7 @@ function updateSettingsFile($config_vars, $keep_quotes = null, $rebuild = false)
 			{
 				if ($setting_def['auto_delete'] === 2 && empty($rebuild) && in_array($var, array_keys($new_settings_vars)))
 				{
-					$replacement .= '$' . $var . ' = ' . ($new_settings_vars[$var] === $setting_def['default'] && !empty($setting_def['raw_default']) ? sprintf($new_settings_vars[$var]) : smf_var_export($new_settings_vars[$var], true)) . ";";
+					$replacement .= '$' . $var . ' = ' . ($new_settings_vars[$var] === $setting_def['default'] && !empty($setting_def['raw_default']) ? sprintf($new_settings_vars[$var]) : sb_var_export($new_settings_vars[$var], true)) . ";";
 				}
 				else
 				{
@@ -1210,12 +1210,12 @@ function updateSettingsFile($config_vars, $keep_quotes = null, $rebuild = false)
 			// Add this setting's value.
 			elseif (in_array($var, array_keys($new_settings_vars)))
 			{
-				$replacement .= '$' . $var . ' = ' . ($new_settings_vars[$var] === $setting_def['default'] && !empty($setting_def['raw_default']) ? sprintf($new_settings_vars[$var]) : smf_var_export($new_settings_vars[$var], true)) . ";";
+				$replacement .= '$' . $var . ' = ' . ($new_settings_vars[$var] === $setting_def['default'] && !empty($setting_def['raw_default']) ? sprintf($new_settings_vars[$var]) : sb_var_export($new_settings_vars[$var], true)) . ";";
 			}
 			// Fall back to the default value.
 			elseif (isset($setting_def['default']))
 			{
-				$replacement .= '$' . $var . ' = ' . (!empty($setting_def['raw_default']) ? sprintf($setting_def['default']) : smf_var_export($setting_def['default'], true)) . ';';
+				$replacement .= '$' . $var . ' = ' . (!empty($setting_def['raw_default']) ? sprintf($setting_def['default']) : sb_var_export($setting_def['default'], true)) . ';';
 			}
 			// This shouldn't happen, but we've got nothing.
 			else
@@ -1247,11 +1247,11 @@ function updateSettingsFile($config_vars, $keep_quotes = null, $rebuild = false)
 
 		$substitutions[$var]['search_pattern'] = '~(?<=^|\s)\h*\$' . preg_quote($var, '~') . '\s*=\s*' . $var_pattern . ';~' . (!empty($utf8) ? 'u' : '');
 		$substitutions[$var]['placeholder'] = $placeholder;
-		$substitutions[$var]['replacement'] = '$' . $var . ' = ' . smf_var_export($val, true) . ";";
+		$substitutions[$var]['replacement'] = '$' . $var . ' = ' . sb_var_export($val, true) . ";";
 	}
 
 	// During an upgrade, some of the path variables may not have been declared yet.
-	if (defined('SMF_INSTALLING') && empty($rebuild))
+	if (defined('SB_INSTALLING') && empty($rebuild))
 	{
 		preg_match_all('~^\h*\$(\w+)\s*=\s*~m', $substitutions[$pathcode_var]['replacement'], $matches);
 		$missing_pathvars = array_diff($matches[1], array_keys($substitutions));
@@ -1856,7 +1856,7 @@ function safe_file_write($file, $data, $backup_file = null, $mtime = null, $appe
 			$failed = true;
 
 		if (!$failed)
-			$failed = !smf_chmod($sf);
+			$failed = !sb_chmod($sf);
 	}
 
 	// Now let's see if writing to a temp file succeeds.
@@ -1943,7 +1943,7 @@ function safe_file_write($file, $data, $backup_file = null, $mtime = null, $appe
  * @param mixed $var The variable to export
  * @return mixed A PHP-parseable representation of the variable's value
  */
-function smf_var_export($var)
+function sb_var_export($var)
 {
 	/*
 	 * Old versions of updateSettingsFile couldn't handle multi-line values.
@@ -1955,7 +1955,7 @@ function smf_var_export($var)
 		$return = array();
 
 		foreach ($var as $key => $value)
-			$return[] = var_export($key, true) . ' => ' . smf_var_export($value);
+			$return[] = var_export($key, true) . ' => ' . sb_var_export($value);
 
 		return 'array(' . implode(', ', $return) . ')';
 	}

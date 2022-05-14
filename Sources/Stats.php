@@ -72,7 +72,7 @@ function DisplayStats()
 
 	loadLanguage('Stats');
 	loadTemplate('Stats');
-	loadJavaScriptFile('stats.js', array('default_theme' => true, 'defer' => false, 'minimize' => true), 'smf_stats');
+	loadJavaScriptFile('stats.js', array('default_theme' => true, 'defer' => false, 'minimize' => true), 'sb_stats');
 
 	// Build the link tree......
 	$context['linktree'][] = array(
@@ -199,7 +199,7 @@ function DisplayStats()
 		}
 	}
 
-	$date = smf_strftime('%Y-%m-%d', time());
+	$date = sb_strftime('%Y-%m-%d', time());
 
 	// Members online so far today.
 	$result = $smcFunc['db_query']('', '

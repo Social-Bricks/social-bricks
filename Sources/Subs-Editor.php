@@ -113,7 +113,7 @@ function html_to_bbc($text)
 	// Remove any formatting within code tags.
 	if (strpos($text, '[code') !== false)
 	{
-		$text = preg_replace('~<br\s?/?' . '>~i', '#smf_br_spec_grudge_cool!#', $text);
+		$text = preg_replace('~<br\s?/?' . '>~i', '#sb_br_spec_grudge_cool!#', $text);
 		$parts = preg_split('~(\[/code\]|\[code(?:=[^\]]+)?\])~i', $text, -1, PREG_SPLIT_DELIM_CAPTURE);
 
 		// Only mess with stuff outside [code] tags.
@@ -124,7 +124,7 @@ function html_to_bbc($text)
 				$parts[$i] = strip_tags($parts[$i]);
 		}
 
-		$text = strtr(implode('', $parts), array('#smf_br_spec_grudge_cool!#' => '<br>'));
+		$text = strtr(implode('', $parts), array('#sb_br_spec_grudge_cool!#' => '<br>'));
 	}
 
 	// Remove scripts, style and comment blocks.
@@ -152,7 +152,7 @@ function html_to_bbc($text)
 			$possible_code = un_htmlspecialchars($possible_code);
 
 			if (in_array($possible_code, $smiley_codes))
-				$matches[1][$k] = '-[]-smf_smily_start#|#' . $possible_code . '-[]-smf_smily_end#|#';
+				$matches[1][$k] = '-[]-sb_smily_start#|#' . $possible_code . '-[]-sb_smily_end#|#';
 			else
 				$matches[1][$k] = $matches[0][$k];
 		}
@@ -161,7 +161,7 @@ function html_to_bbc($text)
 		$text = str_replace($matches[0], $matches[1], $text);
 
 		// Now sort out spaces
-		$text = str_replace(array('-[]-smf_smily_end#|#-[]-smf_smily_start#|#', '-[]-smf_smily_end#|#', '-[]-smf_smily_start#|#'), ' ', $text);
+		$text = str_replace(array('-[]-sb_smily_end#|#-[]-sb_smily_start#|#', '-[]-sb_smily_end#|#', '-[]-sb_smily_start#|#'), ' ', $text);
 	}
 
 	// Only try to buy more time if the client didn't quit.
@@ -1530,9 +1530,9 @@ function create_control_richedit($editorOptions)
 		loadCSSFile('jquery.sceditor.theme.css', array('force_current' => true, 'validate' => true,), 'sb_jquery_sceditor_theme');
 
 		// JS makes the editor go round
-		loadJavaScriptFile('editor.js', array('minimize' => true), 'smf_editor');
-		loadJavaScriptFile('jquery.sceditor.bbcode.min.js', array(), 'smf_sceditor_bbcode');
-		loadJavaScriptFile('jquery.sceditor.smf.js', array('minimize' => true), 'smf_sceditor_smf');
+		loadJavaScriptFile('editor.js', array('minimize' => true), 'sb_editor');
+		loadJavaScriptFile('jquery.sceditor.bbcode.min.js', array(), 'sb_sceditor_bbcode');
+		loadJavaScriptFile('jquery.sceditor.smf.js', array('minimize' => true), 'sb_sceditor_smf');
 
 		$scExtraLangs = '
 		$.sceditor.locale["' . $txt['lang_dictionary'] . '"] = {
@@ -1562,7 +1562,7 @@ function create_control_richedit($editorOptions)
 
 		if ($context['show_spellchecking'])
 		{
-			loadJavaScriptFile('spellcheck.js', array('minimize' => true), 'smf_spellcheck');
+			loadJavaScriptFile('spellcheck.js', array('minimize' => true), 'sb_spellcheck');
 
 			// Some hidden information is needed in order to make the spell checking work.
 			if (!isset($_REQUEST['xml']))
@@ -2005,7 +2005,7 @@ function create_control_verification(&$verificationOptions, $do_test = false)
 
 		// Some javascript ma'am?
 		if (!empty($verificationOptions['override_visual']) || (!empty($modSettings['visual_verification_type']) && !isset($verificationOptions['override_visual'])))
-			loadJavaScriptFile('captcha.js', array('minimize' => true), 'smf_captcha');
+			loadJavaScriptFile('captcha.js', array('minimize' => true), 'sb_captcha');
 
 		$context['use_graphic_library'] = in_array('gd', get_loaded_extensions());
 

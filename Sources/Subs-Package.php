@@ -112,8 +112,8 @@ function read_tgz_data($data, $destination, $single_file = false, $overwrite = f
 	$crc = unpack('Vcrc32/Visize', substr($data, strlen($data) - 8, 8));
 	$data = @gzinflate(substr($data, $offset, strlen($data) - 8 - $offset));
 
-	// smf_crc32 and crc32 may not return the same results, so we accept either.
-	if ($crc['crc32'] != smf_crc32($data) && $crc['crc32'] != crc32($data))
+	// sb_crc32 and crc32 may not return the same results, so we accept either.
+	if ($crc['crc32'] != sb_crc32($data) && $crc['crc32'] != crc32($data))
 		return false;
 
 	$blocks = strlen($data) / 512 - 1;
@@ -548,7 +548,7 @@ function create_chmod_control($chmodFiles = array(), $chmodOptions = array(), $r
 						$package_ftp->chmod($ftp_file, $perms);
 					}
 					else
-						smf_chmod($file, $perms);
+						sb_chmod($file, $perms);
 
 					$new_permissions = @fileperms($file);
 					$result = $new_permissions == $perms ? 'success' : 'failure';
@@ -840,13 +840,13 @@ function packageRequireFTP($destination_url, $files = null, $return = false)
 
 			// This looks odd, but it's an attempt to work around PHP suExec.
 			if (!@is_writable($file))
-				smf_chmod($file, 0755);
+				sb_chmod($file, 0755);
 			if (!@is_writable($file))
-				smf_chmod($file, 0777);
+				sb_chmod($file, 0777);
 			if (!@is_writable(dirname($file)))
-				smf_chmod($file, 0755);
+				sb_chmod($file, 0755);
 			if (!@is_writable(dirname($file)))
-				smf_chmod($file, 0777);
+				sb_chmod($file, 0777);
 
 			$fp = is_dir($file) ? @opendir($file) : @fopen($file, 'rb');
 			if (@is_writable($file) && $fp)
@@ -877,13 +877,13 @@ function packageRequireFTP($destination_url, $files = null, $return = false)
 			{
 				mktree(dirname($file), 0755);
 				@touch($file);
-				smf_chmod($file, 0755);
+				sb_chmod($file, 0755);
 			}
 
 			if (!@is_writable($file))
-				smf_chmod($file, 0777);
+				sb_chmod($file, 0777);
 			if (!@is_writable(dirname($file)))
-				smf_chmod(dirname($file), 0777);
+				sb_chmod(dirname($file), 0777);
 
 			if (@is_writable($file))
 				unset($files[$k]);
@@ -1701,7 +1701,7 @@ function deltree($dir, $delete_dir = true)
 			else
 			{
 				if (!is_writable($dir . '/' . $entryname))
-					smf_chmod($dir . '/' . $entryname, 0777);
+					sb_chmod($dir . '/' . $entryname, 0777);
 				unlink($dir . '/' . $entryname);
 			}
 		}
@@ -1721,7 +1721,7 @@ function deltree($dir, $delete_dir = true)
 		else
 		{
 			if (!is_writable($dir))
-				smf_chmod($dir, 0777);
+				sb_chmod($dir, 0777);
 			@rmdir($dir);
 		}
 	}
@@ -1747,7 +1747,7 @@ function mktree($strPath, $mode)
 			if (isset($package_ftp))
 				$package_ftp->chmod(strtr($strPath, array($_SESSION['pack_ftp']['root'] => '')), $mode);
 			else
-				smf_chmod($strPath, $mode);
+				sb_chmod($strPath, $mode);
 		}
 
 		$test = @opendir($strPath);
@@ -1768,7 +1768,7 @@ function mktree($strPath, $mode)
 		if (isset($package_ftp))
 			$package_ftp->chmod(dirname(strtr($strPath, array($_SESSION['pack_ftp']['root'] => ''))), $mode);
 		else
-			smf_chmod(dirname($strPath), $mode);
+			sb_chmod(dirname($strPath), $mode);
 	}
 
 	if ($mode !== false && isset($package_ftp))
@@ -2781,7 +2781,7 @@ function package_chmod($filename, $perm_state = 'writable', $track_change = fals
 
 					mktree(dirname($chmod_file), 0755);
 					@touch($chmod_file);
-					smf_chmod($chmod_file, 0755);
+					sb_chmod($chmod_file, 0755);
 				}
 				else
 					$file_permissions = @fileperms($chmod_file);
@@ -2789,17 +2789,17 @@ function package_chmod($filename, $perm_state = 'writable', $track_change = fals
 
 			// This looks odd, but it's another attempt to work around PHP suExec.
 			if ($perm_state != 'writable')
-				smf_chmod($chmod_file, $perm_state == 'execute' ? 0755 : 0644);
+				sb_chmod($chmod_file, $perm_state == 'execute' ? 0755 : 0644);
 			else
 			{
 				if (!@is_writable($chmod_file))
-					smf_chmod($chmod_file, 0755);
+					sb_chmod($chmod_file, 0755);
 				if (!@is_writable($chmod_file))
-					smf_chmod($chmod_file, 0777);
+					sb_chmod($chmod_file, 0777);
 				if (!@is_writable(dirname($chmod_file)))
-					smf_chmod($chmod_file, 0755);
+					sb_chmod($chmod_file, 0755);
 				if (!@is_writable(dirname($chmod_file)))
-					smf_chmod($chmod_file, 0777);
+					sb_chmod($chmod_file, 0777);
 			}
 
 			// The ultimate writable test.
@@ -2976,7 +2976,7 @@ function package_create_backup($id = 'backup')
 			mktree($packagesdir . '/backups', 0777);
 		if (!is_writable($packagesdir . '/backups'))
 			package_chmod($packagesdir . '/backups');
-		$output_file = $packagesdir . '/backups/' . smf_strftime('%Y-%m-%d_') . preg_replace('~[$\\\\/:<>|?*"\']~', '', $id);
+		$output_file = $packagesdir . '/backups/' . sb_strftime('%Y-%m-%d_') . preg_replace('~[$\\\\/:<>|?*"\']~', '', $id);
 		$output_ext = '.tar';
 		$output_ext_target = '.tar.gz';
 
@@ -3030,7 +3030,7 @@ function package_create_backup($id = 'backup')
 	return true;
 }
 
-if (!function_exists('smf_crc32'))
+if (!function_exists('sb_crc32'))
 {
 	require_once $sourcedir . '/Subs-Compat.php';
 }

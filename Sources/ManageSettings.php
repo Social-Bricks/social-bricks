@@ -202,7 +202,7 @@ function ModifyBasicSettings($return_config = false)
 
 		// Time zone and formatting.
 		array('text', 'time_format'),
-		array('select', 'default_timezone', array_filter(smf_list_timezones(), 'is_string', ARRAY_FILTER_USE_KEY)),
+		array('select', 'default_timezone', array_filter(sb_list_timezones(), 'is_string', ARRAY_FILTER_USE_KEY)),
 		array('text', 'timezone_priority_countries', 'subtext' => $txt['setting_timezone_priority_countries_note']),
 		'',
 

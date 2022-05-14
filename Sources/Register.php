@@ -100,7 +100,7 @@ function Register($reg_errors = array())
 
 	// Kinda need this.
 	if ($context['sub_template'] == 'registration_form')
-		loadJavaScriptFile('register.js', array('defer' => false, 'minimize' => true), 'smf_register');
+		loadJavaScriptFile('register.js', array('defer' => false, 'minimize' => true), 'sb_register');
 
 	// Add the register chain to the link tree.
 	$context['linktree'][] = array(
@@ -395,7 +395,7 @@ function Register2()
 
 	// Handle a string as a birthdate...
 	if (isset($_POST['birthdate']) && $_POST['birthdate'] != '')
-		$_POST['birthdate'] = smf_strftime('%Y-%m-%d', strtotime($_POST['birthdate']));
+		$_POST['birthdate'] = sb_strftime('%Y-%m-%d', strtotime($_POST['birthdate']));
 	// Or birthdate parts...
 	elseif (!empty($_POST['bday1']) && !empty($_POST['bday2']))
 		$_POST['birthdate'] = sprintf('%04d-%02d-%02d', empty($_POST['bday3']) ? 0 : (int) $_POST['bday3'], (int) $_POST['bday1'], (int) $_POST['bday2']);

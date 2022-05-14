@@ -1360,24 +1360,24 @@ function Display()
 
 	// Load the drafts js file
 	if ($context['drafts_autosave'])
-		loadJavaScriptFile('drafts.js', array('defer' => false, 'minimize' => true), 'smf_drafts');
+		loadJavaScriptFile('drafts.js', array('defer' => false, 'minimize' => true), 'sb_drafts');
 
 	// Spellcheck
 	if ($context['show_spellchecking'])
-		loadJavaScriptFile('spellcheck.js', array('defer' => false, 'minimize' => true), 'smf_spellcheck');
+		loadJavaScriptFile('spellcheck.js', array('defer' => false, 'minimize' => true), 'sb_spellcheck');
 
 	// topic.js
-	loadJavaScriptFile('topic.js', array('defer' => false, 'minimize' => true), 'smf_topic');
+	loadJavaScriptFile('topic.js', array('defer' => false, 'minimize' => true), 'sb_topic');
 
 	// quotedText.js
-	loadJavaScriptFile('quotedText.js', array('defer' => true, 'minimize' => true), 'smf_quotedText');
+	loadJavaScriptFile('quotedText.js', array('defer' => true, 'minimize' => true), 'sb_quotedText');
 
 	// Mentions
 	if (!empty($modSettings['enable_mentions']) && allowedTo('mention'))
 	{
-		loadJavaScriptFile('jquery.atwho.min.js', array('defer' => true), 'smf_atwho');
-		loadJavaScriptFile('jquery.caret.min.js', array('defer' => true), 'smf_caret');
-		loadJavaScriptFile('mentions.js', array('defer' => true, 'minimize' => true), 'smf_mentions');
+		loadJavaScriptFile('jquery.atwho.min.js', array('defer' => true), 'sb_atwho');
+		loadJavaScriptFile('jquery.caret.min.js', array('defer' => true), 'sb_caret');
+		loadJavaScriptFile('mentions.js', array('defer' => true, 'minimize' => true), 'sb_mentions');
 	}
 }
 

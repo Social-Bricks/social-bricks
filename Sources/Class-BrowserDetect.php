@@ -402,7 +402,7 @@ class browser_detector
 				'is_konqueror' => 'konqueror',
 			);
 
-			$context['browser_body_id'] = 'smf';
+			$context['browser_body_id'] = 'socialbricks';
 			$active = array_reverse(array_keys($this->_browsers, true));
 			foreach ($active as $browser)
 			{

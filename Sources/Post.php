@@ -325,7 +325,7 @@ function Post($post_errors = array())
 		}
 
 		// Find the last day of the month.
-		$context['event']['last_day'] = (int) smf_strftime('%d', mktime(0, 0, 0, $context['event']['month'] == 12 ? 1 : $context['event']['month'] + 1, 0, $context['event']['month'] == 12 ? $context['event']['year'] + 1 : $context['event']['year']));
+		$context['event']['last_day'] = (int) sb_strftime('%d', mktime(0, 0, 0, $context['event']['month'] == 12 ? 1 : $context['event']['month'] + 1, 0, $context['event']['month'] == 12 ? $context['event']['year'] + 1 : $context['event']['year']));
 
 		// An all day event? Set up some nice defaults in case the user wants to change that
 		if ($context['event']['allday'] == true)
@@ -342,7 +342,7 @@ function Post($post_errors = array())
 		}
 
 		// Need this so the user can select a timezone for the event.
-		$context['all_timezones'] = smf_list_timezones($context['event']['start_date']);
+		$context['all_timezones'] = sb_list_timezones($context['event']['start_date']);
 
 		// If the event's timezone is not in SMF's standard list of time zones, try to fix it.
 		if (!isset($context['all_timezones'][$context['event']['tz']]))
@@ -1259,17 +1259,17 @@ function Post($post_errors = array())
 	// Mentions
 	if (!empty($modSettings['enable_mentions']) && allowedTo('mention'))
 	{
-		loadJavaScriptFile('jquery.caret.min.js', array('defer' => true), 'smf_caret');
-		loadJavaScriptFile('jquery.atwho.min.js', array('defer' => true), 'smf_atwho');
-		loadJavaScriptFile('mentions.js', array('defer' => true, 'minimize' => true), 'smf_mentions');
+		loadJavaScriptFile('jquery.caret.min.js', array('defer' => true), 'sb_caret');
+		loadJavaScriptFile('jquery.atwho.min.js', array('defer' => true), 'sb_atwho');
+		loadJavaScriptFile('mentions.js', array('defer' => true, 'minimize' => true), 'sb_mentions');
 	}
 
 	// Load the drafts js file
 	if ($context['drafts_autosave'])
-		loadJavaScriptFile('drafts.js', array('defer' => false, 'minimize' => true), 'smf_drafts');
+		loadJavaScriptFile('drafts.js', array('defer' => false, 'minimize' => true), 'sb_drafts');
 
 	// quotedText.js
-	loadJavaScriptFile('quotedText.js', array('defer' => true, 'minimize' => true), 'smf_quotedText');
+	loadJavaScriptFile('quotedText.js', array('defer' => true, 'minimize' => true), 'sb_quotedText');
 
 	addInlineJavaScript('
 	var current_attachments = [];');
@@ -1300,7 +1300,7 @@ function Post($post_errors = array())
 			explode(',', $context['allowed_extensions'])
 		));
 
-		loadJavaScriptFile('dropzone.min.js', array('defer' => true), 'smf_dropzone');
+		loadJavaScriptFile('dropzone.min.js', array('defer' => true), 'sb_dropzone');
 		loadJavaScriptFile('sb_fileUpload.js', array('defer' => true, 'minimize' => true), 'sb_fileUpload');
 		addInlineJavaScript('
 	$(function() {

@@ -67,7 +67,7 @@ function reloadSettings()
 		// We explicitly do not use $smcFunc['json_decode'] here yet, as $smcFunc is not fully loaded.
 		if (!is_array($modSettings['attachmentUploadDir']))
 		{
-			$attachmentUploadDir = smf_json_decode($modSettings['attachmentUploadDir'], true, false);
+			$attachmentUploadDir = sb_json_decode($modSettings['attachmentUploadDir'], true, false);
 			$modSettings['attachmentUploadDir'] = !empty($attachmentUploadDir) ? $attachmentUploadDir : $modSettings['attachmentUploadDir'];
 		}
 
@@ -76,7 +76,7 @@ function reloadSettings()
 	}
 
 	// Going anything further when the files don't match the database can make nasty messes (unless we're actively installing or upgrading)
-	if (!defined('SMF_INSTALLING') && (!isset($_REQUEST['action']) || $_REQUEST['action'] !== 'admin' || !isset($_REQUEST['area']) || $_REQUEST['area'] !== 'packages') && !empty($modSettings['smfVersion']) && version_compare(strtolower(strtr($modSettings['smfVersion'], array(' ' => '.'))), strtolower(strtr(SB_VERSION, array(' ' => '.'))), '!='))
+	if (!defined('SB_INSTALLING') && (!isset($_REQUEST['action']) || $_REQUEST['action'] !== 'admin' || !isset($_REQUEST['area']) || $_REQUEST['area'] !== 'packages') && !empty($modSettings['sbVersion']) && version_compare(strtolower(strtr($modSettings['sbVersion'], array(' ' => '.'))), strtolower(strtr(SB_VERSION, array(' ' => '.'))), '!='))
 	{
 		// Wipe the cached $modSettings values so they don't interfere with anything later
 		cache_put_data('modSettings', null);
@@ -85,7 +85,7 @@ function reloadSettings()
 		if (file_exists($boarddir . '/upgrade.php'))
 			header('location: ' . $boardurl . '/upgrade.php');
 
-		die('SMF file version (' . SB_VERSION . ') does not match SMF database version (' . $modSettings['smfVersion'] . ').<br>Run the SMF upgrader to fix this.<br><a href="https://wiki.simplemachines.org/smf/Upgrading">More information</a>.');
+		die('SMF file version (' . SB_VERSION . ') does not match SMF database version (' . $modSettings['sbVersion'] . ').<br>Run the SMF upgrader to fix this.<br><a href="https://wiki.simplemachines.org/smf/Upgrading">More information</a>.');
 	}
 
 	$modSettings['cache_enable'] = $cache_enable;
@@ -254,7 +254,7 @@ function reloadSettings()
 				$words[$i] = $smcFunc['ucfirst']($words[$i]);
 			return implode('', $words);
 		} : 'ucwords',
-		'json_decode' => 'smf_json_decode',
+		'json_decode' => 'sb_json_decode',
 		'json_encode' => 'json_encode',
 		'random_int' => function($min = 0, $max = PHP_INT_MAX)
 		{
@@ -377,9 +377,9 @@ function reloadSettings()
 	$modSettings['attachmentSizeLimit'] = empty($modSettings['attachmentSizeLimit']) ? $file_max_kb : min($modSettings['attachmentSizeLimit'], $file_max_kb);
 
 	// Integration is cool.
-	if (defined('SMF_INTEGRATION_SETTINGS'))
+	if (defined('SB_INTEGRATION_SETTINGS'))
 	{
-		$integration_settings = $smcFunc['json_decode'](SMF_INTEGRATION_SETTINGS, true);
+		$integration_settings = $smcFunc['json_decode'](SB_INTEGRATION_SETTINGS, true);
 		foreach ($integration_settings as $hook => $function)
 			add_integration_function($hook, $function, false);
 	}
@@ -2473,13 +2473,13 @@ function loadTheme($id_theme = 0, $initialize = true)
 	$settings['lang_images_url'] = $settings['images_url'] . '/' . (!empty($txt['image_lang']) ? $txt['image_lang'] : $user_info['language']);
 
 	// And of course, let's load the default CSS file.
-	loadCSSFile('index.css', array('minimize' => true, 'order_pos' => 1), 'smf_index');
+	loadCSSFile('index.css', array('minimize' => true, 'order_pos' => 1), 'sb_index');
 
 	// Here is my luvly Responsive CSS
-	loadCSSFile('responsive.css', array('force_current' => false, 'validate' => true, 'minimize' => true, 'order_pos' => 9000), 'smf_responsive');
+	loadCSSFile('responsive.css', array('force_current' => false, 'validate' => true, 'minimize' => true, 'order_pos' => 9000), 'sb_responsive');
 
 	if ($context['right_to_left'])
-		loadCSSFile('rtl.css', array('order_pos' => 4000), 'smf_rtl');
+		loadCSSFile('rtl.css', array('order_pos' => 4000), 'sb_rtl');
 
 	// We allow theme variants, because we're cool.
 	$context['theme_variant'] = '';
@@ -2502,9 +2502,9 @@ function loadTheme($id_theme = 0, $initialize = true)
 
 		if (!empty($context['theme_variant']))
 		{
-			loadCSSFile('index' . $context['theme_variant'] . '.css', array('order_pos' => 300), 'smf_index' . $context['theme_variant']);
+			loadCSSFile('index' . $context['theme_variant'] . '.css', array('order_pos' => 300), 'sb_index' . $context['theme_variant']);
 			if ($context['right_to_left'])
-				loadCSSFile('rtl' . $context['theme_variant'] . '.css', array('order_pos' => 4200), 'smf_rtl' . $context['theme_variant']);
+				loadCSSFile('rtl' . $context['theme_variant'] . '.css', array('order_pos' => 4200), 'sb_rtl' . $context['theme_variant']);
 		}
 	}
 
@@ -2563,12 +2563,12 @@ function loadTheme($id_theme = 0, $initialize = true)
 	if (!$user_info['is_guest'])
 	{
 		loadJavaScriptFile('jquery.custom-scrollbar.js', array('minimize' => true), 'sb_jquery_scrollbar');
-		loadCSSFile('jquery.custom-scrollbar.css', array('force_current' => false, 'validate' => true), 'smf_scrollbar');
+		loadCSSFile('jquery.custom-scrollbar.css', array('force_current' => false, 'validate' => true), 'sb_scrollbar');
 	}
 
 	// script.js and theme.js, always required, so always add them! Makes index.template.php cleaner and all.
 	loadJavaScriptFile('script.js', array('defer' => false, 'minimize' => true), 'sb_script');
-	loadJavaScriptFile('theme.js', array('minimize' => true), 'smf_theme');
+	loadJavaScriptFile('theme.js', array('minimize' => true), 'sb_theme');
 
 	// If we think we have mail to send, let's offer up some possibilities... robots get pain (Now with scheduled task support!)
 	if ((!empty($modSettings['mail_next_send']) && $modSettings['mail_next_send'] < time() && empty($modSettings['mail_queue_use_cron'])) || empty($modSettings['next_task_time']) || $modSettings['next_task_time'] < time())
@@ -3907,7 +3907,7 @@ function cache_get_data($key, $ttl = 120)
 	if (function_exists('call_integration_hook') && isset($value))
 		call_integration_hook('cache_get_data', array(&$key, &$ttl, &$value));
 
-	return empty($value) ? null : (isset($smcFunc['json_decode']) ? $smcFunc['json_decode']($value, true) : smf_json_decode($value, true));
+	return empty($value) ? null : (isset($smcFunc['json_decode']) ? $smcFunc['json_decode']($value, true) : sb_json_decode($value, true));
 }
 
 /**

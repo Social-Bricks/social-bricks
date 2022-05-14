@@ -480,7 +480,7 @@ sb_popupMenu.prototype.closeAll = function ()
 function sb_popup(oOptions)
 {
 	this.opt = oOptions;
-	this.popup_id = this.opt.custom_id ? this.opt.custom_id : 'smf_popup';
+	this.popup_id = this.opt.custom_id ? this.opt.custom_id : 'sb_popup';
 	this.show();
 }
 

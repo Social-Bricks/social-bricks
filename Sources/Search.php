@@ -2288,7 +2288,7 @@ function findSearchAPI()
 	$searchAPI = new $search_class_name();
 
 	// An invalid Search API.
-	if (!$searchAPI || !($searchAPI instanceof search_api_interface) || ($searchAPI->supportsMethod('isValid') && !$searchAPI->isValid()) || !matchPackageVersion(SB_VERSION, $searchAPI->min_smf_version . '-' . $searchAPI->version_compatible))
+	if (!$searchAPI || !($searchAPI instanceof search_api_interface) || ($searchAPI->supportsMethod('isValid') && !$searchAPI->isValid()) || !matchPackageVersion(SB_VERSION, $searchAPI->min_version . '-' . $searchAPI->version_compatible))
 	{
 		// Log the error.
 		loadLanguage('Errors');

@@ -27,7 +27,7 @@ abstract class CacheApi
 	/**
 	 * @var string The minimum SMF version that this will work with.
 	 */
-	protected $min_smf_version = '2.1 RC1';
+	protected $min_version = '2.1 RC1';
 
 	/**
 	 * @var string The prefix for all keys.
@@ -203,7 +203,7 @@ abstract class CacheApi
 	 */
 	public function getMinimumVersion()
 	{
-		return $this->min_smf_version;
+		return $this->min_version;
 	}
 
 	/**
@@ -214,7 +214,7 @@ abstract class CacheApi
 	 */
 	public function getVersion()
 	{
-		return $this->min_smf_version;
+		return $this->min_version;
 	}
 
 	/**

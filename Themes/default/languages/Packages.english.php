@@ -147,7 +147,7 @@ $txt['package_install_options_ftp_server'] = 'FTP Server';
 $txt['package_install_options_ftp_port'] = 'Port';
 $txt['package_install_options_ftp_user'] = 'Username';
 $txt['package_install_options_make_backups'] = 'Create Backup versions of replaced files with a tilde (~) on the end of their names.';
-$txt['package_install_options_make_full_backups'] = 'Create a backup of key SMF files whenever a package is installed or uninstalled.';
+$txt['package_install_options_make_full_backups'] = 'Create a backup of key files whenever a package is installed or uninstalled.';
 
 $txt['package_ftp_necessary'] = 'FTP Information Required';
 $txt['package_ftp_why'] = 'Some of the files the package manager needs to modify are not writable. This needs to be changed by logging into FTP and using it to chmod or create the files and directories. Your FTP information may be temporarily cached for proper operation of the package manager. Note you can also do this manually using an FTP client - to view a list of the affected files please click <a href="#" onclick="%1$s">here</a>.';
@@ -157,7 +157,7 @@ $txt['package_ftp_server'] = 'FTP Server';
 $txt['package_ftp_port'] = 'Port';
 $txt['package_ftp_username'] = 'Username';
 $txt['package_ftp_password'] = 'Password';
-$txt['package_ftp_path'] = 'Local path to SMF';
+$txt['package_ftp_path'] = 'Local path to Social Bricks';
 $txt['package_ftp_test'] = 'Test';
 $txt['package_ftp_test_connection'] = 'Test Connection';
 $txt['package_ftp_test_success'] = 'FTP connection established.';
@@ -235,7 +235,7 @@ $txt['package_file_perms_more_files'] = 'More Files';
 
 $txt['package_file_perms_change'] = 'Change File Permissions';
 $txt['package_file_perms_predefined'] = 'Use predefined permission profile';
-$txt['package_file_perms_predefined_note'] = 'Note that this only applies the predefined profile to key SMF directories and files.';
+$txt['package_file_perms_predefined_note'] = 'Note that this only applies the predefined profile to key directories and files.';
 $txt['package_file_perms_apply'] = 'Apply individual file permissions settings selected above.';
 $txt['package_file_perms_custom'] = 'If &quot;Custom&quot; has been selected use chmod value of';
 $txt['package_file_perms_pre_restricted'] = 'Restricted - minimum files writable';
@@ -255,7 +255,7 @@ $txt['package_file_perms_files_done'] = '%1$d of %2$d files done in current dire
 $txt['chmod_value_invalid'] = 'You have tried to enter an invalid chmod value. Chmod must be between 0444 and 0777';
 
 $txt['package_restore_permissions'] = 'Restore file permissions';
-$txt['package_restore_permissions_desc'] = 'The following file permissions were changed by SMF to install the selected package(s). You can return these files back to their original status by clicking &quot;Restore&quot; below.';
+$txt['package_restore_permissions_desc'] = 'The following file permissions were changed to install the selected package(s). You can return these files back to their original status by clicking &quot;Restore&quot; below.';
 $txt['package_restore_permissions_restore'] = 'Restore';
 $txt['package_restore_permissions_filename'] = 'Filename';
 $txt['package_restore_permissions_orig_status'] = 'Original Status';
@@ -271,7 +271,7 @@ $txt['package_restore_permissions_action_done'] = 'SMF has attempted to restore 
 $txt['package_file_perms_warning'] = 'Please Note';
 $txt['package_file_perms_warning_desc'] = '
 	<li>Be careful when changing file permissions from this section - incorrect permissions can adversely affect the operation of your forum!</li>
-	<li>On some server configurations selecting the wrong permissions may stop SMF from operating.</li>
+	<li>On some server configurations selecting the wrong permissions may stop Social Bricks from operating.</li>
 	<li>Certain directories such as <em>attachments</em> need to be writable to use that functionality.</li>
 	<li>This functionality is mainly applicable on non-Windows based servers - it will not work as expected on Windows in regards to permission flags.</li>
 	<li>Before proceeding make sure you have an FTP client installed in case you do make an error and need to FTP into the server to remedy it.</li>';

@@ -453,7 +453,7 @@ class Likes
 		);
 
 		// Note that we could just as easily have cleared the cache here, or set up the redirection address
-		// but if your liked content doesn't need to do anything other than have the record in smf_user_likes,
+		// but if your liked content doesn't need to do anything other than have the record in user_likes,
 		// there's no point in creating another function unnecessarily.
 	}
 

@@ -553,7 +553,7 @@ function log_error_online($error, $sprintf = array())
 		// If this happened very early on in startup, $smcFunc may not fully be defined.
 		if (!isset($smcFunc['json_decode']))
 		{
-			$smcFunc['json_decode'] = 'smf_json_decode';
+			$smcFunc['json_decode'] = 'sb_json_decode';
 			$smcFunc['json_encode'] = 'json_encode';
 		}
 

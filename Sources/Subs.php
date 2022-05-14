@@ -750,7 +750,7 @@ function timeformat($log_time, $show_today = true, $tzid = null)
 	$format = !empty($prefix) ? get_date_or_time_format('time', $format) : $format;
 
 	// And now, the moment we've all be waiting for...
-	return $prefix . smf_strftime($format, $log_time, $tzid);
+	return $prefix . sb_strftime($format, $log_time, $tzid);
 }
 
 /**
@@ -897,7 +897,7 @@ function get_date_or_time_format($type = '', $format = '')
  *     If null, uses default time zone.
  * @return string The formatted datetime string.
  */
-function smf_strftime(string $format, int $timestamp = null, string $tzid = null)
+function sb_strftime(string $format, int $timestamp = null, string $tzid = null)
 {
 	global $txt, $smcFunc, $sourcedir;
 
@@ -1213,16 +1213,16 @@ function smf_strftime(string $format, int $timestamp = null, string $tzid = null
 /**
  * Replacement for gmstrftime() that is compatible with PHP 8.1+.
  *
- * Calls smf_strftime() with the $tzid parameter set to 'UTC'.
+ * Calls sb_strftime() with the $tzid parameter set to 'UTC'.
  *
  * @param string $format A strftime() format string.
  * @param int|null $timestamp A Unix timestamp.
  *     If null, defaults to the current time.
  * @return string The formatted datetime string.
  */
-function smf_gmstrftime(string $format, int $timestamp = null)
+function sb_gmstrftime(string $format, int $timestamp = null)
 {
-	return smf_strftime($format, $timestamp, 'UTC');
+	return sb_strftime($format, $timestamp, 'UTC');
 }
 
 /**
@@ -4965,7 +4965,7 @@ function custMinify($data, $type)
 		));
 	}
 	// File has to exist. If it doesn't, try to create it.
-	elseif (@fopen($minified_file, 'w') === false || !smf_chmod($minified_file))
+	elseif (@fopen($minified_file, 'w') === false || !sb_chmod($minified_file))
 	{
 		loadLanguage('Errors');
 		log_error(sprintf($txt['file_not_created'], $minified_file), 'general');
@@ -5400,7 +5400,7 @@ function setupMenuContext()
 			addInlineJavaScript('
 	var new_alert_title = "' . $context['forum_name_html_safe'] . '";
 	var alert_timeout = ' . $timeout . ';');
-			loadJavaScriptFile('alerts.js', array('minimize' => true), 'smf_alerts');
+			loadJavaScriptFile('alerts.js', array('minimize' => true), 'sb_alerts');
 		}
 	}
 
@@ -6598,7 +6598,7 @@ function get_gravatar_url($email_address)
  *		Defaults to 'now'.
  * @return array An array of time zone identifiers and label text.
  */
-function smf_list_timezones($when = 'now')
+function sb_list_timezones($when = 'now')
 {
 	global $modSettings, $tztxt, $txt, $context, $cur_profile, $sourcedir;
 	static $timezones_when = array();
@@ -7179,7 +7179,7 @@ function safe_unserialize($str)
  * @param int $value Not needed, added for legacy reasons.
  * @return boolean  true if the file/dir is already writable or the function was able to make it writable, false if the function couldn't make the file/dir writable.
  */
-function smf_chmod($file, $value = 0)
+function sb_chmod($file, $value = 0)
 {
 	// No file? no checks!
 	if (empty($file))
@@ -7220,7 +7220,7 @@ function smf_chmod($file, $value = 0)
  * @param bool $logIt To specify if the error will be logged if theres any.
  * @return array Either an empty array or the decoded data as an array.
  */
-function smf_json_decode($json, $returnAsArray = false, $logIt = true)
+function sb_json_decode($json, $returnAsArray = false, $logIt = true)
 {
 	global $txt;
 

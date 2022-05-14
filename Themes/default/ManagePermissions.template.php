@@ -469,11 +469,11 @@ function template_modify_group()
 	else
 		echo '
 	<script>
-		window.smf_usedDeny = false;
+		window.sb_usedDeny = false;
 
 		function warnAboutDeny()
 		{
-			if (window.smf_usedDeny)
+			if (window.sb_usedDeny)
 				return confirm("', $txt['permissions_deny_dangerous'], '");
 			else
 				return true;

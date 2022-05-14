@@ -1267,25 +1267,25 @@ function ModifyUserSubscription()
 		$context['sub'] = array(
 			'id' => 0,
 			'start' => array(
-				'year' => (int) smf_strftime('%Y', time()),
-				'month' => (int) smf_strftime('%m', time()),
-				'day' => (int) smf_strftime('%d', time()),
-				'hour' => (int) smf_strftime('%H', time()),
-				'min' => (int) smf_strftime('%M', time()) < 10 ? '0' . (int) smf_strftime('%M', time()) : (int) smf_strftime('%M', time()),
+				'year' => (int) sb_strftime('%Y', time()),
+				'month' => (int) sb_strftime('%m', time()),
+				'day' => (int) sb_strftime('%d', time()),
+				'hour' => (int) sb_strftime('%H', time()),
+				'min' => (int) sb_strftime('%M', time()) < 10 ? '0' . (int) sb_strftime('%M', time()) : (int) sb_strftime('%M', time()),
 				'last_day' => 0,
 			),
 			'end' => array(
-				'year' => (int) smf_strftime('%Y', time()),
-				'month' => (int) smf_strftime('%m', time()),
-				'day' => (int) smf_strftime('%d', time()),
-				'hour' => (int) smf_strftime('%H', time()),
-				'min' => (int) smf_strftime('%M', time()) < 10 ? '0' . (int) smf_strftime('%M', time()) : (int) smf_strftime('%M', time()),
+				'year' => (int) sb_strftime('%Y', time()),
+				'month' => (int) sb_strftime('%m', time()),
+				'day' => (int) sb_strftime('%d', time()),
+				'hour' => (int) sb_strftime('%H', time()),
+				'min' => (int) sb_strftime('%M', time()) < 10 ? '0' . (int) sb_strftime('%M', time()) : (int) sb_strftime('%M', time()),
 				'last_day' => 0,
 			),
 			'status' => 1,
 		);
-		$context['sub']['start']['last_day'] = (int) smf_strftime('%d', mktime(0, 0, 0, $context['sub']['start']['month'] == 12 ? 1 : $context['sub']['start']['month'] + 1, 0, $context['sub']['start']['month'] == 12 ? $context['sub']['start']['year'] + 1 : $context['sub']['start']['year']));
-		$context['sub']['end']['last_day'] = (int) smf_strftime('%d', mktime(0, 0, 0, $context['sub']['end']['month'] == 12 ? 1 : $context['sub']['end']['month'] + 1, 0, $context['sub']['end']['month'] == 12 ? $context['sub']['end']['year'] + 1 : $context['sub']['end']['year']));
+		$context['sub']['start']['last_day'] = (int) sb_strftime('%d', mktime(0, 0, 0, $context['sub']['start']['month'] == 12 ? 1 : $context['sub']['start']['month'] + 1, 0, $context['sub']['start']['month'] == 12 ? $context['sub']['start']['year'] + 1 : $context['sub']['start']['year']));
+		$context['sub']['end']['last_day'] = (int) sb_strftime('%d', mktime(0, 0, 0, $context['sub']['end']['month'] == 12 ? 1 : $context['sub']['end']['month'] + 1, 0, $context['sub']['end']['month'] == 12 ? $context['sub']['end']['year'] + 1 : $context['sub']['end']['year']));
 
 		if (isset($_GET['uid']))
 		{
@@ -1392,26 +1392,26 @@ function ModifyUserSubscription()
 		$context['sub'] = array(
 			'id' => 0,
 			'start' => array(
-				'year' => (int) smf_strftime('%Y', $row['start_time']),
-				'month' => (int) smf_strftime('%m', $row['start_time']),
-				'day' => (int) smf_strftime('%d', $row['start_time']),
-				'hour' => (int) smf_strftime('%H', $row['start_time']),
-				'min' => (int) smf_strftime('%M', $row['start_time']) < 10 ? '0' . (int) smf_strftime('%M', $row['start_time']) : (int) smf_strftime('%M', $row['start_time']),
+				'year' => (int) sb_strftime('%Y', $row['start_time']),
+				'month' => (int) sb_strftime('%m', $row['start_time']),
+				'day' => (int) sb_strftime('%d', $row['start_time']),
+				'hour' => (int) sb_strftime('%H', $row['start_time']),
+				'min' => (int) sb_strftime('%M', $row['start_time']) < 10 ? '0' . (int) sb_strftime('%M', $row['start_time']) : (int) sb_strftime('%M', $row['start_time']),
 				'last_day' => 0,
 			),
 			'end' => array(
-				'year' => (int) smf_strftime('%Y', $row['end_time']),
-				'month' => (int) smf_strftime('%m', $row['end_time']),
-				'day' => (int) smf_strftime('%d', $row['end_time']),
-				'hour' => (int) smf_strftime('%H', $row['end_time']),
-				'min' => (int) smf_strftime('%M', $row['end_time']) < 10 ? '0' . (int) smf_strftime('%M', $row['end_time']) : (int) smf_strftime('%M', $row['end_time']),
+				'year' => (int) sb_strftime('%Y', $row['end_time']),
+				'month' => (int) sb_strftime('%m', $row['end_time']),
+				'day' => (int) sb_strftime('%d', $row['end_time']),
+				'hour' => (int) sb_strftime('%H', $row['end_time']),
+				'min' => (int) sb_strftime('%M', $row['end_time']) < 10 ? '0' . (int) sb_strftime('%M', $row['end_time']) : (int) sb_strftime('%M', $row['end_time']),
 				'last_day' => 0,
 			),
 			'status' => $row['status'],
 			'username' => $row['username'],
 		);
-		$context['sub']['start']['last_day'] = (int) smf_strftime('%d', mktime(0, 0, 0, $context['sub']['start']['month'] == 12 ? 1 : $context['sub']['start']['month'] + 1, 0, $context['sub']['start']['month'] == 12 ? $context['sub']['start']['year'] + 1 : $context['sub']['start']['year']));
-		$context['sub']['end']['last_day'] = (int) smf_strftime('%d', mktime(0, 0, 0, $context['sub']['end']['month'] == 12 ? 1 : $context['sub']['end']['month'] + 1, 0, $context['sub']['end']['month'] == 12 ? $context['sub']['end']['year'] + 1 : $context['sub']['end']['year']));
+		$context['sub']['start']['last_day'] = (int) sb_strftime('%d', mktime(0, 0, 0, $context['sub']['start']['month'] == 12 ? 1 : $context['sub']['start']['month'] + 1, 0, $context['sub']['start']['month'] == 12 ? $context['sub']['start']['year'] + 1 : $context['sub']['start']['year']));
+		$context['sub']['end']['last_day'] = (int) sb_strftime('%d', mktime(0, 0, 0, $context['sub']['end']['month'] == 12 ? 1 : $context['sub']['end']['month'] + 1, 0, $context['sub']['end']['month'] == 12 ? $context['sub']['end']['year'] + 1 : $context['sub']['end']['year']));
 	}
 
 	loadJavaScriptFile('suggest.js', array('defer' => false, 'minimize' => true), 'sb_suggest');

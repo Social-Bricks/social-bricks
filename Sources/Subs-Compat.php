@@ -141,7 +141,7 @@ function sha1_rol($num, $cnt)
 	return ($num << $cnt) | $a;
 }
 
-if (!function_exists('smf_crc32'))
+if (!function_exists('sb_crc32'))
 {
 	/**
 	 * Compatibility function.
@@ -151,7 +151,7 @@ if (!function_exists('smf_crc32'))
 	 * @param string $number
 	 * @return string The crc32 polynomial of $number
 	 */
-	function smf_crc32($number)
+	function sb_crc32($number)
 	{
 		$crc = crc32($number);
 

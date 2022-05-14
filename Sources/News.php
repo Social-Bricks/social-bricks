@@ -424,7 +424,7 @@ function buildXmlFeed($xml_format, $xml_data, $feed_meta, $subaction)
 	<title>' . $feed_meta['title'] . '</title>
 	<link rel="alternate" type="text/html" href="' . $feed_meta['source'] . '" />
 	<link rel="self" type="application/atom+xml" href="' . $feed_meta['self'] . '" />
-	<updated>' . smf_gmstrftime('%Y-%m-%dT%H:%M:%SZ') . '</updated>
+	<updated>' . sb_gmstrftime('%Y-%m-%dT%H:%M:%SZ') . '</updated>
 	<id>' . $feed_meta['source'] . '</id>
 	<subtitle>' . $feed_meta['desc'] . '</subtitle>
 	<generator uri="https://www.simplemachines.org" version="' . SB_VERSION . '">SMF</generator>';
@@ -494,7 +494,7 @@ function buildXmlFeed($xml_format, $xml_data, $feed_meta, $subaction)
 	else
 	{
 		$context['feed']['header'] .= '
-<smf:xml-feed xml:lang="' . strtr($txt['lang_locale'], '_', '-') . '"' . $ns_string . ' version="' . SB_VERSION . '" forum-name="' . $context['forum_name'] . '" forum-url="' . $scripturl . '"' . (!empty($feed_meta['title']) && $feed_meta['title'] != $context['forum_name'] ? ' title="' . $feed_meta['title'] . '"' : '') . (!empty($feed_meta['desc']) ? ' description="' . $feed_meta['desc'] . '"' : '') . ' source="' . $feed_meta['source'] . '" generated-date-localized="' . strip_tags(timeformat(time(), false, 'forum')) . '" generated-date-UTC="' . smf_gmstrftime('%F %T') . '"' . (!empty($feed_meta['page']) ? ' page="' . $feed_meta['page'] . '"' : '') . '>';
+<smf:xml-feed xml:lang="' . strtr($txt['lang_locale'], '_', '-') . '"' . $ns_string . ' version="' . SB_VERSION . '" forum-name="' . $context['forum_name'] . '" forum-url="' . $scripturl . '"' . (!empty($feed_meta['title']) && $feed_meta['title'] != $context['forum_name'] ? ' title="' . $feed_meta['title'] . '"' : '') . (!empty($feed_meta['desc']) ? ' description="' . $feed_meta['desc'] . '"' : '') . ' source="' . $feed_meta['source'] . '" generated-date-localized="' . strip_tags(timeformat(time(), false, 'forum')) . '" generated-date-UTC="' . sb_gmstrftime('%F %T') . '"' . (!empty($feed_meta['page']) ? ' page="' . $feed_meta['page'] . '"' : '') . '>';
 
 		// Hard to imagine anyone wanting to add these for the proprietary format, but just in case...
 		$context['feed']['header'] .= $extraFeedTags_string;
@@ -784,11 +784,11 @@ function getXmlMembers($xml_format, $ascending = false)
 					),
 					array(
 						'tag' => 'published',
-						'content' => smf_gmstrftime('%Y-%m-%dT%H:%M:%SZ', $row['date_registered']),
+						'content' => sb_gmstrftime('%Y-%m-%dT%H:%M:%SZ', $row['date_registered']),
 					),
 					array(
 						'tag' => 'updated',
-						'content' => smf_gmstrftime('%Y-%m-%dT%H:%M:%SZ', $row['last_login']),
+						'content' => sb_gmstrftime('%Y-%m-%dT%H:%M:%SZ', $row['last_login']),
 					),
 					array(
 						'tag' => 'id',
@@ -810,7 +810,7 @@ function getXmlMembers($xml_format, $ascending = false)
 					),
 					array(
 						'tag' => 'time',
-						'attributes' => array('label' => $txt['date_registered'], 'UTC' => smf_gmstrftime('%F %T', $row['date_registered'])),
+						'attributes' => array('label' => $txt['date_registered'], 'UTC' => sb_gmstrftime('%F %T', $row['date_registered'])),
 						'content' => $smcFunc['htmlspecialchars'](strip_tags(timeformat($row['date_registered'], false, 'forum'))),
 					),
 					array(
@@ -1113,11 +1113,11 @@ function getXmlNews($xml_format, $ascending = false)
 					),
 					array(
 						'tag' => 'published',
-						'content' => smf_gmstrftime('%Y-%m-%dT%H:%M:%SZ', $row['poster_time']),
+						'content' => sb_gmstrftime('%Y-%m-%dT%H:%M:%SZ', $row['poster_time']),
 					),
 					array(
 						'tag' => 'updated',
-						'content' => smf_gmstrftime('%Y-%m-%dT%H:%M:%SZ', empty($row['modified_time']) ? $row['poster_time'] : $row['modified_time']),
+						'content' => sb_gmstrftime('%Y-%m-%dT%H:%M:%SZ', empty($row['modified_time']) ? $row['poster_time'] : $row['modified_time']),
 					),
 					array(
 						'tag' => 'id',
@@ -1186,7 +1186,7 @@ function getXmlNews($xml_format, $ascending = false)
 				'content' => array(
 					array(
 						'tag' => 'time',
-						'attributes' => array('label' => $txt['date'], 'UTC' => smf_gmstrftime('%F %T', $row['poster_time'])),
+						'attributes' => array('label' => $txt['date'], 'UTC' => sb_gmstrftime('%F %T', $row['poster_time'])),
 						'content' => $smcFunc['htmlspecialchars'](strip_tags(timeformat($row['poster_time'], false, 'forum'))),
 					),
 					array(
@@ -1573,11 +1573,11 @@ function getXmlRecent($xml_format)
 					),
 					array(
 						'tag' => 'published',
-						'content' => smf_gmstrftime('%Y-%m-%dT%H:%M:%SZ', $row['poster_time']),
+						'content' => sb_gmstrftime('%Y-%m-%dT%H:%M:%SZ', $row['poster_time']),
 					),
 					array(
 						'tag' => 'updated',
-						'content' => smf_gmstrftime('%Y-%m-%dT%H:%M:%SZ', empty($row['modified_time']) ? $row['poster_time'] : $row['modified_time']),
+						'content' => sb_gmstrftime('%Y-%m-%dT%H:%M:%SZ', empty($row['modified_time']) ? $row['poster_time'] : $row['modified_time']),
 					),
 					array(
 						'tag' => 'id',
@@ -1646,7 +1646,7 @@ function getXmlRecent($xml_format)
 				'content' => array(
 					array(
 						'tag' => 'time',
-						'attributes' => array('label' => $txt['date'], 'UTC' => smf_gmstrftime('%F %T', $row['poster_time'])),
+						'attributes' => array('label' => $txt['date'], 'UTC' => sb_gmstrftime('%F %T', $row['poster_time'])),
 						'content' => $smcFunc['htmlspecialchars'](strip_tags(timeformat($row['poster_time'], false, 'forum'))),
 					),
 					array(
@@ -1905,11 +1905,11 @@ function getXmlProfile($xml_format)
 				),
 				array(
 					'tag' => 'published',
-					'content' => smf_gmstrftime('%Y-%m-%dT%H:%M:%SZ', $profile['registered_timestamp']),
+					'content' => sb_gmstrftime('%Y-%m-%dT%H:%M:%SZ', $profile['registered_timestamp']),
 				),
 				array(
 					'tag' => 'updated',
-					'content' => smf_gmstrftime('%Y-%m-%dT%H:%M:%SZ', $profile['last_login_timestamp']),
+					'content' => sb_gmstrftime('%Y-%m-%dT%H:%M:%SZ', $profile['last_login_timestamp']),
 				),
 				array(
 					'tag' => 'id',
@@ -1959,12 +1959,12 @@ function getXmlProfile($xml_format)
 			),
 			array(
 				'tag' => 'last-login',
-				'attributes' => array('label' => $txt['lastLoggedIn'], 'UTC' => smf_gmstrftime('%F %T', $profile['last_login_timestamp'])),
+				'attributes' => array('label' => $txt['lastLoggedIn'], 'UTC' => sb_gmstrftime('%F %T', $profile['last_login_timestamp'])),
 				'content' => timeformat($profile['last_login_timestamp'], false, 'forum'),
 			),
 			array(
 				'tag' => 'registered',
-				'attributes' => array('label' => $txt['date_registered'], 'UTC' => smf_gmstrftime('%F %T', $profile['registered_timestamp'])),
+				'attributes' => array('label' => $txt['date_registered'], 'UTC' => sb_gmstrftime('%F %T', $profile['registered_timestamp'])),
 				'content' => timeformat($profile['registered_timestamp'], false, 'forum'),
 			),
 			array(
@@ -2367,11 +2367,11 @@ function getXmlPosts($xml_format, $ascending = false)
 					),
 					array(
 						'tag' => 'published',
-						'content' => smf_gmstrftime('%Y-%m-%dT%H:%M:%SZ', $row['poster_time']),
+						'content' => sb_gmstrftime('%Y-%m-%dT%H:%M:%SZ', $row['poster_time']),
 					),
 					array(
 						'tag' => 'updated',
-						'content' => smf_gmstrftime('%Y-%m-%dT%H:%M:%SZ', empty($row['modified_time']) ? $row['poster_time'] : $row['modified_time']),
+						'content' => sb_gmstrftime('%Y-%m-%dT%H:%M:%SZ', empty($row['modified_time']) ? $row['poster_time'] : $row['modified_time']),
 					),
 					array(
 						'tag' => 'id',
@@ -2539,12 +2539,12 @@ function getXmlPosts($xml_format, $ascending = false)
 					),
 					array(
 						'tag' => 'time',
-						'attributes' => array('label' => $txt['date'], 'UTC' => smf_gmstrftime('%F %T', $row['poster_time'])),
+						'attributes' => array('label' => $txt['date'], 'UTC' => sb_gmstrftime('%F %T', $row['poster_time'])),
 						'content' => $smcFunc['htmlspecialchars'](strip_tags(timeformat($row['poster_time'], false, 'forum'))),
 					),
 					array(
 						'tag' => 'modified_time',
-						'attributes' => !empty($row['modified_time']) ? array('label' => $txt['modified_time'], 'UTC' => smf_gmstrftime('%F %T', $row['modified_time'])) : null,
+						'attributes' => !empty($row['modified_time']) ? array('label' => $txt['modified_time'], 'UTC' => sb_gmstrftime('%F %T', $row['modified_time'])) : null,
 						'content' => !empty($row['modified_time']) ? $smcFunc['htmlspecialchars'](strip_tags(timeformat($row['modified_time'], false, 'forum'))) : null,
 					),
 					array(
@@ -2730,7 +2730,7 @@ function getXmlPMs($xml_format, $ascending = false)
 					),
 					array(
 						'tag' => 'updated',
-						'content' => smf_gmstrftime('%Y-%m-%dT%H:%M:%SZ', $row['msgtime']),
+						'content' => sb_gmstrftime('%Y-%m-%dT%H:%M:%SZ', $row['msgtime']),
 					),
 					array(
 						'tag' => 'title',
@@ -2788,7 +2788,7 @@ function getXmlPMs($xml_format, $ascending = false)
 					),
 					array(
 						'tag' => 'sent_date',
-						'attributes' => array('label' => $txt['date'], 'UTC' => smf_gmstrftime('%F %T', $row['msgtime'])),
+						'attributes' => array('label' => $txt['date'], 'UTC' => sb_gmstrftime('%F %T', $row['msgtime'])),
 						'content' => $smcFunc['htmlspecialchars'](strip_tags(timeformat($row['msgtime'], false, 'forum'))),
 					),
 					array(

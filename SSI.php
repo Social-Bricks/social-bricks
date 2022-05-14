@@ -2248,7 +2248,7 @@ function ssi_recentEvents($max_events = 7, $output_method = 'echo')
 		ORDER BY cal.start_date DESC
 		LIMIT ' . $max_events,
 		array(
-			'current_date' => smf_strftime('%Y-%m-%d', time()),
+			'current_date' => sb_strftime('%Y-%m-%d', time()),
 			'no_board' => 0,
 		)
 	);
@@ -2263,8 +2263,8 @@ function ssi_recentEvents($max_events = 7, $output_method = 'echo')
 		// Censor the title.
 		censorText($row['title']);
 
-		if ($row['start_date'] < smf_strftime('%Y-%m-%d', time()))
-			$date = smf_strftime('%Y-%m-%d', time());
+		if ($row['start_date'] < sb_strftime('%Y-%m-%d', time()))
+			$date = sb_strftime('%Y-%m-%d', time());
 		else
 			$date = $row['start_date'];
 

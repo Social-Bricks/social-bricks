@@ -150,7 +150,7 @@ abstract class search_api implements search_api_interface
 	/**
 	 * @var string The minimum SMF version that this will work with.
 	 */
-	public $min_smf_version = '2.1 RC1';
+	public $min_version = '2.1 RC1';
 
 	/**
 	 * @var bool Whether or not it's supported

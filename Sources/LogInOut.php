@@ -58,7 +58,7 @@ function Login()
 		||
 		(
 			!empty($context['valid_cors_found'])
-			&& !empty($_SERVER['HTTP_X_SMF_AJAX'])
+			&& !empty($_SERVER['HTTP_X_SOCIALBRICKS_AJAX'])
 			&& isset($_REQUEST['ajax'])
 		)
 	)
@@ -131,7 +131,7 @@ function Login2()
 		||
 		(
 			!empty($context['valid_cors_found'])
-			&& !empty($_SERVER['HTTP_X_SMF_AJAX'])
+			&& !empty($_SERVER['HTTP_X_SOCIALBRICKS_AJAX'])
 			&& isset($_REQUEST['ajax'])
 		)
 	)
@@ -511,7 +511,7 @@ function LoginTFA()
 		||
 		(
 			!empty($context['valid_cors_found'])
-			&& !empty($_SERVER['HTTP_X_SMF_AJAX'])
+			&& !empty($_SERVER['HTTP_X_SOCIALBRICKS_AJAX'])
 			&& isset($_REQUEST['ajax'])
 		)
 	)

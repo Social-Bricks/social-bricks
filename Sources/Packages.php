@@ -1378,7 +1378,7 @@ function PackageRemove()
 			deltree($packagesdir . '/' . $_GET['package']);
 		else
 		{
-			smf_chmod($packagesdir . '/' . $_GET['package'], 0777);
+			sb_chmod($packagesdir . '/' . $_GET['package'], 0777);
 			unlink($packagesdir . '/' . $_GET['package']);
 		}
 	}
@@ -1946,7 +1946,7 @@ function ViewOperations()
 	);
 
 	// Since the alerts code is loaded very late in the process, it must be disabled seperately.
-	$settings['disable_files'] = ['smf_alerts'];
+	$settings['disable_files'] = ['sb_alerts'];
 }
 
 /**
@@ -2525,7 +2525,7 @@ function PackagePermissionsAction()
 					$package_ftp->chmod($ftp_file, $custom_value);
 				}
 				else
-					smf_chmod($path, $custom_value);
+					sb_chmod($path, $custom_value);
 			}
 
 			// This fish is fried...

@@ -25,7 +25,7 @@ function AutoTask()
 	corsPolicyHeader();
 
 	// Requests from a CORS response may send a options to find if the requst is valid.  Simply bail out here, the cors header have been sent already.
-	if (isset($_SERVER['HTTP_X_SMF_AJAX']) && isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] === 'OPTIONS')
+	if (isset($_SERVER['HTTP_X_SOCIALBRICKS_AJAX']) && isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] === 'OPTIONS')
 	{
 		send_http_status(204);
 		die;

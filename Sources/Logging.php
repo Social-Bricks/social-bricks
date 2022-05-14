@@ -346,7 +346,7 @@ function trackStats($stats = array())
 
 	$setStringUpdate = '';
 	$insert_keys = array();
-	$date = smf_strftime('%Y-%m-%d', time());
+	$date = sb_strftime('%Y-%m-%d', time());
 	$update_parameters = array(
 		'current_date' => $date,
 	);

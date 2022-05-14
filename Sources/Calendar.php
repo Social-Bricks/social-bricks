@@ -54,7 +54,7 @@ function CalendarMain()
 
 	// This is gonna be needed...
 	loadTemplate('Calendar');
-	loadCSSFile('calendar.css', array('force_current' => false, 'validate' => true, 'rtl' => 'calendar.rtl.css'), 'smf_calendar');
+	loadCSSFile('calendar.css', array('force_current' => false, 'validate' => true, 'rtl' => 'calendar.rtl.css'), 'sb_calendar');
 
 	// Did the specify an individual event ID? If so, let's splice the year/month in to what we would otherwise be doing.
 	if (isset($_GET['event']))
@@ -396,7 +396,7 @@ function CalendarPost()
 		$eventDatetimes = getNewEventDatetimes();
 		$context['event'] = array_merge($context['event'], $eventDatetimes);
 
-		$context['event']['last_day'] = (int) smf_strftime('%d', mktime(0, 0, 0, $context['event']['month'] == 12 ? 1 : $context['event']['month'] + 1, 0, $context['event']['month'] == 12 ? $context['event']['year'] + 1 : $context['event']['year']));
+		$context['event']['last_day'] = (int) sb_strftime('%d', mktime(0, 0, 0, $context['event']['month'] == 12 ? 1 : $context['event']['month'] + 1, 0, $context['event']['month'] == 12 ? $context['event']['year'] + 1 : $context['event']['year']));
 	}
 	else
 	{
@@ -435,7 +435,7 @@ function CalendarPost()
 	}
 
 	// Need this so the user can select a timezone for the event.
-	$context['all_timezones'] = smf_list_timezones($context['event']['start_date']);
+	$context['all_timezones'] = sb_list_timezones($context['event']['start_date']);
 
 	// If the event's timezone is not in SMF's standard list of time zones, try to fix it.
 	if (!isset($context['all_timezones'][$context['event']['tz']]))

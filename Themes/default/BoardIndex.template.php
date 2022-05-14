@@ -29,7 +29,7 @@ function template_newsfader()
 	if (!empty($settings['show_newsfader']) && !empty($context['news_lines']))
 	{
 		echo '
-		<ul id="smf_slider" class="roundframe">';
+		<ul id="sb_slider" class="roundframe">';
 
 		foreach ($context['news_lines'] as $news)
 			echo '
@@ -38,7 +38,7 @@ function template_newsfader()
 		echo '
 		</ul>
 		<script>
-			jQuery("#smf_slider").slippry({
+			jQuery("#sb_slider").slippry({
 				pause: ', $settings['newsfader_time'], ',
 				adaptiveHeight: 0,
 				captions: 0,

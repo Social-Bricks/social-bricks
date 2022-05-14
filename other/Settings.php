@@ -127,7 +127,7 @@ $ssi_db_passwd = '';
  *
  * @var string
  */
-$db_prefix = 'smf_';
+$db_prefix = 'sb_';
 /**
  * Use a persistent database connection
  *

@@ -201,10 +201,10 @@ sb_viewVersions.prototype.determineVersions = function ()
 		}
 	}
 
-	if (!('smfVersions' in window))
-		window.smfVersions = {};
+	if (!('sbVersions' in window))
+		window.sbVersions = {};
 
-	for (var sFilename in window.smfVersions)
+	for (var sFilename in window.sbVersions)
 	{
 		if (!document.getElementById('current' + sFilename))
 			continue;
@@ -223,19 +223,19 @@ sb_viewVersions.prototype.determineVersions = function ()
 		{
 			if ((this.compareVersions(oHighYour[sCurVersionType], sYourVersion) || oHighYour[sCurVersionType] == '??') && !oLowVersion[sCurVersionType])
 				oHighYour[sCurVersionType] = sYourVersion;
-			if (this.compareVersions(oHighCurrent[sCurVersionType], smfVersions[sFilename]) || oHighCurrent[sCurVersionType] == '??')
-				oHighCurrent[sCurVersionType] = smfVersions[sFilename];
+			if (this.compareVersions(oHighCurrent[sCurVersionType], sbVersions[sFilename]) || oHighCurrent[sCurVersionType] == '??')
+				oHighCurrent[sCurVersionType] = sbVersions[sFilename];
 
-			if (this.compareVersions(sYourVersion, smfVersions[sFilename]))
+			if (this.compareVersions(sYourVersion, sbVersions[sFilename]))
 			{
 				oLowVersion[sCurVersionType] = sYourVersion;
 				document.getElementById('your' + sFilename).className = 'alert';
 			}
 		}
-		else if (this.compareVersions(sYourVersion, smfVersions[sFilename]))
+		else if (this.compareVersions(sYourVersion, sbVersions[sFilename]))
 			oLowVersion[sCurVersionType] = sYourVersion;
 
-		setInnerHTML(document.getElementById('current' + sFilename), smfVersions[sFilename]);
+		setInnerHTML(document.getElementById('current' + sFilename), sbVersions[sFilename]);
 		setInnerHTML(document.getElementById('your' + sFilename), sYourVersion);
 	}
 

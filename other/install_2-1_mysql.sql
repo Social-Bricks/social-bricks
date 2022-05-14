@@ -1954,7 +1954,7 @@ VALUES
 
 INSERT INTO {$db_prefix}settings
 	(variable, value)
-VALUES ('smfVersion', '{$smf_version}'),
+VALUES ('sbVersion', '{$sb_version}'),
 	('news', '{$default_news}'),
 	('compactTopicPagesContiguous', '5'),
 	('compactTopicPagesEnable', '1'),

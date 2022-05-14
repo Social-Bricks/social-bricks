@@ -185,7 +185,7 @@ function setPassword()
 		'memID' => (int) $_REQUEST['u']
 	);
 
-	loadJavaScriptFile('register.js', array('defer' => false, 'minimize' => true), 'smf_register');
+	loadJavaScriptFile('register.js', array('defer' => false, 'minimize' => true), 'sb_register');
 
 	// Tokens!
 	createToken('remind-sp');
@@ -322,7 +322,7 @@ function SecretAnswerInput()
 
 	$context['sub_template'] = 'ask';
 	createToken('remind-sai');
-	loadJavaScriptFile('register.js', array('defer' => false, 'minimize' => true), 'smf_register');
+	loadJavaScriptFile('register.js', array('defer' => false, 'minimize' => true), 'sb_register');
 }
 
 /**
