@@ -13,7 +13,7 @@
  * @version 2.1.2
  */
 
-use SMF\Cache\CacheApiInterface;
+use SocialBricks\Cache\CacheApiInterface;
 
 /**
  * Get a list of versions that are currently installed on the server.

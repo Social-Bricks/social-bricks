@@ -13,8 +13,8 @@
  * @version 2.1.2
  */
 
-use SMF\Cache\CacheApi;
-use SMF\Cache\CacheApiInterface;
+use SocialBricks\Cache\CacheApi;
+use SocialBricks\Cache\CacheApiInterface;
 
 /**
  * Load the $modSettings array.
@@ -3677,8 +3677,7 @@ function registerAutoLoader()
 			'ReCaptcha\\' => 'ReCaptcha/',
 			'MatthiasMullie\\Minify\\' => 'minify/src/',
 			'MatthiasMullie\\PathConverter\\' => 'minify/path-converter/src/',
-			'SMF\\Cache\\' => 'Cache/',
-			'SocialBricks\\Helper\\' => 'SocialBricks/Helper/',
+			'SocialBricks\\' => 'SocialBricks/',
 		);
 
 		// Do any third-party scripts want in on the fun?
@@ -3734,9 +3733,6 @@ function loadCacheAccelerator($overrideCache = '', $fallbackfile = true)
 
 	elseif (is_null($cacheAPI))
 		$cacheAPI = false;
-
-	require_once($sourcedir . '/Cache/CacheApi.php');
-	require_once($sourcedir . '/Cache/CacheApiInterface.php');
 
 	// What accelerator we are going to try.
 	$cache_class_name = !empty($cache_accelerator) ? $cache_accelerator : CacheApi::APIS_DEFAULT;

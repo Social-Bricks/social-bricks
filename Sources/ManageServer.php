@@ -59,8 +59,8 @@
  * @version 2.1.2
  */
 
-use SMF\Cache\CacheApi;
-use SMF\Cache\CacheApiInterface;
+use SocialBricks\Cache\CacheApi;
+use SocialBricks\Cache\CacheApiInterface;
 
 /**
  * This is the main dispatcher. Sets up all the available sub-actions, all the tabs and selects
@@ -1768,7 +1768,7 @@ function loadCacheAPIs()
 {
 	global $sourcedir;
 
-	$cacheAPIdir = $sourcedir . '/Cache';
+	$cacheAPIdir = $sourcedir . '/SocialBricks/Cache';
 
 	$loadedApis = array();
 	$apis_dir = $cacheAPIdir .'/'. CacheApi::APIS_FOLDER;

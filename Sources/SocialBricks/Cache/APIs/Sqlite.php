@@ -11,10 +11,10 @@
  * @version 2.1.2
  */
 
-namespace SMF\Cache\APIs;
+namespace SocialBricks\Cache\APIs;
 
-use SMF\Cache\CacheApi;
-use SMF\Cache\CacheApiInterface;
+use SocialBricks\Cache\CacheApi;
+use SocialBricks\Cache\CacheApiInterface;
 use SQLite3;
 
 /**

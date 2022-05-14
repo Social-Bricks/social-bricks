@@ -11,7 +11,7 @@
  * @version 2.1.0
  */
 
-namespace SMF\Cache;
+namespace SocialBricks\Cache;
 
 interface CacheApiInterface
 {

@@ -11,51 +11,25 @@
  * @version 2.1.2
  */
 
-namespace SMF\Cache\APIs;
+namespace SocialBricks\Cache\APIs;
 
-use Memcached;
-use SMF\Cache\CacheApi;
-use SMF\Cache\CacheApiInterface;
+use Memcache;
+use SocialBricks\Cache\CacheApi;
+use SocialBricks\Cache\CacheApiInterface;
 
 /**
  * Our Cache API class
  *
  * @package CacheAPI
  */
-class MemcachedImplementation extends CacheApi implements CacheApiInterface
+class MemcacheImplementation extends CacheApi implements CacheApiInterface
 {
 	const CLASS_KEY = 'cache_memcached';
 
-	/** @var Memcached The memcache instance. */
-	private $memcached = null;
-
-	/** @var string[] */
-	private $servers;
-
 	/**
-	 * {@inheritDoc}
+	 * @var Memcache The memcache instance.
 	 */
-	public function __construct()
-	{
-		global $cache_memcached;
-
-		$this->servers = array_map(
-			function($server)
-			{
-				if (strpos($server, '/') !== false)
-					return array($server, 0);
-
-				else
-				{
-					$server = explode(':', $server);
-					return array($server[0], isset($server[1]) ? (int) $server[1] : 11211);
-				}
-			},
-			explode(',', $cache_memcached)
-		);
-
-		parent::__construct();
-	}
+	private $memcache = null;
 
 	/**
 	 * {@inheritDoc}
@@ -64,7 +38,7 @@ class MemcachedImplementation extends CacheApi implements CacheApiInterface
 	{
 		global $cache_memcached;
 
-		$supported = class_exists('Memcached');
+		$supported = class_exists('Memcache');
 
 		if ($test)
 			return $supported;
@@ -77,41 +51,48 @@ class MemcachedImplementation extends CacheApi implements CacheApiInterface
 	 */
 	public function connect()
 	{
-		$this->memcached = new Memcached;
+		global $db_persist, $cache_memcached;
 
-		return $this->addServers();
-	}
+		$this->memcache = new Memcache();
 
-	/**
-	 * Add memcached servers.
-	 *
-	 * Don't add servers if they already exist. Ideal for persistent connections.
-	 *
-	 * @return bool True if there are servers in the daemon, false if not.
-	 */
-	protected function addServers()
-	{
-		$currentServers = $this->memcached->getServerList();
-		$retVal = !empty($currentServers);
-		foreach ($this->servers as $server)
+		$servers = explode(',', $cache_memcached);
+		$port = 0;
+
+		// Don't try more times than we have servers!
+		$connected = false;
+		$level = 0;
+
+		// We should keep trying if a server times out, but only for the amount of servers we have.
+		while (!$connected && $level < count($servers))
 		{
-			// Figure out if we have this server or not
-			$foundServer = false;
-			foreach ($currentServers as $currentServer)
+			++$level;
+
+			$server = trim($servers[array_rand($servers)]);
+
+			// No server, can't connect to this.
+			if (empty($server))
+				continue;
+
+			// Normal host names do not contain slashes, while e.g. unix sockets do. Assume alternative transport pipe with port 0.
+			if (strpos($server, '/') !== false)
+				$host = $server;
+
+			else
 			{
-				if ($server[0] == $currentServer['host'] && $server[1] == $currentServer['port'])
-				{
-					$foundServer = true;
-					break;
-				}
+				$server = explode(':', $server);
+				$host = $server[0];
+				$port = isset($server[1]) ? $server[1] : 11211;
 			}
 
-			// Found it?
-			if (empty($foundServer))
-				$retVal |= $this->memcached->addServer($server[0], $server[1]);
+			// Don't wait too long: yes, we want the server, but we might be able to run the query faster!
+			if (empty($db_persist))
+				$connected = $this->memcache->connect($host, $port);
+
+			else
+				$connected = $this->memcache->pconnect($host, $port);
 		}
 
-		return $retVal;
+		return $connected;
 	}
 
 	/**
@@ -121,7 +102,7 @@ class MemcachedImplementation extends CacheApi implements CacheApiInterface
 	{
 		$key = $this->prefix . strtr($key, ':/', '-_');
 
-		$value = $this->memcached->get($key);
+		$value = $this->memcache->get($key);
 
 		// $value should return either data or false (from failure, key not found or empty array).
 		if ($value === false)
@@ -137,7 +118,15 @@ class MemcachedImplementation extends CacheApi implements CacheApiInterface
 	{
 		$key = $this->prefix . strtr($key, ':/', '-_');
 
-		return $this->memcached->set($key, $value, $ttl !== null ? $ttl : $this->ttl);
+		return $this->memcache->set($key, $value, 0, $ttl !== null ? $ttl : $this->ttl);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public function quit()
+	{
+		return $this->memcache->close();
 	}
 
 	/**
@@ -147,16 +136,7 @@ class MemcachedImplementation extends CacheApi implements CacheApiInterface
 	{
 		$this->invalidateCache();
 
-		// Memcached accepts a delay parameter, always use 0 (instant).
-		return $this->memcached->flush(0);
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public function quit()
-	{
-		return $this->memcached->quit();
+		return $this->memcache->flush();
 	}
 
 	/**
@@ -194,14 +174,14 @@ class MemcachedImplementation extends CacheApi implements CacheApiInterface
 	 */
 	public function getVersion()
 	{
-		if (!is_object($this->memcached))
+		if (!is_object($this->memcache))
 			return false;
 
 		// This gets called in Subs-Admin getServerVersions when loading up support information.  If we can't get a connection, return nothing.
-		$result = $this->memcached->getVersion();
+		$result = $this->memcache->getVersion();
 
 		if (!empty($result))
-			return current($result);
+			return $result;
 
 		return false;
 	}

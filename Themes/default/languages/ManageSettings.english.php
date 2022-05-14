@@ -126,7 +126,7 @@ $txt['caching_information'] = 'Social Bricks supports caching through the use of
 	<li>SQLite3</li>
 	<li>Zend Platform/Performance Suite (Not Zend Optimizer)</li>
 </ul>
-Caching will work best if you have PHP compiled with one of the above optimizers, or have memcached available. If you do not have any optimizer installed SMF will do file based caching.';
+Caching will work best if you have PHP compiled with one of the above optimizers, or have memcached available. If you do not have any optimizer installed Social Bricks will do file based caching.';
 $txt['detected_no_caching'] = 'Social Bricks has not been able to detect a compatible accelerator on your server. File based caching can be used instead.';
 $txt['detected_accelerators'] = 'Social Bricks has detected the following accelerators: %1$s';
 

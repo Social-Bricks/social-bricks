@@ -11,12 +11,12 @@
  * @version 2.1.0
  */
 
-namespace SMF\Cache;
+namespace SocialBricks\Cache;
 
 abstract class CacheApi
 {
 	const APIS_FOLDER = 'APIs';
-	const APIS_NAMESPACE = 'SMF\Cache\APIs\\';
+	const APIS_NAMESPACE = 'SocialBricks\Cache\APIs\\';
 	const APIS_DEFAULT = 'FileBased';
 
 	/**
