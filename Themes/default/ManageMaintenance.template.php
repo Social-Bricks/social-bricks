@@ -324,7 +324,7 @@ function template_maintain_members()
 	</div><!-- #manage_maintenance -->
 
 	<script>
-		var oAttributeMemberSuggest = new smc_AutoSuggest({
+		var oAttributeMemberSuggest = new sb_autoSuggest({
 			sSelf: \'oAttributeMemberSuggest\',
 			sSessionId: sb_session_id,
 			sSessionVar: sb_session_var,

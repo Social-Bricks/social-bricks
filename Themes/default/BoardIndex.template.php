@@ -314,7 +314,7 @@ function template_info_center()
 	// Info center collapse object.
 	echo '
 	<script>
-		var oInfoCenterToggle = new smc_Toggle({
+		var oInfoCenterToggle = new sb_toggle({
 			bToggleEnabled: true,
 			bCurrentlyCollapsed: ', empty($options['collapse_header_ic']) ? 'false' : 'true', ',
 			aSwappableContainers: [

@@ -606,7 +606,7 @@ function template_modify_board()
 	</div><!-- #manage_boards -->
 
 	<script>
-		var oModeratorSuggest = new smc_AutoSuggest({
+		var oModeratorSuggest = new sb_autoSuggest({
 			sSelf: \'oModeratorSuggest\',
 			sSessionId: sb_session_id,
 			sSessionVar: sb_session_var,
@@ -631,7 +631,7 @@ function template_modify_board()
 			]
 		});
 
-		var oModeratorGroupSuggest = new smc_AutoSuggest({
+		var oModeratorGroupSuggest = new sb_autoSuggest({
 			sSelf: \'oModeratorGroupSuggest\',
 			sSessionId: sb_session_id,
 			sSessionVar: sb_session_var,

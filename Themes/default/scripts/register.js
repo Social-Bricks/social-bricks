@@ -1,4 +1,4 @@
-function smfRegister(formID, passwordDifficultyLevel, regTextStrings)
+function sb_Register(formID, passwordDifficultyLevel, regTextStrings)
 {
 	this.addVerify = addVerificationField;
 	this.autoSetup = autoSetup;

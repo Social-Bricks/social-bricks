@@ -712,7 +712,7 @@ $(function() {
 		$('div.boardindex_table div.cat_bar').each(function(index, el)
 		{
 			var catid = el.id.replace('category_', '');
-			new smc_Toggle({
+			new sb_toggle({
 				bToggleEnabled: true,
 				bCurrentlyCollapsed: $('#category_' + catid + '_upshrink').data('collapsed'),
 				aHeader: $('#category_' + catid),

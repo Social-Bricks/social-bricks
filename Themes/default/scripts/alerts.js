@@ -82,7 +82,7 @@ var updateAlerts = function ()
 				}, alert_timeout);
 		});
 
-		var user_menus = new smc_PopupMenu();
+		var user_menus = new sb_popupMenu();
 		user_menus.add("alerts", sb_scripturl + "?action=profile;area=alerts_popup;u=" + sb_member_id);
 	});
 

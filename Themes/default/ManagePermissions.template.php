@@ -207,7 +207,7 @@ function template_permission_index()
 		// Javascript for the advanced stuff.
 		echo '
 			<script>
-				var oPermissionsPanelToggle = new smc_Toggle({
+				var oPermissionsPanelToggle = new sb_toggle({
 					bToggleEnabled: true,
 					bCurrentlyCollapsed: ', empty($context['show_advanced_options']) ? 'true' : 'false', ',
 					aSwappableContainers: [

@@ -1019,7 +1019,7 @@ function template_quickreply()
 	if (!empty($context['drafts_autosave']))
 		echo '
 		<script>
-			var oDraftAutoSave = new smf_DraftAutoSave({
+			var oDraftAutoSave = new sb_draftAutoSave({
 				sSelf: \'oDraftAutoSave\',
 				sLastNote: \'draft_lastautosave\',
 				sLastID: \'id_draft\',', !empty($context['post_box_name']) ? '

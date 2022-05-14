@@ -470,7 +470,7 @@ function template_view_versions()
 	echo '
 					<script src="', $scripturl, '?action=viewadminfile;filename=detailed-version.js"></script>
 					<script>
-						var oViewVersions = new smf_ViewVersions({
+						var oViewVersions = new sb_viewVersions({
 							aKnownLanguages: [
 								\'.', implode('\',
 								\'.', $context['default_known_languages']), '\'

@@ -72,7 +72,7 @@ function template_group_requests_block()
 		</div><!-- #group_requests_panel -->
 
 		<script>
-			var oGroupRequestsPanelToggle = new smc_Toggle({
+			var oGroupRequestsPanelToggle = new sb_toggle({
 				bToggleEnabled: true,
 				bCurrentlyCollapsed: ', !empty($context['admin_prefs']['mcgr']) ? 'true' : 'false', ',
 				aSwappableContainers: [
@@ -139,7 +139,7 @@ function template_watched_users()
 		</div><!-- #watched_users_panel -->
 
 		<script>
-			var oWatchedUsersToggle = new smc_Toggle({
+			var oWatchedUsersToggle = new sb_toggle({
 				bToggleEnabled: true,
 				bCurrentlyCollapsed: ', !empty($context['admin_prefs']['mcwu']) ? 'true' : 'false', ',
 				aSwappableContainers: [
@@ -206,7 +206,7 @@ function template_reported_posts_block()
 		</div><!-- #reported_posts_panel -->
 
 		<script>
-			var oWatchedUsersToggle = new smc_Toggle({
+			var oWatchedUsersToggle = new sb_toggle({
 				bToggleEnabled: true,
 				bCurrentlyCollapsed: ', !empty($context['admin_prefs']['mcrp']) ? 'true' : 'false', ',
 				aSwappableContainers: [
@@ -273,7 +273,7 @@ function template_reported_users_block()
 		</div><!-- #reported_users_panel -->
 
 		<script>
-			var oWatchedUsersToggle = new smc_Toggle({
+			var oWatchedUsersToggle = new sb_toggle({
 				bToggleEnabled: true,
 				bCurrentlyCollapsed: ', !empty($context['admin_prefs']['mcur']) ? 'true' : 'false', ',
 				aSwappableContainers: [

@@ -347,7 +347,7 @@ function reqOverlayDiv(desktopURL, sHeader, sIcon)
 		containerOptions = {heading: sHeader, content: sAjax_indicator, icon_class: 'main_icons ' + (typeof(sIcon) != 'string' ? 'help' : sIcon)};
 
 	// Create the div that we are going to load
-	var oContainer = new smc_Popup(containerOptions);
+	var oContainer = new sb_popup(containerOptions);
 	var oPopup_body = $('#' + oContainer.popup_id).find('.popup_content');
 
 	// Load the help page content (we just want the text to show)
@@ -383,13 +383,13 @@ function reqOverlayDiv(desktopURL, sHeader, sIcon)
 }
 
 // Create the popup menus for the top level/user menu area.
-function smc_PopupMenu(oOptions)
+function sb_popupMenu(oOptions)
 {
 	this.opt = (typeof oOptions == 'object') ? oOptions : {};
 	this.opt.menus = {};
 }
 
-smc_PopupMenu.prototype.add = function (sItem, sUrl)
+sb_popupMenu.prototype.add = function (sItem, sUrl)
 {
 	var $menu = $('#' + sItem + '_menu'), $item = $('#' + sItem + '_menu_top');
 	if ($item.length == 0)
@@ -404,7 +404,7 @@ smc_PopupMenu.prototype.add = function (sItem, sUrl)
 	});
 }
 
-smc_PopupMenu.prototype.toggle = function (sItem)
+sb_popupMenu.prototype.toggle = function (sItem)
 {
 	if (!!this.opt.menus[sItem].open)
 		this.close(sItem);
@@ -412,7 +412,7 @@ smc_PopupMenu.prototype.toggle = function (sItem)
 		this.open(sItem);
 }
 
-smc_PopupMenu.prototype.open = function (sItem)
+sb_popupMenu.prototype.open = function (sItem)
 {
 	this.closeAll();
 
@@ -461,7 +461,7 @@ smc_PopupMenu.prototype.open = function (sItem)
 	});
 }
 
-smc_PopupMenu.prototype.close = function (sItem)
+sb_popupMenu.prototype.close = function (sItem)
 {
 	this.opt.menus[sItem].menuObj.removeClass('visible');
 	this.opt.menus[sItem].itemObj.removeClass('open');
@@ -469,22 +469,22 @@ smc_PopupMenu.prototype.close = function (sItem)
 	$(document).off('click.menu');
 }
 
-smc_PopupMenu.prototype.closeAll = function ()
+sb_popupMenu.prototype.closeAll = function ()
 {
 	for (var prop in this.opt.menus)
 		if (!!this.opt.menus[prop].open)
 			this.close(prop);
 }
 
-// *** smc_Popup class.
-function smc_Popup(oOptions)
+// *** sb_popup class.
+function sb_popup(oOptions)
 {
 	this.opt = oOptions;
 	this.popup_id = this.opt.custom_id ? this.opt.custom_id : 'smf_popup';
 	this.show();
 }
 
-smc_Popup.prototype.show = function ()
+sb_popup.prototype.show = function ()
 {
 	popup_class = 'popup_window ' + (this.opt.custom_class ? this.opt.custom_class : 'description');
 	if (this.opt.icon_class)
@@ -513,7 +513,7 @@ smc_Popup.prototype.show = function ()
 	return false;
 }
 
-smc_Popup.prototype.hide = function ()
+sb_popup.prototype.hide = function ()
 {
 	$('#' + this.popup_id).fadeOut(300, function(){ $(this).remove(); });
 
@@ -794,12 +794,12 @@ function expandPages(spanNode, baseLink, firstPage, lastPage, perPage)
 		$(spanNode).remove();
 }
 
-function smc_preCacheImage(sSrc)
+function sb_preCacheImage(sSrc)
 {
-	if (!('smc_aCachedImages' in window))
-		window.smc_aCachedImages = [];
+	if (!('sb_aCachedImages' in window))
+		window.sb_aCachedImages = [];
 
-	if (!in_array(sSrc, window.smc_aCachedImages))
+	if (!in_array(sSrc, window.sb_aCachedImages))
 	{
 		var oImage = new Image();
 		oImage.src = sSrc;
@@ -807,15 +807,15 @@ function smc_preCacheImage(sSrc)
 }
 
 
-// *** smc_Cookie class.
-function smc_Cookie(oOptions)
+// *** sb_cookie class.
+function sb_cookie(oOptions)
 {
 	this.opt = oOptions;
 	this.oCookies = {};
 	this.init();
 }
 
-smc_Cookie.prototype.init = function()
+sb_cookie.prototype.init = function()
 {
 	if ('cookie' in document && document.cookie != '')
 	{
@@ -828,19 +828,19 @@ smc_Cookie.prototype.init = function()
 	}
 }
 
-smc_Cookie.prototype.get = function(sKey)
+sb_cookie.prototype.get = function(sKey)
 {
 	return sKey in this.oCookies ? this.oCookies[sKey] : null;
 }
 
-smc_Cookie.prototype.set = function(sKey, sValue)
+sb_cookie.prototype.set = function(sKey, sValue)
 {
 	document.cookie = sKey + '=' + encodeURIComponent(sValue);
 }
 
 
-// *** smc_Toggle class.
-function smc_Toggle(oOptions)
+// *** sb_toggle class.
+function sb_toggle(oOptions)
 {
 	this.opt = oOptions;
 	this.bCollapsed = false;
@@ -848,7 +848,7 @@ function smc_Toggle(oOptions)
 	this.init();
 }
 
-smc_Toggle.prototype.init = function ()
+sb_toggle.prototype.init = function ()
 {
 	// The master switch can disable this toggle fully.
 	if ('bToggleEnabled' in this.opt && !this.opt.bToggleEnabled)
@@ -858,7 +858,7 @@ smc_Toggle.prototype.init = function ()
 	if ('oCookieOptions' in this.opt && this.opt.oCookieOptions.bUseCookie)
 	{
 		// Initialize the cookie handler.
-		this.oCookie = new smc_Cookie({});
+		this.oCookie = new sb_cookie({});
 
 		// Check if the cookie is set.
 		var cookieValue = this.oCookie.get(this.opt.oCookieOptions.sCookieName)
@@ -882,7 +882,7 @@ smc_Toggle.prototype.init = function ()
 			else
 			{
 				// Preload the collapsed image.
-				smc_preCacheImage(this.opt.aSwapImages[i].srcCollapsed);
+				sb_preCacheImage(this.opt.aSwapImages[i].srcCollapsed);
 			}
 
 			// Display the image in case it was hidden.
@@ -928,7 +928,7 @@ smc_Toggle.prototype.init = function ()
 }
 
 // Collapse or expand the section.
-smc_Toggle.prototype.changeState = function(bCollapse, bInit)
+sb_toggle.prototype.changeState = function(bCollapse, bInit)
 {
 	// Default bInit to false.
 	bInit = typeof(bInit) !== 'undefined';
@@ -1027,7 +1027,7 @@ smc_Toggle.prototype.changeState = function(bCollapse, bInit)
 		sb_setThemeOption(this.opt.oThemeOptions.sOptionName, this.bCollapsed | 0, 'sThemeId' in this.opt.oThemeOptions ? this.opt.oThemeOptions.sThemeId : null, sb_session_id, sb_session_var, 'sAdditionalVars' in this.opt.oThemeOptions ? this.opt.oThemeOptions.sAdditionalVars : null);
 }
 
-smc_Toggle.prototype.toggle = function()
+sb_toggle.prototype.toggle = function()
 {
 	// Change the state by reversing the current state.
 	this.changeState(!this.bCollapsed);
@@ -1658,7 +1658,7 @@ function makeToggle(el, text)
 	el.parentNode.insertBefore(t, el);
 }
 
-function smc_resize(selector)
+function sb_resize(selector)
 {
 	var allElements = [];
 
@@ -1854,14 +1854,14 @@ else
     document.attachEvent("error", avatar_fallback);
 
 // SMF Preview handler.
-function smc_preview_post(oOptions)
+function sb_previewPost(oOptions)
 {
 	this.opts = oOptions;
 	this.previewXMLSupported = true;
 	this.init();
 }
 
-smc_preview_post.prototype.init = function ()
+sb_previewPost.prototype.init = function ()
 {
 	if (this.opts.sPreviewLinkContainerID)
 		$('#' + this.opts.sPreviewLinkContainerID).on('click', this.doPreviewPost.bind(this));
@@ -1869,7 +1869,7 @@ smc_preview_post.prototype.init = function ()
 		$(document.forms).find("input[name='preview']").on('click', this.doPreviewPost.bind(this));
 }
 
-smc_preview_post.prototype.doPreviewPost = function (event)
+sb_previewPost.prototype.doPreviewPost = function (event)
 {
 	event.preventDefault();
 
@@ -1940,7 +1940,7 @@ smc_preview_post.prototype.doPreviewPost = function (event)
 		return submitThisOnce(document.forms.postmodify);
 }
 
-smc_preview_post.prototype.onDocSent = function (XMLDoc)
+sb_previewPost.prototype.onDocSent = function (XMLDoc)
 {
 	if (!XMLDoc)
 	{
@@ -2036,7 +2036,7 @@ smc_preview_post.prototype.onDocSent = function (XMLDoc)
 	{
 		for (var i = 0; i < numIgnoredReplies; i++)
 		{
-			aIgnoreToggles[ignored_replies[i]] = new smc_Toggle({
+			aIgnoreToggles[ignored_replies[i]] = new sb_toggle({
 				bToggleEnabled: true,
 				bCurrentlyCollapsed: true,
 				aSwappableContainers: [

@@ -58,7 +58,7 @@ function template_control_richedit($editor_id, $smileyContainer = null, $bbcCont
 
 	// Now for backward compatibility let's collect few infos in the good ol' style
 	echo '
-			var oEditorHandle_', $editor_id, ' = new smc_Editor({
+			var oEditorHandle_', $editor_id, ' = new sb_editor({
 				sUniqueId: ', JavaScriptEscape($editor_id), ',
 				sEditWidth: ', JavaScriptEscape($editor_context['width']), ',
 				sEditHeight: ', JavaScriptEscape($editor_context['height']), ',
@@ -130,7 +130,7 @@ function template_control_richedit_buttons($editor_id)
 			<span id="draft_lastautosave" ></span>
 		</span>
 		<script>
-			var oDraftAutoSave = new smf_DraftAutoSave({
+			var oDraftAutoSave = new sb_draftAutoSave({
 				sSelf: \'oDraftAutoSave\',
 				sLastNote: \'draft_lastautosave\',
 				sLastID: \'id_pm_draft\',
@@ -150,7 +150,7 @@ function template_control_richedit_buttons($editor_id)
 			<span id="draft_lastautosave" ></span>
 		</span>
 		<script>
-			var oDraftAutoSave = new smf_DraftAutoSave({
+			var oDraftAutoSave = new sb_draftAutoSave({
 				sSelf: \'oDraftAutoSave\',
 				sLastNote: \'draft_lastautosave\',
 				sLastID: \'id_draft\',

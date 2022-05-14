@@ -357,7 +357,7 @@ function template_edit_group()
 			<input type="hidden" name="', $context['admin-mmg_token_var'], '" value="', $context['admin-mmg_token'], '">
 		</form>
 	<script>
-		var oModeratorSuggest = new smc_AutoSuggest({
+		var oModeratorSuggest = new sb_autoSuggest({
 			sSelf: \'oModeratorSuggest\',
 			sSessionId: sb_session_id,
 			sSessionVar: sb_session_var,
@@ -694,7 +694,7 @@ function template_group_members()
 	if (!empty($context['group']['assignable']))
 		echo '
 	<script>
-		var oAddMemberSuggest = new smc_AutoSuggest({
+		var oAddMemberSuggest = new sb_autoSuggest({
 			sSelf: \'oAddMemberSuggest\',
 			sSessionId: \'', $context['session_id'], '\',
 			sSessionVar: \'', $context['session_var'], '\',

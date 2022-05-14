@@ -2055,7 +2055,7 @@ function create_control_verification(&$verificationOptions, $do_test = false)
 	if ($context['controls']['verification'][$verificationOptions['id']]['show_visual'])
 		$context['insert_after_template'] .= '
 			<script>
-				var verification' . $verificationOptions['id'] . 'Handle = new smfCaptcha("' . $thisVerification['image_href'] . '", "' . $verificationOptions['id'] . '", ' . ($context['use_graphic_library'] ? 1 : 0) . ');
+				var verification' . $verificationOptions['id'] . 'Handle = new sb_captcha("' . $thisVerification['image_href'] . '", "' . $verificationOptions['id'] . '", ' . ($context['use_graphic_library'] ? 1 : 0) . ');
 			</script>';
 
 	// If we want questions do we have a cache of all the IDs?

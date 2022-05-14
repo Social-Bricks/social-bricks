@@ -8,7 +8,7 @@
 		public checkUpdateAvailable()
 	}
 
-	smf_ViewVersions(oOptions)
+	sb_viewVersions(oOptions)
 	{
 		public init()
 		public loadViewVersions
@@ -64,14 +64,14 @@ sb_adminIndex.prototype.checkUpdateAvailable = function ()
 
 
 
-function smf_ViewVersions (oOptions)
+function sb_viewVersions (oOptions)
 {
 	this.opt = oOptions;
 	this.oSwaps = {};
 	this.init();
 }
 
-smf_ViewVersions.prototype.init = function ()
+sb_viewVersions.prototype.init = function ()
 {
 	// Load this on loading of the page.
 	window.viewVersionsInstanceRef = this;
@@ -81,12 +81,12 @@ smf_ViewVersions.prototype.init = function ()
 	addLoadEvent(fHandlePageLoaded);
 }
 
-smf_ViewVersions.prototype.loadViewVersions = function ()
+sb_viewVersions.prototype.loadViewVersions = function ()
 {
 	this.determineVersions();
 }
 
-smf_ViewVersions.prototype.swapOption = function (oSendingElement, sName)
+sb_viewVersions.prototype.swapOption = function (oSendingElement, sName)
 {
 	// If it is undefined, or currently off, turn it on - otherwise off.
 	this.oSwaps[sName] = !(sName in this.oSwaps) || !this.oSwaps[sName];
@@ -100,7 +100,7 @@ smf_ViewVersions.prototype.swapOption = function (oSendingElement, sName)
 	return false;
 }
 
-smf_ViewVersions.prototype.compareVersions = function (sCurrent, sTarget)
+sb_viewVersions.prototype.compareVersions = function (sCurrent, sTarget)
 {
 	var aVersions = aParts = new Array();
 	var aCompare = new Array(sCurrent, sTarget);
@@ -149,7 +149,7 @@ smf_ViewVersions.prototype.compareVersions = function (sCurrent, sTarget)
 	return false;
 }
 
-smf_ViewVersions.prototype.determineVersions = function ()
+sb_viewVersions.prototype.determineVersions = function ()
 {
 	var oHighYour = {
 		Sources: '??',
@@ -374,15 +374,6 @@ function createNamedElement(type, name, customFields)
 	}
 
 	return element;
-}
-
-function smfSetLatestThemes()
-{
-	if (typeof(window.smfLatestThemes) != "undefined")
-		setInnerHTML(document.getElementById("themeLatest"), window.smfLatestThemes);
-
-	if (tempOldOnload)
-		tempOldOnload();
 }
 
 function changeVariant(sVariant)

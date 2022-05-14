@@ -1,5 +1,5 @@
 // The draft save object
-function smf_DraftAutoSave(oOptions)
+function sb_draftAutoSave(oOptions)
 {
 	this.opt = oOptions;
 	this.bInDraftMode = false;
@@ -16,7 +16,7 @@ function smf_DraftAutoSave(oOptions)
 }
 
 // Start our self calling routine
-smf_DraftAutoSave.prototype.init = function ()
+sb_draftAutoSave.prototype.init = function ()
 {
 	if (this.opt.iFreq > 0)
 	{
@@ -43,7 +43,7 @@ smf_DraftAutoSave.prototype.init = function ()
 }
 
 // Moved away from the page, where did you go? ... till you return we pause autosaving
-smf_DraftAutoSave.prototype.draftBlur = function(oEvent, source)
+sb_draftAutoSave.prototype.draftBlur = function(oEvent, source)
 {
 	var e = $('#' + this.opt.sSceditorID).get(0);
 	if (sceditor.instance(e).inSourceMode() == source)
@@ -61,7 +61,7 @@ smf_DraftAutoSave.prototype.draftBlur = function(oEvent, source)
 }
 
 // Since you're back we resume the autosave timer
-smf_DraftAutoSave.prototype.draftFocus = function(oEvent, source)
+sb_draftAutoSave.prototype.draftFocus = function(oEvent, source)
 {
 	var e = $('#' + this.opt.sSceditorID).get(0);
 	if (sceditor.instance(e).inSourceMode() == source)
@@ -72,7 +72,7 @@ smf_DraftAutoSave.prototype.draftFocus = function(oEvent, source)
 }
 
 // Make the call to save this draft in the background
-smf_DraftAutoSave.prototype.draftSave = function ()
+sb_draftAutoSave.prototype.draftSave = function ()
 {
 	var e = $('#' + this.opt.sSceditorID).get(0);
 	var sPostdata = sceditor.instance(e).getText(true);
@@ -123,7 +123,7 @@ smf_DraftAutoSave.prototype.draftSave = function ()
 }
 
 // Make the call to save this PM draft in the background
-smf_DraftAutoSave.prototype.draftPMSave = function ()
+sb_draftAutoSave.prototype.draftPMSave = function ()
 {
 	var e = $('#' + this.opt.sSceditorID).get(0);
 	var sPostdata = sceditor.instance(e).getText();
@@ -168,7 +168,7 @@ smf_DraftAutoSave.prototype.draftPMSave = function ()
 }
 
 // Callback function of the XMLhttp request for saving the draft message
-smf_DraftAutoSave.prototype.onDraftDone = function (XMLDoc)
+sb_draftAutoSave.prototype.onDraftDone = function (XMLDoc)
 {
 	// If it is not valid then clean up
 	if (!XMLDoc || !XMLDoc.getElementsByTagName('draft'))
@@ -193,7 +193,7 @@ smf_DraftAutoSave.prototype.onDraftDone = function (XMLDoc)
 }
 
 // function to retrieve the to and bcc values from the pseudo arrays
-smf_DraftAutoSave.prototype.draftGetRecipient = function (sField)
+sb_draftAutoSave.prototype.draftGetRecipient = function (sField)
 {
 	var oRecipient = document.forms.postmodify.elements[sField];
 	var aRecipient = [];
@@ -214,7 +214,7 @@ smf_DraftAutoSave.prototype.draftGetRecipient = function (sField)
 }
 
 // If another auto save came in with one still pending
-smf_DraftAutoSave.prototype.draftCancel = function ()
+sb_draftAutoSave.prototype.draftCancel = function ()
 {
 	// can we do anything at all ... do we want to (e.g. sequence our async events?)
 	// @todo if not remove this function

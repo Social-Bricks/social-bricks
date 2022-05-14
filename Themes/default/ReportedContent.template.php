@@ -135,7 +135,7 @@ function template_reported_posts_block()
 		</div><!-- #reported_posts_panel -->
 
 		<script>
-			var oReportedPostsPanelToggle = new smc_Toggle({
+			var oReportedPostsPanelToggle = new sb_toggle({
 				bToggleEnabled: true,
 				bCurrentlyCollapsed: ', !empty($context['admin_prefs']['mcrp']) ? 'true' : 'false', ',
 				aSwappableContainers: [
@@ -349,7 +349,7 @@ function template_reported_members_block()
 		</div><!-- #reported_users_panel -->
 
 		<script>
-			var oReportedPostsPanelToggle = new smc_Toggle({
+			var oReportedPostsPanelToggle = new sb_toggle({
 				bToggleEnabled: true,
 				bCurrentlyCollapsed: ', !empty($context['admin_prefs']['mcrm']) ? 'true' : 'false', ',
 				aSwappableContainers: [

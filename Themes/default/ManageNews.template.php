@@ -116,7 +116,7 @@ function template_email_members()
 	// This is some javascript for the simple/advanced toggling and member suggest
 	echo '
 	<script>
-		var oAdvancedPanelToggle = new smc_Toggle({
+		var oAdvancedPanelToggle = new sb_toggle({
 			bToggleEnabled: true,
 			bCurrentlyCollapsed: true,
 			aSwappableContainers: [
@@ -139,7 +139,7 @@ function template_email_members()
 		});
 	</script>
 	<script>
-		var oMemberSuggest = new smc_AutoSuggest({
+		var oMemberSuggest = new sb_autoSuggest({
 			sSelf: \'oMemberSuggest\',
 			sSessionId: sb_session_id,
 			sSessionVar: sb_session_var,
@@ -153,7 +153,7 @@ function template_email_members()
 			sItemListContainerId: \'members_container\',
 			aListItems: []
 		});
-		var oExcludeMemberSuggest = new smc_AutoSuggest({
+		var oExcludeMemberSuggest = new sb_autoSuggest({
 			sSelf: \'oExcludeMemberSuggest\',
 			sSessionId: \'', $context['session_id'], '\',
 			sSessionVar: \'', $context['session_var'], '\',

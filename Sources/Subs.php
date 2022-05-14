@@ -4356,7 +4356,7 @@ function setupThemeContext($forceload = false)
 	if ($context['show_pm_popup'])
 		addInlineJavaScript('
 		jQuery(document).ready(function($) {
-			new smc_Popup({
+			new sb_popup({
 				heading: ' . JavaScriptEscape($txt['show_personal_messages_heading']) . ',
 				content: ' . JavaScriptEscape(sprintf($txt['show_personal_messages'], $context['user']['unread_messages'], $scripturl . '?action=pm')) . ',
 				icon_class: \'main_icons mail_new\'
@@ -5383,7 +5383,7 @@ function setupMenuContext()
 	if (!$context['user']['is_guest'])
 	{
 		addInlineJavaScript('
-	var user_menus = new smc_PopupMenu();
+	var user_menus = new sb_popupMenu();
 	user_menus.add("profile", "' . $scripturl . '?action=profile;area=popup");
 	user_menus.add("alerts", "' . $scripturl . '?action=profile;area=alerts_popup;u=' . $context['user']['id'] . '");', true);
 		if ($context['allow_pm'])
