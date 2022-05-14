@@ -101,7 +101,7 @@ function ModifySettings()
 		'cache' => 'ModifyCacheSettings',
 		'export' => 'ModifyExportSettings',
 		'loads' => 'ModifyLoadBalancingSettings',
-		'phpinfo' => 'ShowPHPinfoSettings',
+		'serverinfo' => 'ShowServerInfoSettings',
 	);
 
 	// By default we're editing the core settings
@@ -1701,11 +1701,28 @@ function saveDBSettings(&$config_vars)
  * - loads the settings into an array for display in a template
  * - drops cookie values just in case
  */
-function ShowPHPinfoSettings()
+function ShowServerInfoSettings()
 {
-	global $context, $txt;
+	global $context, $txt, $sourcedir;
 
 	$category = $txt['phpinfo_settings'];
+
+	// Get a list of current server versions.
+	require_once($sourcedir . '/Subs-Admin.php');
+	$checkFor = array(
+		'gd',
+		'imagemagick',
+		'db_server',
+		'apcu',
+		'memcacheimplementation',
+		'memcachedimplementation',
+		'sqlite',
+		'zend',
+		'filebased',
+		'php',
+		'server',
+	);
+	$context['current_versions'] = getServerVersions($checkFor);
 
 	// get the data
 	ob_start();
@@ -1739,7 +1756,7 @@ function ShowPHPinfoSettings()
 	// load it in to context and display it
 	$context['pinfo'] = $pinfo;
 	$context['page_title'] = $txt['admin_server_settings'];
-	$context['sub_template'] = 'php_info';
+	$context['sub_template'] = 'server_info';
 	return;
 }
 

@@ -4646,14 +4646,14 @@ function template_header()
  */
 function theme_copyright()
 {
-	global $forum_copyright, $scripturl;
+	global $forum_copyright;
 
 	// Don't display copyright for things like SSI.
 	if (SMF !== 1)
 		return;
 
 	// Put in the version...
-	printf($forum_copyright, SB_FULL_VERSION, SB_SOFTWARE_YEAR, $scripturl);
+	printf($forum_copyright, SB_FULL_VERSION, SB_SOFTWARE_YEAR);
 }
 
 /**

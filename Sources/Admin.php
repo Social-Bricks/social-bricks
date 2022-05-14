@@ -51,11 +51,6 @@ function AdminMain()
 					'function' => 'AdminHome',
 					'icon' => 'administration',
 				),
-				'credits' => array(
-					'label' => $txt['support_credits_title'],
-					'function' => 'AdminHome',
-					'icon' => 'support',
-				),
 				'news' => array(
 					'label' => $txt['news_title'],
 					'file' => 'ManageNews.php',
@@ -371,7 +366,7 @@ function AdminMain()
 						'cache' => array($txt['caching_settings']),
 						'export' => array($txt['export_settings']),
 						'loads' => array($txt['load_balancing_settings']),
-						'phpinfo' => array($txt['phpinfo_settings']),
+						'serverinfo' => array($txt['serverinfo_settings']),
 					),
 				),
 				'maintain' => array(
@@ -515,61 +510,20 @@ function AdminHome()
 	// You have to be able to do at least one of the below to see this page.
 	isAllowedTo(array('admin_forum', 'manage_permissions', 'moderate_forum', 'manage_membergroups', 'manage_bans', 'send_mail', 'edit_news', 'manage_boards', 'manage_smileys', 'manage_attachments'));
 
-	// Load the credits stuff.
-	require_once($sourcedir . '/Who.php');
-	Credits(true);
-
 	// This makes it easier to get the latest news with your time format.
 	$context['time_format'] = urlencode($user_info['time_format']);
 
-	// Get a list of current server versions.
-	require_once($sourcedir . '/Subs-Admin.php');
-	$checkFor = array(
-		'gd',
-		'imagemagick',
-		'db_server',
-		'apcu',
-		'memcacheimplementation',
-		'memcachedimplementation',
-		'sqlite',
-		'zend',
-		'filebased',
-		'php',
-		'server',
-	);
-	$context['current_versions'] = getServerVersions($checkFor);
-
-	$context['forum_version'] = SB_FULL_VERSION;
-
 	$context['can_admin'] = allowedTo('admin_forum');
 
-	$context['sub_template'] = $context['admin_area'] == 'credits' ? 'credits' : 'admin';
-	$context['page_title'] = $context['admin_area'] == 'credits' ? $txt['support_credits_title'] : $txt['admin_center'];
-	if ($context['admin_area'] != 'credits')
-		$context[$context['admin_menu_name']]['tab_data'] = array(
-			'title' => $txt['admin_center'],
-			'help' => '',
-			'description' => '',
-		);
-
-	// Lastly, fill in the blanks in the support resources paragraphs.
-	$txt['support_resources_p1'] = sprintf($txt['support_resources_p1'],
-		'https://wiki.simplemachines.org/',
-		'https://wiki.simplemachines.org/smf/features2',
-		'https://wiki.simplemachines.org/smf/options2',
-		'https://wiki.simplemachines.org/smf/themes2',
-		'https://wiki.simplemachines.org/smf/packages2'
-	);
-	$txt['support_resources_p2'] = sprintf($txt['support_resources_p2'],
-		'https://www.simplemachines.org/community/',
-		'https://www.simplemachines.org/redirect/english_support',
-		'https://www.simplemachines.org/redirect/international_support_boards',
-		'https://www.simplemachines.org/redirect/smf_support',
-		'https://www.simplemachines.org/redirect/customize_support'
+	$context['sub_template'] = 'admin';
+	$context['page_title'] = $txt['admin_center'];
+	$context[$context['admin_menu_name']]['tab_data'] = array(
+		'title' => $txt['admin_center'],
+		'help' => '',
+		'description' => '',
 	);
 
-	if ($context['admin_area'] == 'admin')
-		loadJavaScriptFile('admin.js', array('defer' => false, 'minimize' => true), 'sb_admin');
+	loadJavaScriptFile('admin.js', array('defer' => false, 'minimize' => true), 'sb_admin');
 }
 
 /**

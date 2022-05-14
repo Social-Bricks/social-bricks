@@ -244,23 +244,6 @@ fieldset.admin_group .inactive {
 	background-position: -5px -215px;
 }
 
-/* Styles for the support and credits page.
-/* Hey, people might actually want to put their names on it now!
-/* Only a couple of trivial markup hacks that wont break any mods or themes.
-/* The older I get, the more devious I get. :D
-/* Nobody ever themes admin anyway. That's why it looked like crap. */
-#support_credits_list dl {
-	padding: 0 6px;
-}
-#support_credits_list dt {
-	float: left;
-	padding: 6px 0.8em 0 0;
-	text-indent: -4px;
-}
-#support_credits_list dd {
-	padding: 6px 0;
-}
-
 /* Styles for the package manager. */
 #package_list .tborder {
 	margin: .25em 0 .25em 26px;
@@ -545,9 +528,6 @@ ul.moderation_notes li {
 	border-right: 1px solid #ddd;
 }
 
-#support_credits .sub_bar {
-	padding: 6px 0px 5px 0px;
-}
 #taskpad .button, #admin_form_wrapper {
 	margin: 5px 0 5px 0;
 }

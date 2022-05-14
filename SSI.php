@@ -268,12 +268,12 @@ function ssi_software_year($output_method = 'echo')
  */
 function ssi_copyright($output_method = 'echo')
 {
-	global $forum_copyright, $scripturl;
+	global $forum_copyright;
 
 	if ($output_method == 'echo')
-		printf($forum_copyright, SB_FULL_VERSION, SB_SOFTWARE_YEAR, $scripturl);
+		printf($forum_copyright, SB_FULL_VERSION, SB_SOFTWARE_YEAR);
 	else
-		return sprintf($forum_copyright, SB_FULL_VERSION, SB_SOFTWARE_YEAR, $scripturl);
+		return sprintf($forum_copyright, SB_FULL_VERSION, SB_SOFTWARE_YEAR);
 }
 
 /**

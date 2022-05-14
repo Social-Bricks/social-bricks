@@ -1,3 +1,5 @@
+# Social Bricks
+
 Social Bricks is the result of collaborations over the years.
 
 Contributors:
@@ -6,6 +8,8 @@ Peter "Arantor" Spicer
 Other contributors may be listed in the GitHub repository.
 
 --
+
+## Simple Machines
 
 It is also based on the work of the Simple Machines project, including: (in alphabetical order)
 
@@ -109,3 +113,33 @@ Will "Kindred" Wagner.
 "ziycon"
 
 Other contributors may be listed in the GitHub history.
+
+--
+
+## Other components
+
+### Graphics
+
+* [Fugue Icons](http://p.yusukekamiyamane.com/) | © 2012 Yusuke Kamiyamane | These icons are licensed under a Creative Commons Attribution 3.0 License
+* [Oxygen Icons](https://techbase.kde.org/Projects/Oxygen/Licensing#Use_on_Websites) | These icons are licensed under GNU LGPLv3
+
+### Libraries
+
+* [JQuery](https://jquery.org/) | © John Resig | Licensed under The MIT License (MIT)
+* [hoverIntent](https://briancherne.github.io/jquery-hoverIntent/) | © Brian Cherne | Licensed under The MIT License (MIT)
+* [SCEditor](https://www.sceditor.com/) | © Sam Clarke | Licensed under The MIT License (MIT)
+* [animaDrag](http://wayfarerweb.com/jquery/plugins/animadrag/) | © Abel Mohler | Licensed under The MIT License (MIT)
+* [jQuery Custom Scrollbar](https://github.com/mzubala/jquery-custom-scrollbar) | © Maciej Zubala | Licensed under The MIT License (MIT)
+* [jQuery Responsive Slider](http://slippry.com/) | © booncon ROCKETS | Licensed under The MIT License (MIT)
+* [At.js](https://github.com/ichord/At.js) | © chord.luo@gmail.com | Licensed under The MIT License (MIT)
+* [HTML5 Desktop Notifications](https://github.com/ttsvetko/HTML5-Desktop-Notifications) | © Tsvetan Tsvetkov | Licensed under The Apache License Version 2.0
+* [GAuth Code Generator/Validator](https://github.com/enygma/gauth) | © Chris Cornutt | Licensed under The MIT License (MIT)
+* [Dropzone.js](https://github.com/enyo/dropzone) | © Matias Meno | Licensed under The MIT License (MIT)
+* [Minify](https://github.com/matthiasmullie/minify) | © Matthias Mullie | Licensed under The MIT License (MIT)
+* [PHP-Punycode](https://github.com/true/php-punycode) | © True B.V. | Licensed under The MIT License (MIT)
+
+### Fonts
+
+* [Anonymous Pro](https://fontlibrary.org/en/font/anonymous-pro) | © 2009 | This font is licensed under the SIL Open Font License, Version 1.1
+* [ConsolaMono](https://fontlibrary.org/en/font/consolamono) | © 2012 | This font is licensed under the SIL Open Font License, Version 1.1
+* [Phennig](https://fontlibrary.org/en/font/phennig) | © 2009-2012 | This font is licensed under the SIL Open Font License, Version 1.1

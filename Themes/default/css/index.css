@@ -1315,7 +1315,6 @@ ul li.greeting {
 	flex: none;
 }
 #footer li, #footer p, #footer a {
-	font-size: 0.9em;
 	color: #fff;
 }
 #footer li.copyright {
@@ -1709,9 +1708,6 @@ dl.register_form dd {
 
 tr.windowbg td, tr.bg td, .table_grid tr td {
 	padding: 4px 8px;
-}
-#credits p {
-	font-style: italic;
 }
 
 .errorfile_table {

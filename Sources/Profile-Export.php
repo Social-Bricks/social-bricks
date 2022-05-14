@@ -845,7 +845,7 @@ function get_xslt_stylesheet($format, $uid)
 				'value' => $export_formats[$format]['extension'],
 			),
 			'forum_copyright' => array(
-				'value' => sprintf($forum_copyright, SB_FULL_VERSION, SB_SOFTWARE_YEAR, $scripturl),
+				'value' => sprintf($forum_copyright, SB_FULL_VERSION, SB_SOFTWARE_YEAR),
 			),
 			'txt_summary_heading' => array(
 				'value' => $txt['summary'],
