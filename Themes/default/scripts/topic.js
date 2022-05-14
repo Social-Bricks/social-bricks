@@ -727,7 +727,7 @@ $(function() {
 			type: 'GET',
 			url: obj.attr('href') + ';js=1',
 			headers: {
-				"X-SMF-AJAX": 1
+				"X-SOCIALBRICKS-AJAX": 1
 			},
 			xhrFields: {
 				withCredentials: typeof allow_xhjr_credentials !== "undefined" ? allow_xhjr_credentials : false

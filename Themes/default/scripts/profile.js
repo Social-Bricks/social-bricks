@@ -95,7 +95,7 @@ function ajax_getSignaturePreview (showPreview)
 		type: "POST",
 		url: sb_scripturl + "?action=xmlhttp;sa=previews;xml",
 		headers: {
-			"X-SMF-AJAX": 1
+			"X-SOCIALBRICKS-AJAX": 1
 		},
 		xhrFields: {
 			withCredentials: typeof allow_xhjr_credentials !== "undefined" ? allow_xhjr_credentials : false

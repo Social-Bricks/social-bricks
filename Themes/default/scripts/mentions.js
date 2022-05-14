@@ -37,7 +37,7 @@ var atwhoConfig = {
 				url: sb_scripturl + '?action=suggest;' + sb_session_var + '=' + sb_session_id + ';xml',
 				method: 'GET',
 				headers: {
-					"X-SMF-AJAX": 1
+					"X-SOCIALBRICKS-AJAX": 1
 				},
 				xhrFields: {
 					withCredentials: typeof allow_xhjr_credentials !== "undefined" ? allow_xhjr_credentials : false

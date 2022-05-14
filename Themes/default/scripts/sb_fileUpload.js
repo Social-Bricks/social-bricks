@@ -197,7 +197,7 @@ function sb_fileUpload(oOptions) {
 						url: sb_prepareScriptUrl(sb_scripturl) + 'action=uploadAttach;sa=delete;attach=' + attachmentId + ';' + sb_session_var + '=' + sb_session_id + (current_board ? ';board=' + current_board : ''),
 						type: 'GET',
 						headers: {
-							"X-SMF-AJAX": 1
+							"X-SOCIALBRICKS-AJAX": 1
 						},
 						xhrFields: {
 							withCredentials: typeof allow_xhjr_credentials !== "undefined" ? allow_xhjr_credentials : false

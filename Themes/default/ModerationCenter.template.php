@@ -644,7 +644,7 @@ function template_warn_template()
 			$.ajax({
 				type: "POST",
 				headers: {
-					"X-SMF-AJAX": 1
+					"X-SOCIALBRICKS-AJAX": 1
 				},
 				xhrFields: {
 					withCredentials: typeof allow_xhjr_credentials !== "undefined" ? allow_xhjr_credentials : false

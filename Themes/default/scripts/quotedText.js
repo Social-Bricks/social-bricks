@@ -71,7 +71,7 @@ function quotedTextClick(oOptions)
 			url: sb_prepareScriptUrl(sb_scripturl) + 'action=quotefast;quote=' + oOptions.msgID + ';xml;pb='+ oEditorID + ';mode=' + (oEditorObject.bRichTextEnabled ? 1 : 0),
 			type: 'GET',
 			headers: {
-				"X-SMF-AJAX": 1
+				"X-SOCIALBRICKS-AJAX": 1
 			},
 			xhrFields: {
 				withCredentials: typeof allow_xhjr_credentials !== "undefined" ? allow_xhjr_credentials : false

@@ -1490,7 +1490,7 @@ function corsPolicyHeader($set_header = true)
 		$context['valid_cors_found'] = 'same';
 	}
 
-	$context['cors_headers'] = 'X-SMF-AJAX';
+	$context['cors_headers'] = 'X-SOCIALBRICKS-AJAX';
 
 	// Any additional headers?
 	if (!empty($modSettings['cors_headers']))

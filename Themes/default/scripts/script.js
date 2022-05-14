@@ -43,7 +43,7 @@ function getServerResponse(sUrl, funcCallback, sType, sDataType)
 		type: sType,
 		url: sUrl,
 		headers: {
-			"X-SMF-AJAX": 1
+			"X-SOCIALBRICKS-AJAX": 1
 		},
 		xhrFields: {
 			withCredentials: typeof allow_xhjr_credentials !== "undefined" ? allow_xhjr_credentials : false
@@ -68,7 +68,7 @@ function getXMLDocument(sUrl, funcCallback)
 		type: 'GET',
 		url: sUrl,
 		headers: {
-			"X-SMF-AJAX": 1
+			"X-SOCIALBRICKS-AJAX": 1
 		},
 		xhrFields: {
 			withCredentials: typeof allow_xhjr_credentials !== "undefined" ? allow_xhjr_credentials : false
@@ -92,7 +92,7 @@ function sendXMLDocument(sUrl, sContent, funcCallback)
 		type: 'POST',
 		url: sUrl,
 		headers: {
-			"X-SMF-AJAX": 1
+			"X-SOCIALBRICKS-AJAX": 1
 		},
 		xhrFields: {
 			withCredentials: typeof allow_xhjr_credentials !== "undefined" ? allow_xhjr_credentials : false
@@ -354,7 +354,7 @@ function reqOverlayDiv(desktopURL, sHeader, sIcon)
 	$.ajax({
 		url: desktopURL + ';ajax',
 		headers: {
-			'X-SMF-AJAX': 1
+			'X-SOCIALBRICKS-AJAX': 1
 		},
 		xhrFields: {
 			withCredentials: typeof allow_xhjr_credentials !== "undefined" ? allow_xhjr_credentials : false
@@ -423,7 +423,7 @@ smc_PopupMenu.prototype.open = function (sItem)
 		$.ajax({
 			url: this.opt.menus[sItem].sUrl + ';ajax',
 			headers: {
-				'X-SMF-AJAX': 1
+				'X-SOCIALBRICKS-AJAX': 1
 			},
 			xhrFields: {
 				withCredentials: typeof allow_xhjr_credentials !== "undefined" ? allow_xhjr_credentials : false
