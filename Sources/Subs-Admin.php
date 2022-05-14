@@ -7,7 +7,7 @@
  *
  * @package SocialBricks
  * @author Simple Machines https://www.simplemachines.org
- * @copyright 2022 Simple Machines and individual contributors
+ * @copyright 2022 Social Bricks contributors (full details see LICENSE file)
  * @license 3-clause BSD (see accompanying LICENSE file)
  *
  * @version 2.1.2
@@ -348,7 +348,7 @@ function get_settings_defs()
 				' *',
 				' * @package SocialBricks',
 				' * @author Simple Machines https://www.simplemachines.org',
-				' * @copyright ' . SB_SOFTWARE_YEAR . ' Simple Machines and individual contributors',
+				' * @copyright ' . SB_SOFTWARE_YEAR . ' Social Bricks contributors (full details see LICENSE file)',
 				' * @license 3-clause BSD (see accompanying LICENSE file)',
 				' *',
 				' * @version ' . SB_VERSION,
