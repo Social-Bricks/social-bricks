@@ -1836,7 +1836,7 @@ function template_install_above()
 	<div id="footerfix">
 	<div id="header">
 		<h1 class="forumtitle">', $txt['sb_installer'], '</h1>
-		<img id="smflogo" src="Themes/default/images/smflogo.svg" alt="Simple Machines Forum" title="Simple Machines Forum">
+		<img id="smflogo" src="Themes/default/images/smflogo.svg" alt="Social Bricks" title="Social Bricks">
 	</div>
 	<div id="wrapper">';
 
@@ -1928,7 +1928,7 @@ function template_install_below()
 	</div><!-- #footerfix -->
 	<div id="footer">
 		<ul>
-			<li class="copyright"><a href="https://www.simplemachines.org/" title="Simple Machines Forum" target="_blank" rel="noopener">' . SB_FULL_VERSION . ' &copy; ' . SB_SOFTWARE_YEAR . ', Simple Machines</a></li>
+			<li class="copyright"><a href="https://socialbricks.org/" title="Social Bricks" target="_blank" rel="noopener">' . SB_FULL_VERSION . ' &copy; ' . SB_SOFTWARE_YEAR . ', Social Bricks</a></li>
 		</ul>
 	</div>
 </body>

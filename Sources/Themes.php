@@ -1385,9 +1385,9 @@ function InstallCopy()
 <!-- Theme name, used purely for aesthetics. -->
 <name>' . $context['to_install']['name'] . '</name>
 <!-- Author: your email address or contact information. The name attribute is optional. -->
-<author name="Simple Machines">info@simplemachines.org</author>
+<author name="Social Bricks">noreply@socialbricks.org</author>
 <!-- Website... where to get updates and more information. -->
-<website>https://www.simplemachines.org/</website>
+<website>https://socialbricks.org/</website>
 <!-- Template layers to use, defaults to "html,body". -->
 <layers>' . $context['to_install']['theme_layers'] . '</layers>
 <!-- Templates to load on startup. Default is "index". -->

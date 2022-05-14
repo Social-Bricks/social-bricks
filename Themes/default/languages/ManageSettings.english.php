@@ -348,12 +348,12 @@ $txt['lang_entries_not_writable'] = '<strong>Warning:</strong> The language file
 $txt['languages_ltr'] = 'Right to Left';
 
 $txt['add_language'] = 'Add Language';
-$txt['add_language_smf'] = 'Download from Simple Machines';
+$txt['add_language_smf'] = 'Download from Social Bricks';
 $txt['add_language_smf_browse'] = 'Type name of language to search for or leave blank to search for all.';
 $txt['add_language_smf_install'] = 'Install';
 $txt['add_language_found_title'] = 'Found Languages';
 $txt['add_language_smf_found'] = 'The following languages were found. Click the install link next to the language you wish to install. You will then be taken to the package manager to install.';
-$txt['add_language_error_no_response'] = 'The Simple Machines site is not responding. Please try again later.';
+$txt['add_language_error_no_response'] = 'The Social Bricks site is not responding. Please try again later.';
 $txt['add_language_error_no_files'] = 'No files could be found.';
 $txt['add_language_smf_desc'] = 'Description';
 $txt['add_language_smf_utf8'] = 'UTF-8';
@@ -390,7 +390,7 @@ $txt['languages_download_exists_same'] = 'Identical';
 $txt['languages_download_exists_different'] = 'Different';
 $txt['languages_download_overwrite'] = 'Overwrite';
 $txt['languages_download_not_chmod'] = 'You cannot proceed with the installation until all files selected to be copied are writable.';
-$txt['languages_download_illegal_paths'] = 'Package contains illegal paths - please contact Simple Machines';
+$txt['languages_download_illegal_paths'] = 'Package contains illegal paths - please contact Social Bricks';
 $txt['languages_download_complete'] = 'Installation Complete';
 $txt['languages_download_complete_desc'] = 'Language pack installed successfully. Please click <a href="%1$s">here</a> to return to the languages page';
 $txt['languages_delete_confirm'] = 'Are you sure you want to delete this language?';

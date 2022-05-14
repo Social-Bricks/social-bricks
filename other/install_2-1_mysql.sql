@@ -1845,17 +1845,7 @@ VALUES ('xx', 'Standard', '0'),
 
 INSERT INTO {$db_prefix}messages
 	(id_msg, id_msg_modified, id_topic, id_board, poster_time, subject, poster_name, poster_email, modified_name, body, icon)
-VALUES (1, 1, 1, 1, UNIX_TIMESTAMP(), '{$default_topic_subject}', 'Simple Machines', 'info@simplemachines.org', '', '{$default_topic_message}', 'xx');
-# --------------------------------------------------------
-
-#
-# Dumping data for table `package_servers`
-#
-
-INSERT INTO {$db_prefix}package_servers
-	(name, url, validation_url)
-VALUES ('Simple Machines Third-party Mod Site', 'https://custom.simplemachines.org/packages/mods', 'https://custom.simplemachines.org/api.php?action=validate;version=v1;smf_version={SB_VERSION}'),
-		('Simple Machines Downloads Site', 'https://download.simplemachines.org/browse.php?api=v1;smf_version={SB_VERSION}', 'https://download.simplemachines.org/validate.php?api=v1;smf_version={SB_VERSION}');
+VALUES (1, 1, 1, 1, UNIX_TIMESTAMP(), '{$default_topic_subject}', 'Social Bricks', 'noreply@socialbricks.org', '', '{$default_topic_message}', 'xx');
 # --------------------------------------------------------
 
 #

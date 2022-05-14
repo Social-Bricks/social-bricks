@@ -1,9 +1,7 @@
 <?php
 // Version: 2.1.0; Manual
 
-/* Everything in this file is for the Simple Machines help manual
-   If you are looking at translating the manual into another language
-   please visit the Simple Machines website for tools to assist! */
+/* Everything in this file is for the Social Bricks help manual. */
 
 $txt['manual_user_help'] = 'User Help';
 

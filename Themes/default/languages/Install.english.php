@@ -183,10 +183,10 @@ $txt['error_mod_security_no_write'] = 'The installer has detected the mod_securi
 $txt['error_utf8_version'] = 'The current version of your database doesn\'t support the use of the UTF-8 character set. You can still install Social Bricks without any problems, but only with UTF-8 support unchecked. If you would like to switch over to UTF-8 in the future (e.g. after the database server of your forum has been upgraded to version >= %1$s), you can convert your forum to UTF-8 through the admin panel.';
 $txt['error_valid_admin_email_needed'] = 'You have not entered a valid email address for your administrator account.';
 $txt['error_valid_server_email_needed'] = 'You have not entered a valid webmaster email address.';
-$txt['error_already_installed'] = 'The installer has detected that you already have Social Bricks installed. It is strongly advised that you do <strong>not</strong> try to overwrite an existing installation, continuing with installation <strong>may result in the loss or corruption of existing data</strong>.<br><br>If you wish to upgrade please visit the <a href="https://www.simplemachines.org">Simple Machines Website</a> and download the latest <em>upgrade</em> package.<br><br>If you wish to overwrite your existing installation, including all data, it is recommended that you delete the existing database tables and replace Settings.php and try again.';
+$txt['error_already_installed'] = 'The installer has detected that you already have Social Bricks installed. It is strongly advised that you do <strong>not</strong> try to overwrite an existing installation, continuing with installation <strong>may result in the loss or corruption of existing data</strong>.<br><br>If you wish to upgrade please visit the <a href="https://socialbricks.org">Social Bricks website</a> and download the latest <em>upgrade</em> package.<br><br>If you wish to overwrite your existing installation, including all data, it is recommended that you delete the existing database tables and replace Settings.php and try again.';
 $txt['error_warning_notice'] = 'Warning!';
 $txt['error_script_outdated'] = 'This install script is out of date! The current version of Social Bricks is %1$s, but this install script is for %2$s.<br><br>
-	It is recommended that you visit the <a href="https://www.simplemachines.org">Simple Machines</a> website to ensure you are installing the latest version.';
+	It is recommended that you visit the <a href="https://socialbricks.org/">Social Bricks website</a> to ensure you are installing the latest version.';
 $txt['error_invalid_characters_username'] = 'Invalid character used in Username.';
 $txt['error_username_too_long'] = 'Username may only be up to 25 characters long.';
 $txt['error_username_left_empty'] = 'Username field was left empty.';
@@ -305,15 +305,15 @@ $txt['upgrade_ftp_shell'] = 'If you have a shell account, the command below can 
 $txt['upgrade_ftp_error'] = 'The following error was encountered when trying to connect:';
 
 $txt['upgrade_ready_proceed'] = 'Thank you for choosing to upgrade to Social Bricks %1$s. All files appear to be in place and the upgrade can now proceed.';
-$txt['upgrade_error_script_js'] = 'The upgrade script cannot find script.js or it is out of date. Make sure your theme paths are correct. You can download a setting checker tool from the <a href="%1$s">Simple Machines Website</a>';
+$txt['upgrade_error_script_js'] = 'The upgrade script cannot find script.js or it is out of date. Make sure your theme paths are correct. You can download a setting checker tool from the <a href="%1$s">Social Bricks website</a>';
 $txt['upgrade_warning_lots_data'] = 'This upgrade script has detected that your forum contains a lot of data which needs upgrading. This process may take quite some time depending on your server and forum size, and for very large forums (~300,000 messages) may take several hours to complete.';
-$txt['upgrade_warning_out_of_date'] = 'This upgrade script is out of date! The current version of Social Bricks is <em id="sbVersion" style="white-space: nowrap;">??</em> but this upgrade script is for <em id="yourVersion" style="white-space: nowrap;">%1$s</em>.<br><br>It is recommended that you visit the <a href="%2$s">Simple Machines Website</a> to ensure you are upgrading to the latest version.';
+$txt['upgrade_warning_out_of_date'] = 'This upgrade script is out of date! The current version of Social Bricks is <em id="sbVersion" style="white-space: nowrap;">??</em> but this upgrade script is for <em id="yourVersion" style="white-space: nowrap;">%1$s</em>.<br><br>It is recommended that you visit the <a href="%2$s">Social Bricks website</a> to ensure you are upgrading to the latest version.';
 
 $txt['upgrade_forumdir_settings'] = 'It looks as if your forum directory settings <em>might</em> be incorrect. Your forum directory is currently set to &quot;%1$s&quot;, but should probably be &quot;%2$s&quot;. Settings.php currently lists your paths as:';
 $txt['upgrade_forumdir'] = 'Forum Directory:';
 $txt['upgrade_sourcedir'] = 'Source Directory:';
 $txt['upgrade_cachedir'] = 'Cache Directory:';
-$txt['upgrade_incorrect_settings'] = 'If these seem incorrect please open Settings.php in a text editor before proceeding with this upgrade. If they are incorrect due to you moving your forum to a new location please download and execute the <a href="https://download.simplemachines.org/?tools">Repair Settings</a> tool from the Simple Machines website before continuing.';
+$txt['upgrade_incorrect_settings'] = 'If these seem incorrect please open Settings.php in a text editor before proceeding with this upgrade.';
 
 $txt['upgrade_fulltext_error'] = 'Your fulltext search index was dropped to facilitate the conversion. You will need to recreate it.';
 $txt['upgrade_writable_files'] = 'The following files need to be writable to continue the upgrade. Please ensure the Windows permissions are correctly set to allow this:';
