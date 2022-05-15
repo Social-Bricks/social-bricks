@@ -14,8 +14,6 @@
  * @version 2.1.0
  */
 
-loadLanguage('Drafts');
-
 /**
  * Saves a post draft in the user_drafts table
  * The core draft feature must be enabled, as well as the post draft option
@@ -424,6 +422,8 @@ function ShowDrafts($member_id, $topic = false, $draft_type = 0)
 {
 	global $smcFunc, $scripturl, $context, $txt, $modSettings;
 
+	loadLanguage('Drafts');
+
 	// Permissions
 	if (($draft_type === 0 && empty($context['drafts_save'])) || ($draft_type === 1 && empty($context['drafts_pm_save'])) || empty($member_id))
 		return false;
@@ -492,6 +492,8 @@ function XmlDraft($id_draft)
 {
 	global $txt, $context;
 
+	loadLanguage('Drafts');
+
 	header('content-type: text/xml; charset=' . (empty($context['character_set']) ? 'ISO-8859-1' : $context['character_set']));
 
 	echo '<?xml version="1.0" encoding="', $context['character_set'], '"?>
@@ -513,6 +515,8 @@ function XmlDraft($id_draft)
 function showProfileDrafts($memID, $draft_type = 0)
 {
 	global $txt, $scripturl, $modSettings, $context, $smcFunc, $options;
+
+	loadLanguage('Drafts');
 
 	// Some initial context.
 	$context['start'] = isset($_REQUEST['start']) ? (int) $_REQUEST['start'] : 0;
@@ -679,6 +683,8 @@ function showProfileDrafts($memID, $draft_type = 0)
 function showPMDrafts($memID = -1)
 {
 	global $txt, $user_info, $scripturl, $modSettings, $context, $smcFunc, $options;
+
+	loadLanguage('Drafts');
 
 	// init
 	$draft_type = 1;
