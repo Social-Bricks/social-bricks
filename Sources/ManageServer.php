@@ -172,6 +172,7 @@ function ModifyGeneralSettings($return_config = false)
 		return $config_vars;
 
 	// If no cert, force_ssl must remain 0 (The admin search doesn't require this)
+	require_once($sourcedir . '/Subs-Server.php');
 	$config_vars['force_ssl']['disabled'] = empty($modSettings['force_ssl']) && !ssl_cert_found($boardurl);
 
 	// Setup the template stuff.

@@ -944,6 +944,7 @@ function ForumSettings()
 
 	// If redirect in effect, force ssl ON
 	require_once(dirname(__FILE__) . '/Sources/Subs.php');
+	require_once(dirname(__FILE__) . '/Sources/Subs-Server.php');
 	if (https_redirect_active($incontext['detected_url']))
 	{
 		$incontext['ssl_chkbx_protected'] = true;
