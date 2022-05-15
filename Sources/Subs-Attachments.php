@@ -14,6 +14,8 @@
  * @version 2.1.2
  */
 
+use SocialBricks\Tasks\Background\CreateAttachmentNotify;
+
 /**
  * Check if the current directory is still valid or not.
  * If not creates the new directory
@@ -805,29 +807,9 @@ function createAttachment(&$attachmentOptions)
 		);
 
 		// Queue background notification task.
-		$smcFunc['db_insert'](
-			'insert',
-			'{db_prefix}background_tasks',
-			array(
-				'task_file' => 'string',
-				'task_class' => 'string',
-				'task_data' => 'string',
-				'claimed_time' => 'int'
-			),
-			array(
-					'$sourcedir/tasks/CreateAttachment-Notify.php',
-					'CreateAttachment_Notify_Background',
-					$smcFunc['json_encode'](
-						array(
-							'id' => $attachmentOptions['id'],
-						)
-					),
-				0
-			),
-			array(
-				'id_task'
-			)
-		);
+		CreateAttachmentNotify::queue(array(
+			'id' => $attachmentOptions['id'],
+		));
 	}
 
 	if (empty($modSettings['attachmentThumbnails']) || (empty($attachmentOptions['width']) && empty($attachmentOptions['height'])))

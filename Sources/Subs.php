@@ -13,6 +13,8 @@
  * @version 2.1.2
  */
 
+use SocialBricks\Tasks\Background\UpdateTLDRegex;
+
 /**
  * Update some basic statistics.
  *
@@ -1527,10 +1529,7 @@ function parse_bbc($message, $smileys = true, $cache_id = '', $parse_tags = arra
 
 	// Ensure $modSettings['tld_regex'] contains a valid regex for the autolinker
 	if (!empty($modSettings['autoLinkUrls']))
-	{
-		require_once($sourcedir . '/tasks/UpdateTldRegex.php');
-		Update_TLD_Regex::set_tld_regex();
-	}
+		UpdateTLDRegex::set_tld_regex();
 
 	// Allow mods access before entering the main parse_bbc loop
 	if ($message !== false)

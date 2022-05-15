@@ -13,10 +13,12 @@
  * @version 2.1.0
  */
 
+namespace SocialBricks\Tasks\Background;
+
 /**
- * Class Update_TLD_Regex
+ * Class UpdateTLDRegex
  */
-class Update_TLD_Regex extends SB_BackgroundTask
+class UpdateTLDRegex extends AbstractTask
 {
 	/**
 	 * This executes the task. It just calls set_tld_regex() in Subs.php
@@ -138,10 +140,7 @@ class Update_TLD_Regex extends SB_BackgroundTask
 			// Schedule a background update, unless civilization has collapsed and/or we are having connectivity issues.
 			if (empty($postapocalypticNightmare))
 			{
-				$smcFunc['db_insert']('insert', '{db_prefix}background_tasks',
-					array('task_file' => 'string-255', 'task_class' => 'string-255', 'task_data' => 'string', 'claimed_time' => 'int'),
-					array('$sourcedir/tasks/UpdateTldRegex.php', 'Update_TLD_Regex', '', 0), array()
-				);
+				static::queue();
 			}
 		}
 

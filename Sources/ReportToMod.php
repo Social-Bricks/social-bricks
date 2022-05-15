@@ -12,6 +12,8 @@
  * @version 2.1.0
  */
 
+use SocialBricks\Tasks\Background\MemberReportNotify;
+
 /**
  * Report a post or profile to the moderator... ask for a comment.
  * Gathers data from the user to report abuse to the moderator(s).
@@ -441,20 +443,15 @@ function reportUser($id_member, $reason)
 		);
 
 		// And get ready to notify people.
-		$smcFunc['db_insert']('insert',
-			'{db_prefix}background_tasks',
-			array('task_file' => 'string', 'task_class' => 'string', 'task_data' => 'string', 'claimed_time' => 'int'),
-			array('$sourcedir/tasks/MemberReport-Notify.php', 'MemberReport_Notify_Background', $smcFunc['json_encode'](array(
-				'report_id' => $id_report,
-				'user_id' => $user['id_member'],
-				'user_name' => $user_name,
-				'sender_id' => $context['user']['id'],
-				'sender_name' => $context['user']['name'],
-				'comment' => $reason,
-				'time' => time(),
-			)), 0),
-			array('id_task')
-		);
+		MemberReportNotify::queue(array(
+			'report_id' => $id_report,
+			'user_id' => $user['id_member'],
+			'user_name' => $user_name,
+			'sender_id' => $context['user']['id'],
+			'sender_name' => $context['user']['name'],
+			'comment' => $reason,
+			'time' => time(),
+		));
 	}
 
 	// Keep track of when the mod reports get updated, that way we know when we need to look again.

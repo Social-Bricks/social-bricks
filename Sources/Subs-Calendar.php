@@ -13,6 +13,8 @@
  * @version 2.1.2
  */
 
+use SocialBricks\Tasks\Background\EventNewNotify;
+
 /**
  * Get all birthdays within the given time range.
  * finds all the birthdays in the specified range of days.
@@ -1188,18 +1190,13 @@ function insertEvent(&$eventOptions)
 	// If this isn't tied to a topic, we need to notify people about it.
 	if (empty($eventOptions['topic']))
 	{
-		$smcFunc['db_insert']('insert',
-			'{db_prefix}background_tasks',
-			array('task_file' => 'string', 'task_class' => 'string', 'task_data' => 'string', 'claimed_time' => 'int'),
-			array('$sourcedir/tasks/EventNew-Notify.php', 'EventNew_Notify_Background', $smcFunc['json_encode'](array(
-				'event_title' => $eventOptions['title'],
-				'event_id' => $eventOptions['id'],
-				'sender_id' => $eventOptions['member'],
-				'sender_name' => $eventOptions['member'] == $context['user']['id'] ? $context['user']['name'] : '',
-				'time' => time(),
-			)), 0),
-			array('id_task')
-		);
+		EventNewNotify::queue(array(
+			'event_title' => $eventOptions['title'],
+			'event_id' => $eventOptions['id'],
+			'sender_id' => $eventOptions['member'],
+			'sender_name' => $eventOptions['member'] == $context['user']['id'] ? $context['user']['name'] : '',
+			'time' => time(),
+		));
 	}
 
 	// Update the settings to show something calendar-ish was updated.

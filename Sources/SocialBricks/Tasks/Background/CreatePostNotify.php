@@ -15,10 +15,12 @@
  * @version 2.1.2
  */
 
+namespace SocialBricks\Tasks\Background;
+
 /**
- * Class CreatePost_Notify_Background
+ * Class CreatePostNotify
  */
-class CreatePost_Notify_Background extends SB_BackgroundTask
+class CreatePostNotify extends AbstractTask
 {
 	/**
 	 * Constants for reply types.
@@ -328,8 +330,8 @@ class CreatePost_Notify_Background extends SB_BackgroundTask
 						'claimed_time' => 'int',
 					),
 					array(
-						'$sourcedir/tasks/CreatePost-Notify.php',
-						'CreatePost_Notify_Background',
+						'',
+						CreatePostNotify::class,
 						$smcFunc['json_encode']($new_details),
 						max(0, $this->mention_mail_time - MAX_CLAIM_THRESHOLD),
 					),

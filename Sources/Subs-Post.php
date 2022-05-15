@@ -15,6 +15,11 @@
  * @version 2.1.0
  */
 
+use SocialBricks\Tasks\Background\ApprovePostNotify;
+use SocialBricks\Tasks\Background\ApproveReplyNotify;
+use SocialBricks\Tasks\Background\CreatePostNotify;
+use SocialBricks\Tasks\Background\RegisterNotify;
+
 /**
  * Takes a message and parses it, returning nothing.
  * Cleans up links (javascript, etc.) and code/quote sections.
@@ -1721,7 +1726,7 @@ function sendNotifications($topics, $type, $exclude = array(), $members_only = a
 	while ($row = $smcFunc['db_fetch_assoc']($result))
 	{
 		$task_rows[] = array(
-			'$sourcedir/tasks/CreatePost-Notify.php', 'CreatePost_Notify_Background', $smcFunc['json_encode'](array(
+			'', CreatePostNotify::class, $smcFunc['json_encode'](array(
 				'msgOptions' => array(
 					'id' => $row['id_msg'],
 					'subject' => $row['subject'],
@@ -2057,19 +2062,12 @@ function createPost(&$msgOptions, &$topicOptions, &$posterOptions)
 			array()
 		);
 
-		$smcFunc['db_insert']('',
-			'{db_prefix}background_tasks',
-			array('task_file' => 'string', 'task_class' => 'string', 'task_data' => 'string', 'claimed_time' => 'int'),
-			array(
-				'$sourcedir/tasks/ApprovePost-Notify.php', 'ApprovePost_Notify_Background', $smcFunc['json_encode'](array(
-					'msgOptions' => $msgOptions,
-					'topicOptions' => $topicOptions,
-					'posterOptions' => $posterOptions,
-					'type' => $new_topic ? 'topic' : 'post',
-				)), 0
-			),
-			array('id_task')
-		);
+		ApprovePostNotify::queue(array(
+			'msgOptions' => $msgOptions,
+			'topicOptions' => $topicOptions,
+			'posterOptions' => $posterOptions,
+			'type' => $new_topic ? 'topic' : 'post',
+		));
 	}
 
 	// Mark inserted topic as read (only for the user calling this function).
@@ -2105,18 +2103,11 @@ function createPost(&$msgOptions, &$topicOptions, &$posterOptions)
 	}
 
 	if ($msgOptions['approved'] && empty($topicOptions['is_approved']) && $posterOptions['id'] != $user_info['id'])
-		$smcFunc['db_insert']('',
-			'{db_prefix}background_tasks',
-			array('task_file' => 'string', 'task_class' => 'string', 'task_data' => 'string', 'claimed_time' => 'int'),
-			array(
-				'$sourcedir/tasks/ApproveReply-Notify.php', 'ApproveReply_Notify_Background', $smcFunc['json_encode'](array(
-					'msgOptions' => $msgOptions,
-					'topicOptions' => $topicOptions,
-					'posterOptions' => $posterOptions,
-				)), 0
-			),
-			array('id_task')
-		);
+		ApproveReplyNotify::queue(array(
+			'msgOptions' => $msgOptions,
+			'topicOptions' => $topicOptions,
+			'posterOptions' => $posterOptions,
+		));
 
 	// If there's a custom search index, it may need updating...
 	require_once($sourcedir . '/Search.php');
@@ -2158,7 +2149,7 @@ function createPost(&$msgOptions, &$topicOptions, &$posterOptions)
 		$smcFunc['db_insert']('',
 			'{db_prefix}background_tasks',
 			array('task_file' => 'string', 'task_class' => 'string', 'task_data' => 'string', 'claimed_time' => 'int'),
-			array('$sourcedir/tasks/CreatePost-Notify.php', 'CreatePost_Notify_Background', $smcFunc['json_encode'](array(
+			array('', CreatePostNotify::class, $smcFunc['json_encode'](array(
 				'msgOptions' => $msgOptions,
 				'topicOptions' => $topicOptions,
 				'posterOptions' => $posterOptions,
@@ -2358,7 +2349,7 @@ function modifyPost(&$msgOptions, &$topicOptions, &$posterOptions)
 		$smcFunc['db_insert']('',
 			'{db_prefix}background_tasks',
 			array('task_file' => 'string', 'task_class' => 'string', 'task_data' => 'string', 'claimed_time' => 'int'),
-			array('$sourcedir/tasks/CreatePost-Notify.php', 'CreatePost_Notify_Background', $smcFunc['json_encode'](array(
+			array('', CreatePostNotify::class, $smcFunc['json_encode'](array(
 				'msgOptions' => $msgOptions,
 				'topicOptions' => $topicOptions,
 				'posterOptions' => $posterOptions,
@@ -2583,7 +2574,7 @@ function approvePosts($msgs, $approve = true, $notify = true)
 		$task_rows = array();
 		foreach (array_merge($notification_topics, $notification_posts) as $topic)
 			$task_rows[] = array(
-				'$sourcedir/tasks/CreatePost-Notify.php', 'CreatePost_Notify_Background', $smcFunc['json_encode'](array(
+				'', CreatePostNotify::class, $smcFunc['json_encode'](array(
 					'msgOptions' => array(
 						'id' => $topic['msg'],
 						'body' => $topic['body'],
@@ -2859,17 +2850,12 @@ function adminNotify($type, $memberID, $member_name = null)
 	}
 
 	// This is really just a wrapper for making a new background task to deal with all the fun.
-	$smcFunc['db_insert']('insert',
-		'{db_prefix}background_tasks',
-		array('task_file' => 'string', 'task_class' => 'string', 'task_data' => 'string', 'claimed_time' => 'int'),
-		array('$sourcedir/tasks/Register-Notify.php', 'Register_Notify_Background', $smcFunc['json_encode'](array(
-			'new_member_id' => $memberID,
-			'new_member_name' => $member_name,
-			'notify_type' => $type,
-			'time' => time(),
-		)), 0),
-		array('id_task')
-	);
+	RegisterNotify::queue(array(
+		'new_member_id' => $memberID,
+		'new_member_name' => $member_name,
+		'notify_type' => $type,
+		'time' => time(),
+	));
 }
 
 /**

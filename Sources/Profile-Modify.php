@@ -15,6 +15,8 @@
  * @version 2.1.2
  */
 
+use SocialBricks\Tasks\Background\GroupReqNotify;
+
 /**
  * This defines every profile field known to man.
  *
@@ -4215,14 +4217,15 @@ function groupMembership2($profile_vars, $post_errors, $memID)
 			array('id_request')
 		);
 
-		// Set up some data for our background task...
-		$data = $smcFunc['json_encode'](array('id_member' => $memID, 'member_name' => $user_info['name'], 'id_group' => $group_id, 'group_name' => $group_name, 'reason' => $_POST['reason'], 'time' => time()));
-
 		// Add a background task to handle notifying people of this request
-		$smcFunc['db_insert']('insert', '{db_prefix}background_tasks',
-			array('task_file' => 'string-255', 'task_class' => 'string-255', 'task_data' => 'string', 'claimed_time' => 'int'),
-			array('$sourcedir/tasks/GroupReq-Notify.php', 'GroupReq_Notify_Background', $data, 0), array()
-		);
+		GroupReqNotify::queue(array(
+			'id_member' => $memID,
+			'member_name' => $user_info['name'],
+			'id_group' => $group_id,
+			'group_name' => $group_name,
+			'reason' => $_POST['reason'],
+			'time' => time(),
+		));
 
 		return $changeType;
 	}

@@ -13,10 +13,12 @@
  * @version 2.1.0
  */
 
+namespace SocialBricks\Tasks\Background;
+
 /**
- * Class Birthday_Notify_Background
+ * Class BirthdayNotify
  */
-class Birthday_Notify_Background extends SB_BackgroundTask
+class BirthdayNotify extends AbstractTask
 {
 	/**
 	 * This executes the task: loads up the info, puts the email in the queue

@@ -992,7 +992,6 @@ function ForumSettings()
 			'sourcedir' => $path . '/Sources',
 			'cachedir' => $path . '/cache',
 			'packagesdir' => $path . '/Packages',
-			'tasksdir' => $path . '/Sources/tasks',
 			'mbname' => strtr($_POST['mbname'], array('\"' => '"')),
 			'language' => substr($_SESSION['installer_temp_lang'], 8, -4),
 			'image_proxy_secret' => bin2hex(random_bytes(10)),

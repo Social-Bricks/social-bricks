@@ -14,6 +14,8 @@
  * @version 2.1.0
  */
 
+namespace SocialBricks\Tasks\Background;
+
 /**
  * @todo Find a way to throttle the export rate dynamically when dealing with
  * truly enormous amounts of data. Specifically, if the dataset contains lots
@@ -22,9 +24,9 @@
  */
 
 /**
- * Class ExportProfileData_Background
+ * Class ExportProfileData
  */
-class ExportProfileData_Background extends SB_BackgroundTask
+class ExportProfileData extends AbstractTask
 {
 	/**
 	 * @var array A copy of $this->_details for access by the static functions
@@ -107,7 +109,7 @@ class ExportProfileData_Background extends SB_BackgroundTask
 
 		// Use some temporary integration hooks to manipulate BBC parsing during export.
 		foreach (array('pre_parsebbc', 'post_parsebbc', 'bbc_codes', 'post_parseAttachBBC', 'attach_bbc_validate') as $hook)
-			add_integration_function('integrate_' . $hook, 'ExportProfileData_Background::' . $hook, false);
+			add_integration_function('integrate_' . $hook, static::class . '::' . $hook, false);
 
 		// Perform the export.
 		if ($this->_details['format'] == 'XML')
@@ -434,7 +436,7 @@ class ExportProfileData_Background extends SB_BackgroundTask
 			if (!empty($new_item_count))
 				$new_details['item_count'] = $new_item_count;
 
-			$this->next_task = array('$sourcedir/tasks/ExportProfileData.php', 'ExportProfileData_Background', $smcFunc['json_encode']($new_details), time() - MAX_CLAIM_THRESHOLD + $delay);
+			$this->next_task = array('', static::class, $smcFunc['json_encode']($new_details), time() - MAX_CLAIM_THRESHOLD + $delay);
 
 			if (!file_exists($tempfile))
 			{
@@ -521,7 +523,7 @@ class ExportProfileData_Background extends SB_BackgroundTask
 					$new_details = $this->_details;
 					$new_details['start'] = $smcFunc['json_decode'](file_get_contents($progressfile), true);
 
-					$this->next_task = array('$sourcedir/tasks/ExportProfileData.php', 'ExportProfileData_Background', $smcFunc['json_encode']($new_details), time() - MAX_CLAIM_THRESHOLD);
+					$this->next_task = array('', static::class, $smcFunc['json_encode']($new_details), time() - MAX_CLAIM_THRESHOLD);
 				}
 
 				// So let's just relax and take a well deserved...
@@ -546,7 +548,7 @@ class ExportProfileData_Background extends SB_BackgroundTask
 		$context['export_dlfilename'] = $this->_details['dlfilename'];
 
 		// Embedded XSLT requires adding a special DTD and processing instruction in the main XML document.
-		add_integration_function('integrate_xml_data', 'ExportProfileData_Background::add_dtd', false);
+		add_integration_function('integrate_xml_data', static::class . '::add_dtd', false);
 
 		// Perform the export to XML.
 		$this->exportXml($member_info);

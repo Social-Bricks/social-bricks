@@ -121,12 +121,12 @@ function getServerVersions($checkFor)
  * - returns an array containing information on source files, templates and
  *   language files found in the default theme directory (grouped by language).
  *
- * @param array &$versionOptions An array of options. Can contain one or more of 'include_ssi', 'include_subscriptions', 'include_tasks' and 'sort_results'
+ * @param array &$versionOptions An array of options. Can contain one or more of 'include_ssi', 'include_subscriptions' and 'sort_results'
  * @return array An array of file version info.
  */
 function getFileVersions(&$versionOptions)
 {
-	global $boarddir, $sourcedir, $settings, $tasksdir;
+	global $boarddir, $sourcedir, $settings;
 
 	// Default place to find the languages would be the default theme dir.
 	$lang_dir = $settings['default_theme_dir'] . '/languages';
@@ -189,30 +189,6 @@ function getFileVersions(&$versionOptions)
 		}
 	}
 	$sources_dir->close();
-
-	// Load all the files in the tasks directory.
-	if (!empty($versionOptions['include_tasks']))
-	{
-		$tasks_dir = dir($tasksdir);
-		while ($entry = $tasks_dir->read())
-		{
-			if (substr($entry, -4) === '.php' && !is_dir($tasksdir . '/' . $entry) && $entry !== 'index.php')
-			{
-				// Read the first 4k from the file.... enough for the header.
-				$fp = fopen($tasksdir . '/' . $entry, 'rb');
-				$header = fread($fp, 4096);
-				fclose($fp);
-
-				// Look for the version comment in the file header.
-				if (preg_match('~\*\s@version\s+(.+)[\s]{2}~i', $header, $match) == 1)
-					$version_info['tasks_versions'][$entry] = $match[1];
-				// It wasn't found, but the file was... show a '??'.
-				else
-					$version_info['tasks_versions'][$entry] = '??';
-			}
-		}
-		$tasks_dir->close();
-	}
 
 	// Load all the files in the default template directory - and the current theme if applicable.
 	$directories = array('default_template_versions' => $settings['default_theme_dir']);
@@ -753,18 +729,6 @@ function get_settings_defs()
 			'raw_default' => true,
 			'type' => 'string',
 		),
-		'tasksdir' => array(
-			'text' => implode("\n", array(
-				'/**',
-				' * Path to the tasks directory.',
-				' *',
-				' * @var string',
-				' */',
-			)),
-			'default' => '$sourcedir . \'/tasks\'',
-			'raw_default' => true,
-			'type' => 'string',
-		),
 		array(
 			'text' => implode("\n", array(
 				'',
@@ -773,14 +737,12 @@ function get_settings_defs()
 				'	$boarddir = dirname(__FILE__);',
 				'if (!is_dir(realpath($sourcedir)) && is_dir($boarddir . \'/Sources\'))',
 				'	$sourcedir = $boarddir . \'/Sources\';',
-				'if (!is_dir(realpath($tasksdir)) && is_dir($sourcedir . \'/tasks\'))',
-				'	$tasksdir = $sourcedir . \'/tasks\';',
 				'if (!is_dir(realpath($packagesdir)) && is_dir($boarddir . \'/Packages\'))',
 				'	$packagesdir = $boarddir . \'/Packages\';',
 				'if (!is_dir(realpath($cachedir)) && is_dir($boarddir . \'/cache\'))',
 				'	$cachedir = $boarddir . \'/cache\';',
 			)),
-			'search_pattern' => '~\n?(#[^\n]+)?(?:\n\h*if\s*\((?:\!file_exists\(\$(?'.'>boarddir|sourcedir|tasksdir|packagesdir|cachedir)\)|\!is_dir\(realpath\(\$(?'.'>boarddir|sourcedir|tasksdir|packagesdir|cachedir)\)\))[^;]+\n\h*\$(?'.'>boarddir|sourcedir|tasksdir|packagesdir|cachedir)[^\n]+;)+~sm',
+			'search_pattern' => '~\n?(#[^\n]+)?(?:\n\h*if\s*\((?:\!file_exists\(\$(?'.'>boarddir|sourcedir|packagesdir|cachedir)\)|\!is_dir\(realpath\(\$(?'.'>boarddir|sourcedir|packagesdir|cachedir)\)\))[^;]+\n\h*\$(?'.'>boarddir|sourcedir|packagesdir|cachedir)[^\n]+;)+~sm',
 		),
 		'db_character_set' => array(
 			'text' => implode("\n", array(

@@ -14,6 +14,8 @@
  * @version 2.1.2
  */
 
+use SocialBricks\Tasks\Background\ExportProfileData;
+
 /**
  * Initiates exports a member's profile, posts, and personal messages to a file.
  *
@@ -216,7 +218,7 @@ function export_profile_data($uid)
 				WHERE task_class = {string:class}
 					AND task_data LIKE {string:details}',
 				array(
-					'class' => 'ExportProfileData_Background',
+					'class' => ExportProfileData::class,
 					'details' => substr($smcFunc['json_encode'](array('format' => $format, 'uid' => $uid)), 0, -1) . ',%',
 				)
 			);
@@ -352,7 +354,7 @@ function export_profile_data($uid)
 
 		$last_page = ceil(array_sum($total) / $context['export_formats'][$format]['per_page']);
 
-		$data = $smcFunc['json_encode'](array(
+		ExportProfileData::queue(array(
 			'format' => $format,
 			'uid' => $uid,
 			'lang' => $context['member']['language'],
@@ -364,12 +366,6 @@ function export_profile_data($uid)
 			'last_page' => $last_page,
 			'dlfilename' => $dlfilename,
 		));
-
-		$smcFunc['db_insert']('insert', '{db_prefix}background_tasks',
-			array('task_file' => 'string-255', 'task_class' => 'string-255', 'task_data' => 'string', 'claimed_time' => 'int'),
-			array('$sourcedir/tasks/ExportProfileData.php', 'ExportProfileData_Background', $data, 0),
-			array()
-		);
 
 		// So the user can see that we've started.
 		if (!file_exists($tempfile))

@@ -14,10 +14,12 @@
  * @version 2.1.0
  */
 
+namespace SocialBricks\Tasks\Background;
+
 /**
- * Class Buddy_Notify_Background
+ * Class BuddyNotify
  */
-class Buddy_Notify_Background extends SB_BackgroundTask
+class BuddyNotify extends AbstractTask
 {
 	/**
 	 * This executes the task: loads up the info, puts the email in the queue
