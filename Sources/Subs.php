@@ -1432,39 +1432,6 @@ function forum_time($use_user_offset = true, $timestamp = null)
 }
 
 /**
- * Calculates all the possible permutations (orders) of array.
- * should not be called on huge arrays (bigger than like 10 elements.)
- * returns an array containing each permutation.
- *
- * @deprecated since 2.1
- * @param array $array An array
- * @return array An array containing each permutation
- */
-function permute($array)
-{
-	$orders = array($array);
-
-	$n = count($array);
-	$p = range(0, $n);
-	for ($i = 1; $i < $n; null)
-	{
-		$p[$i]--;
-		$j = $i % 2 != 0 ? $p[$i] : 0;
-
-		$temp = $array[$i];
-		$array[$i] = $array[$j];
-		$array[$j] = $temp;
-
-		for ($i = 1; $p[$i] == 0; $i++)
-			$p[$i] = 1;
-
-		$orders[] = $array;
-	}
-
-	return $orders;
-}
-
-/**
  * Return an array with allowed bbc tags for signatures, that can be passed to parse_bbc().
  *
  * @return array An array containing allowed tags for signatures, or an empty array if all tags are allowed.
