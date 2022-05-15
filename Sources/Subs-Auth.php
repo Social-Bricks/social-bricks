@@ -43,23 +43,9 @@ function setLoginCookie($cookie_length, $id, $password = '')
 	// The cookie may already exist, and have been set with different options.
 	if (isset($_COOKIE[$cookiename]))
 	{
-		// First check for 2.1 json-format cookie
+		// Check for 2.1 json-format cookie
 		if (preg_match('~^{"0":\d+,"1":"[0-9a-f]*","2":\d+,"3":"[^"]+","4":"[^"]+"~', $_COOKIE[$cookiename]) === 1)
 			list(,,, $old_domain, $old_path) = $smcFunc['json_decode']($_COOKIE[$cookiename], true);
-
-		// Legacy format (for recent 2.0 --> 2.1 upgrades)
-		elseif (preg_match('~^a:[34]:\{i:0;i:\d+;i:1;s:(0|40):"([a-fA-F0-9]{40})?";i:2;[id]:\d+;(i:3;i:\d;)?~', $_COOKIE[$cookiename]) === 1)
-		{
-			list(,,, $old_state) = safe_unserialize($_COOKIE[$cookiename]);
-
-			$cookie_state = (empty($modSettings['localCookies']) ? 0 : 1) | (empty($modSettings['globalCookies']) ? 0 : 2);
-
-			// Maybe we need to temporarily pretend to be using local cookies
-			if ($cookie_state == 0 && $old_state == 1)
-				list($old_domain, $old_path) = url_parts(true, false);
-			else
-				list($old_domain, $old_path) = url_parts($old_state & 1 > 0, $old_state & 2 > 0);
-		}
 
 		// Out with the old, in with the new!
 		if (isset($old_domain) && $old_domain != $cookie_url[0] || isset($old_path) && $old_path != $cookie_url[1])

@@ -523,10 +523,6 @@ function loadUserSettings()
 		// First try 2.1 json-format cookie
 		$cookie_data = $smcFunc['json_decode']($_COOKIE[$cookiename], true, false);
 
-		// Legacy format (for recent 2.0 --> 2.1 upgrades)
-		if (empty($cookie_data))
-			$cookie_data = safe_unserialize($_COOKIE[$cookiename]);
-
 		list($id_member, $password, $login_span, $cookie_domain, $cookie_path) = array_pad((array) $cookie_data, 5, '');
 
 		$id_member = !empty($id_member) && strlen($password) > 0 ? (int) $id_member : 0;
@@ -539,9 +535,6 @@ function loadUserSettings()
 	{
 		// @todo Perhaps we can do some more checking on this, such as on the first octet of the IP?
 		$cookie_data = $smcFunc['json_decode']($_SESSION['login_' . $cookiename], true);
-
-		if (empty($cookie_data))
-			$cookie_data = safe_unserialize($_SESSION['login_' . $cookiename]);
 
 		list($id_member, $password, $login_span) = array_pad((array) $cookie_data, 3, '');
 		$id_member = !empty($id_member) && strlen($password) == 40 && (int) $login_span > time() ? (int) $id_member : 0;
