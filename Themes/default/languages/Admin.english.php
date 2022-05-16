@@ -32,9 +32,6 @@ $txt['admin_news'] = 'Enable News';
 $txt['admin_manage_members'] = 'Members';
 $txt['admin_main'] = 'Main';
 $txt['admin_config'] = 'Configuration';
-$txt['admin_version_check'] = 'Detailed version check';
-$txt['admin_smffile'] = 'SMF File';
-$txt['admin_smfpackage'] = 'SMF Package';
 $txt['admin_logoff'] = 'End admin Session';
 $txt['admin_maintenance'] = 'Maintenance';
 $txt['admin_agreement'] = 'Require new members to accept the registration agreement';
@@ -103,8 +100,6 @@ $txt['attachment_delete_admin'] = '[attachment deleted by admin]';
 
 $txt['remove_all'] = 'Clear log';
 $txt['agreement_not_writable'] = 'Warning - agreement.txt is not writable, any changes you make will NOT be saved.';
-
-$txt['version_check_desc'] = 'This shows you the versions of your installation\'s files versus those of the latest version. If any of these files are out of date, you should download and upgrade to the latest version at <a href="https://www.simplemachines.org/" target="_blank" rel="noopener">www.simplemachines.org</a>.';
 
 $txt['manage_calendar'] = 'Calendar';
 $txt['manage_search'] = 'Search';
@@ -257,13 +252,7 @@ $txt['errorlog_no_entries'] = 'There are currently no error log entries.';
 $txt['theme_settings'] = 'Theme Settings';
 $txt['theme_current_settings'] = 'Current Theme';
 
-$txt['dvc_your'] = 'Your version';
-$txt['dvc_current'] = 'Current version';
-$txt['dvc_sources'] = 'Sources';
 $txt['dvc_default'] = 'Default Templates';
-$txt['dvc_templates'] = 'Current Templates';
-$txt['dvc_languages'] = 'Language Files';
-$txt['dvc_tasks'] = 'Background Tasks';
 
 $txt['smileys_default_set_for_theme'] = 'Select default smiley set for this theme';
 $txt['smileys_no_default'] = '(use global default smiley set)';

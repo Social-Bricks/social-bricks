@@ -46,7 +46,6 @@ function ManageMaintenance()
 			'function' => 'MaintainRoutine',
 			'template' => 'maintain_routine',
 			'activities' => array(
-				'version' => 'VersionDetail',
 				'repair' => 'MaintainFindFixErrors',
 				'recount' => 'AdminBoardRecount',
 				'rebuild_settings' => 'RebuildSettingsFile',
@@ -1249,50 +1248,6 @@ function AdminBoardRecount()
 	CalculateNextTrigger();
 
 	redirectexit('action=admin;area=maintain;sa=routine;done=recount');
-}
-
-/**
- * Perform a detailed version check.  A very good thing ;).
- * The function parses the comment headers in all files for their version information,
- * and outputs that for some javascript to check with simplemachines.org.
- * It does not connect directly with simplemachines.org, but rather expects the client to.
- *
- * It requires the admin_forum permission.
- * Uses the view_versions admin area.
- * Accessed through ?action=admin;area=maintain;sa=routine;activity=version.
- *
- * @uses template_view_versions()
- */
-function VersionDetail()
-{
-	global $txt, $sourcedir, $context;
-
-	isAllowedTo('admin_forum');
-
-	// Call the function that'll get all the version info we need.
-	require_once($sourcedir . '/Subs-Admin.php');
-	$versionOptions = array(
-		'include_ssi' => true,
-		'include_subscriptions' => true,
-		'sort_results' => true,
-	);
-	$version_info = getFileVersions($versionOptions);
-
-	// Add the new info to the template context.
-	$context += array(
-		'file_versions' => $version_info['file_versions'],
-		'default_template_versions' => $version_info['default_template_versions'],
-		'template_versions' => $version_info['template_versions'],
-		'default_language_versions' => $version_info['default_language_versions'],
-		'default_known_languages' => array_keys($version_info['default_language_versions']),
-		'tasks_versions' => $version_info['tasks_versions'],
-	);
-
-	// Make it easier to manage for the template.
-	$context['forum_version'] = SB_FULL_VERSION;
-
-	$context['sub_template'] = 'view_versions';
-	$context['page_title'] = $txt['admin_version_check'];
 }
 
 /**

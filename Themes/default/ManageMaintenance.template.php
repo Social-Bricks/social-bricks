@@ -93,18 +93,6 @@ function template_maintain_routine()
 
 	echo '
 		<div class="cat_bar">
-			<h3 class="catbg">', $txt['maintain_version'], '</h3>
-		</div>
-		<div class="windowbg">
-			<form action="', $scripturl, '?action=admin;area=maintain;sa=routine;activity=version" method="post" accept-charset="', $context['character_set'], '">
-				<p>
-					', $txt['maintain_version_info'], '
-					<input type="submit" value="', $txt['maintain_run_now'], '" class="button">
-					<input type="hidden" name="', $context['session_var'], '" value="', $context['session_id'], '">
-				</p>
-			</form>
-		</div>
-		<div class="cat_bar">
 			<h3 class="catbg">', $txt['maintain_errors'], '</h3>
 		</div>
 		<div class="windowbg">
