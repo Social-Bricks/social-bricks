@@ -4018,7 +4018,7 @@ function set_avatar_data($data = array())
  */
 function get_auth_secret()
 {
-	global $context, $auth_secret, $sourcedir, $boarddir, $smcFunc, $db_last_error, $txt;
+	global $context, $auth_secret, $sourcedir, $boarddir, $smcFunc, $txt;
 
 	if (empty($auth_secret))
 	{
@@ -4032,14 +4032,6 @@ function get_auth_secret()
 		{
 			$context['auth_secret_missing'] = true;
 			$auth_secret = hash_file('sha256', $boarddir . '/Settings.php');
-
-			// Set the last error to now, but only every 15 minutes.  Don't need to flood the logs.
-			if (empty($db_last_error) || ($db_last_error + 60*15) <= time())
-			{
-				updateDbLastError(time());
-				loadLanguage('Errors');
-				log_error($txt['auth_secret_missing'], 'critical');
-			}
 		}
 	}
 

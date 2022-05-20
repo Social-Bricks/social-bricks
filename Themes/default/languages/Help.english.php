@@ -393,8 +393,6 @@ $helptxt['customoptions'] = 'This defines the options that a user may choose fro
 		<li><strong>Reordering Options:</strong> You can reorder the options by moving text around between the boxes. However - an important note - you must make sure you do <strong>not</strong> change the text when reordering options as otherwise user data will be lost.</li>
 	</ul>';
 
-$helptxt['autoFixDatabase'] = 'This will automatically fix broken tables and resume as if nothing happened. It does email you when this happens.<br>If you choose to disable this option, your forum will be down until you notice and manually fix the problem.';
-
 $helptxt['enableParticipation'] = 'This shows a little icon on the topics the user has posted in.';
 
 $helptxt['db_persist'] = 'This keeps the connection active to increase performance. If you aren\'t on a dedicated server, this may cause you problems with your host.<br>

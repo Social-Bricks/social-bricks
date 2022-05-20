@@ -508,7 +508,6 @@ function CheckFilesWritable()
 		'agreement.txt',
 		'Settings.php',
 		'Settings_bak.php',
-		'cache/db_last_error.php',
 	);
 
 	foreach ($incontext['detected_languages'] as $lang => $temp)

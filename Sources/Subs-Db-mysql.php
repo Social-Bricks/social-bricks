@@ -559,10 +559,7 @@ function sb_db_transaction($type = 'commit', $connection = null)
  */
 function sb_db_error($db_string, $connection = null)
 {
-	global $txt, $context, $sourcedir, $webmaster_email, $modSettings;
-	global $db_connection, $db_last_error, $db_persist, $cache_enable;
-	global $db_server, $db_user, $db_passwd, $db_name, $db_show_debug, $ssi_db_user, $ssi_db_passwd;
-	global $smcFunc;
+	global $txt, $context, $modSettings, $db_connection, $db_show_debug;
 
 	// Get the file and line numbers.
 	list ($file, $line) = sb_db_error_backtrace('', '', 'return', __FILE__, __LINE__);
@@ -575,126 +572,12 @@ function sb_db_error($db_string, $connection = null)
 	$query_errno = mysqli_errno($connection);
 
 	// Error numbers:
-	//    1016: Can't open file '....MYI'
-	//    1030: Got error ??? from table handler.
-	//    1034: Incorrect key file for table.
-	//    1035: Old key file for table.
 	//    1205: Lock wait timeout exceeded.
 	//    1213: Deadlock found.
 
 	// Log the error.
 	if ($query_errno != 1213 && $query_errno != 1205 && function_exists('log_error'))
 		log_error($txt['database_error'] . ': ' . $query_error . (!empty($modSettings['enableErrorQueryLogging']) ? "\n\n$db_string" : ''), 'database', $file, $line);
-
-	// Database error auto fixing ;).
-	if (function_exists('cache_get_data') && (!isset($modSettings['autoFixDatabase']) || $modSettings['autoFixDatabase'] == '1'))
-	{
-		// Force caching on, just for the error checking.
-		$old_cache = @$cache_enable;
-		$cache_enable = '1';
-
-		if (($temp = cache_get_data('db_last_error', 600)) !== null)
-			$db_last_error = max(@$db_last_error, $temp);
-
-		if (@$db_last_error < time() - 3600 * 24 * 3)
-		{
-			// We know there's a problem... but what?  Try to auto detect.
-			if ($query_errno == 1030 && strpos($query_error, ' 127 ') !== false)
-			{
-				preg_match_all('~(?:[\n\r]|^)[^\']+?(?:FROM|JOIN|UPDATE|TABLE) ((?:[^\n\r(]+?(?:, )?)*)~s', $db_string, $matches);
-
-				$fix_tables = array();
-				foreach ($matches[1] as $tables)
-				{
-					$tables = array_unique(explode(',', $tables));
-					foreach ($tables as $table)
-					{
-						// Now, it's still theoretically possible this could be an injection.  So backtick it!
-						if (trim($table) != '')
-							$fix_tables[] = '`' . strtr(trim($table), array('`' => '')) . '`';
-					}
-				}
-
-				$fix_tables = array_unique($fix_tables);
-			}
-			// Table crashed.  Let's try to fix it.
-			elseif ($query_errno == 1016)
-			{
-				if (preg_match('~\'([^\.\']+)~', $query_error, $match) != 0)
-					$fix_tables = array('`' . $match[1] . '`');
-			}
-			// Indexes crashed.  Should be easy to fix!
-			elseif ($query_errno == 1034 || $query_errno == 1035)
-			{
-				preg_match('~\'([^\']+?)\'~', $query_error, $match);
-				$fix_tables = array('`' . $match[1] . '`');
-			}
-		}
-
-		// Check for errors like 145... only fix it once every three days, and send an email. (can't use empty because it might not be set yet...)
-		if (!empty($fix_tables))
-		{
-			// Subs-Admin.php for updateSettingsFile(), Subs-Post.php for sendmail().
-			require_once($sourcedir . '/Subs-Admin.php');
-			require_once($sourcedir . '/Subs-Post.php');
-
-			// Make a note of the REPAIR...
-			cache_put_data('db_last_error', time(), 600);
-			if (($temp = cache_get_data('db_last_error', 600)) === null)
-				updateSettingsFile(array('db_last_error' => time()));
-
-			// Attempt to find and repair the broken table.
-			foreach ($fix_tables as $table)
-				$smcFunc['db_query']('', "
-					REPAIR TABLE $table", false, false);
-
-			// And send off an email!
-			sendmail($webmaster_email, $txt['database_error'], $txt['tried_to_repair'], null, 'dberror');
-
-			$cache_enable = $old_cache;
-
-			// Try the query again...?
-			$ret = $smcFunc['db_query']('', $db_string, false, false);
-			if ($ret !== false)
-				return $ret;
-		}
-		else
-			$cache_enable = $old_cache;
-
-		// Check for the "lost connection" or "deadlock found" errors - and try it just one more time.
-		if (in_array($query_errno, array(1205, 1213)))
-		{
-			if ($db_connection)
-			{
-				// Try a deadlock more than once more.
-				for ($n = 0; $n < 4; $n++)
-				{
-					$ret = $smcFunc['db_query']('', $db_string, false, false);
-
-					$new_errno = mysqli_errno($db_connection);
-					if ($ret !== false || in_array($new_errno, array(1205, 1213)))
-						break;
-				}
-
-				// If it failed again, shucks to be you... we're not trying it over and over.
-				if ($ret !== false)
-					return $ret;
-			}
-		}
-		// Are they out of space, perhaps?
-		elseif ($query_errno == 1030 && (strpos($query_error, ' -1 ') !== false || strpos($query_error, ' 28 ') !== false || strpos($query_error, ' 12 ') !== false))
-		{
-			if (!isset($txt))
-				$query_error .= ' - check database storage space.';
-			else
-			{
-				if (!isset($txt['mysql_error_space']))
-					loadLanguage('Errors');
-
-				$query_error .= !isset($txt['mysql_error_space']) ? ' - check database storage space.' : $txt['mysql_error_space'];
-			}
-		}
-	}
 
 	// Nothing's defined yet... just die with it.
 	if (empty($context) || empty($txt))

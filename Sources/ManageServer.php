@@ -388,8 +388,6 @@ function ModifyDatabaseSettings($return_config = false)
 		array('db_persist', $txt['db_persist'], 'file', 'check', null, 'db_persist'),
 		array('ssi_db_user', $txt['ssi_db_user'], 'file', 'text', null, 'ssi_db_user'),
 		array('ssi_db_passwd', $txt['ssi_db_passwd'], 'file', 'password'),
-		'',
-		array('autoFixDatabase', $txt['autoFixDatabase'], 'db', 'check', false, 'autoFixDatabase')
 	);
 
 	call_integration_hook('integrate_database_settings', array(&$config_vars));
