@@ -53,7 +53,7 @@ class UpdateTLDRegex extends AbstractTask
 	 */
 	public static function set_tld_regex($update = false)
 	{
-		global $sourcedir, $smcFunc, $modSettings;
+		global $sourcedir, $modSettings;
 		static $done = false;
 
 		// If we don't need to do anything, don't

@@ -305,7 +305,7 @@ class ExportProfileData extends AbstractTask
 				unset($first_chunk);
 			}
 
-			foreach ($xml_data as $chunk => $items)
+			foreach ($xml_data as $items)
 			{
 				unset($new_item_count, $last_id);
 
@@ -542,7 +542,7 @@ class ExportProfileData extends AbstractTask
 	 */
 	protected function exportXmlXslt($member_info)
 	{
-		global $modSettings, $context, $smcFunc, $sourcedir;
+		global $modSettings, $context, $sourcedir;
 
 		$context['export_last_page'] = $this->_details['last_page'];
 		$context['export_dlfilename'] = $this->_details['dlfilename'];
@@ -630,7 +630,7 @@ class ExportProfileData extends AbstractTask
 	 */
 	public static function pre_parsebbc(&$message, &$smileys, &$cache_id, &$parse_tags)
 	{
-		global $modSettings, $context, $user_info;
+		global $modSettings;
 
 		$cache_id = '';
 
@@ -664,7 +664,7 @@ class ExportProfileData extends AbstractTask
 	 */
 	public static function post_parsebbc(&$message, &$smileys, &$cache_id, &$parse_tags)
 	{
-		global $modSettings, $context;
+		global $modSettings;
 
 		foreach (array('disabledBBC', 'smileys_url', 'attachmentThumbnails') as $var)
 			if (isset(self::$real_modSettings[$var]))

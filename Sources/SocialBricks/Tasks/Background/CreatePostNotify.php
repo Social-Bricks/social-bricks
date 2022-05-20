@@ -86,7 +86,7 @@ class CreatePostNotify extends AbstractTask
 	 */
 	public function execute()
 	{
-		global $smcFunc, $sourcedir, $scripturl, $language, $modSettings, $user_info, $txt;
+		global $smcFunc, $sourcedir, $modSettings, $txt;
 
 		require_once($sourcedir . '/Subs-Post.php');
 		require_once($sourcedir . '/Mentions.php');

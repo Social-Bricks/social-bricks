@@ -3066,13 +3066,11 @@ function package_validate_installtest($package)
  */
 function package_validate($packages)
 {
-	global $context, $smcFunc;
-
 	// Setup our send data.
 	$sendData = array();
 
 	// Go through all packages and get them ready to send up.
-	foreach ($packages as $id_package => $package)
+	foreach ($packages as $package)
 	{
 		$sha256_hash = hash_file('sha256', $package);
 		$packageInfo = getPackageInfo($package);

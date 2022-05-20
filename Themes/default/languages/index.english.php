@@ -1,7 +1,7 @@
 <?php
 // Version: 2.1.2; index
 
-global $forum_copyright, $webmaster_email, $scripturl, $context, $boardurl;
+global $forum_copyright, $scripturl, $context, $boardurl;
 
 // Native name, please use full HTML entities to write your language's name.
 $txt['native_name'] = 'English';

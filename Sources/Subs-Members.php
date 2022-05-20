@@ -432,7 +432,7 @@ function deleteMembers($users, $check_not_admin = false)
  */
 function registerMember(&$regOptions, $return_errors = false)
 {
-	global $scripturl, $txt, $modSettings, $context, $sourcedir;
+	global $scripturl, $txt, $modSettings, $sourcedir;
 	global $user_info, $smcFunc;
 
 	loadLanguage('Login');
@@ -1299,7 +1299,7 @@ function reattributePosts($memID, $email = false, $membername = false, $post_cou
  */
 function BuddyListToggle()
 {
-	global $user_info, $smcFunc;
+	global $user_info;
 
 	checkSession('get');
 

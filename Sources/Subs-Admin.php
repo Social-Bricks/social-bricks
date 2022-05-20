@@ -23,7 +23,7 @@ use SocialBricks\Cache\CacheApiInterface;
  */
 function getServerVersions($checkFor)
 {
-	global $txt, $db_connection, $sourcedir, $smcFunc, $modSettings;
+	global $txt, $db_connection, $sourcedir, $smcFunc;
 
 	loadLanguage('Admin');
 	loadLanguage('ManageSettings');
@@ -819,7 +819,6 @@ function updateSettingsFile($config_vars, $keep_quotes = null, $rebuild = false)
 			// Special handling for the Error-Catching block: always at the end.
 			elseif (strpos($setting_def['text'], 'Error-Catching') !== false)
 			{
-				$errcatch_var = $var;
 				$substitutions[$var]['search_pattern'] = $setting_def['search_pattern'];
 				$substitutions[$var]['placeholder'] = '';
 				$substitutions[-2]['replacement'] = "\n" . $setting_def['text'] . $substitutions[-2]['replacement'];
