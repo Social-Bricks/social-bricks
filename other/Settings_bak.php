@@ -135,12 +135,6 @@ $db_prefix = 'sb_';
  */
 $db_persist = false;
 /**
- * Send emails on database connection error
- *
- * @var bool
- */
-$db_error_send = false;
-/**
  * Override the default behavior of the database layer for mb4 handling
  * null keep the default behavior untouched
  *

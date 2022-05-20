@@ -422,17 +422,6 @@ function get_settings_defs()
 			'default' => false,
 			'type' => 'boolean',
 		),
-		'db_error_send' => array(
-			'text' => implode("\n", array(
-				'/**',
-				' * Send emails on database connection error',
-				' *',
-				' * @var bool',
-				' */',
-			)),
-			'default' => false,
-			'type' => 'boolean',
-		),
 		'db_mb4' => array(
 			'text' => implode("\n", array(
 				'/**',
