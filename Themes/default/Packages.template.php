@@ -55,31 +55,6 @@ function template_view_package()
 			!empty($context['failure_details']) ? '<br><br><strong>' . $context['failure_details'] . '</strong>' : '', '
 		</div>';
 
-	// Validation info?
-	if (!empty($context['validation_tests']))
-	{
-		echo '
-		<div class="title_bar">
-			<h3 class="titlebg">', $txt['package_validaiton_results'], '</h3>
-		</div>
-		<div id="package_validation">
-			<table class="table_grid">';
-
-		foreach ($context['validation_tests'] as $id_server => $result)
-		{
-			echo '
-			<tr>
-				<td>', $context['package_servers'][$id_server]['name'], '</td>
-				<td>', $txt[isset($result[$context['package_sha256_hash']]) ? $result[$context['package_sha256_hash']] : 'package_validation_status_unknown'], '</td>
-			</tr>';
-		}
-
-		echo '
-			</table>
-		</div>
-		<br>';
-	}
-
 	// Display the package readme if one exists
 	if (isset($context['package_readme']))
 	{
