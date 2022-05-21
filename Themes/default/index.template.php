@@ -444,7 +444,7 @@ function template_body_above()
  */
 function template_body_below()
 {
-	global $context, $txt, $scripturl, $modSettings;
+	global $context, $txt, $scripturl, $modSettings, $db_show_debug;
 
 	echo '
 			</div><!-- #main_content_section -->
@@ -467,7 +467,7 @@ function template_body_below()
 	// Show the load time?
 	if ($context['show_load_time'])
 		echo '
-		<p>', sprintf($txt['page_created_full'], $context['load_time'], $context['load_queries']), '</p>';
+		<p', ($db_show_debug === true ? ' class="debug"' : ''), '>', sprintf($txt['page_created_full'], $context['load_time'], $context['load_queries']), '</p>';
 
 	echo '
 		</div>

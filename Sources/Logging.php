@@ -192,20 +192,45 @@ function displayDebug()
 		$_SESSION['debug'] = &$db_cache;
 	}
 
+	$collapser = function($title, $content)
+	{
+		if (is_array($content))
+		{
+			$content = implode(', ', $content);
+		}
+		if ($content)
+		{
+			return '<details><summary>' . $title . '</summary> <span>' . $content . '</span></details>';
+		}
+
+		return $title . '<br>';
+	};
+
+	if (!isset($context['debug']['hooks']))
+	{
+		$context['debug']['hooks'] = [];
+	}
+	if (!isset($context['debug']['instances']))
+	{
+		$context['debug']['instances'] = [];
+	}
+
 	// Gotta have valid HTML ;).
 	$temp = ob_get_contents();
 	ob_clean();
 
 	echo preg_replace('~</body>\s*</html>~', '', $temp), '
-<div class="smalltext" style="text-align: left; margin: 1ex;">
+<div class="debug-info" style="display:none">
 	', $txt['debug_browser'], $context['browser_body_id'], ' <em>(', implode('</em>, <em>', array_reverse(array_keys($context['browser'], true))), ')</em><br>
-	', $txt['debug_templates'], count($context['debug']['templates']), ': <em>', implode('</em>, <em>', $context['debug']['templates']), '</em>.<br>
-	', $txt['debug_subtemplates'], count($context['debug']['sub_templates']), ': <em>', implode('</em>, <em>', $context['debug']['sub_templates']), '</em>.<br>
-	', $txt['debug_language_files'], count($context['debug']['language_files']), ': <em>', implode('</em>, <em>', $context['debug']['language_files']), '</em>.<br>
-	', $txt['debug_stylesheets'], count($context['debug']['sheets']), ': <em>', implode('</em>, <em>', $context['debug']['sheets']), '</em>.<br>
-	', $txt['debug_hooks'], empty($context['debug']['hooks']) ? 0 : count($context['debug']['hooks']) . ' (<a href="javascript:void(0);" onclick="document.getElementById(\'debug_hooks\').style.display = \'inline\'; this.style.display = \'none\'; return false;">', $txt['debug_show'], '</a><span id="debug_hooks" style="display: none;"><em>' . implode('</em>, <em>', $context['debug']['hooks']), '</em></span>)', '<br>
-	', (isset($context['debug']['instances']) ? ($txt['debug_instances'] . (empty($context['debug']['instances']) ? 0 : count($context['debug']['instances'])) . ' (<a href="javascript:void(0);" onclick="document.getElementById(\'debug_instances\').style.display = \'inline\'; this.style.display = \'none\'; return false;">' . $txt['debug_show'] . '</a><span id="debug_instances" style="display: none;"><em>' . implode('</em>, <em>', array_keys($context['debug']['instances'])) . '</em></span>)' . '<br>') : ''), '
-	', $txt['debug_files_included'], count($files), ' - ', round($total_size / 1024), $txt['debug_kb'], ' (<a href="javascript:void(0);" onclick="document.getElementById(\'debug_include_info\').style.display = \'inline\'; this.style.display = \'none\'; return false;">', $txt['debug_show'], '</a><span id="debug_include_info" style="display: none;"><em>', implode('</em>, <em>', $files), '</em></span>)<br>';
+	', $collapser($txt['debug_templates'] . count($context['debug']['templates']), $context['debug']['templates']), '
+	', $collapser($txt['debug_subtemplates'] . count($context['debug']['sub_templates']), $context['debug']['sub_templates']), '
+	', $collapser($txt['debug_language_files'] . count($context['debug']['language_files']), $context['debug']['language_files']), '
+	', $collapser($txt['debug_stylesheets'] . count($context['debug']['sheets']), $context['debug']['sheets']), '
+	', $collapser($txt['debug_hooks'] . count($context['debug']['hooks']), $context['debug']['hooks']), '
+	', $collapser($txt['debug_instances'] . count($context['debug']['instances']), $context['debug']['instances']);
+
+	echo '<br>
+	', $collapser($txt['debug_files_included'] . count($files) . ' - ' . round($total_size / 1024) . $txt['debug_kb'], $files);
 
 	if (function_exists('memory_get_peak_usage'))
 		echo $txt['debug_memory_use'], ceil(memory_get_peak_usage() / 1024), $txt['debug_kb'], '<br>';
@@ -278,7 +303,12 @@ function displayDebug()
 
 	echo '
 	<a href="' . $scripturl . '?action=viewquery;sa=hide">', $txt['debug_' . (empty($_SESSION['view_queries']) ? 'show' : 'hide') . '_queries'], '</a>
-</div></body></html>';
+</div>
+<script>
+$("#footer .debug").on("click", function(e) {
+	reqDebugDiv(".debug-info");
+});
+</script></body></html>';
 }
 
 /**

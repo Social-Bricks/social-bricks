@@ -279,6 +279,17 @@ function reqOverlayDiv(desktopURL, sHeader, sIcon)
 	return false;
 }
 
+function reqDebugDiv(selector)
+{
+	var sIcon = sb_images_url + '/' + (typeof(sIcon) == 'string' ? sIcon : 'helptopics.png');
+	var sHeader = typeof(sHeader) == 'string' ? sHeader : help_popup_heading_text;
+
+	// Create the div that we are going to load
+	var oContainer = new sb_popup({heading: sHeader, content: $(selector).html(), icon: sIcon});
+
+	return false;
+}
+
 // Create the popup menus for the top level/user menu area.
 function sb_popupMenu(oOptions)
 {
