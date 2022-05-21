@@ -18,7 +18,7 @@ function template_main()
 	global $context, $txt, $scripturl, $modSettings;
 
 	echo '
-	<form action="', $scripturl, '?action=search2" method="post" accept-charset="', $context['character_set'], '" name="searchform" id="searchform">';
+	<form action="', $scripturl, '?action=search2" method="post" accept-charset="UTF-8" name="searchform" id="searchform">';
 
 	if (!empty($context['search_errors']))
 		echo '
@@ -276,7 +276,7 @@ function template_results()
 			</p>';
 
 		echo '
-			<form action="', $scripturl, '?action=search2" method="post" accept-charset="', $context['character_set'], '">
+			<form action="', $scripturl, '?action=search2" method="post" accept-charset="UTF-8">
 				<strong>', $txt['search_for'], ':</strong>
 				<input type="text" name="search"', !empty($context['search_params']['search']) ? ' value="' . $context['search_params']['search'] . '"' : '', ' maxlength="', $context['search_string_limit'], '" size="40">
 				<input type="submit" name="edit_search" value="', $txt['search_adjust_submit'], '" class="button">
@@ -302,7 +302,7 @@ function template_results()
 	if ($context['compact'])
 	{
 		echo '
-	<form id="new_search" name="new_search" action="', $scripturl, '?action=search2" method="post" accept-charset="', $context['character_set'], '">
+	<form id="new_search" name="new_search" action="', $scripturl, '?action=search2" method="post" accept-charset="UTF-8">
 		<input type="hidden" name="search"', !empty($context['search_params']['search']) ? ' value="' . $context['search_params']['search'] . '"' : '', ' maxlength="', $context['search_string_limit'], '" size="40">
 		<input type="hidden" name="searchtype" value="', !empty($context['search_params']['searchtype']) ? $context['search_params']['searchtype'] : 0, '">
 		<input type="hidden" name="userspec" value="', !empty($context['search_params']['userspec']) ? $context['search_params']['userspec'] : '', '">

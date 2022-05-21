@@ -44,7 +44,7 @@ error_reporting(E_ALL);
 ob_start();
 
 // Do some cleaning, just in case.
-foreach (array('db_character_set', 'cachedir') as $variable)
+foreach (array('cachedir') as $variable)
 	unset($GLOBALS[$variable]);
 
 // Load the settings...

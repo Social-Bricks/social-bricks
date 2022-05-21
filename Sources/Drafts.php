@@ -494,9 +494,9 @@ function XmlDraft($id_draft)
 
 	loadLanguage('Drafts');
 
-	header('content-type: text/xml; charset=' . (empty($context['character_set']) ? 'ISO-8859-1' : $context['character_set']));
+	header('content-type: text/xml; charset=UTF-8');
 
-	echo '<?xml version="1.0" encoding="', $context['character_set'], '"?>
+	echo '<?xml version="1.0" encoding="UTF-8"?>
 	<drafts>
 		<draft id="', $id_draft, '"><![CDATA[', $txt['draft_saved_on'], ': ', timeformat($context['draft_saved_on']), ']]></draft>
 	</drafts>';

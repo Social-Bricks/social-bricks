@@ -480,7 +480,6 @@ function template_ssi_above()
 		<script>
 			var sb_scripturl = "', $scripturl, '";
 			var sb_iso_case_folding = ', $context['server']['iso_case_folding'] ? 'true' : 'false', ';
-			var sb_charset = "', $context['character_set'], '";
 
 			// Sets all ssi_preview class to hidden, then shows the one requested.
 			function showSSIBlock(elementID)

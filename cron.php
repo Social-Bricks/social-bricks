@@ -50,7 +50,7 @@ if (!defined('TIME_START'))
 	define('TIME_START', microtime(true));
 
 // Just being safe...
-foreach (array('db_character_set', 'cachedir') as $variable)
+foreach (array('cachedir') as $variable)
 	if (isset($GLOBALS[$variable]))
 		unset($GLOBALS[$variable]);
 

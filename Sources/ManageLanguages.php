@@ -686,7 +686,7 @@ function list_getLanguages()
 		$languages[$lang['filename']] = array(
 			'id' => $lang['filename'],
 			'count' => 0,
-			'char_set' => $txt['lang_character_set'],
+			'char_set' => 'UTF-8',
 			'default' => $language == $lang['filename'] || ($language == '' && $lang['filename'] == 'english'),
 			'locale' => $txt['lang_locale'],
 			'name' => $smcFunc['ucwords'](strtr($lang['filename'], array('_' => ' ', '-utf8' => ''))),
@@ -989,7 +989,7 @@ function ModifyLanguage()
 	}
 
 	// Saving primary settings?
-	$primary_settings = array('native_name' => 'string', 'lang_character_set' => 'string', 'lang_locale' => 'string', 'lang_rtl' => 'bool', 'lang_dictionary' => 'string', 'lang_recaptcha' => 'string');
+	$primary_settings = array('native_name' => 'string', 'lang_locale' => 'string', 'lang_rtl' => 'bool', 'lang_dictionary' => 'string', 'lang_recaptcha' => 'string');
 	$madeSave = false;
 	if (!empty($_POST['save_main']) && !$current_file)
 	{
@@ -1002,7 +1002,7 @@ function ModifyLanguage()
 		// Build the replacements. old => new
 		$replace_array = array();
 		foreach ($primary_settings as $setting => $type)
-			$replace_array['~\$txt\[\'' . $setting . '\'\]\s*=\s*[^\r\n]+~'] = '$txt[\'' . $setting . '\'] = ' . ($type === 'bool' ? (!empty($_POST[$setting]) ? 'true' : 'false') : '\'' . ($setting = 'native_name' ? htmlentities(un_htmlspecialchars($_POST[$setting]), ENT_QUOTES, $context['character_set']) : preg_replace('~[^\w-]~i', '', $_POST[$setting])) . '\'') . ';';
+			$replace_array['~\$txt\[\'' . $setting . '\'\]\s*=\s*[^\r\n]+~'] = '$txt[\'' . $setting . '\'] = ' . ($type === 'bool' ? (!empty($_POST[$setting]) ? 'true' : 'false') : '\'' . ($setting = 'native_name' ? htmlentities(un_htmlspecialchars($_POST[$setting]), ENT_QUOTES, 'UTF-8') : preg_replace('~[^\w-]~i', '', $_POST[$setting])) . '\'') . ';';
 
 		$current_data = preg_replace(array_keys($replace_array), array_values($replace_array), $current_data);
 		$fp = fopen($settings['default_theme_dir'] . '/languages/index.' . $context['lang_id'] . '.php', 'w+');
@@ -1113,13 +1113,13 @@ function ModifyLanguage()
 		// Read in the file's contents and process it into entries.
 		// Also, remove any lines for uneditable variables like $forum_copyright from the working data.
 		$entries = array();
-		foreach (preg_split('~^(?=\$(?:' . implode('|', $string_types) . ')\[\'([^\n]+?)\'\])~m' . ($context['utf8'] ? 'u' : ''), preg_replace('~\s*\n(\$(?!(?:' . implode('|', $string_types) . '))[^\n]*)~', '', file_get_contents($current_file))) as $blob)
+		foreach (preg_split('~^(?=\$(?:' . implode('|', $string_types) . ')\[\'([^\n]+?)\'\])~mu', preg_replace('~\s*\n(\$(?!(?:' . implode('|', $string_types) . '))[^\n]*)~', '', file_get_contents($current_file))) as $blob)
 		{
 			// Comment lines at the end of the blob can make terrible messes
-			$blob = preg_replace('~(\n[ \t]*//[^\n]*)*$~' . ($context['utf8'] ? 'u' : ''), '', $blob);
+			$blob = preg_replace('~(\n[ \t]*//[^\n]*)*$~u', '', $blob);
 
 			// Extract the variable
-			if (preg_match('~^\$(' . implode('|', $string_types) . ')\[\'([^\n]+?)\'\](?:\[\'?([^\n]+?)\'?\])?\s?=\s?(.+);([ \t]*(?://[^\n]*)?)$~ms' . ($context['utf8'] ? 'u' : ''), strtr($blob, array("\r" => '')), $matches))
+			if (preg_match('~^\$(' . implode('|', $string_types) . ')\[\'([^\n]+?)\'\](?:\[\'?([^\n]+?)\'?\])?\s?=\s?(.+);([ \t]*(?://[^\n]*)?)$~msu', strtr($blob, array("\r" => '')), $matches))
 			{
 				// If no valid subkey was found, we need it to be explicitly null
 				$matches[3] = isset($matches[3]) && $matches[3] !== '' ? $matches[3] : null;
@@ -1194,7 +1194,7 @@ function ModifyLanguage()
 					# Followed by a comma or the end of the string
 					(?=,|$)
 
-					/x' . ($context['utf8'] ? 'u' : ''), $entryValue['entry'], $matches);
+					/xu', $entryValue['entry'], $matches);
 
 				if (empty($m))
 					continue;
@@ -1425,7 +1425,7 @@ function ModifyLanguage()
 			foreach ($final_saves as $save)
 			{
 				if (!empty($save['is_regex']))
-					$file_contents = preg_replace('~' . $save['find'] . '~' . ($context['utf8'] ? 'u' : ''), $save['replace'], $file_contents);
+					$file_contents = preg_replace('~' . $save['find'] . '~u', $save['replace'], $file_contents);
 				else
 					$file_contents = str_replace($save['find'], $save['replace'], $file_contents);
 			}

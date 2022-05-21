@@ -13,8 +13,6 @@ $txt['lang_dictionary'] = 'en';
 //https://developers.google.com/recaptcha/docs/language
 $txt['lang_recaptcha'] = 'en';
 
-// Ensure you remember to use uppercase for character set strings.
-$txt['lang_character_set'] = 'UTF-8';
 // Character set and right to left?
 $txt['lang_rtl'] = false;
 // Number format.

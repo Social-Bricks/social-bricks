@@ -223,10 +223,6 @@ if (!is_dir(realpath($packagesdir)) && is_dir($boarddir . '/Packages'))
 if (!is_dir(realpath($cachedir)) && is_dir($boarddir . '/cache'))
 	$cachedir = $boarddir . '/cache';
 
-######### Legacy Settings #########
-# UTF-8 is now the only character set supported in 2.1.
-$db_character_set = 'utf8';
-
 if (file_exists(dirname(__FILE__) . '/install.php'))
 {
 	$secure = false;

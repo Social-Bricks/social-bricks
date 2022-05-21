@@ -18,7 +18,7 @@ function template_registration_agreement()
 	global $context, $scripturl, $txt;
 
 	echo '
-		<form action="', $scripturl, '?action=signup" method="post" accept-charset="', $context['character_set'], '" id="registration">';
+		<form action="', $scripturl, '?action=signup" method="post" accept-charset="UTF-8" id="registration">';
 
 	if (!empty($context['agreement']))
 		echo '
@@ -101,7 +101,7 @@ function template_registration_form()
 	}
 
 	echo '
-		<form action="', !empty($modSettings['force_ssl']) ? strtr($scripturl, array('http://' => 'https://')) : $scripturl, '?action=signup2" method="post" accept-charset="', $context['character_set'], '" name="registration" id="registration" onsubmit="return verifyAgree();">
+		<form action="', !empty($modSettings['force_ssl']) ? strtr($scripturl, array('http://' => 'https://')) : $scripturl, '?action=signup2" method="post" accept-charset="UTF-8" name="registration" id="registration" onsubmit="return verifyAgree();">
 			<div class="cat_bar">
 				<h3 class="catbg">', $txt['registration_form'], '</h3>
 			</div>
@@ -445,7 +445,7 @@ function template_verification_sound()
 	echo '<!DOCTYPE html>
 <html', $context['right_to_left'] ? ' dir="rtl"' : '', '>
 	<head>
-		<meta charset="', $context['character_set'], '">
+		<meta charset="UTF-8">
 		<title>', $txt['visual_verification_sound'], '</title>
 		<meta name="robots" content="noindex">
 		<link rel="stylesheet" href="', $settings['theme_url'], '/css/index', $context['theme_variant'], '.css', $context['browser_cache'], '">
@@ -491,7 +491,7 @@ function template_admin_register()
 
 	echo '
 		<div id="admin_form_wrapper">
-			<form id="postForm" action="', $scripturl, '?action=admin;area=regcenter" method="post" accept-charset="', $context['character_set'], '" name="postForm">
+			<form id="postForm" action="', $scripturl, '?action=admin;area=regcenter" method="post" accept-charset="UTF-8" name="postForm">
 				<div class="cat_bar">
 					<h3 class="catbg">', $txt['admin_browse_register_new'], '</h3>
 				</div>
@@ -622,7 +622,7 @@ function template_edit_agreement()
 					<h3 class="catbg">', $txt['language_configuration'], '</h3>
 				</div>
 				<div class="information">
-					<form action="', $scripturl, '?action=admin;area=regcenter" id="change_reg" method="post" accept-charset="', $context['character_set'], '" style="display: inline;">
+					<form action="', $scripturl, '?action=admin;area=regcenter" id="change_reg" method="post" accept-charset="UTF-8" style="display: inline;">
 						<strong>', $txt['admin_agreement_select_language'], ':</strong>
 						<select name="agree_lang" onchange="document.getElementById(\'change_reg\').submit();" tabindex="', $context['tabindex']++, '">';
 
@@ -644,7 +644,7 @@ function template_edit_agreement()
 
 	// Show the actual agreement in an oversized text box.
 	echo '
-				<form action="', $scripturl, '?action=admin;area=regcenter" method="post" accept-charset="', $context['character_set'], '">
+				<form action="', $scripturl, '?action=admin;area=regcenter" method="post" accept-charset="UTF-8">
 					<textarea cols="70" rows="20" name="agreement" id="agreement">', $context['agreement'], '</textarea>
 					<div class="information">
 						<span>', $context['agreement_info'], '</span>
@@ -677,7 +677,7 @@ function template_edit_reserved_words()
 	<div class="infobox">', $txt['settings_saved'], '</div>';
 
 	echo '
-	<form id="admin_form_wrapper" action="', $scripturl, '?action=admin;area=regcenter" method="post" accept-charset="', $context['character_set'], '">
+	<form id="admin_form_wrapper" action="', $scripturl, '?action=admin;area=regcenter" method="post" accept-charset="UTF-8">
 		<div class="cat_bar">
 			<h3 class="catbg">', $txt['admin_reserved_set'], '</h3>
 		</div>
@@ -741,7 +741,7 @@ function template_edit_privacy_policy()
 	{
 		echo '
 			<div class="information">
-				<form action="', $scripturl, '?action=admin;area=regcenter" id="change_policy" method="post" accept-charset="', $context['character_set'], '" style="display: inline;">
+				<form action="', $scripturl, '?action=admin;area=regcenter" id="change_policy" method="post" accept-charset="UTF-8" style="display: inline;">
 					<strong>', $txt['admin_agreement_select_language'], ':</strong>
 					<select name="policy_lang" onchange="document.getElementById(\'change_policy\').submit();" tabindex="', $context['tabindex']++, '">';
 
@@ -761,7 +761,7 @@ function template_edit_privacy_policy()
 	}
 
 	echo '
-			<form action="', $scripturl, '?action=admin;area=regcenter" method="post" accept-charset="', $context['character_set'], '">';
+			<form action="', $scripturl, '?action=admin;area=regcenter" method="post" accept-charset="UTF-8">';
 
 	// Show the actual policy in an oversized text box.
 	echo '

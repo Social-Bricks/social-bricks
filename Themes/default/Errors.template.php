@@ -63,7 +63,7 @@ function template_error_log()
 	global $scripturl, $context, $txt;
 
 	echo '
-		<form action="', $scripturl, '?action=admin;area=logs;sa=errorlog', $context['sort_direction'] == 'down' ? ';desc' : '', ';start=', $context['start'], $context['has_filter'] ? $context['filter']['href'] : '', '" method="post" accept-charset="', $context['character_set'], '">
+		<form action="', $scripturl, '?action=admin;area=logs;sa=errorlog', $context['sort_direction'] == 'down' ? ';desc' : '', ';start=', $context['start'], $context['has_filter'] ? $context['filter']['href'] : '', '" method="post" accept-charset="UTF-8">
 			<div class="cat_bar">
 				<h3 class="catbg">
 					<a href="', $scripturl, '?action=helpadmin;help=error_log" onclick="return reqOverlayDiv(this.href);" class="help"><span class="main_icons help" title="', $txt['help'], '"></span></a> ', $txt['errorlog'], '
@@ -205,7 +205,7 @@ function template_show_file()
 	echo '<!DOCTYPE html>
 <html', $context['right_to_left'] ? ' dir="rtl"' : '', '>
 	<head>
-		<meta charset="', $context['character_set'], '">
+		<meta charset="UTF-8">
 		<title>', $context['file_data']['file'], '</title>
 		<link rel="stylesheet" href="', $settings['theme_url'], '/css/index', $context['theme_variant'], '.css', $context['browser_cache'], '">
 	</head>
@@ -270,7 +270,7 @@ function template_show_backtrace()
 	echo '<!DOCTYPE html>
 <html', $context['right_to_left'] ? ' dir="rtl"' : '', '>
 	<head>
-		<meta charset="', $context['character_set'], '">
+		<meta charset="UTF-8">
 		<title>', $txt['backtrace_title'], '</title>';
 
 	template_css();

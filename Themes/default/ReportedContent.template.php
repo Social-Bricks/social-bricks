@@ -25,7 +25,7 @@ function template_reported_posts()
 	</div>';
 
 	echo '
-	<form id="reported_posts" action="', $scripturl, '?action=moderate;area=reportedposts;sa=show', $context['view_closed'] ? ';closed' : '', ';start=', $context['start'], '" method="post" accept-charset="', $context['character_set'], '">
+	<form id="reported_posts" action="', $scripturl, '?action=moderate;area=reportedposts;sa=show', $context['view_closed'] ? ';closed' : '', ';start=', $context['start'], '" method="post" accept-charset="UTF-8">
 		<div class="cat_bar">
 			<h3 class="catbg">
 				', $context['view_closed'] ? $txt['mc_reportedp_closed'] : $txt['mc_reportedp_active'], '
@@ -183,7 +183,7 @@ function template_viewmodreport()
 
 	echo '
 	<div id="modcenter">
-		<form action="', $scripturl, '?action=moderate;area=reportedposts;sa=handlecomment;rid=', $context['report']['id'], '" method="post" accept-charset="', $context['character_set'], '">
+		<form action="', $scripturl, '?action=moderate;area=reportedposts;sa=handlecomment;rid=', $context['report']['id'], '" method="post" accept-charset="UTF-8">
 			<div class="cat_bar">
 				<h3 class="catbg">
 					', sprintf($txt['mc_viewmodreport'], $context['report']['message_link'], $context['report']['author']['link']), '
@@ -294,7 +294,7 @@ function template_edit_comment()
 
 	echo '
 	<div id="modcenter">
-		<form action="', $scripturl, '?action=moderate;area=reported', $context['report_type'], ';sa=editcomment;mid=', $context['comment_id'], ';rid=', $context['report_id'], ';save" method="post" accept-charset="', $context['character_set'], '">
+		<form action="', $scripturl, '?action=moderate;area=reported', $context['report_type'], ';sa=editcomment;mid=', $context['comment_id'], ';rid=', $context['report_id'], ';save" method="post" accept-charset="UTF-8">
 			<br>
 			<div class="cat_bar">
 				<h3 class="catbg">', $txt['mc_modreport_edit_mod_comment'], '</h3>
@@ -396,7 +396,7 @@ function template_reported_members()
 	</div>';
 
 	echo '
-	<form id="reported_members" action="', $scripturl, '?action=moderate;area=reportedmembers;sa=show', $context['view_closed'] ? ';closed' : '', ';start=', $context['start'], '" method="post" accept-charset="', $context['character_set'], '">
+	<form id="reported_members" action="', $scripturl, '?action=moderate;area=reportedmembers;sa=show', $context['view_closed'] ? ';closed' : '', ';start=', $context['start'], '" method="post" accept-charset="UTF-8">
 		<div class="cat_bar cat_bar_round">
 			<h3 class="catbg">
 				', $context['view_closed'] ? $txt['mc_reportedp_closed'] : $txt['mc_reportedp_active'], '
@@ -473,7 +473,7 @@ function template_viewmemberreport()
 
 	echo '
 	<div id="modcenter">
-		<form action="', $scripturl, '?action=moderate;area=reportedmembers;sa=handlecomment;rid=', $context['report']['id'], '" method="post" accept-charset="', $context['character_set'], '">
+		<form action="', $scripturl, '?action=moderate;area=reportedmembers;sa=handlecomment;rid=', $context['report']['id'], '" method="post" accept-charset="UTF-8">
 			<div class="cat_bar">
 				<h3 class="catbg">
 					', sprintf($txt['mc_viewmemberreport'], $context['report']['user']['link']), '

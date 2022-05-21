@@ -587,15 +587,6 @@ function get_settings_defs()
 			)),
 			'search_pattern' => '~\n?(#[^\n]+)?(?:\n\h*if\s*\((?:\!file_exists\(\$(?'.'>boarddir|sourcedir|packagesdir|cachedir)\)|\!is_dir\(realpath\(\$(?'.'>boarddir|sourcedir|packagesdir|cachedir)\)\))[^;]+\n\h*\$(?'.'>boarddir|sourcedir|packagesdir|cachedir)[^\n]+;)+~sm',
 		),
-		'db_character_set' => array(
-			'text' => implode("\n", array(
-				'',
-				'######### Legacy Settings #########',
-				'# UTF-8 is now the only character set supported in 2.1.',
-			)),
-			'default' => 'utf8',
-			'type' => 'string',
-		),
 		'db_show_debug' => array(
 			'text' => implode("\n", array(
 				'',
@@ -709,9 +700,6 @@ function updateSettingsFile($config_vars, $keep_quotes = null, $rebuild = false)
 
 	// It works best to set everything afresh.
 	$new_settings_vars = array_merge($settings_vars, $config_vars);
-
-	// Are we using UTF-8?
-	$utf8 = isset($GLOBALS['context']['utf8']) ? $GLOBALS['context']['utf8'] : (isset($GLOBALS['utf8']) ? $GLOBALS['utf8'] : (isset($settings_vars['db_character_set']) ? $settings_vars['db_character_set'] === 'utf8' : false));
 
 	// Get our definitions for all known Settings.php variables and other content.
 	$settings_defs = get_settings_defs();
@@ -946,7 +934,7 @@ function updateSettingsFile($config_vars, $keep_quotes = null, $rebuild = false)
 
 				$var_pattern = count($var_pattern) > 1 ? '(?:' . (implode('|', $var_pattern)) . ')' : $var_pattern[0];
 
-				$substitutions[$var]['search_pattern'] = '~(?<=^|\s)\h*\$' . preg_quote($var, '~') . '\s*=\s*' . $var_pattern . ';~' . (!empty($utf8) ? 'u' : '');
+				$substitutions[$var]['search_pattern'] = '~(?<=^|\s)\h*\$' . preg_quote($var, '~') . '\s*=\s*' . $var_pattern . ';~u';
 			}
 
 			// Next create the placeholder or replace_pattern.
@@ -1010,7 +998,7 @@ function updateSettingsFile($config_vars, $keep_quotes = null, $rebuild = false)
 
 		$placeholder = md5($prefix . $var);
 
-		$substitutions[$var]['search_pattern'] = '~(?<=^|\s)\h*\$' . preg_quote($var, '~') . '\s*=\s*' . $var_pattern . ';~' . (!empty($utf8) ? 'u' : '');
+		$substitutions[$var]['search_pattern'] = '~(?<=^|\s)\h*\$' . preg_quote($var, '~') . '\s*=\s*' . $var_pattern . ';~u';
 		$substitutions[$var]['placeholder'] = $placeholder;
 		$substitutions[$var]['replacement'] = '$' . $var . ' = ' . sb_var_export($val, true) . ";";
 	}

@@ -118,10 +118,10 @@ function ManageMaintenance()
  */
 function MaintainDatabase()
 {
-	global $context, $db_type, $db_character_set, $modSettings, $smcFunc, $txt;
+	global $context, $db_type, $modSettings, $smcFunc, $txt;
 
 	// Show some conversion options?
-	$context['convert_entities'] = isset($modSettings['global_character_set']) && $modSettings['global_character_set'] === 'UTF-8';
+	$context['convert_entities'] = true;
 
 	if ($db_type == 'mysql')
 	{
@@ -458,13 +458,9 @@ function ConvertMsgBody()
  */
 function ConvertEntities()
 {
-	global $db_character_set, $modSettings, $context, $smcFunc, $db_type, $db_prefix;
+	global $modSettings, $context, $smcFunc, $db_type, $db_prefix;
 
 	isAllowedTo('admin_forum');
-
-	// Check to see if UTF-8 is currently the default character set.
-	if ($modSettings['global_character_set'] !== 'UTF-8')
-		fatal_lang_error('entity_convert_only_utf8');
 
 	// Some starting values.
 	$context['table'] = empty($_REQUEST['table']) ? 0 : (int) $_REQUEST['table'];

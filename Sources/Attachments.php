@@ -522,7 +522,7 @@ class Attachments
 			ob_start();
 
 		// Set the header.
-		header('content-type: application/json; charset=' . $context['character_set'] . '');
+		header('content-type: application/json; charset=UTF-8');
 
 		echo $smcFunc['json_encode']($this->_response ? $this->_response : array());
 

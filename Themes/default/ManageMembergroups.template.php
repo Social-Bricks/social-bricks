@@ -30,7 +30,7 @@ function template_new_group()
 	global $context, $scripturl, $txt, $modSettings;
 
 	echo '
-		<form id="new_group" action="', $scripturl, '?action=admin;area=membergroups;sa=add" method="post" accept-charset="', $context['character_set'], '">
+		<form id="new_group" action="', $scripturl, '?action=admin;area=membergroups;sa=add" method="post" accept-charset="UTF-8">
 			<div class="cat_bar">
 				<h3 class="catbg">', $txt['membergroups_new_group'], '</h3>
 			</div>
@@ -164,7 +164,7 @@ function template_edit_group()
 	global $context, $scripturl, $txt, $modSettings;
 
 	echo '
-		<form action="', $scripturl, '?action=admin;area=membergroups;sa=edit;group=', $context['group']['id'], '" method="post" accept-charset="', $context['character_set'], '" name="groupForm" id="groupForm">
+		<form action="', $scripturl, '?action=admin;area=membergroups;sa=edit;group=', $context['group']['id'], '" method="post" accept-charset="UTF-8" name="groupForm" id="groupForm">
 			<div class="cat_bar">
 				<h3 class="catbg">', $txt['membergroups_edit_group'], ' - ', $context['group']['name'], '
 				</h3>
@@ -538,7 +538,7 @@ function template_group_members()
 	global $context, $scripturl, $txt;
 
 	echo '
-		<form action="', $scripturl, '?action=', $context['current_action'], (isset($context['admin_area']) ? ';area=' . $context['admin_area'] : ''), ';sa=members;group=', $context['group']['id'], '" method="post" accept-charset="', $context['character_set'], '" id="view_group">
+		<form action="', $scripturl, '?action=', $context['current_action'], (isset($context['admin_area']) ? ';area=' . $context['admin_area'] : ''), ';sa=members;group=', $context['group']['id'], '" method="post" accept-charset="UTF-8" id="view_group">
 			<div class="cat_bar">
 				<h3 class="catbg">', $context['page_title'], '</h3>
 			</div>
@@ -720,7 +720,7 @@ function template_group_request_reason()
 	// Show a welcome message to the user.
 	echo '
 	<div id="moderationcenter">
-		<form action="', $scripturl, '?action=groups;sa=requests" method="post" accept-charset="', $context['character_set'], '">
+		<form action="', $scripturl, '?action=groups;sa=requests" method="post" accept-charset="UTF-8">
 			<div class="cat_bar">
 				<h3 class="catbg">', $txt['mc_groups_reason_title'], '</h3>
 			</div>

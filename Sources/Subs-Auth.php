@@ -546,7 +546,7 @@ function RequestMembers()
 	{
 		if (function_exists('iconv'))
 		{
-			$utf8 = iconv($txt['lang_character_set'], 'UTF-8', $row['real_name']);
+			$utf8 = iconv('UTF-8', 'UTF-8', $row['real_name']);
 			if ($utf8)
 				$row['real_name'] = $utf8;
 		}
