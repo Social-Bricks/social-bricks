@@ -605,11 +605,6 @@ function template_single_post($message)
 				echo '
 										<li><a href="', $message['member']['website']['url'], '" title="' . $message['member']['website']['title'] . '" target="_blank" rel="noopener">', ($settings['use_image_buttons'] ? '<span class="main_icons www centericon" title="' . $message['member']['website']['title'] . '"></span>' : $txt['www']), '</a></li>';
 
-			// Since we know this person isn't a guest, you *can* message them.
-			if ($context['can_send_pm'])
-				echo '
-										<li><a href="', $scripturl, '?action=pm;sa=send;u=', $message['member']['id'], '" title="', $message['member']['online']['is_online'] ? $txt['pm_online'] : $txt['pm_offline'], '">', $settings['use_image_buttons'] ? '<span class="main_icons im_' . ($message['member']['online']['is_online'] ? 'on' : 'off') . ' centericon" title="' . ($message['member']['online']['is_online'] ? $txt['pm_online'] : $txt['pm_offline']) . '"></span> ' : ($message['member']['online']['is_online'] ? $txt['pm_online'] : $txt['pm_offline']), '</a></li>';
-
 			// Show the email if necessary
 			if (!empty($message['member']['email']) && $message['member']['show_email'])
 				echo '
@@ -639,25 +634,6 @@ function template_single_post($message)
 								<li class="poster_ip">
 									<a href="', $scripturl, '?action=', !empty($message['member']['is_guest']) ? 'trackip' : 'profile;area=tracking;sa=ip;u=' . $message['member']['id'], ';searchip=', $message['member']['ip'], '" data-hover="', $message['member']['ip'], '" class="show_on_hover"><span>', $txt['show_ip'], '</span></a> <a href="', $scripturl, '?action=helpadmin;help=see_admin_ip" onclick="return reqOverlayDiv(this.href);" class="help">(?)</a>
 								</li>';
-
-	// Or, should we show it because this is you?
-	elseif ($message['can_see_ip'])
-		echo '
-								<li class="poster_ip">
-									<a href="', $scripturl, '?action=helpadmin;help=see_member_ip" onclick="return reqOverlayDiv(this.href);" class="help show_on_hover" data-hover="', $message['member']['ip'], '"><span>', $txt['show_ip'], '</span></a>
-								</li>';
-
-	// Okay, are you at least logged in? Then we can show something about why IPs are logged...
-	elseif (!$context['user']['is_guest'])
-		echo '
-								<li class="poster_ip">
-									<a href="', $scripturl, '?action=helpadmin;help=see_member_ip" onclick="return reqOverlayDiv(this.href);" class="help">', $txt['logged'], '</a>
-								</li>';
-
-	// Otherwise, you see NOTHING!
-	else
-		echo '
-								<li class="poster_ip">', $txt['logged'], '</li>';
 
 	// Are we showing the warning status?
 	// Don't show these things for guests.
