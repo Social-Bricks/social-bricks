@@ -13,6 +13,7 @@
  * @version 2.1.2
  */
 
+use SocialBricks\Renderable;
 use SocialBricks\Tasks\Background\UpdateTLDRegex;
 
 /**
@@ -4024,7 +4025,7 @@ function redirectexit($setLocation = '', $refresh = false, $permanent = false)
  * @param bool $from_index Whether we're coming from the board index
  * @param bool $from_fatal_error Whether we're coming from a fatal error
  */
-function obExit($header = null, $do_footer = null, $from_index = false, $from_fatal_error = false)
+function obExit($header = null, $do_footer = null, $from_index = false, $from_fatal_error = false, ?Renderable $renderable = null)
 {
 	global $context, $settings, $modSettings, $txt, $smcFunc, $should_log;
 	static $header_done = false, $footer_done = false, $level = 0, $has_fatal_error = false;
@@ -4085,7 +4086,7 @@ function obExit($header = null, $do_footer = null, $from_index = false, $from_fa
 	}
 	if ($do_footer)
 	{
-		loadSubTemplate(isset($context['sub_template']) ? $context['sub_template'] : 'main');
+		loadSubTemplate(isset($context['sub_template']) ? $context['sub_template'] : 'main', false, $renderable);
 
 		// Anything special to put out?
 		if (!empty($context['insert_after_template']) && !isset($_REQUEST['xml']))

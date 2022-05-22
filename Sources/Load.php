@@ -15,6 +15,11 @@
 
 use SocialBricks\Cache\CacheApi;
 use SocialBricks\Cache\CacheApiInterface;
+use SocialBricks\Renderable;
+use Performing\TwigComponents\Configuration as TwigComponentsConfiguration;
+use Twig\Loader\FilesystemLoader;
+use Twig\Environment as TwigEnvironment;
+use Twig\TwigFunction;
 
 /**
  * Load the $modSettings array.
@@ -2114,6 +2119,9 @@ function loadTheme($id_theme = 0, $initialize = true)
 		// Lastly the default theme.
 		if ($settings['theme_dir'] != $settings['default_theme_dir'])
 			$settings['template_dirs'][] = $settings['default_theme_dir'];
+
+		if (empty($context['twig']))
+			$context['twig'] = load_twig();
 	}
 
 	if (!$initialize)
@@ -2627,6 +2635,56 @@ function loadTheme($id_theme = 0, $initialize = true)
 	$context['theme_loaded'] = true;
 }
 
+function load_twig()
+{
+	global $settings;
+
+	$loader = new FilesystemLoader;
+
+	foreach ($settings['template_dirs'] as $theme_dir)
+	{
+		$loader->addPath($theme_dir . '/templates');
+		$loader->addPath($theme_dir . '/templates/layouts', 'layouts');
+	}
+
+	$twig_options = [];
+	// if (!$sitesettings->enable_debug_templates)
+	// {
+	// 	$twig_options['cache'] = $container->get('cachedir') . '/template/admin';
+	// }
+	$twig = new TwigEnvironment($loader, $twig_options);
+
+	$twig->addFunction(new TwigFunction('txt', function ($string, ...$params) {
+		global $txt;
+		if (!isset($txt[$string]))
+			return '[[' . $string . ']]';
+
+		return !empty($params) ? vsprintf($txt[$string], $params) : $txt[$string];
+	}));
+	$twig->addFunction(new TwigFunction('csrf', function() {
+		global $context;
+
+		return new \Twig\Markup('<input type="hidden" name="' . $context['session_var'] . '" value="' . $context['session_id'] . '">', 'UTF-8');
+	}));
+	$twig->addFunction(new TwigFunction('token', function($token = null) {
+		global $context;
+
+		$csrf = '';
+		if (!empty($token) && !empty($context[$token . '_token_var']) && !empty($context[$token . '_token']))
+			$csrf .= '<input type="hidden" name="' . $context[$token . '_token_var'] . '" value="' . $context[$token . '_token'] . '">';
+
+		return new \Twig\Markup($csrf, 'UTF-8');
+	}));
+
+	TwigComponentsConfiguration::make($twig)
+	    ->setTemplatesPath('components')
+	    ->setTemplatesExtension('twig')
+	    ->useCustomTags()
+	    ->setup();
+
+	return $twig;
+}
+
 /**
  * Load a template - if the theme doesn't include it, use the default.
  * What this function does:
@@ -2715,21 +2773,26 @@ function loadTemplate($template_name, $style_sheets = array(), $fatal = true)
  * @param string $sub_template_name The name of the sub-template to load
  * @param bool $fatal Whether to die with an error if the sub-template can't be loaded
  */
-function loadSubTemplate($sub_template_name, $fatal = false)
+function loadSubTemplate($sub_template_name, $fatal = false, ?Renderable $renderable = null)
 {
 	global $context, $txt, $db_show_debug;
 
 	if ($db_show_debug === true)
 		$context['debug']['sub_templates'][] = $sub_template_name;
 
-	// Figure out what the template function is named.
-	$theme_function = 'template_' . $sub_template_name;
-	if (function_exists($theme_function))
-		$theme_function();
-	elseif ($fatal === false)
-		fatal_lang_error('theme_template_error', 'template', array((string) $sub_template_name));
-	elseif ($fatal !== 'ignore')
-		die(log_error(sprintf(isset($txt['theme_template_error']) ? $txt['theme_template_error'] : 'Unable to load the %s sub template!', (string) $sub_template_name), 'template'));
+	if ($renderable)
+		echo $renderable->render();
+	else
+	{
+		// Figure out what the template function is named.
+		$theme_function = 'template_' . $sub_template_name;
+		if (function_exists($theme_function))
+			$theme_function();
+		elseif ($fatal === false)
+			fatal_lang_error('theme_template_error', 'template', array((string) $sub_template_name));
+		elseif ($fatal !== 'ignore')
+			die(log_error(sprintf(isset($txt['theme_template_error']) ? $txt['theme_template_error'] : 'Unable to load the %s sub template!', (string) $sub_template_name), 'template'));
+	}
 
 	// Are we showing debugging for templates?  Just make sure not to do it before the doctype...
 	if (allowedTo('admin_forum') && isset($_REQUEST['debug']) && !in_array($sub_template_name, array('init', 'main_below')) && ob_get_length() > 0 && !isset($_REQUEST['xml']))

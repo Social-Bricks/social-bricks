@@ -144,10 +144,10 @@ set_error_handler('sb_error_handler');
 loadSession();
 
 // What function shall we execute? (done like this for memory's sake.)
-call_user_func(sb_main());
+$result = call_user_func(sb_main());
 
 // Call obExit specially; we're coming from the main area ;).
-obExit(null, null, true);
+obExit(null, null, true, false, $result);
 
 /**
  * The main dispatcher.

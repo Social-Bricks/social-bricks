@@ -1,0 +1,17 @@
+	<x-form form_action="{{ remind_url }}" token="remind">
+		<x-panel.heading>
+			{{ txt('authentication_reminder') }}
+		</x-panel.heading>
+		<x-panel.body>
+			<p class="smalltext centertext">{{ txt('password_reminder_desc') }}</p>
+			<dl>
+				<dt>{{ txt('user_email') }}:</dt>
+				<dd><input type="text" name="user" size="30"></dd>
+			</dl>
+			<x-form.buttonstrip>
+				<x-form.button>
+					{{ txt('reminder_continue') }}
+				</x-form.button>
+			</x-form.buttonstrip>
+		</x-panel.body>
+	</x-form>

@@ -1,0 +1,7 @@
+	<form action="{{ form_action }}" method="post" accept-charset="UTF-8">
+		{{ slot }}
+		{{ csrf() }}
+		{% if token %}
+			{{ token(token) }}
+		{% endif %}
+	</form>

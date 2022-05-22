@@ -12,6 +12,8 @@
  * @version 2.1.0
  */
 
+use SocialBricks\Renderable;
+
 /**
  * This is the controlling delegator
  *
@@ -19,7 +21,7 @@
  */
 function RemindMe()
 {
-	global $txt, $context;
+	global $txt, $context, $scripturl;
 
 	loadLanguage('Profile');
 	loadTemplate('Reminder');
@@ -41,7 +43,12 @@ function RemindMe()
 
 	// Creating a one time token.
 	else
+	{
 		createToken('remind');
+		return new Renderable('reminder_start.twig', [
+			'remind_url' => $scripturl . '?action=reminder;sa=picktype',
+		]);
+	}
 }
 
 /**
