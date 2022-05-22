@@ -3687,6 +3687,8 @@ function registerAutoLoader()
 			}
 		}
 	});
+
+	require_once($sourcedir . '/vendor/autoload.php');
 }
 
 /**
