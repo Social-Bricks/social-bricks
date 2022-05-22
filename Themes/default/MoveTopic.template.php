@@ -19,7 +19,7 @@ function template_move()
 
 	echo '
 	<div id="move_topic" class="lower_padding">
-		<form action="', $scripturl, '?action=movetopic2;current_board=' . $context['current_board'] . ';topic=', $context['current_topic'], '.0" method="post" accept-charset="', $context['character_set'], '" onsubmit="submitonce(this);">
+		<form action="', $scripturl, '?action=movetopic2;current_board=' . $context['current_board'] . ';topic=', $context['current_topic'], '.0" method="post" accept-charset="UTF-8" onsubmit="submitonce(this);">
 			<div class="cat_bar">
 				<h3 class="catbg">', $txt['move_topic'], '</h3>
 			</div>
@@ -198,7 +198,7 @@ function template_merge()
 	if (isset($context['merge_categories']))
 	{
 		echo '
-					<form action="' . $scripturl . '?action=mergetopics;from=' . $context['origin_topic'] . ';targetboard=' . $context['target_board'] . ';board=' . $context['current_board'] . '.0" method="post" accept-charset="', $context['character_set'], '" id="mergeSelectBoard">
+					<form action="' . $scripturl . '?action=mergetopics;from=' . $context['origin_topic'] . ';targetboard=' . $context['target_board'] . ';board=' . $context['current_board'] . '.0" method="post" accept-charset="UTF-8" id="mergeSelectBoard">
 						', $txt['target_below'], ' (', $txt['board'], ':
 						<select name="targetboard" onchange="this.form.submit();">';
 
@@ -225,7 +225,7 @@ function template_merge()
 
 	echo '		</h4>
 			</div><!-- .title_bar -->
-			<form action="', $scripturl, '?action=mergetopics;sa=options" method="post" accept-charset="', $context['character_set'], '">';
+			<form action="', $scripturl, '?action=mergetopics;sa=options" method="post" accept-charset="UTF-8">';
 
 	// Don't show this if there aren't any topics...
 	if (!empty($context['topics']))
@@ -288,7 +288,7 @@ function template_merge_extra_options()
 
 	echo '
 	<div id="merge_topics">
-		<form action="', $scripturl, '?action=mergetopics;sa=execute;" method="post" accept-charset="', $context['character_set'], '">
+		<form action="', $scripturl, '?action=mergetopics;sa=execute;" method="post" accept-charset="UTF-8">
 			<div class="cat_bar">
 				<h3 class="catbg">', $txt['merge_topic_list'], '</h3>
 			</div>

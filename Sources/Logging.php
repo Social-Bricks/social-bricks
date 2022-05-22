@@ -152,47 +152,6 @@ function writeLog($force = false)
 }
 
 /**
- * Logs the last database error into a file.
- * Attempts to use the backup file first, to store the last database error
- * and only update db_last_error.php if the first was successful.
- */
-function logLastDatabaseError()
-{
-	global $boarddir, $cachedir;
-
-	// Make a note of the last modified time in case someone does this before us
-	$last_db_error_change = @filemtime($cachedir . '/db_last_error.php');
-
-	// save the old file before we do anything
-	$file = $cachedir . '/db_last_error.php';
-	$dberror_backup_fail = !@is_writable($cachedir . '/db_last_error_bak.php') || !@copy($file, $cachedir . '/db_last_error_bak.php');
-	$dberror_backup_fail = !$dberror_backup_fail ? (!file_exists($cachedir . '/db_last_error_bak.php') || filesize($cachedir . '/db_last_error_bak.php') === 0) : $dberror_backup_fail;
-
-	clearstatcache();
-	if (filemtime($cachedir . '/db_last_error.php') === $last_db_error_change)
-	{
-		// Write the change
-		$write_db_change = '<' . '?' . "php\n" . '$db_last_error = ' . time() . ';' . "\n" . '?' . '>';
-		$written_bytes = file_put_contents($cachedir . '/db_last_error.php', $write_db_change, LOCK_EX);
-
-		// survey says ...
-		if ($written_bytes !== strlen($write_db_change) && !$dberror_backup_fail)
-		{
-			// Oops. maybe we have no more disk space left, or some other troubles, troubles...
-			// Copy the file back and run for your life!
-			@copy($cachedir . '/db_last_error_bak.php', $cachedir . '/db_last_error.php');
-		}
-		else
-		{
-			@touch($boarddir . '/' . 'Settings.php');
-			return true;
-		}
-	}
-
-	return false;
-}
-
-/**
  * This function shows the debug information tracked when $db_show_debug = true
  * in Settings.php
  */
@@ -233,20 +192,45 @@ function displayDebug()
 		$_SESSION['debug'] = &$db_cache;
 	}
 
+	$collapser = function($title, $content)
+	{
+		if (is_array($content))
+		{
+			$content = implode(', ', $content);
+		}
+		if ($content)
+		{
+			return '<details><summary>' . $title . '</summary> <span>' . $content . '</span></details>';
+		}
+
+		return $title . '<br>';
+	};
+
+	if (!isset($context['debug']['hooks']))
+	{
+		$context['debug']['hooks'] = [];
+	}
+	if (!isset($context['debug']['instances']))
+	{
+		$context['debug']['instances'] = [];
+	}
+
 	// Gotta have valid HTML ;).
 	$temp = ob_get_contents();
 	ob_clean();
 
 	echo preg_replace('~</body>\s*</html>~', '', $temp), '
-<div class="smalltext" style="text-align: left; margin: 1ex;">
+<div class="debug-info" style="display:none">
 	', $txt['debug_browser'], $context['browser_body_id'], ' <em>(', implode('</em>, <em>', array_reverse(array_keys($context['browser'], true))), ')</em><br>
-	', $txt['debug_templates'], count($context['debug']['templates']), ': <em>', implode('</em>, <em>', $context['debug']['templates']), '</em>.<br>
-	', $txt['debug_subtemplates'], count($context['debug']['sub_templates']), ': <em>', implode('</em>, <em>', $context['debug']['sub_templates']), '</em>.<br>
-	', $txt['debug_language_files'], count($context['debug']['language_files']), ': <em>', implode('</em>, <em>', $context['debug']['language_files']), '</em>.<br>
-	', $txt['debug_stylesheets'], count($context['debug']['sheets']), ': <em>', implode('</em>, <em>', $context['debug']['sheets']), '</em>.<br>
-	', $txt['debug_hooks'], empty($context['debug']['hooks']) ? 0 : count($context['debug']['hooks']) . ' (<a href="javascript:void(0);" onclick="document.getElementById(\'debug_hooks\').style.display = \'inline\'; this.style.display = \'none\'; return false;">', $txt['debug_show'], '</a><span id="debug_hooks" style="display: none;"><em>' . implode('</em>, <em>', $context['debug']['hooks']), '</em></span>)', '<br>
-	', (isset($context['debug']['instances']) ? ($txt['debug_instances'] . (empty($context['debug']['instances']) ? 0 : count($context['debug']['instances'])) . ' (<a href="javascript:void(0);" onclick="document.getElementById(\'debug_instances\').style.display = \'inline\'; this.style.display = \'none\'; return false;">' . $txt['debug_show'] . '</a><span id="debug_instances" style="display: none;"><em>' . implode('</em>, <em>', array_keys($context['debug']['instances'])) . '</em></span>)' . '<br>') : ''), '
-	', $txt['debug_files_included'], count($files), ' - ', round($total_size / 1024), $txt['debug_kb'], ' (<a href="javascript:void(0);" onclick="document.getElementById(\'debug_include_info\').style.display = \'inline\'; this.style.display = \'none\'; return false;">', $txt['debug_show'], '</a><span id="debug_include_info" style="display: none;"><em>', implode('</em>, <em>', $files), '</em></span>)<br>';
+	', $collapser($txt['debug_templates'] . count($context['debug']['templates']), $context['debug']['templates']), '
+	', $collapser($txt['debug_subtemplates'] . count($context['debug']['sub_templates']), $context['debug']['sub_templates']), '
+	', $collapser($txt['debug_language_files'] . count($context['debug']['language_files']), $context['debug']['language_files']), '
+	', $collapser($txt['debug_stylesheets'] . count($context['debug']['sheets']), $context['debug']['sheets']), '
+	', $collapser($txt['debug_hooks'] . count($context['debug']['hooks']), $context['debug']['hooks']), '
+	', $collapser($txt['debug_instances'] . count($context['debug']['instances']), $context['debug']['instances']);
+
+	echo '<br>
+	', $collapser($txt['debug_files_included'] . count($files) . ' - ' . round($total_size / 1024) . $txt['debug_kb'], $files);
 
 	if (function_exists('memory_get_peak_usage'))
 		echo $txt['debug_memory_use'], ceil(memory_get_peak_usage() / 1024), $txt['debug_kb'], '<br>';
@@ -319,7 +303,12 @@ function displayDebug()
 
 	echo '
 	<a href="' . $scripturl . '?action=viewquery;sa=hide">', $txt['debug_' . (empty($_SESSION['view_queries']) ? 'show' : 'hide') . '_queries'], '</a>
-</div></body></html>';
+</div>
+<script>
+$("#footer .debug").on("click", function(e) {
+	reqDebugDiv(".debug-info");
+});
+</script></body></html>';
 }
 
 /**

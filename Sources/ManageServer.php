@@ -172,6 +172,7 @@ function ModifyGeneralSettings($return_config = false)
 		return $config_vars;
 
 	// If no cert, force_ssl must remain 0 (The admin search doesn't require this)
+	require_once($sourcedir . '/Subs-Server.php');
 	$config_vars['force_ssl']['disabled'] = empty($modSettings['force_ssl']) && !ssl_cert_found($boardurl);
 
 	// Setup the template stuff.
@@ -385,11 +386,8 @@ function ModifyDatabaseSettings($return_config = false)
 		OR a string for a titled section. */
 	$config_vars = array(
 		array('db_persist', $txt['db_persist'], 'file', 'check', null, 'db_persist'),
-		array('db_error_send', $txt['db_error_send'], 'file', 'check'),
 		array('ssi_db_user', $txt['ssi_db_user'], 'file', 'text', null, 'ssi_db_user'),
 		array('ssi_db_passwd', $txt['ssi_db_passwd'], 'file', 'password'),
-		'',
-		array('autoFixDatabase', $txt['autoFixDatabase'], 'db', 'check', false, 'autoFixDatabase')
 	);
 
 	call_integration_hook('integrate_database_settings', array(&$config_vars));
@@ -1360,7 +1358,7 @@ function saveSettings(&$config_vars)
 
 	// Fix the darn stupid cookiename! (more may not be allowed, but these for sure!)
 	if (isset($_POST['cookiename']))
-		$_POST['cookiename'] = preg_replace('~[,;\s\.$]+~' . ($context['utf8'] ? 'u' : ''), '', $_POST['cookiename']);
+		$_POST['cookiename'] = preg_replace('~[,;\s\.$]+~u', '', $_POST['cookiename']);
 
 	// Fix the forum's URL if necessary.
 	if (isset($_POST['boardurl']))

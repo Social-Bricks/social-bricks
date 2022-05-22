@@ -13,6 +13,8 @@
  * @version 2.1.2
  */
 
+use SocialBricks\Tasks\Background\BuddyNotify;
+
 /**
  * Delete one or more members.
  * Requires profile_remove_own or profile_remove_any permission for
@@ -430,7 +432,7 @@ function deleteMembers($users, $check_not_admin = false)
  */
 function registerMember(&$regOptions, $return_errors = false)
 {
-	global $scripturl, $txt, $modSettings, $context, $sourcedir;
+	global $scripturl, $txt, $modSettings, $sourcedir;
 	global $user_info, $smcFunc;
 
 	loadLanguage('Login');
@@ -1297,7 +1299,7 @@ function reattributePosts($memID, $email = false, $membername = false, $post_cou
  */
 function BuddyListToggle()
 {
-	global $user_info, $smcFunc;
+	global $user_info;
 
 	checkSession('get');
 
@@ -1321,17 +1323,12 @@ function BuddyListToggle()
 		// And add a nice alert. Don't abuse though!
 		if ((cache_get_data('Buddy-sent-' . $user_info['id'] . '-' . $userReceiver, 86400)) == null)
 		{
-			$smcFunc['db_insert']('insert',
-				'{db_prefix}background_tasks',
-				array('task_file' => 'string', 'task_class' => 'string', 'task_data' => 'string', 'claimed_time' => 'int'),
-				array('$sourcedir/tasks/Buddy-Notify.php', 'Buddy_Notify_Background', $smcFunc['json_encode'](array(
-					'receiver_id' => $userReceiver,
-					'id_member' => $user_info['id'],
-					'member_name' => $user_info['username'],
-					'time' => time(),
-				)), 0),
-				array('id_task')
-			);
+			BuddyNotify::queue(array(
+				'receiver_id' => $userReceiver,
+				'id_member' => $user_info['id'],
+				'member_name' => $user_info['username'],
+				'time' => time(),
+			));
 
 			// Store this in a cache entry to avoid creating multiple alerts. Give it a long life cycle.
 			cache_put_data('Buddy-sent-' . $user_info['id'] . '-' . $userReceiver, '1', 86400);

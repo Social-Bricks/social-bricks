@@ -13,6 +13,9 @@
  * @version 2.1.0
  */
 
+use SocialBricks\Tasks\Background\MemberReportReplyNotify;
+use SocialBricks\Tasks\Background\MsgReportReplyNotify;
+
 /**
  * Updates a report with the given parameters. Logs each action via logAction()
  *
@@ -586,8 +589,7 @@ function saveModComment($report_id, $data)
 
 	if ($context['report_type'] == 'members')
 	{
-		$prefix = 'Member';
-		$data = array(
+		MemberReportReplyNotify::queue(array(
 			'report_id' => $report_id,
 			'user_id' => $report['id_user'],
 			'user_name' => $report['user_name'],
@@ -595,12 +597,11 @@ function saveModComment($report_id, $data)
 			'sender_name' => $context['user']['name'],
 			'comment_id' => $last_comment,
 			'time' => time(),
-		);
+		));
 	}
 	else
 	{
-		$prefix = 'Msg';
-		$data = array(
+		MsgReportReplyNotify::queue(array(
 			'report_id' => $report_id,
 			'comment_id' => $last_comment,
 			'msg_id' => $report['id_msg'],
@@ -609,17 +610,8 @@ function saveModComment($report_id, $data)
 			'sender_id' => $user_info['id'],
 			'sender_name' => $user_info['name'],
 			'time' => time(),
-		);
+		));
 	}
-
-	// And get ready to notify people.
-	if (!empty($report))
-		$smcFunc['db_insert']('insert',
-			'{db_prefix}background_tasks',
-			array('task_file' => 'string', 'task_class' => 'string', 'task_data' => 'string', 'claimed_time' => 'int'),
-			array('$sourcedir/tasks/' . $prefix . 'ReportReply-Notify.php', $prefix . 'ReportReply_Notify_Background', $smcFunc['json_encode']($data), 0),
-			array('id_task')
-		);
 }
 
 /**

@@ -87,7 +87,7 @@ function template_html_above()
 	echo '<!DOCTYPE html>
 <html', $context['right_to_left'] ? ' dir="rtl"' : '', !empty($txt['lang_locale']) ? ' lang="' . str_replace("_", "-", substr($txt['lang_locale'], 0, strcspn($txt['lang_locale'], "."))) . '"' : '', '>
 <head>
-	<meta charset="', $context['character_set'], '">';
+	<meta charset="UTF-8">';
 
 	/*
 		You don't need to manually load index.css, this will be set up for you.
@@ -318,7 +318,7 @@ function template_body_above()
 	if ($context['allow_search'])
 	{
 		echo '
-			<form id="search_form" class="floatright" action="', $scripturl, '?action=search2" method="post" accept-charset="', $context['character_set'], '">
+			<form id="search_form" class="floatright" action="', $scripturl, '?action=search2" method="post" accept-charset="UTF-8">
 				<input type="search" name="search" value="">&nbsp;';
 
 		// Using the quick search dropdown?
@@ -444,7 +444,7 @@ function template_body_above()
  */
 function template_body_below()
 {
-	global $context, $txt, $scripturl, $modSettings;
+	global $context, $txt, $scripturl, $modSettings, $db_show_debug;
 
 	echo '
 			</div><!-- #main_content_section -->
@@ -467,7 +467,7 @@ function template_body_below()
 	// Show the load time?
 	if ($context['show_load_time'])
 		echo '
-		<p>', sprintf($txt['page_created_full'], $context['load_time'], $context['load_queries']), '</p>';
+		<p', ($db_show_debug === true ? ' class="debug"' : ''), '>', sprintf($txt['page_created_full'], $context['load_time'], $context['load_queries']), '</p>';
 
 	echo '
 		</div>

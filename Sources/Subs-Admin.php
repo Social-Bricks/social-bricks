@@ -23,7 +23,7 @@ use SocialBricks\Cache\CacheApiInterface;
  */
 function getServerVersions($checkFor)
 {
-	global $txt, $db_connection, $sourcedir, $smcFunc, $modSettings;
+	global $txt, $db_connection, $sourcedir, $smcFunc;
 
 	loadLanguage('Admin');
 	loadLanguage('ManageSettings');
@@ -110,176 +110,6 @@ function getServerVersions($checkFor)
 		);
 
 	return $versions;
-}
-
-/**
- * Search through source, theme and language files to determine their version.
- * Get detailed version information about the physical Social Bricks files on the server.
- *
- * - the input parameter allows to set whether to include SSI.php and whether
- *   the results should be sorted.
- * - returns an array containing information on source files, templates and
- *   language files found in the default theme directory (grouped by language).
- *
- * @param array &$versionOptions An array of options. Can contain one or more of 'include_ssi', 'include_subscriptions', 'include_tasks' and 'sort_results'
- * @return array An array of file version info.
- */
-function getFileVersions(&$versionOptions)
-{
-	global $boarddir, $sourcedir, $settings, $tasksdir;
-
-	// Default place to find the languages would be the default theme dir.
-	$lang_dir = $settings['default_theme_dir'] . '/languages';
-
-	$version_info = array(
-		'file_versions' => array(),
-		'default_template_versions' => array(),
-		'template_versions' => array(),
-		'default_language_versions' => array(),
-		'tasks_versions' => array(),
-	);
-
-	// Find the version in SSI.php's file header.
-	if (!empty($versionOptions['include_ssi']) && file_exists($boarddir . '/SSI.php'))
-	{
-		$fp = fopen($boarddir . '/SSI.php', 'rb');
-		$header = fread($fp, 4096);
-		fclose($fp);
-
-		// The comment looks rougly like... that.
-		if (preg_match('~\*\s@version\s+(.+)[\s]{2}~i', $header, $match) == 1)
-			$version_info['file_versions']['SSI.php'] = $match[1];
-		// Not found!  This is bad.
-		else
-			$version_info['file_versions']['SSI.php'] = '??';
-	}
-
-	// Do the paid subscriptions handler?
-	if (!empty($versionOptions['include_subscriptions']) && file_exists($boarddir . '/subscriptions.php'))
-	{
-		$fp = fopen($boarddir . '/subscriptions.php', 'rb');
-		$header = fread($fp, 4096);
-		fclose($fp);
-
-		// Found it?
-		if (preg_match('~\*\s@version\s+(.+)[\s]{2}~i', $header, $match) == 1)
-			$version_info['file_versions']['subscriptions.php'] = $match[1];
-		// If we haven't how do we all get paid?
-		else
-			$version_info['file_versions']['subscriptions.php'] = '??';
-	}
-
-	// Load all the files in the Sources directory, except this file and the redirect.
-	$sources_dir = dir($sourcedir);
-	while ($entry = $sources_dir->read())
-	{
-		if (substr($entry, -4) === '.php' && !is_dir($sourcedir . '/' . $entry) && $entry !== 'index.php')
-		{
-			// Read the first 4k from the file.... enough for the header.
-			$fp = fopen($sourcedir . '/' . $entry, 'rb');
-			$header = fread($fp, 4096);
-			fclose($fp);
-
-			// Look for the version comment in the file header.
-			if (preg_match('~\*\s@version\s+(.+)[\s]{2}~i', $header, $match) == 1)
-				$version_info['file_versions'][$entry] = $match[1];
-			// It wasn't found, but the file was... show a '??'.
-			else
-				$version_info['file_versions'][$entry] = '??';
-		}
-	}
-	$sources_dir->close();
-
-	// Load all the files in the tasks directory.
-	if (!empty($versionOptions['include_tasks']))
-	{
-		$tasks_dir = dir($tasksdir);
-		while ($entry = $tasks_dir->read())
-		{
-			if (substr($entry, -4) === '.php' && !is_dir($tasksdir . '/' . $entry) && $entry !== 'index.php')
-			{
-				// Read the first 4k from the file.... enough for the header.
-				$fp = fopen($tasksdir . '/' . $entry, 'rb');
-				$header = fread($fp, 4096);
-				fclose($fp);
-
-				// Look for the version comment in the file header.
-				if (preg_match('~\*\s@version\s+(.+)[\s]{2}~i', $header, $match) == 1)
-					$version_info['tasks_versions'][$entry] = $match[1];
-				// It wasn't found, but the file was... show a '??'.
-				else
-					$version_info['tasks_versions'][$entry] = '??';
-			}
-		}
-		$tasks_dir->close();
-	}
-
-	// Load all the files in the default template directory - and the current theme if applicable.
-	$directories = array('default_template_versions' => $settings['default_theme_dir']);
-	if ($settings['theme_id'] != 1)
-		$directories += array('template_versions' => $settings['theme_dir']);
-
-	foreach ($directories as $type => $dirname)
-	{
-		$this_dir = dir($dirname);
-		while ($entry = $this_dir->read())
-		{
-			if (substr($entry, -12) == 'template.php' && !is_dir($dirname . '/' . $entry))
-			{
-				// Read the first 768 bytes from the file.... enough for the header.
-				$fp = fopen($dirname . '/' . $entry, 'rb');
-				$header = fread($fp, 768);
-				fclose($fp);
-
-				// Look for the version comment in the file header.
-				if (preg_match('~\*\s@version\s+(.+)[\s]{2}~i', $header, $match) == 1)
-					$version_info[$type][$entry] = $match[1];
-				// It wasn't found, but the file was... show a '??'.
-				else
-					$version_info[$type][$entry] = '??';
-			}
-		}
-		$this_dir->close();
-	}
-
-	// Load up all the files in the default language directory and sort by language.
-	$this_dir = dir($lang_dir);
-	while ($entry = $this_dir->read())
-	{
-		if (substr($entry, -4) == '.php' && $entry != 'index.php' && !is_dir($lang_dir . '/' . $entry))
-		{
-			// Read the first 768 bytes from the file.... enough for the header.
-			$fp = fopen($lang_dir . '/' . $entry, 'rb');
-			$header = fread($fp, 768);
-			fclose($fp);
-
-			// Split the file name off into useful bits.
-			list ($name, $language) = explode('.', $entry);
-
-			// Look for the version comment in the file header.
-			if (preg_match('~(?://|/\*)\s*Version:\s+(.+?);\s*' . preg_quote($name, '~') . '(?:[\s]{2}|\*/)~i', $header, $match) == 1)
-				$version_info['default_language_versions'][$language][$name] = $match[1];
-			// It wasn't found, but the file was... show a '??'.
-			else
-				$version_info['default_language_versions'][$language][$name] = '??';
-		}
-	}
-	$this_dir->close();
-
-	// Sort the file versions by filename.
-	if (!empty($versionOptions['sort_results']))
-	{
-		ksort($version_info['file_versions']);
-		ksort($version_info['default_template_versions']);
-		ksort($version_info['template_versions']);
-		ksort($version_info['default_language_versions']);
-		ksort($version_info['tasks_versions']);
-
-		// For languages sort each language too.
-		foreach ($version_info['default_language_versions'] as $language => $dummy)
-			ksort($version_info['default_language_versions'][$language]);
-	}
-	return $version_info;
 }
 
 /**
@@ -592,17 +422,6 @@ function get_settings_defs()
 			'default' => false,
 			'type' => 'boolean',
 		),
-		'db_error_send' => array(
-			'text' => implode("\n", array(
-				'/**',
-				' * Send emails on database connection error',
-				' *',
-				' * @var bool',
-				' */',
-			)),
-			'default' => false,
-			'type' => 'boolean',
-		),
 		'db_mb4' => array(
 			'text' => implode("\n", array(
 				'/**',
@@ -753,18 +572,6 @@ function get_settings_defs()
 			'raw_default' => true,
 			'type' => 'string',
 		),
-		'tasksdir' => array(
-			'text' => implode("\n", array(
-				'/**',
-				' * Path to the tasks directory.',
-				' *',
-				' * @var string',
-				' */',
-			)),
-			'default' => '$sourcedir . \'/tasks\'',
-			'raw_default' => true,
-			'type' => 'string',
-		),
 		array(
 			'text' => implode("\n", array(
 				'',
@@ -773,23 +580,12 @@ function get_settings_defs()
 				'	$boarddir = dirname(__FILE__);',
 				'if (!is_dir(realpath($sourcedir)) && is_dir($boarddir . \'/Sources\'))',
 				'	$sourcedir = $boarddir . \'/Sources\';',
-				'if (!is_dir(realpath($tasksdir)) && is_dir($sourcedir . \'/tasks\'))',
-				'	$tasksdir = $sourcedir . \'/tasks\';',
 				'if (!is_dir(realpath($packagesdir)) && is_dir($boarddir . \'/Packages\'))',
 				'	$packagesdir = $boarddir . \'/Packages\';',
 				'if (!is_dir(realpath($cachedir)) && is_dir($boarddir . \'/cache\'))',
 				'	$cachedir = $boarddir . \'/cache\';',
 			)),
-			'search_pattern' => '~\n?(#[^\n]+)?(?:\n\h*if\s*\((?:\!file_exists\(\$(?'.'>boarddir|sourcedir|tasksdir|packagesdir|cachedir)\)|\!is_dir\(realpath\(\$(?'.'>boarddir|sourcedir|tasksdir|packagesdir|cachedir)\)\))[^;]+\n\h*\$(?'.'>boarddir|sourcedir|tasksdir|packagesdir|cachedir)[^\n]+;)+~sm',
-		),
-		'db_character_set' => array(
-			'text' => implode("\n", array(
-				'',
-				'######### Legacy Settings #########',
-				'# UTF-8 is now the only character set supported in 2.1.',
-			)),
-			'default' => 'utf8',
-			'type' => 'string',
+			'search_pattern' => '~\n?(#[^\n]+)?(?:\n\h*if\s*\((?:\!file_exists\(\$(?'.'>boarddir|sourcedir|packagesdir|cachedir)\)|\!is_dir\(realpath\(\$(?'.'>boarddir|sourcedir|packagesdir|cachedir)\)\))[^;]+\n\h*\$(?'.'>boarddir|sourcedir|packagesdir|cachedir)[^\n]+;)+~sm',
 		),
 		'db_show_debug' => array(
 			'text' => implode("\n", array(
@@ -801,35 +597,11 @@ function get_settings_defs()
 			'auto_delete' => 2,
 			'type' => 'boolean',
 		),
-		array(
-			'text' => implode("\n", array(
-				'',
-				'########## Error-Catching ##########',
-				'# Note: You shouldn\'t touch these settings.',
-				'if (file_exists((isset($cachedir) ? $cachedir : dirname(__FILE__)) . \'/db_last_error.php\'))',
-				'	include((isset($cachedir) ? $cachedir : dirname(__FILE__)) . \'/db_last_error.php\');',
-				'',
-				'if (!isset($db_last_error))',
-				'{',
-				'	// File does not exist so lets try to create it',
-				'	file_put_contents((isset($cachedir) ? $cachedir : dirname(__FILE__)) . \'/db_last_error.php\', \'<\' . \'?\' . "php\n" . \'$db_last_error = 0;\' . "\n" . \'?\' . \'>\');',
-				'	$db_last_error = 0;',
-				'}',
-			)),
-			// Designed to match both 2.0 and 2.1 versions of this code.
-			'search_pattern' => '~\n?#+ Error.Catching #+\n[^\n]*?settings\.\n(?:\$db_last_error = \d{1,11};|if \(file_exists.*?\$db_last_error = 0;(?' . '>\s*}))(?=\n|\?' . '>|$)~s',
-		),
 		// Temporary variable used during the upgrade process.
 		'upgradeData' => array(
 			'default' => '',
 			'auto_delete' => 1,
 			'type' => 'string',
-		),
-		// This should be removed if found.
-		'db_last_error' => array(
-			'default' => 0,
-			'auto_delete' => 1,
-			'type' => 'integer',
 		),
 	);
 
@@ -855,9 +627,6 @@ function get_settings_defs()
  * - Correctly formats the values using sb_var_export().
  *
  * - Restores standard formatting of the file, if $rebuild is true.
- *
- * - Checks for changes to db_last_error and passes those off to a separate
- *   handler.
  *
  * - Creates a backup file and will use it should the writing of the
  *   new settings file fail.
@@ -890,18 +659,6 @@ function updateSettingsFile($config_vars, $keep_quotes = null, $rebuild = false)
 			if (is_string($val) && ($keep_quotes === false || strpos($val, '\'') === 0 && strrpos($val, '\'') === strlen($val) - 1))
 				$config_vars[$var] = trim(stripcslashes($val), '\'');
 		}
-	}
-
-	// Updating the db_last_error, then don't mess around with Settings.php
-	if (isset($config_vars['db_last_error']))
-	{
-		updateDbLastError($config_vars['db_last_error']);
-
-		if (count($config_vars) === 1 && empty($rebuild))
-			return true;
-
-		// Make sure we delete this from Settings.php, if present.
-		$config_vars['db_last_error'] = 0;
 	}
 
 	// Rebuilding should not be undertaken lightly, so we're picky about the parameter.
@@ -943,9 +700,6 @@ function updateSettingsFile($config_vars, $keep_quotes = null, $rebuild = false)
 
 	// It works best to set everything afresh.
 	$new_settings_vars = array_merge($settings_vars, $config_vars);
-
-	// Are we using UTF-8?
-	$utf8 = isset($GLOBALS['context']['utf8']) ? $GLOBALS['context']['utf8'] : (isset($GLOBALS['utf8']) ? $GLOBALS['utf8'] : (isset($settings_vars['db_character_set']) ? $settings_vars['db_character_set'] === 'utf8' : false));
 
 	// Get our definitions for all known Settings.php variables and other content.
 	$settings_defs = get_settings_defs();
@@ -1053,7 +807,6 @@ function updateSettingsFile($config_vars, $keep_quotes = null, $rebuild = false)
 			// Special handling for the Error-Catching block: always at the end.
 			elseif (strpos($setting_def['text'], 'Error-Catching') !== false)
 			{
-				$errcatch_var = $var;
 				$substitutions[$var]['search_pattern'] = $setting_def['search_pattern'];
 				$substitutions[$var]['placeholder'] = '';
 				$substitutions[-2]['replacement'] = "\n" . $setting_def['text'] . $substitutions[-2]['replacement'];
@@ -1181,7 +934,7 @@ function updateSettingsFile($config_vars, $keep_quotes = null, $rebuild = false)
 
 				$var_pattern = count($var_pattern) > 1 ? '(?:' . (implode('|', $var_pattern)) . ')' : $var_pattern[0];
 
-				$substitutions[$var]['search_pattern'] = '~(?<=^|\s)\h*\$' . preg_quote($var, '~') . '\s*=\s*' . $var_pattern . ';~' . (!empty($utf8) ? 'u' : '');
+				$substitutions[$var]['search_pattern'] = '~(?<=^|\s)\h*\$' . preg_quote($var, '~') . '\s*=\s*' . $var_pattern . ';~u';
 			}
 
 			// Next create the placeholder or replace_pattern.
@@ -1245,7 +998,7 @@ function updateSettingsFile($config_vars, $keep_quotes = null, $rebuild = false)
 
 		$placeholder = md5($prefix . $var);
 
-		$substitutions[$var]['search_pattern'] = '~(?<=^|\s)\h*\$' . preg_quote($var, '~') . '\s*=\s*' . $var_pattern . ';~' . (!empty($utf8) ? 'u' : '');
+		$substitutions[$var]['search_pattern'] = '~(?<=^|\s)\h*\$' . preg_quote($var, '~') . '\s*=\s*' . $var_pattern . ';~u';
 		$substitutions[$var]['placeholder'] = $placeholder;
 		$substitutions[$var]['replacement'] = '$' . $var . ' = ' . sb_var_export($val, true) . ";";
 	}
@@ -2148,42 +1901,6 @@ function strip_php_comments($code_str)
 		$code_str = strtr($code_str, array_flip($heredoc_replacements));
 
 	return $code_str;
-}
-
-/**
- * Saves the time of the last db error for the error log
- * - Done separately from updateSettingsFile to avoid race conditions
- *   which can occur during a db error
- * - If it fails Settings.php will assume 0
- *
- * @param int $time The timestamp of the last DB error
- * @param bool True If we should update the current db_last_error context as well.  This may be useful in cases where the current context needs to know a error was logged since the last check.
- * @return bool True If we could succesfully put the file or not.
- */
-function updateDbLastError($time, $update = true)
-{
-	global $boarddir, $cachedir, $db_last_error;
-
-	// Write out the db_last_error file with the error timestamp
-	if (!empty($cachedir) && is_writable($cachedir))
-		$errorfile = $cachedir . '/db_last_error.php';
-
-	elseif (file_exists(dirname(__DIR__) . '/cache'))
-		$errorfile = dirname(__DIR__) . '/cache/db_last_error.php';
-
-	else
-		$errorfile = dirname(__DIR__) . '/db_last_error.php';
-
-	$result = file_put_contents($errorfile, '<' . '?' . "php\n" . '$db_last_error = ' . $time . ';' . "\n" . '?' . '>', LOCK_EX);
-
-	@touch($boarddir . '/' . 'Settings.php');
-
-	// Unless requested, we should update $db_last_error as well.
-	if ($update)
-		$db_last_error = $time;
-
-	// We  do a loose match here rather than strict (!==) as 0 is also false.
-	return $result != false;
 }
 
 /**

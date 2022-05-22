@@ -260,7 +260,7 @@ function ShowXmlFeed()
 	elseif (!empty($board))
 		$filename[] = 'board=' . $board;
 	$filename[] = $xml_format;
-	$filename = preg_replace($context['utf8'] ? '/[^\p{L}\p{M}\p{N}\-]+/u' : '/[\s_,.\/\\;:\'<>?|\[\]{}~!@#$%^&*()=+`]+/', '_', str_replace('"', '', un_htmlspecialchars(strip_tags(implode('-', $filename)))));
+	$filename = preg_replace('/[^\p{L}\p{M}\p{N}\-]+/u', '_', str_replace('"', '', un_htmlspecialchars(strip_tags(implode('-', $filename)))));
 
 	// This is an xml file....
 	ob_end_clean();
@@ -270,13 +270,13 @@ function ShowXmlFeed()
 		ob_start();
 
 	if ($xml_format == 'smf' || isset($_GET['debug']))
-		header('content-type: text/xml; charset=' . (empty($context['character_set']) ? 'UTF-8' : $context['character_set']));
+		header('content-type: text/xml; charset=UTF-8');
 	elseif ($xml_format == 'rss' || $xml_format == 'rss2')
-		header('content-type: application/rss+xml; charset=' . (empty($context['character_set']) ? 'UTF-8' : $context['character_set']));
+		header('content-type: application/rss+xml; charset=UTF-8');
 	elseif ($xml_format == 'atom')
-		header('content-type: application/atom+xml; charset=' . (empty($context['character_set']) ? 'UTF-8' : $context['character_set']));
+		header('content-type: application/atom+xml; charset=UTF-8');
 	elseif ($xml_format == 'rdf')
-		header('content-type: ' . (isBrowser('ie') ? 'text/xml' : 'application/rdf+xml') . '; charset=' . (empty($context['character_set']) ? 'UTF-8' : $context['character_set']));
+		header('content-type: ' . (isBrowser('ie') ? 'text/xml' : 'application/rdf+xml') . '; charset=UTF-8');
 
 	header('content-disposition: ' . (isset($_GET['download']) ? 'attachment' : 'inline') . '; filename="' . $filename . '.xml"');
 
@@ -373,7 +373,7 @@ function buildXmlFeed($xml_format, $xml_data, $feed_meta, $subaction)
 	$context['feed'] = array();
 
 	// First, output the xml header.
-	$context['feed']['header'] = '<?xml version="1.0" encoding="' . $context['character_set'] . '"?' . '>' . ($doctype !== '' ? "\n" . trim($doctype) : '');
+	$context['feed']['header'] = '<?xml version="1.0" encoding="UTF-8"?' . '>' . ($doctype !== '' ? "\n" . trim($doctype) : '');
 
 	// Are we outputting an rss feed or one with more information?
 	if ($xml_format == 'rss' || $xml_format == 'rss2')

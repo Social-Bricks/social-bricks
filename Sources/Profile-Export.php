@@ -14,6 +14,8 @@
  * @version 2.1.2
  */
 
+use SocialBricks\Tasks\Background\ExportProfileData;
+
 /**
  * Initiates exports a member's profile, posts, and personal messages to a file.
  *
@@ -216,7 +218,7 @@ function export_profile_data($uid)
 				WHERE task_class = {string:class}
 					AND task_data LIKE {string:details}',
 				array(
-					'class' => 'ExportProfileData_Background',
+					'class' => ExportProfileData::class,
 					'details' => substr($smcFunc['json_encode'](array('format' => $format, 'uid' => $uid)), 0, -1) . ',%',
 				)
 			);
@@ -352,7 +354,7 @@ function export_profile_data($uid)
 
 		$last_page = ceil(array_sum($total) / $context['export_formats'][$format]['per_page']);
 
-		$data = $smcFunc['json_encode'](array(
+		ExportProfileData::queue(array(
 			'format' => $format,
 			'uid' => $uid,
 			'lang' => $context['member']['language'],
@@ -364,12 +366,6 @@ function export_profile_data($uid)
 			'last_page' => $last_page,
 			'dlfilename' => $dlfilename,
 		));
-
-		$smcFunc['db_insert']('insert', '{db_prefix}background_tasks',
-			array('task_file' => 'string-255', 'task_class' => 'string-255', 'task_data' => 'string', 'claimed_time' => 'int'),
-			array('$sourcedir/tasks/ExportProfileData.php', 'ExportProfileData_Background', $data, 0),
-			array()
-		);
 
 		// So the user can see that we've started.
 		if (!file_exists($tempfile))
@@ -532,21 +528,18 @@ function download_export_file($uid)
 	header('etag: ' . $eTag);
 	header('content-type: ' . $export_formats[$_GET['format']]['mime']);
 
-	// Convert the file to UTF-8, cuz most browsers dig that.
-	$utf8name = !$context['utf8'] && function_exists('iconv') ? iconv($context['character_set'], 'UTF-8', $dlbasename) : (!$context['utf8'] && function_exists('mb_convert_encoding') ? mb_convert_encoding($dlbasename, 'UTF-8', $context['character_set']) : $dlbasename);
-
 	// Different browsers like different standards...
 	if (isBrowser('firefox'))
-		header('content-disposition: attachment; filename*=UTF-8\'\'' . rawurlencode(preg_replace_callback('~&#(\d{3,8});~', 'fixchar__callback', $utf8name)));
+		header('content-disposition: attachment; filename*=UTF-8\'\'' . rawurlencode(preg_replace_callback('~&#(\d{3,8});~', 'fixchar__callback', $dlbasename)));
 
 	elseif (isBrowser('opera'))
-		header('content-disposition: attachment; filename="' . preg_replace_callback('~&#(\d{3,8});~', 'fixchar__callback', $utf8name) . '"');
+		header('content-disposition: attachment; filename="' . preg_replace_callback('~&#(\d{3,8});~', 'fixchar__callback', $dlbasename) . '"');
 
 	elseif (isBrowser('ie'))
-		header('content-disposition: attachment; filename="' . urlencode(preg_replace_callback('~&#(\d{3,8});~', 'fixchar__callback', $utf8name)) . '"');
+		header('content-disposition: attachment; filename="' . urlencode(preg_replace_callback('~&#(\d{3,8});~', 'fixchar__callback', $dlbasename)) . '"');
 
 	else
-		header('content-disposition: attachment; filename="' . $utf8name . '"');
+		header('content-disposition: attachment; filename="' . $dlbasename . '"');
 
 	header('cache-control: max-age=' . (525600 * 60) . ', private');
 
@@ -914,7 +907,7 @@ function get_xslt_stylesheet($format, $uid)
 		{
 			$doctype = '';
 			$stylesheet['header'] = implode("\n", array(
-				'<?xml version="1.0" encoding="' . $context['character_set'] . '"?' . '>',
+				'<?xml version="1.0" encoding="UTF-8"?' . '>',
 				'<xsl:stylesheet version="1.0" xmlns:xsl="' . $xslt_ns . '" xmlns:html="' . $html_ns . '" xmlns:smf="' . $smf_ns . '" exclude-result-prefixes="smf html">',
 			));
 		}

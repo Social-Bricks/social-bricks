@@ -102,7 +102,7 @@ function db_packages_init()
  */
 function sb_db_create_table($table_name, $columns, $indexes = array(), $parameters = array(), $if_exists = 'ignore', $error = 'fatal')
 {
-	global $reservedTables, $smcFunc, $db_package_log, $db_prefix, $db_character_set, $db_name;
+	global $reservedTables, $smcFunc, $db_package_log, $db_prefix, $db_name;
 
 	static $engines = array();
 
@@ -193,9 +193,7 @@ function sb_db_create_table($table_name, $columns, $indexes = array(), $paramete
 		$parameters['engine'] = in_array('InnoDB', $engines) ? 'InnoDB' : 'MyISAM';
 	}
 
-	$table_query .= ') ENGINE=' . $parameters['engine'];
-	if (!empty($db_character_set) && $db_character_set == 'utf8')
-		$table_query .= ' DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci';
+	$table_query .= ') ENGINE=' . $parameters['engine'] . ' DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci';
 
 	// Create the table!
 	$smcFunc['db_query']('', $table_query,

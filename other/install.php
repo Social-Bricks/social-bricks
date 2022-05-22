@@ -375,7 +375,7 @@ function installExit($fallThrough = false)
 	global $incontext, $installurl, $txt;
 
 	// Send character set.
-	header('content-type: text/html; charset=' . (isset($txt['lang_character_set']) ? $txt['lang_character_set'] : 'UTF-8'));
+	header('content-type: text/html; charset=UTF-8');
 
 	// We usually dump our templates out.
 	if (!$fallThrough)
@@ -508,7 +508,6 @@ function CheckFilesWritable()
 		'agreement.txt',
 		'Settings.php',
 		'Settings_bak.php',
-		'cache/db_last_error.php',
 	);
 
 	foreach ($incontext['detected_languages'] as $lang => $temp)
@@ -944,6 +943,7 @@ function ForumSettings()
 
 	// If redirect in effect, force ssl ON
 	require_once(dirname(__FILE__) . '/Sources/Subs.php');
+	require_once(dirname(__FILE__) . '/Sources/Subs-Server.php');
 	if (https_redirect_active($incontext['detected_url']))
 	{
 		$incontext['ssl_chkbx_protected'] = true;
@@ -974,8 +974,7 @@ function ForumSettings()
 			$_POST['boardurl'] = strtr($_POST['boardurl'], array('http://' => 'https://'));
 
 		// Make sure international domain names are normalized correctly.
-		if ($txt['lang_character_set'] == 'UTF-8')
-			$_POST['boardurl'] = normalize_iri($_POST['boardurl']);
+		$_POST['boardurl'] = normalize_iri($_POST['boardurl']);
 
 		// Deal with different operating systems' directory structure...
 		$path = rtrim(str_replace(DIRECTORY_SEPARATOR, '/', __DIR__), '/');
@@ -991,7 +990,6 @@ function ForumSettings()
 			'sourcedir' => $path . '/Sources',
 			'cachedir' => $path . '/cache',
 			'packagesdir' => $path . '/Packages',
-			'tasksdir' => $path . '/Sources/tasks',
 			'mbname' => strtr($_POST['mbname'], array('\"' => '"')),
 			'language' => substr($_SESSION['installer_temp_lang'], 8, -4),
 			'image_proxy_secret' => bin2hex(random_bytes(10)),
@@ -1022,9 +1020,6 @@ function ForumSettings()
 			return false;
 		}
 
-		// Set the character set here.
-		installer_updateSettingsFile(array('db_character_set' => 'utf8'), true);
-
 		// Good, skip on.
 		return true;
 	}
@@ -1035,7 +1030,7 @@ function ForumSettings()
 // Step one: Do the SQL thang.
 function DatabasePopulation()
 {
-	global $db_character_set, $txt, $db_connection, $smcFunc, $databases, $modSettings, $db_type, $db_prefix, $incontext, $db_name, $boardurl;
+	global $txt, $db_connection, $smcFunc, $databases, $modSettings, $db_type, $db_prefix, $incontext, $db_name, $boardurl;
 
 	$incontext['sub_template'] = 'populate_database';
 	$incontext['page_title'] = $txt['db_populate'];
@@ -1230,9 +1225,6 @@ function DatabasePopulation()
 			$incontext['sql_results'][$key] = sprintf($txt['db_populate_' . $key], $number);
 	}
 
-	// Make sure UTF will be used globally.
-	$newSettings[] = array('global_character_set', 'UTF-8');
-
 	// Are we enabling SSL?
 	if (!empty($_POST['force_ssl']))
 		$newSettings[] = array('force_ssl', 1);
@@ -1369,7 +1361,7 @@ function DatabasePopulation()
 // Ask for the administrator login information.
 function AdminAccount()
 {
-	global $txt, $db_type, $smcFunc, $incontext, $db_prefix, $db_passwd, $sourcedir, $db_character_set;
+	global $txt, $db_type, $smcFunc, $incontext, $db_prefix, $db_passwd, $sourcedir;
 
 	$incontext['sub_template'] = 'admin_account';
 	$incontext['page_title'] = $txt['user_settings'];
@@ -1584,7 +1576,7 @@ function AdminAccount()
 // Final step, clean up and a complete message!
 function DeleteInstall()
 {
-	global $smcFunc, $db_character_set, $context, $txt, $incontext;
+	global $smcFunc, $context, $txt, $incontext;
 	global $databases, $sourcedir, $modSettings, $user_info, $db_type, $boardurl;
 	global $auth_secret, $cookiename;
 
@@ -1614,7 +1606,7 @@ function DeleteInstall()
 	$smcFunc['db_query']('', '
 		SET NAMES {string:db_character_set}',
 		array(
-			'db_character_set' => $db_character_set,
+			'db_character_set' => 'utf8',
 			'db_error_skip' => true,
 		)
 	);
@@ -1702,7 +1694,6 @@ function DeleteInstall()
 			'db_error_skip' => true,
 		)
 	);
-	$context['utf8'] = true;
 	if ($smcFunc['db_num_rows']($request) > 0)
 		updateStats('subject', 1, htmlspecialchars($txt['default_topic_subject']));
 	$smcFunc['db_free_result']($request);
@@ -1739,9 +1730,7 @@ function DeleteInstall()
 
 function installer_updateSettingsFile($vars, $rebuild = false)
 {
-	global $sourcedir, $context, $db_character_set, $txt;
-
-	$context['utf8'] = true;
+	global $sourcedir, $context, $txt;
 
 	if (empty($sourcedir))
 	{
@@ -1822,7 +1811,7 @@ function template_install_above()
 	echo '<!DOCTYPE html>
 <html', $txt['lang_rtl'] == true ? ' dir="rtl"' : '', '>
 <head>
-	<meta charset="', isset($txt['lang_character_set']) ? $txt['lang_character_set'] : 'UTF-8', '">
+	<meta charset="UTF-8">
 	<meta name="robots" content="noindex">
 	<title>', $txt['sb_installer'], '</title>
 	<link rel="stylesheet" href="Themes/default/css/index.css">

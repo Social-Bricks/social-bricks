@@ -15,6 +15,11 @@
  * @version 2.1.0
  */
 
+use SocialBricks\Tasks\Background\ApprovePostNotify;
+use SocialBricks\Tasks\Background\ApproveReplyNotify;
+use SocialBricks\Tasks\Background\CreatePostNotify;
+use SocialBricks\Tasks\Background\RegisterNotify;
+
 /**
  * Takes a message and parses it, returning nothing.
  * Cleans up links (javascript, etc.) and code/quote sections.
@@ -42,13 +47,8 @@ function preparsecode(&$message, $previewing = false)
 	);
 	$message = strtr($message, $control_replacements);
 
-	// This line makes all languages *theoretically* work even with the wrong charset ;).
-	if (empty($context['utf8']))
-		$message = preg_replace('~&amp;#(\d{4,5}|[2-9]\d{2,4}|1[2-9]\d);~', '&#$1;', $message);
-
 	// Normalize Unicode characters for storage efficiency, better searching, etc.
-	else
-		$message = $smcFunc['normalize']($message);
+	$message = $smcFunc['normalize']($message);
 
 	// Clean out any other funky stuff.
 	$message = sanitize_chars($message, 0);
@@ -128,7 +128,7 @@ function preparsecode(&$message, $previewing = false)
 	$message = implode('', $parts);
 
 	// The regular expression non breaking space has many versions.
-	$non_breaking_space = $context['utf8'] ? '\x{A0}' : '\xA0';
+	$non_breaking_space = '\x{A0}';
 
 	// Now that we've fixed all the code tags, let's fix the img and url tags...
 	fixTags($message);
@@ -213,25 +213,25 @@ function preparsecode(&$message, $previewing = false)
 
 	$mistake_fixes = array(
 		// Find [table]s not followed by [tr].
-		'~\[table\](?![\s' . $non_breaking_space . ']*\[tr\])~s' . ($context['utf8'] ? 'u' : '') => '[table][tr]',
+		'~\[table\](?![\s' . $non_breaking_space . ']*\[tr\])~su' => '[table][tr]',
 		// Find [tr]s not followed by [td].
-		'~\[tr\](?![\s' . $non_breaking_space . ']*\[td\])~s' . ($context['utf8'] ? 'u' : '') => '[tr][td]',
+		'~\[tr\](?![\s' . $non_breaking_space . ']*\[td\])~su' => '[tr][td]',
 		// Find [/td]s not followed by something valid.
-		'~\[/td\](?![\s' . $non_breaking_space . ']*(?:\[td\]|\[/tr\]|\[/table\]))~s' . ($context['utf8'] ? 'u' : '') => '[/td][/tr]',
+		'~\[/td\](?![\s' . $non_breaking_space . ']*(?:\[td\]|\[/tr\]|\[/table\]))~su' => '[/td][/tr]',
 		// Find [/tr]s not followed by something valid.
-		'~\[/tr\](?![\s' . $non_breaking_space . ']*(?:\[tr\]|\[/table\]))~s' . ($context['utf8'] ? 'u' : '') => '[/tr][/table]',
+		'~\[/tr\](?![\s' . $non_breaking_space . ']*(?:\[tr\]|\[/table\]))~su' => '[/tr][/table]',
 		// Find [/td]s incorrectly followed by [/table].
-		'~\[/td\][\s' . $non_breaking_space . ']*\[/table\]~s' . ($context['utf8'] ? 'u' : '') => '[/td][/tr][/table]',
+		'~\[/td\][\s' . $non_breaking_space . ']*\[/table\]~su' => '[/td][/tr][/table]',
 		// Find [table]s, [tr]s, and [/td]s (possibly correctly) followed by [td].
-		'~\[(table|tr|/td)\]([\s' . $non_breaking_space . ']*)\[td\]~s' . ($context['utf8'] ? 'u' : '') => '[$1]$2[_td_]',
+		'~\[(table|tr|/td)\]([\s' . $non_breaking_space . ']*)\[td\]~su' => '[$1]$2[_td_]',
 		// Now, any [td]s left should have a [tr] before them.
 		'~\[td\]~s' => '[tr][td]',
 		// Look for [tr]s which are correctly placed.
-		'~\[(table|/tr)\]([\s' . $non_breaking_space . ']*)\[tr\]~s' . ($context['utf8'] ? 'u' : '') => '[$1]$2[_tr_]',
+		'~\[(table|/tr)\]([\s' . $non_breaking_space . ']*)\[tr\]~su' => '[$1]$2[_tr_]',
 		// Any remaining [tr]s should have a [table] before them.
 		'~\[tr\]~s' => '[table][tr]',
 		// Look for [/td]s followed by [/tr].
-		'~\[/td\]([\s' . $non_breaking_space . ']*)\[/tr\]~s' . ($context['utf8'] ? 'u' : '') => '[/td]$1[_/tr_]',
+		'~\[/td\]([\s' . $non_breaking_space . ']*)\[/tr\]~su' => '[/td]$1[_/tr_]',
 		// Any remaining [/tr]s should have a [/td].
 		'~\[/tr\]~s' => '[/td][/tr]',
 		// Look for properly opened [li]s which aren't closed.
@@ -239,14 +239,14 @@ function preparsecode(&$message, $previewing = false)
 		'~\[li\]([^\[\]]+?)\[/list\]~s' => '[_li_]$1[_/li_][/list]',
 		'~\[li\]([^\[\]]+?)$~s' => '[li]$1[/li]',
 		// Lists - find correctly closed items/lists.
-		'~\[/li\]([\s' . $non_breaking_space . ']*)\[/list\]~s' . ($context['utf8'] ? 'u' : '') => '[_/li_]$1[/list]',
+		'~\[/li\]([\s' . $non_breaking_space . ']*)\[/list\]~su' => '[_/li_]$1[/list]',
 		// Find list items closed and then opened.
-		'~\[/li\]([\s' . $non_breaking_space . ']*)\[li\]~s' . ($context['utf8'] ? 'u' : '') => '[_/li_]$1[_li_]',
+		'~\[/li\]([\s' . $non_breaking_space . ']*)\[li\]~su' => '[_/li_]$1[_li_]',
 		// Now, find any [list]s or [/li]s followed by [li].
-		'~\[(list(?: [^\]]*?)?|/li)\]([\s' . $non_breaking_space . ']*)\[li\]~s' . ($context['utf8'] ? 'u' : '') => '[$1]$2[_li_]',
+		'~\[(list(?: [^\]]*?)?|/li)\]([\s' . $non_breaking_space . ']*)\[li\]~su' => '[$1]$2[_li_]',
 		// Allow for sub lists.
-		'~\[/li\]([\s' . $non_breaking_space . ']*)\[list\]~' . ($context['utf8'] ? 'u' : '') => '[_/li_]$1[list]',
-		'~\[/list\]([\s' . $non_breaking_space . ']*)\[li\]~' . ($context['utf8'] ? 'u' : '') => '[/list]$1[_li_]',
+		'~\[/li\]([\s' . $non_breaking_space . ']*)\[list\]~u' => '[_/li_]$1[list]',
+		'~\[/list\]([\s' . $non_breaking_space . ']*)\[li\]~u' => '[/list]$1[_li_]',
 		// Any remaining [li]s weren't inside a [list].
 		'~\[li\]~' => '[list][li]',
 		// Any remaining [/li]s weren't before a [/list].
@@ -284,9 +284,9 @@ function preparsecode(&$message, $previewing = false)
 
 	// Restore white space entities
 	if (!$previewing)
-		$message = strtr($message, array('  ' => '&nbsp; ', "\n" => '<br>', $context['utf8'] ? "\xC2\xA0" : "\xA0" => '&nbsp;'));
+		$message = strtr($message, array('  ' => '&nbsp; ', "\n" => '<br>', "\xC2\xA0" => '&nbsp;'));
 	else
-		$message = strtr($message, array('  ' => '&nbsp; ', $context['utf8'] ? "\xC2\xA0" : "\xA0" => '&nbsp;'));
+		$message = strtr($message, array('  ' => '&nbsp; ', "\xC2\xA0" => '&nbsp;'));
 
 	// Now let's quickly clean up things that will slow our parser (which are common in posted code.)
 	$message = strtr($message, array('[]' => '&#91;]', '[&#039;' => '&#91;&#039;'));
@@ -1280,7 +1280,7 @@ function mimespecialchars($string, $with_charset = true, $hotmail_fix = false, $
 {
 	global $context;
 
-	$charset = $custom_charset !== null ? $custom_charset : $context['character_set'];
+	$charset = $custom_charset !== null ? $custom_charset : 'UTF-8';
 
 	// This is the fun part....
 	if (preg_match_all('~&#(\d{3,8});~', $string, $matches) !== 0 && !$hotmail_fix)
@@ -1304,14 +1304,6 @@ function mimespecialchars($string, $with_charset = true, $hotmail_fix = false, $
 			);
 		else
 		{
-			// Try to convert the string to UTF-8.
-			if (!$context['utf8'] && function_exists('iconv'))
-			{
-				$newstring = @iconv($context['character_set'], 'UTF-8', $string);
-				if ($newstring)
-					$string = $newstring;
-			}
-
 			$string = preg_replace_callback('~&#(\d{3,8});~', 'fixchar__callback', $string);
 
 			// Unicode, baby.
@@ -1320,15 +1312,8 @@ function mimespecialchars($string, $with_charset = true, $hotmail_fix = false, $
 	}
 
 	// Convert all special characters to HTML entities...just for Hotmail :-\
-	if ($hotmail_fix && ($context['utf8'] || function_exists('iconv') || $context['character_set'] === 'ISO-8859-1'))
+	if ($hotmail_fix)
 	{
-		if (!$context['utf8'] && function_exists('iconv'))
-		{
-			$newstring = @iconv($context['character_set'], 'UTF-8', $string);
-			if ($newstring)
-				$string = $newstring;
-		}
-
 		$entityConvert = function($m)
 		{
 			$c = $m[1];
@@ -1721,7 +1706,7 @@ function sendNotifications($topics, $type, $exclude = array(), $members_only = a
 	while ($row = $smcFunc['db_fetch_assoc']($result))
 	{
 		$task_rows[] = array(
-			'$sourcedir/tasks/CreatePost-Notify.php', 'CreatePost_Notify_Background', $smcFunc['json_encode'](array(
+			'', CreatePostNotify::class, $smcFunc['json_encode'](array(
 				'msgOptions' => array(
 					'id' => $row['id_msg'],
 					'subject' => $row['subject'],
@@ -2057,19 +2042,12 @@ function createPost(&$msgOptions, &$topicOptions, &$posterOptions)
 			array()
 		);
 
-		$smcFunc['db_insert']('',
-			'{db_prefix}background_tasks',
-			array('task_file' => 'string', 'task_class' => 'string', 'task_data' => 'string', 'claimed_time' => 'int'),
-			array(
-				'$sourcedir/tasks/ApprovePost-Notify.php', 'ApprovePost_Notify_Background', $smcFunc['json_encode'](array(
-					'msgOptions' => $msgOptions,
-					'topicOptions' => $topicOptions,
-					'posterOptions' => $posterOptions,
-					'type' => $new_topic ? 'topic' : 'post',
-				)), 0
-			),
-			array('id_task')
-		);
+		ApprovePostNotify::queue(array(
+			'msgOptions' => $msgOptions,
+			'topicOptions' => $topicOptions,
+			'posterOptions' => $posterOptions,
+			'type' => $new_topic ? 'topic' : 'post',
+		));
 	}
 
 	// Mark inserted topic as read (only for the user calling this function).
@@ -2105,18 +2083,11 @@ function createPost(&$msgOptions, &$topicOptions, &$posterOptions)
 	}
 
 	if ($msgOptions['approved'] && empty($topicOptions['is_approved']) && $posterOptions['id'] != $user_info['id'])
-		$smcFunc['db_insert']('',
-			'{db_prefix}background_tasks',
-			array('task_file' => 'string', 'task_class' => 'string', 'task_data' => 'string', 'claimed_time' => 'int'),
-			array(
-				'$sourcedir/tasks/ApproveReply-Notify.php', 'ApproveReply_Notify_Background', $smcFunc['json_encode'](array(
-					'msgOptions' => $msgOptions,
-					'topicOptions' => $topicOptions,
-					'posterOptions' => $posterOptions,
-				)), 0
-			),
-			array('id_task')
-		);
+		ApproveReplyNotify::queue(array(
+			'msgOptions' => $msgOptions,
+			'topicOptions' => $topicOptions,
+			'posterOptions' => $posterOptions,
+		));
 
 	// If there's a custom search index, it may need updating...
 	require_once($sourcedir . '/Search.php');
@@ -2158,7 +2129,7 @@ function createPost(&$msgOptions, &$topicOptions, &$posterOptions)
 		$smcFunc['db_insert']('',
 			'{db_prefix}background_tasks',
 			array('task_file' => 'string', 'task_class' => 'string', 'task_data' => 'string', 'claimed_time' => 'int'),
-			array('$sourcedir/tasks/CreatePost-Notify.php', 'CreatePost_Notify_Background', $smcFunc['json_encode'](array(
+			array('', CreatePostNotify::class, $smcFunc['json_encode'](array(
 				'msgOptions' => $msgOptions,
 				'topicOptions' => $topicOptions,
 				'posterOptions' => $posterOptions,
@@ -2358,7 +2329,7 @@ function modifyPost(&$msgOptions, &$topicOptions, &$posterOptions)
 		$smcFunc['db_insert']('',
 			'{db_prefix}background_tasks',
 			array('task_file' => 'string', 'task_class' => 'string', 'task_data' => 'string', 'claimed_time' => 'int'),
-			array('$sourcedir/tasks/CreatePost-Notify.php', 'CreatePost_Notify_Background', $smcFunc['json_encode'](array(
+			array('', CreatePostNotify::class, $smcFunc['json_encode'](array(
 				'msgOptions' => $msgOptions,
 				'topicOptions' => $topicOptions,
 				'posterOptions' => $posterOptions,
@@ -2583,7 +2554,7 @@ function approvePosts($msgs, $approve = true, $notify = true)
 		$task_rows = array();
 		foreach (array_merge($notification_topics, $notification_posts) as $topic)
 			$task_rows[] = array(
-				'$sourcedir/tasks/CreatePost-Notify.php', 'CreatePost_Notify_Background', $smcFunc['json_encode'](array(
+				'', CreatePostNotify::class, $smcFunc['json_encode'](array(
 					'msgOptions' => array(
 						'id' => $topic['msg'],
 						'body' => $topic['body'],
@@ -2859,17 +2830,12 @@ function adminNotify($type, $memberID, $member_name = null)
 	}
 
 	// This is really just a wrapper for making a new background task to deal with all the fun.
-	$smcFunc['db_insert']('insert',
-		'{db_prefix}background_tasks',
-		array('task_file' => 'string', 'task_class' => 'string', 'task_data' => 'string', 'claimed_time' => 'int'),
-		array('$sourcedir/tasks/Register-Notify.php', 'Register_Notify_Background', $smcFunc['json_encode'](array(
-			'new_member_id' => $memberID,
-			'new_member_name' => $member_name,
-			'notify_type' => $type,
-			'time' => time(),
-		)), 0),
-		array('id_task')
-	);
+	RegisterNotify::queue(array(
+		'new_member_id' => $memberID,
+		'new_member_name' => $member_name,
+		'notify_type' => $type,
+		'time' => time(),
+	));
 }
 
 /**
@@ -2972,12 +2938,12 @@ function spell_init()
 	global $context, $txt;
 
 	// Check for UTF-8 and strip ".utf8" off the lang_locale string for enchant
-	$context['spell_utf8'] = ($txt['lang_character_set'] == 'UTF-8');
+	$context['spell_utf8'] = true;
 	$lang_locale = str_replace('.utf8', '', $txt['lang_locale']);
 
 	// Try enchant first since PSpell is (supposedly) deprecated as of PHP 5.3
 	// enchant only does UTF-8, so we need iconv if you aren't using UTF-8
-	if (function_exists('enchant_broker_init') && ($context['spell_utf8'] || function_exists('iconv')))
+	if (function_exists('enchant_broker_init') && function_exists('iconv'))
 	{
 		// We'll need this to free resources later...
 		$context['enchant_broker'] = enchant_broker_init();
@@ -3016,7 +2982,7 @@ function spell_init()
 		pspell_new('en');
 
 		// Next, the dictionary in question may not exist. So, we try it... but...
-		$pspell_link = pspell_new($txt['lang_dictionary'], '', '', strtr($context['character_set'], array('iso-' => 'iso', 'ISO-' => 'iso')), PSPELL_FAST | PSPELL_RUN_TOGETHER);
+		$pspell_link = pspell_new($txt['lang_dictionary'], '', '', 'UTF-8', PSPELL_FAST | PSPELL_RUN_TOGETHER);
 
 		// Most people don't have anything but English installed... So we use English as a last resort.
 		if (!$pspell_link)
@@ -3057,7 +3023,7 @@ function spell_check($dict, $word)
 		if (!$context['spell_utf8'])
 		{
 			// Convert the word to UTF-8 with iconv
-			$word = iconv($txt['lang_character_set'], 'UTF-8', $word);
+			$word = iconv('UTF-8', 'UTF-8', $word);
 		}
 		return enchant_dict_check($dict, $word);
 	}
@@ -3086,14 +3052,14 @@ function spell_suggest($dict, $word)
 		if (!$context['spell_utf8'])
 		{
 			// Convert the word to UTF-8 before getting suggestions
-			$word = iconv($txt['lang_character_set'], 'UTF-8', $word);
+			$word = iconv('UTF-8', 'UTF-8', $word);
 			$suggestions = enchant_dict_suggest($dict, $word);
 
 			// Go through the suggestions and convert them back to the proper character set
 			foreach ($suggestions as $index => $suggestion)
 			{
 				// //TRANSLIT makes it use similar-looking characters for incompatible ones...
-				$suggestions[$index] = iconv('UTF-8', $txt['lang_character_set'] . '//TRANSLIT', $suggestion);
+				$suggestions[$index] = iconv('UTF-8', 'UTF-8//TRANSLIT', $suggestion);
 			}
 
 			return $suggestions;

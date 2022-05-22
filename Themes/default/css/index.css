@@ -2806,6 +2806,10 @@ dl.addrules dt.floatleft {
 	background: rgba(40, 64, 80, 0.5);
 	z-index: 6;
 }
+body.popup_open {
+	overflow: hidden !important;
+}
+
 #genericmenu > .popup_container {
 	z-index: 5;
 }

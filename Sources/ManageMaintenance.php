@@ -46,7 +46,6 @@ function ManageMaintenance()
 			'function' => 'MaintainRoutine',
 			'template' => 'maintain_routine',
 			'activities' => array(
-				'version' => 'VersionDetail',
 				'repair' => 'MaintainFindFixErrors',
 				'recount' => 'AdminBoardRecount',
 				'rebuild_settings' => 'RebuildSettingsFile',
@@ -84,10 +83,6 @@ function ManageMaintenance()
 		'hooks' => array(
 			'function' => 'list_integration_hooks',
 		),
-		'destroy' => array(
-			'function' => 'Destroy',
-			'activities' => array(),
-		),
 	);
 
 	call_integration_hook('integrate_manage_maintenance', array(&$subActions));
@@ -123,10 +118,10 @@ function ManageMaintenance()
  */
 function MaintainDatabase()
 {
-	global $context, $db_type, $db_character_set, $modSettings, $smcFunc, $txt;
+	global $context, $db_type, $modSettings, $smcFunc, $txt;
 
 	// Show some conversion options?
-	$context['convert_entities'] = isset($modSettings['global_character_set']) && $modSettings['global_character_set'] === 'UTF-8';
+	$context['convert_entities'] = true;
 
 	if ($db_type == 'mysql')
 	{
@@ -307,22 +302,6 @@ function MaintainEmptyUnimportantLogs()
 }
 
 /**
- * Oh noes! I'd document this but that would give it away
- */
-function Destroy()
-{
-	global $context;
-
-	echo '<!DOCTYPE html>
-		<html', $context['right_to_left'] ? ' dir="rtl"' : '', '><head><title>', $context['forum_name_html_safe'], ' deleted!</title></head>
-		<body style="background-color: orange; font-family: arial, sans-serif; text-align: center;">
-		<div style="margin-top: 8%; font-size: 400%; color: black;">Oh my, you killed ', $context['forum_name_html_safe'], '!</div>
-		<div style="margin-top: 7%; font-size: 500%; color: red;"><strong>You lazy bum!</strong></div>
-		</body></html>';
-	obExit(false);
-}
-
-/**
  * Convert the column "body" of the table {db_prefix}messages from TEXT to MEDIUMTEXT and vice versa.
  * It requires the admin_forum permission.
  * This is needed only for MySQL.
@@ -479,13 +458,9 @@ function ConvertMsgBody()
  */
 function ConvertEntities()
 {
-	global $db_character_set, $modSettings, $context, $smcFunc, $db_type, $db_prefix;
+	global $modSettings, $context, $smcFunc, $db_type, $db_prefix;
 
 	isAllowedTo('admin_forum');
-
-	// Check to see if UTF-8 is currently the default character set.
-	if ($modSettings['global_character_set'] !== 'UTF-8')
-		fatal_lang_error('entity_convert_only_utf8');
 
 	// Some starting values.
 	$context['table'] = empty($_REQUEST['table']) ? 0 : (int) $_REQUEST['table'];
@@ -1269,51 +1244,6 @@ function AdminBoardRecount()
 	CalculateNextTrigger();
 
 	redirectexit('action=admin;area=maintain;sa=routine;done=recount');
-}
-
-/**
- * Perform a detailed version check.  A very good thing ;).
- * The function parses the comment headers in all files for their version information,
- * and outputs that for some javascript to check with simplemachines.org.
- * It does not connect directly with simplemachines.org, but rather expects the client to.
- *
- * It requires the admin_forum permission.
- * Uses the view_versions admin area.
- * Accessed through ?action=admin;area=maintain;sa=routine;activity=version.
- *
- * @uses template_view_versions()
- */
-function VersionDetail()
-{
-	global $txt, $sourcedir, $context;
-
-	isAllowedTo('admin_forum');
-
-	// Call the function that'll get all the version info we need.
-	require_once($sourcedir . '/Subs-Admin.php');
-	$versionOptions = array(
-		'include_ssi' => true,
-		'include_subscriptions' => true,
-		'include_tasks' => true,
-		'sort_results' => true,
-	);
-	$version_info = getFileVersions($versionOptions);
-
-	// Add the new info to the template context.
-	$context += array(
-		'file_versions' => $version_info['file_versions'],
-		'default_template_versions' => $version_info['default_template_versions'],
-		'template_versions' => $version_info['template_versions'],
-		'default_language_versions' => $version_info['default_language_versions'],
-		'default_known_languages' => array_keys($version_info['default_language_versions']),
-		'tasks_versions' => $version_info['tasks_versions'],
-	);
-
-	// Make it easier to manage for the template.
-	$context['forum_version'] = SB_FULL_VERSION;
-
-	$context['sub_template'] = 'view_versions';
-	$context['page_title'] = $txt['admin_version_check'];
 }
 
 /**

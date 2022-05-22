@@ -19,7 +19,7 @@ function template_ban_edit()
 
 	echo '
 	<div id="manage_bans">
-		<form id="admin_form_wrapper" action="', $context['form_url'], '" method="post" accept-charset="', $context['character_set'], '" onsubmit="return confirmBan(this);">';
+		<form id="admin_form_wrapper" action="', $context['form_url'], '" method="post" accept-charset="UTF-8" onsubmit="return confirmBan(this);">';
 
 	// If there were errors creating the ban, show them.
 	if (!empty($context['error_messages']))
@@ -251,7 +251,7 @@ function template_ban_edit_trigger()
 
 	echo '
 	<div id="manage_bans">
-		<form id="admin_form_wrapper" action="', $context['form_url'], '" method="post" accept-charset="', $context['character_set'], '">
+		<form id="admin_form_wrapper" action="', $context['form_url'], '" method="post" accept-charset="UTF-8">
 			<div class="cat_bar">
 				<h3 class="catbg">
 					', $context['ban_trigger']['is_new'] ? $txt['ban_add_trigger'] : $txt['ban_edit_trigger_title'], '

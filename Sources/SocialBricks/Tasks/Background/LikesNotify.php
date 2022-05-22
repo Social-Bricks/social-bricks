@@ -13,10 +13,12 @@
  * @version 2.1.0
  */
 
+namespace SocialBricks\Tasks\Background;
+
 /**
- * Class Likes_Notify_Background
+ * Class LikesNotify
  */
-class Likes_Notify_Background extends SB_BackgroundTask
+class LikesNotify extends AbstractTask
 {
 	/**
 	 * This executes the task: loads up the info, puts the email in the queue

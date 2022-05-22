@@ -25,10 +25,6 @@ function showAttachment()
 {
 	global $smcFunc, $modSettings, $maintenance, $context, $txt, $user_info;
 
-	// Some defaults that we need.
-	$context['character_set'] = empty($modSettings['global_character_set']) ? (empty($txt['lang_character_set']) ? 'ISO-8859-1' : $txt['lang_character_set']) : $modSettings['global_character_set'];
-	$context['utf8'] = $context['character_set'] === 'UTF-8';
-
 	// An early hook to set up global vars, clean cache and other early process.
 	call_integration_hook('integrate_pre_download_request');
 
@@ -226,7 +222,7 @@ function showAttachment()
 	if (empty($file['exists']))
 	{
 		send_http_status(404);
-		header('content-type: text/plain; charset=' . (empty($context['character_set']) ? 'ISO-8859-1' : $context['character_set']));
+		header('content-type: text/plain; charset=UTF-8');
 
 		// We need to die like this *before* we send any anti-caching headers as below.
 		die('File not found.');
@@ -307,11 +303,8 @@ function showAttachment()
 			unset($_REQUEST['image']);
 	}
 
-	// Convert the file to UTF-8, cuz most browsers dig that.
-	$utf8name = !$context['utf8'] && function_exists('iconv') ? iconv($context['character_set'], 'UTF-8', $file['filename']) : (!$context['utf8'] && function_exists('mb_convert_encoding') ? mb_convert_encoding($file['filename'], 'UTF-8', $context['character_set']) : $file['filename']);
-
 	if (!empty($context['prepend_attachment_id']))
-		$utf8name = $_REQUEST['attach'] . ' - ' . $utf8name;
+		$file['filename'] = $_REQUEST['attach'] . ' - ' . $file['filename'];
 
 	// On mobile devices, audio and video should be served inline so the browser can play them.
 	if (isset($_REQUEST['image']) || (isBrowser('is_mobile') && (strpos($file['mime_type'], 'audio/') !== 0 || strpos($file['mime_type'], 'video/') !== 0)))
@@ -321,16 +314,16 @@ function showAttachment()
 
 	// Different browsers like different standards...
 	if (isBrowser('firefox'))
-		header('content-disposition: ' . $disposition . '; filename*=UTF-8\'\'' . rawurlencode(preg_replace_callback('~&#(\d{3,8});~', 'fixchar__callback', $utf8name)));
+		header('content-disposition: ' . $disposition . '; filename*=UTF-8\'\'' . rawurlencode(preg_replace_callback('~&#(\d{3,8});~', 'fixchar__callback', $file['filename'])));
 
 	elseif (isBrowser('opera'))
-		header('content-disposition: ' . $disposition . '; filename="' . preg_replace_callback('~&#(\d{3,8});~', 'fixchar__callback', $utf8name) . '"');
+		header('content-disposition: ' . $disposition . '; filename="' . preg_replace_callback('~&#(\d{3,8});~', 'fixchar__callback', $file['filename']) . '"');
 
 	elseif (isBrowser('ie'))
-		header('content-disposition: ' . $disposition . '; filename="' . urlencode(preg_replace_callback('~&#(\d{3,8});~', 'fixchar__callback', $utf8name)) . '"');
+		header('content-disposition: ' . $disposition . '; filename="' . urlencode(preg_replace_callback('~&#(\d{3,8});~', 'fixchar__callback', $file['filename'])) . '"');
 
 	else
-		header('content-disposition: ' . $disposition . '; filename="' . $utf8name . '"');
+		header('content-disposition: ' . $disposition . '; filename="' . $file['filename'] . '"');
 
 	// If this has an "image extension" - but isn't actually an image - then ensure it isn't cached cause of silly IE.
 	if (!isset($_REQUEST['image']) && in_array($file['fileext'], array('gif', 'jpg', 'bmp', 'png', 'jpeg', 'tiff')))

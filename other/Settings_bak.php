@@ -135,12 +135,6 @@ $db_prefix = 'sb_';
  */
 $db_persist = false;
 /**
- * Send emails on database connection error
- *
- * @var bool
- */
-$db_error_send = false;
-/**
  * Override the default behavior of the database layer for mb4 handling
  * null keep the default behavior untouched
  *
@@ -218,40 +212,16 @@ $sourcedir = dirname(__FILE__) . '/Sources';
  * @var string
  */
 $packagesdir = dirname(__FILE__) . '/Packages';
-/**
- * Path to the tasks directory.
- *
- * @var string
- */
-$tasksdir = $sourcedir . '/tasks';
 
 # Make sure the paths are correct... at least try to fix them.
 if (!is_dir(realpath($boarddir)) && file_exists(dirname(__FILE__) . '/agreement.txt'))
 	$boarddir = dirname(__FILE__);
 if (!is_dir(realpath($sourcedir)) && is_dir($boarddir . '/Sources'))
 	$sourcedir = $boarddir . '/Sources';
-if (!is_dir(realpath($tasksdir)) && is_dir($sourcedir . '/tasks'))
-	$tasksdir = $sourcedir . '/tasks';
 if (!is_dir(realpath($packagesdir)) && is_dir($boarddir . '/Packages'))
 	$packagesdir = $boarddir . '/Packages';
 if (!is_dir(realpath($cachedir)) && is_dir($boarddir . '/cache'))
 	$cachedir = $boarddir . '/cache';
-
-######### Legacy Settings #########
-# UTF-8 is now the only character set supported in 2.1.
-$db_character_set = 'utf8';
-
-########## Error-Catching ##########
-# Note: You shouldn't touch these settings.
-if (file_exists((isset($cachedir) ? $cachedir : dirname(__FILE__)) . '/db_last_error.php'))
-	include((isset($cachedir) ? $cachedir : dirname(__FILE__)) . '/db_last_error.php');
-
-if (!isset($db_last_error))
-{
-	// File does not exist so lets try to create it
-	file_put_contents((isset($cachedir) ? $cachedir : dirname(__FILE__)) . '/db_last_error.php', '<' . '?' . "php\n" . '$db_last_error = 0;' . "\n" . '?' . '>');
-	$db_last_error = 0;
-}
 
 if (file_exists(dirname(__FILE__) . '/install.php'))
 {

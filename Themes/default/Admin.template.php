@@ -77,279 +77,6 @@ function template_admin()
 }
 
 /**
- * Displays information about file versions installed, and compares them to current version.
- */
-function template_view_versions()
-{
-	global $context, $scripturl, $txt;
-
-	echo '
-						<div id="section_header" class="cat_bar">
-							<h3 class="catbg">
-								', $txt['admin_version_check'], '
-							</h3>
-						</div>
-						<div class="information">', $txt['version_check_desc'], '</div>
-						<div id="versions">
-							<table class="table_grid">
-								<thead>
-									<tr class="title_bar">
-										<th class="half_table">
-											<strong>', $txt['admin_smffile'], '</strong>
-										</th>
-										<th class="quarter_table">
-											<strong>', $txt['dvc_your'], '</strong>
-										</th>
-										<th class="quarter_table">
-											<strong>', $txt['dvc_current'], '</strong>
-										</th>
-									</tr>
-								</thead>
-								<tbody>';
-
-	// The current version of the core SMF package.
-	echo '
-									<tr class="windowbg">
-										<td class="half_table">
-											', $txt['admin_smfpackage'], '
-										</td>
-										<td class="quarter_table">
-											<em id="yourSMF">', $context['forum_version'], '</em>
-										</td>
-										<td class="quarter_table">
-											<em id="currentSMF">??</em>
-										</td>
-									</tr>';
-
-	// Now list all the source file versions, starting with the overall version (if all match!).
-	echo '
-									<tr class="windowbg">
-										<td class="half_table">
-											<a href="#" id="Sources-link">', $txt['dvc_sources'], '</a>
-										</td>
-										<td class="quarter_table">
-											<em id="yourSources">??</em>
-										</td>
-										<td class="quarter_table">
-											<em id="currentSources">??</em>
-										</td>
-									</tr>
-								</tbody>
-							</table>
-
-							<table id="Sources" class="table_grid">
-								<tbody>';
-
-	// Loop through every source file displaying its version - using javascript.
-	foreach ($context['file_versions'] as $filename => $version)
-		echo '
-									<tr class="windowbg">
-										<td class="half_table">
-											', $filename, '
-										</td>
-										<td class="quarter_table">
-											<em id="yourSources', $filename, '">', $version, '</em>
-										</td>
-										<td class="quarter_table">
-											<em id="currentSources', $filename, '">??</em>
-										</td>
-									</tr>';
-
-	// Default template files.
-	echo '
-								</tbody>
-							</table>
-
-							<table class="table_grid">
-								<tbody>
-									<tr class="windowbg">
-										<td class="half_table">
-											<a href="#" id="Default-link">', $txt['dvc_default'], '</a>
-										</td>
-										<td class="quarter_table">
-											<em id="yourDefault">??</em>
-										</td>
-										<td class="quarter_table">
-											<em id="currentDefault">??</em>
-										</td>
-									</tr>
-								</tbody>
-							</table>
-
-							<table id="Default" class="table_grid">
-								<tbody>';
-
-	foreach ($context['default_template_versions'] as $filename => $version)
-		echo '
-									<tr class="windowbg">
-										<td class="half_table">
-											', $filename, '
-										</td>
-										<td class="quarter_table">
-											<em id="yourDefault', $filename, '">', $version, '</em>
-										</td>
-										<td class="quarter_table">
-											<em id="currentDefault', $filename, '">??</em>
-										</td>
-									</tr>';
-
-	// Now the language files...
-	echo '
-								</tbody>
-							</table>
-
-							<table class="table_grid">
-								<tbody>
-									<tr class="windowbg">
-										<td class="half_table">
-											<a href="#" id="Languages-link">', $txt['dvc_languages'], '</a>
-										</td>
-										<td class="quarter_table">
-											<em id="yourLanguages">??</em>
-										</td>
-										<td class="quarter_table">
-											<em id="currentLanguages">??</em>
-										</td>
-									</tr>
-								</tbody>
-							</table>
-
-							<table id="Languages" class="table_grid">
-								<tbody>';
-
-	foreach ($context['default_language_versions'] as $language => $files)
-	{
-		foreach ($files as $filename => $version)
-			echo '
-									<tr class="windowbg">
-										<td class="half_table">
-											', $filename, '.<em>', $language, '</em>.php
-										</td>
-										<td class="quarter_table">
-											<em id="your', $filename, '.', $language, '">', $version, '</em>
-										</td>
-										<td class="quarter_table">
-											<em id="current', $filename, '.', $language, '">??</em>
-										</td>
-									</tr>';
-	}
-
-	echo '
-								</tbody>
-							</table>';
-
-	// Display the version information for the currently selected theme - if it is not the default one.
-	if (!empty($context['template_versions']))
-	{
-		echo '
-							<table class="table_grid">
-								<tbody>
-									<tr class="windowbg">
-										<td class="half_table">
-											<a href="#" id="Templates-link">', $txt['dvc_templates'], '</a>
-										</td>
-										<td class="quarter_table">
-											<em id="yourTemplates">??</em>
-										</td>
-										<td class="quarter_table">
-											<em id="currentTemplates">??</em>
-										</td>
-									</tr>
-								</tbody>
-							</table>
-
-							<table id="Templates" class="table_grid">
-								<tbody>';
-
-		foreach ($context['template_versions'] as $filename => $version)
-			echo '
-									<tr class="windowbg">
-										<td class="half_table">
-											', $filename, '
-										</td>
-										<td class="quarter_table">
-											<em id="yourTemplates', $filename, '">', $version, '</em>
-										</td>
-										<td class="quarter_table">
-											<em id="currentTemplates', $filename, '">??</em>
-										</td>
-									</tr>';
-
-		echo '
-								</tbody>
-							</table>';
-	}
-
-	// Display the tasks files version.
-	if (!empty($context['tasks_versions']))
-	{
-		echo '
-							<table class="table_grid">
-								<tbody>
-									<tr class="windowbg">
-										<td class="half_table">
-											<a href="#" id="Tasks-link">', $txt['dvc_tasks'], '</a>
-										</td>
-										<td class="quarter_table">
-											<em id="yourTasks">??</em>
-										</td>
-										<td class="quarter_table">
-											<em id="currentTasks">??</em>
-										</td>
-									</tr>
-								</tbody>
-							</table>
-
-							<table id="Tasks" class="table_grid">
-								<tbody>';
-
-		foreach ($context['tasks_versions'] as $filename => $version)
-			echo '
-									<tr class="windowbg">
-										<td class="half_table">
-											', $filename, '
-										</td>
-										<td class="quarter_table">
-											<em id="yourTasks', $filename, '">', $version, '</em>
-										</td>
-										<td class="quarter_table">
-											<em id="currentTasks', $filename, '">??</em>
-										</td>
-									</tr>';
-
-		echo '
-								</tbody>
-							</table>';
-	}
-
-	echo '
-						</div><!-- #versions -->';
-
-	/* Below is the hefty javascript for this. Upon opening the page it checks the current file versions with ones
-	   held at simplemachines.org and works out if they are up to date. If they aren't it colors that files number
-	   red. It also contains the function, swapOption, that toggles showing the detailed information for each of the
-	   file categories. (sources, languages, and templates.) */
-	echo '
-					<script src="', $scripturl, '?action=viewadminfile;filename=detailed-version.js"></script>
-					<script>
-						var oViewVersions = new sb_viewVersions({
-							aKnownLanguages: [
-								\'.', implode('\',
-								\'.', $context['default_known_languages']), '\'
-							],
-							oSectionContainerIds: {
-								Sources: \'Sources\',
-								Default: \'Default\',
-								Languages: \'Languages\',
-								Templates: \'Templates\',
-								Tasks: \'Tasks\'
-							}
-						});
-					</script>';
-
-}
-
-/**
  * Form for stopping people using naughty words, etc.
  */
 function template_edit_censored()
@@ -362,7 +89,7 @@ function template_edit_censored()
 
 	// First section is for adding/removing words from the censored list.
 	echo '
-						<form id="admin_form_wrapper" action="', $scripturl, '?action=admin;area=postsettings;sa=censor" method="post" accept-charset="', $context['character_set'], '">
+						<form id="admin_form_wrapper" action="', $scripturl, '?action=admin;area=postsettings;sa=censor" method="post" accept-charset="UTF-8">
 							<div id="section_header" class="cat_bar">
 								<h3 class="catbg">
 									', $txt['admin_censored_words'], '
@@ -464,7 +191,7 @@ function template_not_done()
 							</div>';
 
 	echo '
-							<form action="', $scripturl, $context['continue_get_data'], '" method="post" accept-charset="', $context['character_set'], '" name="autoSubmit" id="autoSubmit">';
+							<form action="', $scripturl, $context['continue_get_data'], '" method="post" accept-charset="UTF-8" name="autoSubmit" id="autoSubmit">';
 
 	// Do we have a token?
 	if (isset($context['not_done_token']) && isset($context[$context['not_done_token'] . '_token'], $context[$context['not_done_token'] . '_token_var']))
@@ -517,7 +244,7 @@ function template_show_settings()
 		echo $context['settings_insert_above'];
 
 	echo '
-						<form id="admin_form_wrapper" action="', $context['post_url'], '" method="post" accept-charset="', $context['character_set'], '"', !empty($context['force_form_onsubmit']) ? ' onsubmit="' . $context['force_form_onsubmit'] . '"' : '', '>';
+						<form id="admin_form_wrapper" action="', $context['post_url'], '" method="post" accept-charset="UTF-8"', !empty($context['force_form_onsubmit']) ? ' onsubmit="' . $context['force_form_onsubmit'] . '"' : '', '>';
 
 	// Is there a custom title?
 	if (isset($context['settings_title']))
@@ -900,7 +627,7 @@ function template_edit_profile_field()
 	}
 
 	echo '
-						<form action="', $scripturl, '?action=admin;area=featuresettings;sa=profileedit;fid=', $context['fid'], ';', $context['session_var'], '=', $context['session_id'], '" method="post" accept-charset="', $context['character_set'], '">
+						<form action="', $scripturl, '?action=admin;area=featuresettings;sa=profileedit;fid=', $context['fid'], ';', $context['session_var'], '=', $context['session_id'], '" method="post" accept-charset="UTF-8">
 							<div id="section_header" class="cat_bar">
 								<h3 class="catbg">', $context['page_title'], '</h3>
 							</div>
@@ -1437,7 +1164,7 @@ function template_clean_cache_button_below()
 						<h3 class="catbg">', $txt['maintain_cache'], '</h3>
 					</div>
 					<div class="windowbg">
-						<form action="', $scripturl, '?action=admin;area=maintain;sa=routine;activity=cleancache" method="post" accept-charset="', $context['character_set'], '">
+						<form action="', $scripturl, '?action=admin;area=maintain;sa=routine;activity=cleancache" method="post" accept-charset="UTF-8">
 							<p>', $txt['maintain_cache_info'], '</p>
 							<span><input type="submit" value="', $txt['maintain_run_now'], '" class="button"></span>
 							<input type="hidden" name="', $context['session_var'], '" value="', $context['session_id'], '">
@@ -1455,7 +1182,7 @@ function template_admin_quick_search()
 
 	if ($context['user']['is_admin'])
 		echo '
-								<form action="' . $scripturl . '?action=admin;area=search" method="post" accept-charset="' . $context['character_set'] . '" class="admin_search">
+								<form action="' . $scripturl . '?action=admin;area=search" method="post" accept-charset="UTF-8" class="admin_search">
 									<span class="main_icons filter centericon"></span>
 									<input type="search" name="search_term" placeholder="', $txt['admin_search'], '"', isset($context['search_term']) ? ' value="' . $context['search_term'] . '"' : '','>
 									<select name="search_type">

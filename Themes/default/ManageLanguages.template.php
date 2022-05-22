@@ -42,7 +42,7 @@ function template_download_language()
 
 	// Provide something of an introduction...
 	echo '
-		<form action="', $scripturl, '?action=admin;area=languages;sa=downloadlang;did=', $context['download_id'], ';', $context['session_var'], '=', $context['session_id'], '" method="post" accept-charset="', $context['character_set'], '">
+		<form action="', $scripturl, '?action=admin;area=languages;sa=downloadlang;did=', $context['download_id'], ';', $context['session_var'], '=', $context['session_id'], '" method="post" accept-charset="UTF-8">
 			<div class="cat_bar">
 				<h3 class="catbg">
 					', $txt['languages_download'], '
@@ -134,7 +134,7 @@ function template_modify_language_entries()
 	global $context, $txt, $scripturl;
 
 	echo '
-		<form action="', $scripturl, '?action=admin;area=languages;sa=editlang;lid=', $context['lang_id'], '" id="primary_settings" method="post" accept-charset="', $context['character_set'], '">
+		<form action="', $scripturl, '?action=admin;area=languages;sa=editlang;lid=', $context['lang_id'], '" id="primary_settings" method="post" accept-charset="UTF-8">
 			<div class="cat_bar">
 				<h3 class="catbg">
 					', $txt['edit_languages'], '
@@ -188,7 +188,7 @@ function template_modify_language_entries()
 			</div><!-- .windowbg -->
 		</form>
 
-		<form action="', $scripturl, '?action=admin;area=languages;sa=editlang;lid=', $context['lang_id'], ';entries" id="entry_form" method="post" accept-charset="', $context['character_set'], '">
+		<form action="', $scripturl, '?action=admin;area=languages;sa=editlang;lid=', $context['lang_id'], ';entries" id="entry_form" method="post" accept-charset="UTF-8">
 			<div class="cat_bar">
 				<h3 class="catbg">
 					', $txt['edit_language_entries'], '
@@ -321,7 +321,7 @@ function template_add_language()
 	global $context, $txt, $scripturl;
 
 	echo '
-		<form id="admin_form_wrapper"action="', $scripturl, '?action=admin;area=languages;sa=add;', $context['session_var'], '=', $context['session_id'], '" method="post" accept-charset="', $context['character_set'], '">
+		<form id="admin_form_wrapper"action="', $scripturl, '?action=admin;area=languages;sa=add;', $context['session_var'], '=', $context['session_id'], '" method="post" accept-charset="UTF-8">
 			<div class="cat_bar">
 				<h3 class="catbg">
 					', $txt['add_language'], '

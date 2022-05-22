@@ -365,13 +365,7 @@ function mb_ord_chr_encoding($encoding = null)
 
 	if (is_null($encoding))
 	{
-		if (isset($modSettings['global_character_set']))
-			$encoding = $modSettings['global_character_set'];
-
-		elseif (isset($txt['lang_character_set']))
-			$encoding = $txt['lang_character_set'];
-
-		elseif (function_exists('mb_internal_encoding'))
+		if (function_exists('mb_internal_encoding'))
 			$encoding = mb_internal_encoding();
 
 		elseif (ini_get('default_charset') != false)

@@ -67,7 +67,7 @@ function template_main()
 	// End of the javascript, start the form and display the link tree.
 	echo '
 		</script>
-		<form action="', $scripturl, '?action=', $context['destination'], ';', empty($context['current_board']) ? '' : 'board=' . $context['current_board'], '" method="post" accept-charset="', $context['character_set'], '" name="postmodify" id="postmodify" class="flow_hidden" onsubmit="', ($context['becomes_approved'] ? '' : 'alert(\'' . $txt['js_post_will_require_approval'] . '\');'), 'submitonce(this);" enctype="multipart/form-data">';
+		<form action="', $scripturl, '?action=', $context['destination'], ';', empty($context['current_board']) ? '' : 'board=' . $context['current_board'], '" method="post" accept-charset="UTF-8" name="postmodify" id="postmodify" class="flow_hidden" onsubmit="', ($context['becomes_approved'] ? '' : 'alert(\'' . $txt['js_post_will_require_approval'] . '\');'), 'submitonce(this);" enctype="multipart/form-data">';
 
 	// If the user wants to see how their message looks - the preview section is where it's at!
 	echo '
@@ -725,7 +725,7 @@ function template_spellcheck()
 	echo '<!DOCTYPE html>
 <html', $context['right_to_left'] ? ' dir="rtl"' : '', '>
 	<head>
-		<meta charset="', $context['character_set'], '">
+		<meta charset="UTF-8">
 		<title>', $txt['spell_check'], '</title>
 		<link rel="stylesheet" href="', $settings['theme_url'], '/css/index', $context['theme_variant'], '.css', $context['browser_cache'], '">
 		<style>
@@ -764,7 +764,7 @@ function template_spellcheck()
 		</script>
 	</head>
 	<body onload="nextWord(false);">
-		<form action="#" method="post" accept-charset="', $context['character_set'], '" name="spellingForm" id="spellingForm" onsubmit="return false;">
+		<form action="#" method="post" accept-charset="UTF-8" name="spellingForm" id="spellingForm" onsubmit="return false;">
 			<div id="spellview">&nbsp;</div>
 			<table width="100%">
 				<tr class="windowbg">
@@ -800,7 +800,7 @@ function template_quotefast()
 	echo '<!DOCTYPE html>
 <html', $context['right_to_left'] ? ' dir="rtl"' : '', '>
 	<head>
-		<meta charset="', $context['character_set'], '">
+		<meta charset="UTF-8">
 		<title>', $txt['retrieving_quote'], '</title>
 		<script src="', $settings['default_theme_url'], '/scripts/script.js', $context['browser_cache'], '"></script>
 	</head>
@@ -853,7 +853,7 @@ function template_announce()
 
 	echo '
 	<div id="announcement">
-		<form action="', $scripturl, '?action=announce;sa=send" method="post" accept-charset="', $context['character_set'], '">
+		<form action="', $scripturl, '?action=announce;sa=send" method="post" accept-charset="UTF-8">
 			<div class="cat_bar">
 				<h3 class="catbg">', $txt['announce_title'], '</h3>
 			</div>
@@ -901,7 +901,7 @@ function template_announcement_send()
 
 	echo '
 	<div id="announcement">
-		<form action="', $scripturl, '?action=announce;sa=send" method="post" accept-charset="', $context['character_set'], '" name="autoSubmit" id="autoSubmit">
+		<form action="', $scripturl, '?action=announce;sa=send" method="post" accept-charset="UTF-8" name="autoSubmit" id="autoSubmit">
 			<div class="windowbg">
 				<p>
 					', $txt['announce_sending'], ' <a href="', $scripturl, '?topic=', $context['current_topic'], '.0" target="_blank" rel="noopener">', $context['topic_subject'], '</a>

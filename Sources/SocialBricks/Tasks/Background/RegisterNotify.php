@@ -1,8 +1,7 @@
 <?php
 
 /**
- * This file contains code used to notify moderators when someone files a report
- * about another member's profile.
+ * This file contains code used to notify people when a new member new signs up.
  *
  * Social Bricks
  *
@@ -14,10 +13,12 @@
  * @version 2.1.0
  */
 
+namespace SocialBricks\Tasks\Background;
+
 /**
- * Class MemberReport_Notify_Background
+ * Class RegisterNotify
  */
-class MemberReport_Notify_Background extends SB_BackgroundTask
+class RegisterNotify extends AbstractTask
 {
 	/**
 	 * This executes the task: loads up the info, puts the email in the queue
@@ -29,16 +30,13 @@ class MemberReport_Notify_Background extends SB_BackgroundTask
 	{
 		global $smcFunc, $sourcedir, $modSettings, $language, $scripturl;
 
-		// Anyone with moderate_forum can see this report
+		// Get everyone who could be notified.
 		require_once($sourcedir . '/Subs-Members.php');
 		$members = membersAllowedTo('moderate_forum');
 
-		// And don't send it to them if they're the one who reported it.
-		$members = array_diff($members, array($this->_details['sender_id']));
-
 		// Having successfully figured this out, now let's get the preferences of everyone.
 		require_once($sourcedir . '/Subs-Notify.php');
-		$prefs = getNotifyPrefs($members, 'member_report', true);
+		$prefs = getNotifyPrefs($members, 'member_register', true);
 
 		// So now we find out who wants what.
 		$alert_bits = array(
@@ -50,7 +48,7 @@ class MemberReport_Notify_Background extends SB_BackgroundTask
 		foreach ($prefs as $member => $pref_option)
 		{
 			foreach ($alert_bits as $type => $bitvalue)
-				if ($pref_option['member_report'] & $bitvalue)
+				if ($pref_option['member_register'] & $bitvalue)
 					$notifies[$type][] = $member;
 		}
 
@@ -64,19 +62,13 @@ class MemberReport_Notify_Background extends SB_BackgroundTask
 				$insert_rows[] = array(
 					'alert_time' => $this->_details['time'],
 					'id_member' => $member,
-					'id_member_started' => $this->_details['sender_id'],
-					'member_name' => $this->_details['sender_name'],
+					'id_member_started' => $this->_details['new_member_id'],
+					'member_name' => $this->_details['new_member_name'],
 					'content_type' => 'member',
-					'content_id' => $this->_details['user_id'],
-					'content_action' => 'report',
+					'content_id' => $this->_details['new_member_id'],
+					'content_action' => 'register_' . $this->_details['notify_type'],
 					'is_read' => 0,
-					'extra' => $smcFunc['json_encode'](
-						array(
-							'report_link' => '?action=moderate;area=reportedmembers;sa=details;rid=' . $this->_details['report_id'], // We don't put $scripturl in these!
-							'user_name' => $this->_details['user_name'],
-							'user_id' => $this->_details['user_id'],
-						)
-					),
+					'extra' => '',
 				);
 			}
 
@@ -119,22 +111,27 @@ class MemberReport_Notify_Background extends SB_BackgroundTask
 			}
 			$smcFunc['db_free_result']($request);
 
-			// Iterate through each language, load the relevant templates and set up sending.
+			// Second, iterate through each language, load the relevant templates and set up sending.
 			foreach ($emails as $this_lang => $recipients)
 			{
 				$replacements = array(
-					'MEMBERNAME' => $this->_details['user_name'],
-					'REPORTERNAME' => $this->_details['sender_name'],
-					'PROFILELINK' => $scripturl . '?action=profile;u=' . $this->_details['user_id'],
-					'REPORTLINK' => $scripturl . '?action=moderate;area=reportedmembers;sa=details;rid=' . $this->_details['report_id'],
-					'COMMENT' => $this->_details['comment'],
+					'USERNAME' => $this->_details['new_member_name'],
+					'PROFILELINK' => $scripturl . '?action=profile;u=' . $this->_details['new_member_id']
 				);
+				$emailtype = 'admin_notify';
 
-				$emaildata = loadEmailTemplate('report_member_profile', $replacements, empty($modSettings['userLanguage']) ? $language : $this_lang);
+				// If they need to be approved add more info...
+				if ($this->_details['notify_type'] == 'approval')
+				{
+					$replacements['APPROVALLINK'] = $scripturl . '?action=admin;area=viewmembers;sa=browse;type=approve';
+					$emailtype .= '_approval';
+				}
+
+				$emaildata = loadEmailTemplate($emailtype, $replacements, empty($modSettings['userLanguage']) ? $language : $this_lang);
 
 				// And do the actual sending...
 				foreach ($recipients as $id_member => $email_address)
-					sendmail($email_address, $emaildata['subject'], $emaildata['body'], null, 'ureport' . $this->_details['report_id'], $emaildata['is_html'], 2);
+					sendmail($email_address, $emaildata['subject'], $emaildata['body'], null, 'newmember' . $this->_details['new_member_id'], $emaildata['is_html'], 0);
 			}
 		}
 

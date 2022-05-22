@@ -14,10 +14,12 @@
  * @version 2.1.0
  */
 
+namespace SocialBricks\Tasks\Background;
+
 /**
- * Class MsgReport_Notify_Background
+ * Class MsgReportNotify
  */
-class MsgReport_Notify_Background extends SB_BackgroundTask
+class MsgReportNotify extends AbstractTask
 {
 	/**
 	 * This executes the task: loads up the info, puts the email in the queue

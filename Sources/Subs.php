@@ -13,6 +13,8 @@
  * @version 2.1.2
  */
 
+use SocialBricks\Tasks\Background\UpdateTLDRegex;
+
 /**
  * Update some basic statistics.
  *
@@ -1236,20 +1238,10 @@ function sb_gmstrftime(string $format, int $timestamp = null)
  */
 function un_htmlspecialchars($string)
 {
-	global $context;
 	static $translation = array();
 
-	// Determine the character set... Default to UTF-8
-	if (empty($context['character_set']))
-		$charset = 'UTF-8';
-	// Use ISO-8859-1 in place of non-supported ISO-8859 charsets...
-	elseif (strpos($context['character_set'], 'ISO-8859-') !== false && !in_array($context['character_set'], array('ISO-8859-5', 'ISO-8859-15')))
-		$charset = 'ISO-8859-1';
-	else
-		$charset = $context['character_set'];
-
 	if (empty($translation))
-		$translation = array_flip(get_html_translation_table(HTML_SPECIALCHARS, ENT_QUOTES, $charset)) + array('&#039;' => '\'', '&#39;' => '\'', '&nbsp;' => ' ');
+		$translation = array_flip(get_html_translation_table(HTML_SPECIALCHARS, ENT_QUOTES, 'UTF-8')) + array('&#039;' => '\'', '&#39;' => '\'', '&nbsp;' => ' ');
 
 	return strtr($string, $translation);
 }
@@ -1286,58 +1278,41 @@ function sanitize_chars($string, $level = 0, $substitute = null)
 	{
 		$substitute = strval($substitute);
 	}
-	elseif (!empty($context['utf8']))
+	else
 	{
 		// Raw UTF-8 bytes for U+FFFD.
 		$substitute = "\xEF\xBF\xBD";
 	}
-	elseif (!empty($context['character_set']) && is_callable('mb_decode_numericentity'))
-	{
-		// Get whatever the default replacement character is for this encoding.
-		$substitute = mb_decode_numericentity('&#xFFFD;', array(0xFFFD,0xFFFD,0,0xFFFF), $context['character_set']);
-	}
-	else
-		$substitute = '?';
 
 	// Fix any invalid byte sequences.
-	if (!empty($context['character_set']))
+	// For UTF-8, this preg_match test is much faster than mb_check_encoding.
+	if (@preg_match('//u', $string) === false && preg_last_error() === PREG_BAD_UTF8_ERROR)
 	{
-		// For UTF-8, this preg_match test is much faster than mb_check_encoding.
-		$malformed = !empty($context['utf8']) ? @preg_match('//u', $string) === false && preg_last_error() === PREG_BAD_UTF8_ERROR : (!is_callable('mb_check_encoding') || !mb_check_encoding($string, $context['character_set']));
-
-		if ($malformed)
+		// mb_convert_encoding will replace invalid byte sequences with our substitute.
+		if (is_callable('mb_convert_encoding'))
 		{
-			// mb_convert_encoding will replace invalid byte sequences with our substitute.
-			if (is_callable('mb_convert_encoding'))
-			{
-				if (!is_callable('mb_ord'))
-					require_once($sourcedir . '/Subs-Compat.php');
+			if (!is_callable('mb_ord'))
+				require_once($sourcedir . '/Subs-Compat.php');
 
-				$substitute_ord = $substitute === '' ? 'none' : mb_ord($substitute, $context['character_set']);
+			$substitute_ord = $substitute === '' ? 'none' : mb_ord($substitute, 'UTF-8');
 
-				$mb_substitute_character = mb_substitute_character();
-				mb_substitute_character($substitute_ord);
+			$mb_substitute_character = mb_substitute_character();
+			mb_substitute_character($substitute_ord);
 
-				$string = mb_convert_encoding($string, $context['character_set'], $context['character_set']);
+			$string = mb_convert_encoding($string, 'UTF-8', 'UTF-8');
 
-				mb_substitute_character($mb_substitute_character);
-			}
-			else
-				return false;
+			mb_substitute_character($mb_substitute_character);
 		}
+		else
+			return false;
 	}
 
 	// Fix any weird vertical space characters.
 	$string = normalize_spaces($string, true);
 
 	// Deal with unwanted control characters, invisible formatting characters, and other creepy-crawlies.
-	if (!empty($context['utf8']))
-	{
-		require_once($sourcedir . '/Subs-Charset.php');
-		$string = utf8_sanitize_invisibles($string, $level, $substitute);
-	}
-	else
-		$string = preg_replace('/[^\P{Cc}\t\r\n]/', $substitute, $string);
+	require_once($sourcedir . '/Subs-Charset.php');
+	$string = utf8_sanitize_invisibles($string, $level, $substitute);
 
 	return $string;
 }
@@ -1359,8 +1334,6 @@ function sanitize_chars($string, $level = 0, $substitute = null)
  */
 function normalize_spaces($string, $vspace = true, $hspace = false, $options = array())
 {
-	global $context;
-
 	$string = (string) $string;
 	$vspace = !empty($vspace);
 	$hspace = !empty($hspace);
@@ -1378,14 +1351,14 @@ function normalize_spaces($string, $vspace = true, $hspace = false, $options = a
 	if ($vspace)
 	{
 		// \R is like \v, except it handles "\r\n" as a single unit.
-		$patterns[] = '/\R/' . ($context['utf8'] ? 'u' : '');
+		$patterns[] = '/\R/u';
 		$replacements[] = $options['no_breaks'] ? ' ' : "\n";
 	}
 
 	if ($hspace)
 	{
 		// Interesting fact: Unicode properties like \p{Zs} work even when not in UTF-8 mode.
-		$patterns[] = '/' . ($options['replace_tabs'] ? '\h' : '\p{Zs}') . ($options['collapse_hspace'] ? '+' : '') . '/' . ($context['utf8'] ? 'u' : '');
+		$patterns[] = '/' . ($options['replace_tabs'] ? '\h' : '\p{Zs}') . ($options['collapse_hspace'] ? '+' : '') . '/u';
 		$replacements[] = ' ';
 	}
 
@@ -1429,39 +1402,6 @@ function shorten_subject($subject, $len)
 function forum_time($use_user_offset = true, $timestamp = null)
 {
 	return !isset($timestamp) ? time() : (int) $timestamp;
-}
-
-/**
- * Calculates all the possible permutations (orders) of array.
- * should not be called on huge arrays (bigger than like 10 elements.)
- * returns an array containing each permutation.
- *
- * @deprecated since 2.1
- * @param array $array An array
- * @return array An array containing each permutation
- */
-function permute($array)
-{
-	$orders = array($array);
-
-	$n = count($array);
-	$p = range(0, $n);
-	for ($i = 1; $i < $n; null)
-	{
-		$p[$i]--;
-		$j = $i % 2 != 0 ? $p[$i] : 0;
-
-		$temp = $array[$i];
-		$array[$i] = $array[$j];
-		$array[$j] = $temp;
-
-		for ($i = 1; $p[$i] == 0; $i++)
-			$p[$i] = 1;
-
-		$orders[] = $array;
-	}
-
-	return $orders;
 }
 
 /**
@@ -1523,10 +1463,6 @@ function parse_bbc($message, $smileys = true, $cache_id = '', $parse_tags = arra
 	if ($message === '')
 		return '';
 
-	// Just in case it wasn't determined yet whether UTF-8 is enabled.
-	if (!isset($context['utf8']))
-		$context['utf8'] = (empty($modSettings['global_character_set']) ? $txt['lang_character_set'] : $modSettings['global_character_set']) === 'UTF-8';
-
 	// Clean up any cut/paste issues we may have
 	$message = sanitizeMSCutPaste($message);
 
@@ -1560,7 +1496,7 @@ function parse_bbc($message, $smileys = true, $cache_id = '', $parse_tags = arra
 
 	// Ensure $modSettings['tld_regex'] contains a valid regex for the autolinker
 	if (!empty($modSettings['autoLinkUrls']))
-		set_tld_regex();
+		UpdateTLDRegex::set_tld_regex();
 
 	// Allow mods access before entering the main parse_bbc loop
 	if ($message !== false)
@@ -2737,20 +2673,20 @@ function parse_bbc($message, $smileys = true, $cache_id = '', $parse_tags = arra
 					// An &nbsp; right after a URL can break the autolinker
 					if (strpos($data, '&nbsp;') !== false)
 					{
-						$placeholders[html_entity_decode('&nbsp;', 0, $context['character_set'])] = '&nbsp;';
-						$data = strtr($data, array('&nbsp;' => html_entity_decode('&nbsp;', 0, $context['character_set'])));
+						$placeholders[html_entity_decode('&nbsp;', 0, 'UTF-8')] = '&nbsp;';
+						$data = strtr($data, array('&nbsp;' => html_entity_decode('&nbsp;', 0, 'UTF-8')));
 					}
 
 					// Some reusable character classes
 					$excluded_trailing_chars = '!;:.,?';
-					$domain_label_chars = '0-9A-Za-z\-' . ($context['utf8'] ? implode('', array(
+					$domain_label_chars = '0-9A-Za-z\-' . implode('', array(
 						'\x{A0}-\x{D7FF}', '\x{F900}-\x{FDCF}', '\x{FDF0}-\x{FFEF}',
 						'\x{10000}-\x{1FFFD}', '\x{20000}-\x{2FFFD}', '\x{30000}-\x{3FFFD}',
 						'\x{40000}-\x{4FFFD}', '\x{50000}-\x{5FFFD}', '\x{60000}-\x{6FFFD}',
 						'\x{70000}-\x{7FFFD}', '\x{80000}-\x{8FFFD}', '\x{90000}-\x{9FFFD}',
 						'\x{A0000}-\x{AFFFD}', '\x{B0000}-\x{BFFFD}', '\x{C0000}-\x{CFFFD}',
 						'\x{D0000}-\x{DFFFD}', '\x{E1000}-\x{EFFFD}',
-					)) : '');
+					));
 
 					// Parse any URLs
 					if (!isset($disabled['url']) && strpos($data, '[url') === false)
@@ -2844,16 +2780,16 @@ function parse_bbc($message, $smileys = true, $cache_id = '', $parse_tags = arra
 								'(' => ')', '[' => ']', '{' => '}',
 								// Double quotation marks
 								'"' => '"',
-								html_entity_decode('&#x201C;', 0, $context['character_set']) => html_entity_decode('&#x201D;', 0, $context['character_set']),
-								html_entity_decode('&#x201E;', 0, $context['character_set']) => html_entity_decode('&#x201D;', 0, $context['character_set']),
-								html_entity_decode('&#x201F;', 0, $context['character_set']) => html_entity_decode('&#x201D;', 0, $context['character_set']),
-								html_entity_decode('&#x00AB;', 0, $context['character_set']) => html_entity_decode('&#x00BB;', 0, $context['character_set']),
+								html_entity_decode('&#x201C;', 0, 'UTF-8') => html_entity_decode('&#x201D;', 0, 'UTF-8'),
+								html_entity_decode('&#x201E;', 0, 'UTF-8') => html_entity_decode('&#x201D;', 0, 'UTF-8'),
+								html_entity_decode('&#x201F;', 0, 'UTF-8') => html_entity_decode('&#x201D;', 0, 'UTF-8'),
+								html_entity_decode('&#x00AB;', 0, 'UTF-8') => html_entity_decode('&#x00BB;', 0, 'UTF-8'),
 								// Single quotation marks
 								'\'' => '\'',
-								html_entity_decode('&#x2018;', 0, $context['character_set']) => html_entity_decode('&#x2019;', 0, $context['character_set']),
-								html_entity_decode('&#x201A;', 0, $context['character_set']) => html_entity_decode('&#x2019;', 0, $context['character_set']),
-								html_entity_decode('&#x201B;', 0, $context['character_set']) => html_entity_decode('&#x2019;', 0, $context['character_set']),
-								html_entity_decode('&#x2039;', 0, $context['character_set']) => html_entity_decode('&#x203A;', 0, $context['character_set']),
+								html_entity_decode('&#x2018;', 0, 'UTF-8') => html_entity_decode('&#x2019;', 0, 'UTF-8'),
+								html_entity_decode('&#x201A;', 0, 'UTF-8') => html_entity_decode('&#x2019;', 0, 'UTF-8'),
+								html_entity_decode('&#x201B;', 0, 'UTF-8') => html_entity_decode('&#x2019;', 0, 'UTF-8'),
+								html_entity_decode('&#x2039;', 0, 'UTF-8') => html_entity_decode('&#x203A;', 0, 'UTF-8'),
 							);
 							foreach ($balanced_pairs as $pair_opener => $pair_closer)
 								$balanced_pairs[$smcFunc['htmlspecialchars']($pair_opener)] = $smcFunc['htmlspecialchars']($pair_closer);
@@ -3091,7 +3027,7 @@ function parse_bbc($message, $smileys = true, $cache_id = '', $parse_tags = arra
 						}
 
 						$tmp_data = preg_replace_callback(
-							'~' . $url_regex . '~i' . ($context['utf8'] ? 'u' : ''),
+							'~' . $url_regex . '~iu',
 							function($matches) use ($schemes)
 							{
 								$url = array_shift($matches);
@@ -3158,7 +3094,7 @@ function parse_bbc($message, $smileys = true, $cache_id = '', $parse_tags = arra
 						// Followed by a non-domain character or end of line
 						'(?=[^' . $domain_label_chars . ']|$)';
 
-						$tmp_data = preg_replace('~' . $email_regex . '~i' . ($context['utf8'] ? 'u' : ''), '[email]$0[/email]', $data);
+						$tmp_data = preg_replace('~' . $email_regex . '~iu', '[email]$0[/email]', $data);
 
 						if (!is_null($tmp_data))
 							$data = $tmp_data;
@@ -3904,7 +3840,7 @@ function parsesmileys(&$message)
 			list ($smileysfrom, $smileysto, $smileysdescs) = $temp;
 
 		// The non-breaking-space is a complex thing...
-		$non_breaking_space = $context['utf8'] ? '\x{A0}' : '\xA0';
+		$non_breaking_space = '\x{A0}';
 
 		// This smiley regex makes sure it doesn't parse smileys within code tags (so [url=mailto:David@bla.com] doesn't parse the :D smiley)
 		$smileyPregReplacements = array();
@@ -3934,7 +3870,7 @@ function parsesmileys(&$message)
 			}
 		}
 
-		$smileyPregSearch = '~(?<=[>:\?\.\s' . $non_breaking_space . '[\]()*\\\;]|(?<![a-zA-Z0-9])\(|^)(' . build_regex($searchParts, '~') . ')(?=[^[:alpha:]0-9]|$)~' . ($context['utf8'] ? 'u' : '');
+		$smileyPregSearch = '~(?<=[>:\?\.\s' . $non_breaking_space . '[\]()*\\\;]|(?<![a-zA-Z0-9])\(|^)(' . build_regex($searchParts, '~') . ')(?=[^[:alpha:]0-9]|$)~u';
 	}
 
 	// If there are no smileys defined, no need to replace anything
@@ -4513,10 +4449,10 @@ function template_header()
 		if (!isset($_REQUEST['xml']) && isset($_GET['debug']) && !isBrowser('ie'))
 			header('content-type: application/xhtml+xml');
 		elseif (!isset($_REQUEST['xml']))
-			header('content-type: text/html; charset=' . (empty($context['character_set']) ? 'ISO-8859-1' : $context['character_set']));
+			header('content-type: text/html; charset=UTF-8');
 	}
 
-	header('content-type: text/' . (isset($_REQUEST['xml']) ? 'xml' : 'html') . '; charset=' . (empty($context['character_set']) ? 'ISO-8859-1' : $context['character_set']));
+	header('content-type: text/' . (isset($_REQUEST['xml']) ? 'xml' : 'html') . '; charset=UTF-8');
 
 	// We need to splice this in after the body layer, or after the main layer for older stuff.
 	if ($context['in_maintenance'] && $context['user']['is_admin'])
@@ -5276,12 +5212,8 @@ function text2words($text, $max_chars = 20, $encrypt = false)
 {
 	global $smcFunc, $context;
 
-	// Upgrader may be working on old DBs...
-	if (!isset($context['utf8']))
-		$context['utf8'] = false;
-
 	// Step 1: Remove entities/things we don't consider words:
-	$words = preg_replace('~(?:[\x0B\0' . ($context['utf8'] ? '\x{A0}' : '\xA0') . '\t\r\s\n(){}\\[\\]<>!@$%^*.,:+=`\~\?/\\\\]+|&(?:amp|lt|gt|quot);)+~' . ($context['utf8'] ? 'u' : ''), ' ', strtr($text, array('<br>' => ' ')));
+	$words = preg_replace('~(?:[\x0B\0\x{A0}\t\r\s\n(){}\\[\\]<>!@$%^*.,:+=`\~\?/\\\\]+|&(?:amp|lt|gt|quot);)+~u', ' ', strtr($text, array('<br>' => ' ')));
 
 	// Step 2: Entities we left to letters, where applicable, lowercase.
 	$words = un_htmlspecialchars($smcFunc['strtolower']($words));
@@ -6386,8 +6318,6 @@ function prepareLikesContext($topic)
  */
 function sanitizeMSCutPaste($string)
 {
-	global $context;
-
 	if (empty($string))
 		return $string;
 
@@ -6402,17 +6332,6 @@ function sanitizeMSCutPaste($string)
 		"\xe2\x80\x9d",	// right double curly quote
 	);
 
-	// windows 1252 / iso equivalents
-	$findchars_iso = array(
-		chr(130),
-		chr(132),
-		chr(133),
-		chr(145),
-		chr(146),
-		chr(147),
-		chr(148),
-	);
-
 	// safe replacements
 	$replacechars = array(
 		',',	// &sbquo;
@@ -6424,12 +6343,7 @@ function sanitizeMSCutPaste($string)
 		'"',	// &rdquo;
 	);
 
-	if ($context['utf8'])
-		$string = str_replace($findchars_utf8, $replacechars, $string);
-	else
-		$string = str_replace($findchars_iso, $replacechars, $string);
-
-	return $string;
+	return str_replace($findchars_utf8, $replacechars, $string);
 }
 
 /**
@@ -6444,8 +6358,6 @@ function sanitizeMSCutPaste($string)
  */
 function replaceEntities__callback($matches)
 {
-	global $context;
-
 	if (!isset($matches[2]))
 		return '';
 
@@ -6459,37 +6371,22 @@ function replaceEntities__callback($matches)
 	if (in_array($num, array(0x22, 0x26, 0x27, 0x3C, 0x3E)))
 		return '&#' . $num . ';';
 
-	if (empty($context['utf8']))
-	{
-		// no control characters
-		if ($num < 0x20)
-			return '';
-		// text is text
-		elseif ($num < 0x80)
-			return chr($num);
-		// all others get html-ised
-		else
-			return '&#' . $matches[2] . ';';
-	}
+	// <0x20 are control characters, 0x20 is a space, > 0x10FFFF is past the end of the utf8 character set
+	// 0xD800 >= $num <= 0xDFFF are surrogate markers (not valid for utf8 text)
+	if ($num < 0x20 || $num > 0x10FFFF || ($num >= 0xD800 && $num <= 0xDFFF))
+		return '';
+	// <0x80 (or less than 128) are standard ascii characters a-z A-Z 0-9 and punctuation
+	elseif ($num < 0x80)
+		return chr($num);
+	// <0x800 (2048)
+	elseif ($num < 0x800)
+		return chr(($num >> 6) + 192) . chr(($num & 63) + 128);
+	// < 0x10000 (65536)
+	elseif ($num < 0x10000)
+		return chr(($num >> 12) + 224) . chr((($num >> 6) & 63) + 128) . chr(($num & 63) + 128);
+	// <= 0x10FFFF (1114111)
 	else
-	{
-		// <0x20 are control characters, 0x20 is a space, > 0x10FFFF is past the end of the utf8 character set
-		// 0xD800 >= $num <= 0xDFFF are surrogate markers (not valid for utf8 text)
-		if ($num < 0x20 || $num > 0x10FFFF || ($num >= 0xD800 && $num <= 0xDFFF))
-			return '';
-		// <0x80 (or less than 128) are standard ascii characters a-z A-Z 0-9 and punctuation
-		elseif ($num < 0x80)
-			return chr($num);
-		// <0x800 (2048)
-		elseif ($num < 0x800)
-			return chr(($num >> 6) + 192) . chr(($num & 63) + 128);
-		// < 0x10000 (65536)
-		elseif ($num < 0x10000)
-			return chr(($num >> 12) + 224) . chr((($num >> 6) & 63) + 128) . chr(($num & 63) + 128);
-		// <= 0x10FFFF (1114111)
-		else
-			return chr(($num >> 18) + 240) . chr((($num >> 12) & 63) + 128) . chr((($num >> 6) & 63) + 128) . chr(($num & 63) + 128);
-	}
+		return chr(($num >> 18) + 240) . chr((($num >> 12) & 63) + 128) . chr((($num >> 6) & 63) + 128) . chr(($num & 63) + 128);
 }
 
 /**
@@ -6908,271 +6805,6 @@ function inet_dtop($bin)
 }
 
 /**
- * Safe serialize() and unserialize() replacements
- *
- * @license Public Domain
- *
- * @author anthon (dot) pang (at) gmail (dot) com
- */
-
-/**
- * Safe serialize() replacement. Recursive
- * - output a strict subset of PHP's native serialized representation
- * - does not serialize objects
- *
- * @param mixed $value
- * @return string
- */
-function _safe_serialize($value)
-{
-	if (is_null($value))
-		return 'N;';
-
-	if (is_bool($value))
-		return 'b:' . (int) $value . ';';
-
-	if (is_int($value))
-		return 'i:' . $value . ';';
-
-	if (is_float($value))
-		return 'd:' . str_replace(',', '.', $value) . ';';
-
-	if (is_string($value))
-		return 's:' . strlen($value) . ':"' . $value . '";';
-
-	if (is_array($value))
-	{
-		// Check for nested objects or resources.
-		$contains_invalid = false;
-		array_walk_recursive(
-			$value,
-			function($v) use (&$contains_invalid)
-			{
-				if (is_object($v) || is_resource($v))
-					$contains_invalid = true;
-			}
-		);
-		if ($contains_invalid)
-			return false;
-
-		$out = '';
-		foreach ($value as $k => $v)
-			$out .= _safe_serialize($k) . _safe_serialize($v);
-
-		return 'a:' . count($value) . ':{' . $out . '}';
-	}
-
-	// safe_serialize cannot serialize resources or objects.
-	return false;
-}
-
-/**
- * Wrapper for _safe_serialize() that handles exceptions and multibyte encoding issues.
- *
- * @param mixed $value
- * @return string
- */
-function safe_serialize($value)
-{
-	// Make sure we use the byte count for strings even when strlen() is overloaded by mb_strlen()
-	if (function_exists('mb_internal_encoding') &&
-		(((int) ini_get('mbstring.func_overload')) & 2))
-	{
-		$mbIntEnc = mb_internal_encoding();
-		mb_internal_encoding('ASCII');
-	}
-
-	$out = _safe_serialize($value);
-
-	if (isset($mbIntEnc))
-		mb_internal_encoding($mbIntEnc);
-
-	return $out;
-}
-
-/**
- * Safe unserialize() replacement
- * - accepts a strict subset of PHP's native serialized representation
- * - does not unserialize objects
- *
- * @param string $str
- * @return mixed
- * @throw Exception if $str is malformed or contains unsupported types (e.g., resources, objects)
- */
-function _safe_unserialize($str)
-{
-	// Input  is not a string.
-	if (empty($str) || !is_string($str))
-		return false;
-
-	// The substring 'O:' is used to serialize objects.
-	// If it is not present, then there are none in the serialized data.
-	if (strpos($str, 'O:') === false)
-		return unserialize($str);
-
-	$stack = array();
-	$expected = array();
-
-	/*
-	 * states:
-	 *   0 - initial state, expecting a single value or array
-	 *   1 - terminal state
-	 *   2 - in array, expecting end of array or a key
-	 *   3 - in array, expecting value or another array
-	 */
-	$state = 0;
-	while ($state != 1)
-	{
-		$type = isset($str[0]) ? $str[0] : '';
-		if ($type == '}')
-			$str = substr($str, 1);
-
-		elseif ($type == 'N' && $str[1] == ';')
-		{
-			$value = null;
-			$str = substr($str, 2);
-		}
-		elseif ($type == 'b' && preg_match('/^b:([01]);/', $str, $matches))
-		{
-			$value = $matches[1] == '1' ? true : false;
-			$str = substr($str, 4);
-		}
-		elseif ($type == 'i' && preg_match('/^i:(-?[0-9]+);(.*)/s', $str, $matches))
-		{
-			$value = (int) $matches[1];
-			$str = $matches[2];
-		}
-		elseif ($type == 'd' && preg_match('/^d:(-?[0-9]+\.?[0-9]*(E[+-][0-9]+)?);(.*)/s', $str, $matches))
-		{
-			$value = (float) $matches[1];
-			$str = $matches[3];
-		}
-		elseif ($type == 's' && preg_match('/^s:([0-9]+):"(.*)/s', $str, $matches) && substr($matches[2], (int) $matches[1], 2) == '";')
-		{
-			$value = substr($matches[2], 0, (int) $matches[1]);
-			$str = substr($matches[2], (int) $matches[1] + 2);
-		}
-		elseif ($type == 'a' && preg_match('/^a:([0-9]+):{(.*)/s', $str, $matches))
-		{
-			$expectedLength = (int) $matches[1];
-			$str = $matches[2];
-		}
-
-		// Object or unknown/malformed type.
-		else
-			return false;
-
-		switch ($state)
-		{
-			case 3: // In array, expecting value or another array.
-				if ($type == 'a')
-				{
-					$stack[] = &$list;
-					$list[$key] = array();
-					$list = &$list[$key];
-					$expected[] = $expectedLength;
-					$state = 2;
-					break;
-				}
-				if ($type != '}')
-				{
-					$list[$key] = $value;
-					$state = 2;
-					break;
-				}
-
-				// Missing array value.
-				return false;
-
-			case 2: // in array, expecting end of array or a key
-				if ($type == '}')
-				{
-					// Array size is less than expected.
-					if (count($list) < end($expected))
-						return false;
-
-					unset($list);
-					$list = &$stack[count($stack) - 1];
-					array_pop($stack);
-
-					// Go to terminal state if we're at the end of the root array.
-					array_pop($expected);
-
-					if (count($expected) == 0)
-						$state = 1;
-
-					break;
-				}
-
-				if ($type == 'i' || $type == 's')
-				{
-					// Array size exceeds expected length.
-					if (count($list) >= end($expected))
-						return false;
-
-					$key = $value;
-					$state = 3;
-					break;
-				}
-
-				// Illegal array index type.
-				return false;
-
-			// Expecting array or value.
-			case 0:
-				if ($type == 'a')
-				{
-					$data = array();
-					$list = &$data;
-					$expected[] = $expectedLength;
-					$state = 2;
-					break;
-				}
-
-				if ($type != '}')
-				{
-					$data = $value;
-					$state = 1;
-					break;
-				}
-
-				// Not in array.
-				return false;
-		}
-	}
-
-	// Trailing data in input.
-	if (!empty($str))
-		return false;
-
-	return $data;
-}
-
-/**
- * Wrapper for _safe_unserialize() that handles exceptions and multibyte encoding issue
- *
- * @param string $str
- * @return mixed
- */
-function safe_unserialize($str)
-{
-	// Make sure we use the byte count for strings even when strlen() is overloaded by mb_strlen()
-	if (function_exists('mb_internal_encoding') &&
-		(((int) ini_get('mbstring.func_overload')) & 0x02))
-	{
-		$mbIntEnc = mb_internal_encoding();
-		mb_internal_encoding('ASCII');
-	}
-
-	$out = _safe_unserialize($str);
-
-	if (isset($mbIntEnc))
-		mb_internal_encoding($mbIntEnc);
-
-	return $out;
-}
-
-/**
  * Tries different modes to make file/dirs writable. Wrapper function for chmod()
  *
  * @param string $file The file/dir full path.
@@ -7325,132 +6957,6 @@ function sb_serverResponse($data = '', $type = 'content-type: application/json')
 
 	// Done.
 	obExit(false);
-}
-
-/**
- * Creates an optimized regex to match all known top level domains.
- *
- * The optimized regex is stored in $modSettings['tld_regex'].
- *
- * To update the stored version of the regex to use the latest list of valid
- * TLDs from iana.org, set the $update parameter to true. Updating can take some
- * time, based on network connectivity, so it should normally only be done by
- * calling this function from a background or scheduled task.
- *
- * If $update is not true, but the regex is missing or invalid, the regex will
- * be regenerated from a hard-coded list of TLDs. This regenerated regex will be
- * overwritten on the next scheduled update.
- *
- * @param bool $update If true, fetch and process the latest official list of TLDs from iana.org.
- */
-function set_tld_regex($update = false)
-{
-	global $sourcedir, $smcFunc, $modSettings;
-	static $done = false;
-
-	// If we don't need to do anything, don't
-	if (!$update && $done)
-		return;
-
-	// Should we get a new copy of the official list of TLDs?
-	if ($update)
-	{
-		$tlds = fetch_web_data('https://data.iana.org/TLD/tlds-alpha-by-domain.txt');
-		$tlds_md5 = fetch_web_data('https://data.iana.org/TLD/tlds-alpha-by-domain.txt.md5');
-
-		/**
-		 * If the Internet Assigned Numbers Authority can't be reached, the Internet is GONE!
-		 * We're probably running on a server hidden in a bunker deep underground to protect
-		 * it from marauding bandits roaming on the surface. We don't want to waste precious
-		 * electricity on pointlessly repeating background tasks, so we'll wait until the next
-		 * regularly scheduled update to see if civilization has been restored.
-		 */
-		if ($tlds === false || $tlds_md5 === false)
-			$postapocalypticNightmare = true;
-
-		// Make sure nothing went horribly wrong along the way.
-		if (md5($tlds) != substr($tlds_md5, 0, 32))
-			$tlds = array();
-	}
-	// If we aren't updating and the regex is valid, we're done
-	elseif (!empty($modSettings['tld_regex']) && @preg_match('~' . $modSettings['tld_regex'] . '~', '') !== false)
-	{
-		$done = true;
-		return;
-	}
-
-	// If we successfully got an update, process the list into an array
-	if (!empty($tlds))
-	{
-		// Clean $tlds and convert it to an array
-		$tlds = array_filter(
-			explode("\n", strtolower($tlds)),
-			function($line)
-			{
-				$line = trim($line);
-				if (empty($line) || strlen($line) != strspn($line, 'abcdefghijklmnopqrstuvwxyz0123456789-'))
-					return false;
-				else
-					return true;
-			}
-		);
-
-		// Convert Punycode to Unicode
-		if (!function_exists('idn_to_utf8'))
-			require_once($sourcedir . '/Subs-Compat.php');
-
-		foreach ($tlds as &$tld)
-			$tld = idn_to_utf8($tld, IDNA_DEFAULT, INTL_IDNA_VARIANT_UTS46);
-	}
-	// Otherwise, use the 2012 list of gTLDs and ccTLDs for now and schedule a background update
-	else
-	{
-		$tlds = array('com', 'net', 'org', 'edu', 'gov', 'mil', 'aero', 'asia', 'biz',
-			'cat', 'coop', 'info', 'int', 'jobs', 'mobi', 'museum', 'name', 'post',
-			'pro', 'tel', 'travel', 'xxx', 'ac', 'ad', 'ae', 'af', 'ag', 'ai', 'al',
-			'am', 'ao', 'aq', 'ar', 'as', 'at', 'au', 'aw', 'ax', 'az', 'ba', 'bb', 'bd',
-			'be', 'bf', 'bg', 'bh', 'bi', 'bj', 'bm', 'bn', 'bo', 'br', 'bs', 'bt', 'bv',
-			'bw', 'by', 'bz', 'ca', 'cc', 'cd', 'cf', 'cg', 'ch', 'ci', 'ck', 'cl', 'cm',
-			'cn', 'co', 'cr', 'cu', 'cv', 'cx', 'cy', 'cz', 'de', 'dj', 'dk', 'dm', 'do',
-			'dz', 'ec', 'ee', 'eg', 'er', 'es', 'et', 'eu', 'fi', 'fj', 'fk', 'fm', 'fo',
-			'fr', 'ga', 'gb', 'gd', 'ge', 'gf', 'gg', 'gh', 'gi', 'gl', 'gm', 'gn', 'gp',
-			'gq', 'gr', 'gs', 'gt', 'gu', 'gw', 'gy', 'hk', 'hm', 'hn', 'hr', 'ht', 'hu',
-			'id', 'ie', 'il', 'im', 'in', 'io', 'iq', 'ir', 'is', 'it', 'je', 'jm', 'jo',
-			'jp', 'ke', 'kg', 'kh', 'ki', 'km', 'kn', 'kp', 'kr', 'kw', 'ky', 'kz', 'la',
-			'lb', 'lc', 'li', 'lk', 'lr', 'ls', 'lt', 'lu', 'lv', 'ly', 'ma', 'mc', 'md',
-			'me', 'mg', 'mh', 'mk', 'ml', 'mm', 'mn', 'mo', 'mp', 'mq', 'mr', 'ms', 'mt',
-			'mu', 'mv', 'mw', 'mx', 'my', 'mz', 'na', 'nc', 'ne', 'nf', 'ng', 'ni', 'nl',
-			'no', 'np', 'nr', 'nu', 'nz', 'om', 'pa', 'pe', 'pf', 'pg', 'ph', 'pk', 'pl',
-			'pm', 'pn', 'pr', 'ps', 'pt', 'pw', 'py', 'qa', 're', 'ro', 'rs', 'ru', 'rw',
-			'sa', 'sb', 'sc', 'sd', 'se', 'sg', 'sh', 'si', 'sj', 'sk', 'sl', 'sm', 'sn',
-			'so', 'sr', 'ss', 'st', 'su', 'sv', 'sx', 'sy', 'sz', 'tc', 'td', 'tf', 'tg',
-			'th', 'tj', 'tk', 'tl', 'tm', 'tn', 'to', 'tr', 'tt', 'tv', 'tw', 'tz', 'ua',
-			'ug', 'uk', 'us', 'uy', 'uz', 'va', 'vc', 've', 'vg', 'vi', 'vn', 'vu', 'wf',
-			'ws', 'ye', 'yt', 'za', 'zm', 'zw',
-		);
-
-		// Schedule a background update, unless civilization has collapsed and/or we are having connectivity issues.
-		if (empty($postapocalypticNightmare))
-		{
-			$smcFunc['db_insert']('insert', '{db_prefix}background_tasks',
-				array('task_file' => 'string-255', 'task_class' => 'string-255', 'task_data' => 'string', 'claimed_time' => 'int'),
-				array('$sourcedir/tasks/UpdateTldRegex.php', 'Update_TLD_Regex', '', 0), array()
-			);
-		}
-	}
-
-	// Tack on some "special use domain names" that aren't in DNS but may possibly resolve.
-	// See https://www.iana.org/assignments/special-use-domain-names/ for more info.
-	$tlds = array_merge($tlds, array('local', 'onion', 'test'));
-
-	// Get an optimized regex to match all the TLDs
-	$tld_regex = build_regex($tlds);
-
-	// Remember the new regex in $modSettings
-	updateSettings(array('tld_regex' => $tld_regex));
-
-	// Redundant repetition is redundant
-	$done = true;
 }
 
 /**
@@ -7638,73 +7144,6 @@ function build_regex($strings, $delim = null, $returnArray = false)
 
 	$regexes[$regex_key] = $regex;
 	return $regex;
-}
-
-/**
- * Check if the passed url has an SSL certificate.
- *
- * Returns true if a cert was found & false if not.
- *
- * @param string $url to check, in $boardurl format (no trailing slash).
- */
-function ssl_cert_found($url)
-{
-	// This check won't work without OpenSSL
-	if (!extension_loaded('openssl'))
-		return true;
-
-	// First, strip the subfolder from the passed url, if any
-	$parsedurl = parse_iri($url);
-	$url = 'ssl://' . $parsedurl['host'] . ':443';
-
-	// Next, check the ssl stream context for certificate info
-	$ssloptions = array("capture_peer_cert" => true, "verify_peer" => true, "allow_self_signed" => true);
-
-	$result = false;
-	$context = stream_context_create(array("ssl" => $ssloptions));
-	$stream = @stream_socket_client($url, $errno, $errstr, 30, STREAM_CLIENT_CONNECT, $context);
-	if ($stream !== false)
-	{
-		$params = stream_context_get_params($stream);
-		$result = isset($params["options"]["ssl"]["peer_certificate"]) ? true : false;
-	}
-	return $result;
-}
-
-/**
- * Check if the passed url has a redirect to https:// by querying headers.
- *
- * Returns true if a redirect was found & false if not.
- * Note that when force_ssl = 2, Social Bricks issues its own redirect...  So if this
- * returns true, it may be caused by Social Bricks, not necessarily an .htaccess redirect.
- *
- * @param string $url to check, in $boardurl format (no trailing slash).
- */
-function https_redirect_active($url)
-{
-	// Ask for the headers for the passed url, but via http...
-	// Need to add the trailing slash, or it puts it there & thinks there's a redirect when there isn't...
-	$url = str_ireplace('https://', 'http://', $url) . '/';
-	$headers = @get_headers($url);
-	if ($headers === false)
-		return false;
-
-	// Now to see if it came back https...
-	// First check for a redirect status code in first row (301, 302, 307)
-	if (strstr($headers[0], '301') === false && strstr($headers[0], '302') === false && strstr($headers[0], '307') === false)
-		return false;
-
-	// Search for the location entry to confirm https
-	$result = false;
-	foreach ($headers as $header)
-	{
-		if (stristr($header, 'Location: https://') !== false)
-		{
-			$result = true;
-			break;
-		}
-	}
-	return $result;
 }
 
 /**
@@ -7919,11 +7358,7 @@ function sanitize_iri($iri)
  */
 function normalize_iri($iri)
 {
-	global $sourcedir, $context, $txt, $db_character_set;
-
-	// If we are not using UTF-8, just sanitize and return.
-	if (isset($context['utf8']) ? !$context['utf8'] : (isset($txt['lang_character_set']) ? $txt['lang_character_set'] != 'UTF-8' : (isset($db_character_set) && $db_character_set != 'utf8')))
-		return sanitize_iri($iri);
+	global $sourcedir, $context, $txt;
 
 	require_once($sourcedir . '/Subs-Charset.php');
 
@@ -7960,11 +7395,7 @@ function normalize_iri($iri)
  */
 function iri_to_url($iri)
 {
-	global $sourcedir, $context, $txt, $db_character_set;
-
-	// Sanity check: must be using UTF-8 to do this.
-	if (isset($context['utf8']) ? !$context['utf8'] : (isset($txt['lang_character_set']) ? $txt['lang_character_set'] != 'UTF-8' : (isset($db_character_set) && $db_character_set != 'utf8')))
-		return $iri;
+	global $sourcedir, $context, $txt;
 
 	require_once($sourcedir . '/Subs-Charset.php');
 
@@ -8018,11 +7449,7 @@ function iri_to_url($iri)
  */
 function url_to_iri($url)
 {
-	global $sourcedir, $context, $txt, $db_character_set;
-
-	// Sanity check: must be using UTF-8 to do this.
-	if (isset($context['utf8']) ? !$context['utf8'] : (isset($txt['lang_character_set']) ? $txt['lang_character_set'] != 'UTF-8' : (isset($db_character_set) && $db_character_set != 'utf8')))
-		return $url;
+	global $sourcedir, $context;
 
 	$host = parse_iri((strpos($url, '//') === 0 ? 'http:' : '') . $url, PHP_URL_HOST);
 
@@ -8335,7 +7762,7 @@ function cleanXml($string)
 
 	// The Unicode surrogate pair code points should never be present in our
 	// strings to begin with, but if any snuck in, they need to be removed.
-	if (!empty($context['utf8']) && strpos($string, "\xED") !== false)
+	if (strpos($string, "\xED") !== false)
 		$string = preg_replace('/\xED[\xA0-\xBF][\x80-\xBF]/', '', $string);
 
 	return $string;

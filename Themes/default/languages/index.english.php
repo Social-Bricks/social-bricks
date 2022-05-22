@@ -1,7 +1,7 @@
 <?php
 // Version: 2.1.2; index
 
-global $forum_copyright, $webmaster_email, $scripturl, $context, $boardurl;
+global $forum_copyright, $scripturl, $context, $boardurl;
 
 // Native name, please use full HTML entities to write your language's name.
 $txt['native_name'] = 'English';
@@ -13,8 +13,6 @@ $txt['lang_dictionary'] = 'en';
 //https://developers.google.com/recaptcha/docs/language
 $txt['lang_recaptcha'] = 'en';
 
-// Ensure you remember to use uppercase for character set strings.
-$txt['lang_character_set'] = 'UTF-8';
 // Character set and right to left?
 $txt['lang_rtl'] = false;
 // Number format.
@@ -411,8 +409,7 @@ $txt['database_error'] = 'Database Error';
 $txt['try_again'] = 'Please try again. If you come back to this error screen, report the error to an administrator.';
 $txt['file'] = 'File';
 $txt['line'] = 'Line';
-// Use numeric entities in the below string.
-$txt['tried_to_repair'] = 'Social Bricks has detected and automatically tried to repair an error in your database. If you continue to have problems, or continue to receive these emails, please contact your host.';
+
 $txt['database_error_versions'] = '<strong>Note:</strong> It appears that your database <em>may</em> require an upgrade. Your forum\'s files are currently at version %1$s, while your database is at version %2$s. The above error might possibly go away if you execute the latest version of upgrade.php.';
 $txt['template_parse_error'] = 'Template Parse Error!';
 $txt['template_parse_error_message'] = 'It seems something has gone sour on the forum with the template system. This problem should only be temporary, so please come back later and try again. If you continue to see this message, please contact the administrator.<br><br>You can also try <a href="javascript:location.reload();">refreshing this page</a>.';

@@ -761,7 +761,7 @@ function template_calendar_top($calendar_data)
 			', template_button_strip($context['calendar_buttons'], 'right');
 
 	echo '
-			<form action="', $scripturl, '?action=calendar;', $context['calendar_view'], '" id="', !empty($calendar_data['end_date']) ? 'calendar_range' : 'calendar_navigation', '" method="post" accept-charset="', $context['character_set'], '">
+			<form action="', $scripturl, '?action=calendar;', $context['calendar_view'], '" id="', !empty($calendar_data['end_date']) ? 'calendar_range' : 'calendar_navigation', '" method="post" accept-charset="UTF-8">
 				<input type="text" name="start_date" id="start_date" value="', trim($calendar_data['start_date']), '" tabindex="', $context['tabindex']++, '" class="date_input start" data-type="date">';
 
 	if (!empty($calendar_data['end_date']))
@@ -783,7 +783,7 @@ function template_event_post()
 	global $context, $txt, $scripturl, $modSettings;
 
 	echo '
-		<form action="', $scripturl, '?action=calendar;sa=post" method="post" name="postevent" accept-charset="', $context['character_set'], '" onsubmit="submitonce(this);">';
+		<form action="', $scripturl, '?action=calendar;sa=post" method="post" name="postevent" accept-charset="UTF-8" onsubmit="submitonce(this);">';
 
 	if (!empty($context['event']['new']))
 		echo '

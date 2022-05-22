@@ -111,7 +111,7 @@ function template_main()
 		else
 		{
 			echo '
-					<form action="', $scripturl, '?action=vote;topic=', $context['current_topic'], '.', $context['start'], ';poll=', $context['poll']['id'], '" method="post" accept-charset="', $context['character_set'], '">';
+					<form action="', $scripturl, '?action=vote;topic=', $context['current_topic'], '.', $context['start'], ';poll=', $context['poll']['id'], '" method="post" accept-charset="UTF-8">';
 
 			// Show a warning if they are allowed more than one option.
 			if ($context['poll']['allowed_warning'])
@@ -247,7 +247,7 @@ function template_main()
 	// Show the topic information - icon, subject, etc.
 	echo '
 		<div id="forumposts">
-			<form action="', $scripturl, '?action=quickmod2;topic=', $context['current_topic'], '.', $context['start'], '" method="post" accept-charset="', $context['character_set'], '" name="quickModForm" id="quickModForm" onsubmit="return oQuickModify.bInEditMode ? oQuickModify.modifySave(\'' . $context['session_id'] . '\', \'' . $context['session_var'] . '\') : false">';
+			<form action="', $scripturl, '?action=quickmod2;topic=', $context['current_topic'], '.', $context['start'], '" method="post" accept-charset="UTF-8" name="quickModForm" id="quickModForm" onsubmit="return oQuickModify.bInEditMode ? oQuickModify.modifySave(\'' . $context['session_id'] . '\', \'' . $context['session_var'] . '\') : false">';
 
 	$context['ignoredMsgs'] = array();
 	$context['removableMessageIDs'] = array();
@@ -605,11 +605,6 @@ function template_single_post($message)
 				echo '
 										<li><a href="', $message['member']['website']['url'], '" title="' . $message['member']['website']['title'] . '" target="_blank" rel="noopener">', ($settings['use_image_buttons'] ? '<span class="main_icons www centericon" title="' . $message['member']['website']['title'] . '"></span>' : $txt['www']), '</a></li>';
 
-			// Since we know this person isn't a guest, you *can* message them.
-			if ($context['can_send_pm'])
-				echo '
-										<li><a href="', $scripturl, '?action=pm;sa=send;u=', $message['member']['id'], '" title="', $message['member']['online']['is_online'] ? $txt['pm_online'] : $txt['pm_offline'], '">', $settings['use_image_buttons'] ? '<span class="main_icons im_' . ($message['member']['online']['is_online'] ? 'on' : 'off') . ' centericon" title="' . ($message['member']['online']['is_online'] ? $txt['pm_online'] : $txt['pm_offline']) . '"></span> ' : ($message['member']['online']['is_online'] ? $txt['pm_online'] : $txt['pm_offline']), '</a></li>';
-
 			// Show the email if necessary
 			if (!empty($message['member']['email']) && $message['member']['show_email'])
 				echo '
@@ -639,25 +634,6 @@ function template_single_post($message)
 								<li class="poster_ip">
 									<a href="', $scripturl, '?action=', !empty($message['member']['is_guest']) ? 'trackip' : 'profile;area=tracking;sa=ip;u=' . $message['member']['id'], ';searchip=', $message['member']['ip'], '" data-hover="', $message['member']['ip'], '" class="show_on_hover"><span>', $txt['show_ip'], '</span></a> <a href="', $scripturl, '?action=helpadmin;help=see_admin_ip" onclick="return reqOverlayDiv(this.href);" class="help">(?)</a>
 								</li>';
-
-	// Or, should we show it because this is you?
-	elseif ($message['can_see_ip'])
-		echo '
-								<li class="poster_ip">
-									<a href="', $scripturl, '?action=helpadmin;help=see_member_ip" onclick="return reqOverlayDiv(this.href);" class="help show_on_hover" data-hover="', $message['member']['ip'], '"><span>', $txt['show_ip'], '</span></a>
-								</li>';
-
-	// Okay, are you at least logged in? Then we can show something about why IPs are logged...
-	elseif (!$context['user']['is_guest'])
-		echo '
-								<li class="poster_ip">
-									<a href="', $scripturl, '?action=helpadmin;help=see_member_ip" onclick="return reqOverlayDiv(this.href);" class="help">', $txt['logged'], '</a>
-								</li>';
-
-	// Otherwise, you see NOTHING!
-	else
-		echo '
-								<li class="poster_ip">', $txt['logged'], '</li>';
 
 	// Are we showing the warning status?
 	// Don't show these things for guests.
@@ -944,7 +920,7 @@ function template_quickreply()
 					<p><em>', $txt['wait_for_approval'], '</em></p>';
 
 	echo '
-					<form action="', $scripturl, '?board=', $context['current_board'], ';action=post2" method="post" accept-charset="', $context['character_set'], '" name="postmodify" id="postmodify" onsubmit="submitonce(this);">
+					<form action="', $scripturl, '?board=', $context['current_board'], ';action=post2" method="post" accept-charset="UTF-8" name="postmodify" id="postmodify" onsubmit="submitonce(this);">
 						<input type="hidden" name="topic" value="', $context['current_topic'], '">
 						<input type="hidden" name="subject" value="', $context['response_prefix'], $context['subject'], '">
 						<input type="hidden" name="icon" value="xx">
@@ -1032,7 +1008,7 @@ function template_quickreply()
 
 	if ($context['show_spellchecking'])
 		echo '
-		<form action="', $scripturl, '?action=spellcheck" method="post" accept-charset="', $context['character_set'], '" name="spell_form" id="spell_form" target="spellWindow">
+		<form action="', $scripturl, '?action=spellcheck" method="post" accept-charset="UTF-8" name="spell_form" id="spell_form" target="spellWindow">
 			<input type="hidden" name="spellstring" value="">
 		</form>';
 

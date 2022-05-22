@@ -14,10 +14,12 @@
  * @version 2.1.0
  */
 
+namespace SocialBricks\Tasks\Background;
+
 /**
- * Class GroupAct_Notify_Background
+ * Class GroupActNotify
  */
-class GroupAct_Notify_Background extends SB_BackgroundTask
+class GroupActNotify extends AbstractTask
 {
 	/**
 	 * This executes the task: loads up the info, puts the email in the queue

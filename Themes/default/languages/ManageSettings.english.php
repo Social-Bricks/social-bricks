@@ -65,7 +65,6 @@ $txt['securityDisable'] = 'Disable administration security';
 $txt['securityDisable_moderate'] = 'Disable moderation security';
 $txt['send_validation_onChange'] = 'Require reactivation after email change';
 $txt['approveAccountDeletion'] = 'Require admin approval when member deletes account';
-$txt['autoFixDatabase'] = 'Automatically fix broken tables';
 $txt['disallow_sendBody'] = 'Don\'t allow post text in notifications';
 $txt['enable_ajax_alerts'] = 'Allow AJAX desktop notifications for alerts';
 $txt['alerts_auto_purge'] = 'Automatically delete read alerts';

@@ -198,13 +198,6 @@ function PackageInstallTest()
 	// Set the type of extraction...
 	$context['extract_type'] = isset($packageInfo['type']) ? $packageInfo['type'] : 'modification';
 
-	// Get our validation info.
-	$context['validation_tests'] = package_validate_installtest(array(
-		'file_name' => $packagesdir . '/' . $context['filename'],
-		'custom_id' => !empty($packageInfo['id']) ? $packageInfo['id'] : '',
-		'custom_type' => $context['extract_type']
-	));
-
 	// The mod isn't installed.... unless proven otherwise.
 	$context['is_installed'] = false;
 

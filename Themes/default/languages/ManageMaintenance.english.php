@@ -152,8 +152,6 @@ $txt['maintain_cache'] = 'Empty the cache';
 $txt['maintain_cache_info'] = 'This function will empty out the cache should you need it to be cleared.';
 $txt['maintain_optimize'] = 'Optimize all tables';
 $txt['maintain_optimize_info'] = 'This task allows you to optimize all tables. This will get rid of overhead, effectively making the tables smaller in size and your forum faster.';
-$txt['maintain_version'] = 'Check all files against current versions';
-$txt['maintain_version_info'] = 'This maintenance task allows you to do a detailed version check of all forum files against the official list of latest versions.';
 $txt['maintain_rebuild_settings'] = 'Rebuild Settings.php';
 $txt['maintain_rebuild_settings_info'] = 'This task reconstructs your Settings.php file. It does not change the values stored in the file. Instead, it cleans up and reformats your Settings.php file to a pristine version.';
 $txt['maintain_run_now'] = 'Run task now';
@@ -202,7 +200,6 @@ $txt['convert_to_text'] = 'No messages are longer than 65535 characters. You can
 $txt['convert_to_suggest_text'] = 'The messages body column in your database is currently set as MEDIUMTEXT, but the maximum allowed length set for the messages is lower than 65535 characters. You may free some space converting the column to TEXT.';
 
 $txt['entity_convert_title'] = 'Convert HTML-entities to UTF-8 characters';
-$txt['entity_convert_only_utf8'] = 'The database needs to be in UTF-8 format before HTML-entities can be converted to UTF-8';
 $txt['entity_convert_introduction'] = 'This function will convert all characters that are stored in the database as HTML-entities to UTF-8 characters. This is especially useful when you have just converted your forum from a character set like ISO-8859-1 while non-latin characters were used on the forum. The browser then sends all characters as HTML-entities. For example, the HTML-entity &amp;#945; represents the greek letter &#945; (alpha). Converting entities to UTF-8 will improve searching and sorting of text and reduce storage size.';
 $txt['entity_convert_proceed'] = 'Proceed';
 

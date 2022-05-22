@@ -20,6 +20,8 @@
  * @version 2.1.2
  */
 
+use SocialBricks\Tasks\Background\AbstractTask;
+
 define('SOCIALBRICKS', 'BACKGROUND');
 define('SB_VERSION', '2.1.2');
 define('SB_FULL_VERSION', 'Social Bricks ' . SB_VERSION);
@@ -40,7 +42,7 @@ define('MAX_CLAIM_THRESHOLD', 300);
 // We're going to want a few globals... these are all set later.
 global $maintenance, $msubject, $mmessage, $mbname, $language;
 global $boardurl, $boarddir, $sourcedir, $webmaster_email;
-global $db_server, $db_name, $db_user, $db_prefix, $db_persist, $db_error_send, $db_last_error;
+global $db_server, $db_name, $db_user, $db_prefix, $db_persist;
 global $db_connection, $modSettings, $context, $sc, $user_info, $txt;
 global $smcFunc, $ssi_db_user, $scripturl, $db_passwd, $cachedir;
 
@@ -48,7 +50,7 @@ if (!defined('TIME_START'))
 	define('TIME_START', microtime(true));
 
 // Just being safe...
-foreach (array('db_character_set', 'cachedir') as $variable)
+foreach (array('cachedir') as $variable)
 	if (isset($GLOBALS[$variable]))
 		unset($GLOBALS[$variable]);
 
@@ -228,7 +230,7 @@ function perform_task($task_details)
 	}
 
 	// All background tasks need to be classes.
-	elseif (class_exists($task_details['task_class']) && is_subclass_of($task_details['task_class'], 'SB_BackgroundTask'))
+	elseif (class_exists($task_details['task_class']) && is_subclass_of($task_details['task_class'], AbstractTask::class))
 	{
 		$details = empty($task_details['task_data']) ? array() : $smcFunc['json_decode']($task_details['task_data'], true);
 		$bgtask = new $task_details['task_class']($details);
@@ -300,70 +302,6 @@ function obExit_cron()
 	{
 		header('content-type: image/gif');
 		die("\x47\x49\x46\x38\x39\x61\x01\x00\x01\x00\x80\x00\x00\x00\x00\x00\x00\x00\x00\x21\xF9\x04\x01\x00\x00\x00\x00\x2C\x00\x00\x00\x00\x01\x00\x01\x00\x00\x02\x02\x44\x01\x00\x3B");
-	}
-}
-
-// We would like this to be defined, but we don't want to have to load more stuff than necessary.
-// Thus we declare it here, and any legitimate background task must implement this.
-/**
- * Class SB_BackgroundTask
- */
-abstract class SB_BackgroundTask
-{
-	/**
-	 * Constants for notification types.
-	*/
-	const RECEIVE_NOTIFY_EMAIL = 0x02;
-	const RECEIVE_NOTIFY_ALERT = 0x01;
-
-	/**
-	 * @var array Holds the details for the task
-	 */
-	protected $_details;
-
-	/**
-	 * @var array Temp property to hold the current user info while tasks make use of $user_info
-	 */
-	private $current_user_info = array();
-
-	/**
-	 * The constructor.
-	 *
-	 * @param array $details The details for the task
-	 */
-	public function __construct($details)
-	{
-		global $user_info;
-
-		$this->_details = $details;
-
-		$this->current_user_info = $user_info;
-	}
-
-	/**
-	 * The function to actually execute a task
-	 *
-	 * @return mixed
-	 */
-	abstract public function execute();
-
-	/**
-	 * Loads minimal info for the previously loaded user ids
-	 *
-	 * @param array $user_ids
-	 * @return array
-	 * @throws Exception
-	 */
-	public function getMinUserInfo($user_ids = array())
-	{
-		return loadMinUserInfo($user_ids);
-	}
-
-	public function __destruct()
-	{
-		global $user_info;
-
-		$user_info = $this->current_user_info;
 	}
 }
 

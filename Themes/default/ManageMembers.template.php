@@ -18,7 +18,7 @@ function template_search_members()
 	global $context, $scripturl, $txt;
 
 	echo '
-		<form action="', $scripturl, '?action=admin;area=viewmembers" method="post" accept-charset="', $context['character_set'], '" id="admin_form_wrapper">
+		<form action="', $scripturl, '?action=admin;area=viewmembers" method="post" accept-charset="UTF-8" id="admin_form_wrapper">
 			<input type="hidden" name="sa" value="query">
 			<div class="cat_bar">
 				<h3 class="catbg">
@@ -225,7 +225,7 @@ function template_admin_browse()
 	{
 		echo '
 		<br>
-		<form id="admin_form_wrapper" action="', $scripturl, '?action=admin;area=viewmembers" method="post" accept-charset="', $context['character_set'], '" name="postFormOutstanding" id="postFormOutstanding" onsubmit="return onOutstandingSubmit();">
+		<form id="admin_form_wrapper" action="', $scripturl, '?action=admin;area=viewmembers" method="post" accept-charset="UTF-8" name="postFormOutstanding" id="postFormOutstanding" onsubmit="return onOutstandingSubmit();">
 			<div class="cat_bar">
 				<h3 class="catbg">', $txt['admin_browse_outstanding'], '</h3>
 			</div>

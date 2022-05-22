@@ -1227,8 +1227,7 @@ INSERT INTO {$db_prefix}admin_info_files
 	(id_file, filename, path, parameters, data, filetype)
 VALUES
 	(1, 'current-version.js', '/smf/', 'version=%3$s', '', 'text/javascript'),
-	(2, 'detailed-version.js', '/smf/', 'language=%1$s&version=%3$s', '', 'text/javascript'),
-	(3, 'latest-news.js', '/smf/', 'language=%1$s&format=%2$s', '', 'text/javascript');
+	(2, 'latest-news.js', '/smf/', 'language=%1$s&format=%2$s', '', 'text/javascript');
 # --------------------------------------------------------
 
 #
@@ -2044,7 +2043,6 @@ VALUES ('sbVersion', '{$sb_version}'),
 	('oldTopicDays', '120'),
 	('edit_wait_time', '90'),
 	('edit_disable_time', '0'),
-	('autoFixDatabase', '1'),
 	('allow_guestAccess', '1'),
 	('time_format', '{$default_time_format}'),
 	('number_format', '1234.00'),

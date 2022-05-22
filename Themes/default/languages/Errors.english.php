@@ -358,7 +358,6 @@ $txt['profile_error_posts_out_of_range'] = 'The number of posts is out of range'
 // Registration form.
 $txt['under_age_registration_prohibited'] = 'Sorry, but users under the age of %1$d are not allowed to register on this forum.';
 $txt['error_too_quickly'] = 'You went through registration a bit too quickly, faster than should normally be possible. Please give it a moment and try again.';
-$txt['mysql_error_space'] = ' - check database storage space or contact the server administrator.';
 
 $txt['icon_not_found'] = 'The icon image could not be found in the default theme - please ensure the image has been uploaded and try again.';
 $txt['icon_after_itself'] = 'The icon cannot be positioned after itself.';
