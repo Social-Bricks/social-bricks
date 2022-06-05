@@ -1,0 +1,56 @@
+	<x-form id="calendar_editholiday" form_action="{{ form_url }}" token="admin-eh">
+		<x-panel.heading>
+			{{ page_title }}
+		</x-panel.heading>
+		<x-panel.body>
+			<dl class="settings">
+				<dt>
+					<strong>{{ txt('holidays_title_label') }}</strong>
+				</dt>
+				<dd>
+					<input type="text" name="title" value="{{ holiday.title }}" size="55" maxlength="60">
+				</dd>
+				<dt>
+					<strong>{{ txt('holiday_date') }}</strong>
+				</dt>
+				<dd>
+					<label for="year">{{ txt('calendar_year') }}</label>
+					<select name="year" id="year" onchange="generateDays()">
+						{% for year, label in years %}
+							<option value="{{ year }}"{% if year == holiday.year %} selected{% endif %}>{{ label }}</option>
+						{% endfor %}
+					</select>
+
+					<label for="month">{{ txt('calendar_month') }}</label>
+					<select name="month" id="month" onchange="generateDays()">
+						{% for month, label in months %}
+							<option value="{{ month }}"{% if month == holiday.month %} selected{% endif %}>{{ label }}</option>
+						{% endfor %}
+					</select>
+
+					<label for="month">{{ txt('calendar_day') }}</label>
+					<select name="day" id="day" onchange="generateDays()">
+						{% for day in days %}
+							<option value="{{ day }}"{% if day == holiday.day %} selected{% endif %}>{{ day }}</option>
+						{% endfor %}
+					</select>
+				</dd>
+			</dl>
+			<x-form.buttonstrip>
+				{% if is_new %}
+					<x-form.button>
+						{{ txt('holidays_button_add') }}
+					</x-form.button>
+				{% else %}
+					<x-form.button name="edit" value="edit">
+						{{ txt('holidays_button_edit') }}
+					</x-form.button>
+					<x-form.button name="remove" value="remove">
+						{{ txt('holidays_button_remove') }}
+					</x-form.button>
+
+					<input type="hidden" name="holiday" value="{{ holiday.id }}">
+				{% endif %}
+			</x-form.buttonstrip>
+		</x-panel.body>
+	</x-form>

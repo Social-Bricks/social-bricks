@@ -44,6 +44,7 @@ $txt['manage_holidays_desc'] = 'From here you can add and remove holidays from y
 $txt['current_holidays'] = 'Current Holidays';
 $txt['holidays_title'] = 'Holiday';
 $txt['holidays_title_label'] = 'Title';
+$txt['holiday_date'] = 'Holiday Date';
 $txt['holidays_delete_confirm'] = 'Are you sure you wish to remove these holidays?';
 $txt['holidays_add'] = 'Add new holiday';
 $txt['holidays_edit'] = 'Edit existing holiday';

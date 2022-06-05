@@ -13,6 +13,8 @@
  * @version 2.1.0
  */
 
+use SocialBricks\Renderable;
+
 /**
  * The main controlling function doesn't have much to do... yet.
  * Just check permissions and delegate to the rest.
@@ -46,8 +48,6 @@ function ManageCalendar()
 		$default = 'settings';
 	}
 
-	$_REQUEST['sa'] = isset($_REQUEST['sa']) && isset($subActions[$_REQUEST['sa']]) ? $_REQUEST['sa'] : $default;
-
 	// Set up the two tabs here...
 	$context[$context['admin_menu_name']]['tab_data'] = array(
 		'title' => $txt['manage_calendar'],
@@ -66,7 +66,9 @@ function ManageCalendar()
 
 	call_integration_hook('integrate_manage_calendar', array(&$subActions));
 
-	call_helper($subActions[$_REQUEST['sa']]);
+	$_REQUEST['sa'] = isset($_REQUEST['sa']) && isset($subActions[$_REQUEST['sa']]) ? $_REQUEST['sa'] : $default;
+
+	return call_helper($subActions[$_REQUEST['sa']]);
 }
 
 /**
@@ -194,9 +196,7 @@ function ModifyHolidays()
  */
 function EditHoliday()
 {
-	global $txt, $context, $smcFunc;
-
-	loadTemplate('ManageCalendar');
+	global $txt, $context, $smcFunc, $scripturl, $modSettings;
 
 	$context['is_new'] = !isset($_REQUEST['holiday']);
 	$context['page_title'] = $context['is_new'] ? $txt['holidays_add'] : $txt['holidays_edit'];
@@ -207,7 +207,7 @@ function EditHoliday()
 		$_REQUEST['holiday'] = (int) $_REQUEST['holiday'];
 
 	// Submitting?
-	if (isset($_POST[$context['session_var']]) && (isset($_REQUEST['delete']) || $_REQUEST['title'] != ''))
+	if (isset($_POST[$context['session_var']]) && (isset($_REQUEST['remove']) || $_REQUEST['title'] != ''))
 	{
 		checkSession();
 		validateToken('admin-eh');
@@ -216,7 +216,7 @@ function EditHoliday()
 		$_REQUEST['title'] = $smcFunc['substr']($smcFunc['normalize']($_REQUEST['title']), 0, 60);
 		$_REQUEST['holiday'] = isset($_REQUEST['holiday']) ? (int) $_REQUEST['holiday'] : 0;
 
-		if (isset($_REQUEST['delete']))
+		if (isset($_REQUEST['remove']))
 			$smcFunc['db_query']('', '
 				DELETE FROM {db_prefix}calendar_holidays
 				WHERE id_holiday = {int:selected_holiday}',
@@ -262,16 +262,16 @@ function EditHoliday()
 	createToken('admin-eh');
 
 	// Default states...
-	if ($context['is_new'])
-		$context['holiday'] = array(
-			'id' => 0,
-			'day' => date('d'),
-			'month' => date('m'),
-			'year' => '0000',
-			'title' => ''
-		);
+	$holiday = array(
+		'id' => 0,
+		'day' => date('d'),
+		'month' => date('m'),
+		'year' => '0000',
+		'title' => ''
+	);
+
 	// If it's not new load the data.
-	else
+	if (!$context['is_new'])
 	{
 		$request = $smcFunc['db_query']('', '
 			SELECT id_holiday, YEAR(event_date) AS year, MONTH(event_date) AS month, DAYOFMONTH(event_date) AS day, title
@@ -283,18 +283,32 @@ function EditHoliday()
 			)
 		);
 		while ($row = $smcFunc['db_fetch_assoc']($request))
-			$context['holiday'] = array(
+		{
+			$holiday = array(
 				'id' => $row['id_holiday'],
 				'day' => $row['day'],
 				'month' => $row['month'],
 				'year' => $row['year'] <= 4 ? 0 : $row['year'],
 				'title' => $row['title']
 			);
+		}
 		$smcFunc['db_free_result']($request);
 	}
 
 	// Last day for the drop down?
-	$context['holiday']['last_day'] = (int) sb_strftime('%d', mktime(0, 0, 0, $context['holiday']['month'] == 12 ? 1 : $context['holiday']['month'] + 1, 0, $context['holiday']['month'] == 12 ? $context['holiday']['year'] + 1 : $context['holiday']['year']));
+	$last_day = (int) sb_strftime('%d', mktime(0, 0, 0, $holiday['month'] == 12 ? 1 : $holiday['month'] + 1, 0, $holiday['month'] == 12 ? $holiday['year'] + 1 : $holiday['year']));
+
+	$year_range = range((int) $modSettings['cal_minyear'], (int) $modSettings['cal_maxyear']);
+
+	return new Renderable('areas/admin/calendar/edit_holiday.twig', [
+		'page_title' => $context['page_title'],
+		'form_url' => $scripturl . '?action=admin;area=managecalendar;sa=editholiday',
+		'years' => ['0000' => $txt['every_year']] + array_combine($year_range, $year_range),
+		'months' => $txt['months'],
+		'days' => range(1, $last_day),
+		'holiday' => $holiday,
+		'is_new' => $context['is_new'],
+	]);
 }
 
 /**
