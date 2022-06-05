@@ -194,19 +194,19 @@ function template_main()
 
 			if ($topic['is_locked'])
 				echo '
-								<span class="main_icons lock"></span>';
+								<span class="main_icons lock" title="', $txt['locked_topic'], '"></span>';
 
 			if ($topic['is_sticky'])
 				echo '
-								<span class="main_icons sticky"></span>';
+								<span class="main_icons sticky" title="', $txt['sticky_topic'], '"></span>';
 
 			if ($topic['is_redirect'])
 				echo '
-								<span class="main_icons move"></span>';
+								<span class="main_icons move" title="', $txt['moved_topic'], '"></span>';
 
 			if ($topic['is_poll'])
 				echo '
-								<span class="main_icons poll"></span>';
+								<span class="main_icons poll" title="', $txt['poll'], '"></span>';
 
 			echo '
 							</div>';
