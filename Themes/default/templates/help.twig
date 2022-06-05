@@ -1,0 +1,15 @@
+	<div class="manual_page">
+		<x-panel.heading>
+			{{ txt('manual_user_help') }}
+		</x-panel.heading>
+		<x-panel.body>
+			<p>{{ txt('manual_welcome', forum_name) }}</p>
+			<p>{{ txt('manual_introduction') }}</p>
+			<ul>
+			{% for wiki_page in manual_sections %}
+				<li><a href="{{ wiki_page.href }}" target="_blank" rel="noopener">{{ wiki_page.title }}</a> - {{ wiki_page.desc }}</li>
+			{% endfor %}
+			</ul>
+			<p>{{ txt('manual_docs', wiki_url) }}</p>
+		</x-panel.body>
+	</div>

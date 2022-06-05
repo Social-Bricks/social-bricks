@@ -145,32 +145,4 @@ function template_find_members()
 </html>';
 }
 
-/**
- * The main help page
- */
-function template_manual()
-{
-	global $context, $scripturl, $txt;
-
-	echo '
-			<div class="cat_bar">
-				<h3 class="catbg">', $txt['manual_user_help'], '</h3>
-			</div>
-			<div id="help_container">
-				<div id="helpmain" class="windowbg">
-					<p>', sprintf($txt['manual_welcome'], $context['forum_name_html_safe']), '</p>
-					<p>', $txt['manual_introduction'], '</p>
-					<ul>';
-
-	foreach ($context['manual_sections'] as $section_id => $wiki_id)
-		echo '
-						<li><a href="', $context['wiki_url'], '/', $context['wiki_prefix'], $wiki_id, ($txt['lang_dictionary'] != 'en' ? '/' . $txt['lang_dictionary'] : ''), '" target="_blank" rel="noopener">', $txt['manual_section_' . $section_id . '_title'], '</a> - ', $txt['manual_section_' . $section_id . '_desc'], '</li>';
-
-	echo '
-					</ul>
-					<p>', sprintf($txt['manual_docs'], $context['wiki_url']), '</p>
-				</div><!-- #helpmain -->
-			</div><!-- #help_container -->';
-}
-
 ?>

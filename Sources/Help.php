@@ -13,6 +13,8 @@
  * @version 2.1.0
  */
 
+use SocialBricks\Renderable;
+
 /**
  * Redirect to the user help ;).
  * It loads information needed for the help section.
@@ -22,26 +24,9 @@
  */
 function ShowHelp()
 {
-	loadTemplate('Help');
+	global $context, $scripturl, $txt;
+
 	loadLanguage('Manual');
-
-	$subActions = array(
-		'index' => 'HelpIndex',
-	);
-
-	// CRUD $subActions as needed.
-	call_integration_hook('integrate_manage_help', array(&$subActions));
-
-	$sa = isset($_GET['sa'], $subActions[$_GET['sa']]) ? $_GET['sa'] : 'index';
-	call_helper($subActions[$sa]);
-}
-
-/**
- * The main page for the Help section
- */
-function HelpIndex()
-{
-	global $scripturl, $context, $txt;
 
 	// We need to know where our wiki is.
 	$context['wiki_url'] = 'https://wiki.simplemachines.org/smf';
@@ -50,7 +35,7 @@ function HelpIndex()
 	$context['canonical_url'] = $scripturl . '?action=help';
 
 	// Sections were are going to link...
-	$context['manual_sections'] = array(
+	$sections = array(
 		'registering' => 'Registering',
 		'logging_in' => 'Logging_In',
 		'profile' => 'Profile',
@@ -63,6 +48,16 @@ function HelpIndex()
 		'features' => 'Features',
 	);
 
+	$context['manual_sections'] = [];
+	foreach ($sections as $section_id => $wiki_id)
+	{
+		$context['manual_sections'][$section_id] = [
+			'href' => $context['wiki_url'] . '/' . $context['wiki_prefix'] . $wiki_id .  ($txt['lang_dictionary'] != 'en' ? '/' . $txt['lang_dictionary'] : ''),
+			'title' => $txt['manual_section_' . $section_id . '_title'],
+			'desc' => $txt['manual_section_' . $section_id . '_desc'],
+		];
+	}
+
 	// Build the link tree.
 	$context['linktree'][] = array(
 		'url' => $scripturl . '?action=help',
@@ -71,7 +66,12 @@ function HelpIndex()
 
 	// Lastly, some minor template stuff.
 	$context['page_title'] = $txt['manual_user_help'];
-	$context['sub_template'] = 'manual';
+
+	return new Renderable('help.twig', [
+		'forum_name' => $context['forum_name'],
+		'manual_sections' => $context['manual_sections'],
+		'wiki_url' => $context['wiki_url'],
+	]);
 }
 
 /**
