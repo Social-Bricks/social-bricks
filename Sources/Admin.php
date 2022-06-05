@@ -13,6 +13,7 @@
  * @version 2.1.0
  */
 
+use SocialBricks\Renderable;
 use SocialBricks\Helper\XmlArray;
 
 /**
@@ -490,7 +491,7 @@ function AdminMain()
 
 	// Is it valid?
 	if (!empty($call))
-		call_user_func($call);
+		return call_user_func($call) ?? null;
 }
 
 /**
@@ -505,7 +506,7 @@ function AdminMain()
  */
 function AdminHome()
 {
-	global $txt, $context, $user_info;
+	global $txt, $context, $user_info, $modSettings, $scripturl;
 
 	// You have to be able to do at least one of the below to see this page.
 	isAllowedTo(array('admin_forum', 'manage_permissions', 'moderate_forum', 'manage_membergroups', 'manage_bans', 'send_mail', 'edit_news', 'manage_boards', 'manage_smileys', 'manage_attachments'));
@@ -523,7 +524,51 @@ function AdminHome()
 		'description' => '',
 	);
 
-	loadJavaScriptFile('admin.js', array('defer' => false, 'minimize' => true), 'sb_admin');
+	if (empty($modSettings['disable_smf_js']))
+	{
+		loadJavaScriptFile($scripturl . '?action=viewadminfile;filename=current-version.js', ['external' => true, 'defer' => true], 'adminfile-current-version');
+		loadJavaScriptFile($scripturl . '?action=viewadminfile;filename=latest-news.js', ['external' => true, 'defer' => true], 'adminfile-latest-news');
+	}
+	loadJavaScriptFile('admin.js', array('defer' => true, 'minimize' => true), 'sb_admin');
+
+	addInlineJavaScript('
+	var oAdminIndex = new sb_adminIndex({
+		sSelf: \'oAdminCenter\',
+
+		bLoadUpdateNotification: true,
+		sUpdateNotificationContainerId: \'update_section\',
+		sUpdateNotificationDefaultTitle: ' . JavaScriptEscape($txt['update_available']) . ',
+		sUpdateNotificationDefaultMessage: ' . JavaScriptEscape($txt['update_message']) . ',
+		sUpdateNotificationTemplate: ' . JavaScriptEscape('
+			<h3 id="update_title">
+				%title%
+			</h3>
+			<div id="update_message" class="smalltext">
+				%message%
+			</div>
+		') . ',
+		sUpdateNotificationLink: sb_scripturl + ' . JavaScriptEscape('?action=admin;area=packages;pgdownload;auto;package=%package%;' . $context['session_var'] . '=' . $context['session_id']) . '
+	});', true);
+
+	$menu = [];
+	foreach ($context[$context['admin_menu_name']]['sections'] as $area_id => $area)
+	{
+		foreach ($area['areas'] as $item_id => $item)
+		{
+			// No point showing the 'home' page here, we're already on it!
+			if ($area_id == 'forum' && $item_id == 'index')
+				continue;
+
+			$item['url'] = isset($item['url']) ? $item['url'] : $scripturl . '?action=admin;area=' . $item_id . (!empty($context[$context['admin_menu_name']]['extra_parameters']) ? $context[$context['admin_menu_name']]['extra_parameters'] : '');
+
+			$menu[$area_id]['title'] = $area['title'];
+			$menu[$area_id]['items'][$item_id] = $item;
+		}
+	}
+
+	return new Renderable('areas/admin/home.twig', [
+		'menu' => $menu,
+	]);
 }
 
 /**

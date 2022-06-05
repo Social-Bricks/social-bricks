@@ -1,0 +1,16 @@
+	{# Is there an update available? #}
+	<div id="update_section"></div>
+
+	{% for area_id, area in menu %}
+		<fieldset id="group_{{ area_id }}" class="windowbg admin_group">
+			<legend>{{ area.title }}</legend>
+
+			{% for item_id, item in area.items %}
+				{% if item.icon_file %}
+					<a href="{{ item.url }}" class="admin_group{% if item.inactive %} inactive{% endif %}"><img class="large_admin_menu_icon_file" src="{{ item.icon_file }}" alt="">{{ item.label }}</a>
+				{% else %}
+					<a href="{{ item.url }}"><span class="large_{{ item.icon_class }}{% if item.inactive %} inactive{% endif %}"></span>{{ item.label }}</a>
+				{% endif %}
+			{% endfor %}
+		</fieldset>
+	{% endfor %}
