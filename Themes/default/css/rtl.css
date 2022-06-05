@@ -595,20 +595,6 @@ tr.windowbg th.stats_month, tr.windowbg td.stats_day {
 	padding: 5px 0 0 1em;
 }
 
-/* Styles for the help section.
-------------------------------------------------- */
-#helpmain h3.section {
-	padding: 0 0.5em 0.5em 0;
-}
-/* put back the bullets please */
-#helpmain ul {
-	margin: 0 25px 0 0;
-	padding-left: 0;
-}
-#helpmain #messageindex {
-	clear: left;
-}
-
 /* Styles for the admincenter (reverse admin.css).
 ------------------------------------------------- */
 /* common admin classes */

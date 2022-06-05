@@ -2752,29 +2752,18 @@ dl.addrules dt.floatleft {
 /* Styles for the help section.
 ------------------------------------------------- */
 
-#help_container {
-	padding: 0 0 8px 0;
-}
-#helpmain {
-	margin: 12px 0 0 0;
-	padding: 8px 20px 12px 20px;
-	border: 1px solid #ddd;
-	border-radius: 7px;
-	box-shadow: 0 -2px 2px rgba(0, 0, 0, 0.1);
-	overflow: auto;
-}
-#helpmain p {
+.manual_page p {
 	margin: 10px 0;
 	line-height: 1.5em;
 }
-#helpmain ul {
+.manual_page ul {
 	line-height: 2em;
 	margin: 0 0 0 25px;
 }
-#helpmain ul li {
+.manual_page li {
 	list-style-type: disc;
 }
-#helpmain ul li a {
+.manual_page li a {
 	font-weight: bold;
 }
 
