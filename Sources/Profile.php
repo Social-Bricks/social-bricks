@@ -15,6 +15,8 @@
  * @version 2.1.0
  */
 
+use SocialBricks\Renderable;
+
 /**
  * The main designating function for modifying profiles. Loads up info, determins what to do, etc.
  *
@@ -807,11 +809,13 @@ function ModifyProfile($post_errors = array())
 
 	// Is it valid?
 	if (!empty($call))
-		call_user_func($call, $memID);
+		$result = call_user_func($call, $memID);
 
 	// Set the page title if it's not already set...
 	if (!isset($context['page_title']))
 		$context['page_title'] = $txt['profile'] . (isset($txt[$current_area]) ? ' - ' . $txt[$current_area] : '');
+
+	return $result ?? null;
 }
 
 /**
@@ -889,14 +893,31 @@ function profile_popup($memID)
 
 	// Now check if these items are available
 	$context['profile_items'] = array();
-	$menu_context = &$context[$context['profile_menu_name']]['sections'];
+	$menu_context = $context[$context['profile_menu_name']];
 	foreach ($profile_items as $item)
 	{
-		if (isset($menu_context[$item['menu']]['areas'][$item['area']]))
+		if (isset($menu_context['sections'][$item['menu']]['areas'][$item['area']]))
 		{
-			$context['profile_items'][] = $item;
+			$area = $menu_context['sections'][$item['menu']]['areas'][$item['area']];
+			$item_url = (isset($item['url']) ? $item['url'] : (isset($area['url']) ? $area['url'] : $menu_context['base_url'] . ';area=' . $item['area'])) . $menu_context['extra_parameters'];
+
+			$context['profile_items'][] = [
+				'icon' => $area['icon'],
+				'href' => $item_url,
+				'title' => !empty($item['title']) ? $item['title'] : $area['label'],
+			];
 		}
 	}
+
+	return new Renderable('areas/profile/popup.twig', [
+		'profile' => [
+			'href' => $scripturl, '?action=profile;u=' . $context['user']['id'],
+			'image' => $context['member']['avatar']['image'],
+			'name' => $context['user']['name'],
+			'group' => $context['member']['group'],
+		],
+		'profile_items' => $context['profile_items'],
+	]);
 }
 
 /**

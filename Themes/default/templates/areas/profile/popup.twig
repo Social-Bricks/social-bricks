@@ -1,0 +1,14 @@
+		<div class="profile_user_avatar floatleft">
+			<a href="{{ profile.href }}">{{ profile.image|raw }}</a>
+		</div>
+		<div class="profile_user_info floatleft">
+			<span class="profile_username"><a href="{{ profile.href }}">{{ profile.name|raw }}</a></span>
+			<span class="profile_group">{{ profile.group|raw }}</span>
+		</div>
+		<div class="profile_user_links">
+			<ol>
+			{% for item in profile_items %}
+				<li>{{ item.icon|raw }}<a href="{{ item.href }}">{{ item.title }}</a>
+			{% endfor %}
+			</ol>
+		</div>
