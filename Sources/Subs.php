@@ -5920,16 +5920,8 @@ function call_helper($string, $return = false)
 		// What are we gonna do about it?
 		if ($return)
 			return $func;
-
-		// If this is a plain function, avoid the heat of calling call_user_func().
 		else
-		{
-			if (is_array($func))
-				call_user_func($func);
-
-			else
-				$func();
-		}
+			return call_user_func($func) ?? null;
 	}
 }
 
