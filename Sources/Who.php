@@ -41,23 +41,13 @@ function Who()
 	loadTemplate('Who');
 	loadLanguage('Who');
 
-	// Sort out... the column sorting.
-	$sort_methods = array(
-		'user' => 'mem.real_name',
-		'time' => 'lo.log_time'
-	);
-
 	$show_methods = array(
 		'members' => '(lo.id_member != 0)',
 		'guests' => '(lo.id_member = 0)',
 		'all' => '1=1',
 	);
 
-	// Store the sort methods and the show types for use in the template.
-	$context['sort_methods'] = array(
-		'user' => $txt['who_user'],
-		'time' => $txt['who_time'],
-	);
+	// Store the show types for use in the template.
 	$context['show_methods'] = array(
 		'all' => $txt['who_show_all'],
 		'members' => $txt['who_show_members_only'],
@@ -74,34 +64,10 @@ function Who()
 	elseif (empty($modSettings['show_spider_online']) && isset($_SESSION['who_online_filter']) && $_SESSION['who_online_filter'] == 'spiders')
 		unset($_SESSION['who_online_filter']);
 
-	// Does the user prefer a different sort direction?
-	if (isset($_REQUEST['sort']) && isset($sort_methods[$_REQUEST['sort']]))
-	{
-		$context['sort_by'] = $_SESSION['who_online_sort_by'] = $_REQUEST['sort'];
-		$sort_method = $sort_methods[$_REQUEST['sort']];
-	}
-	// Did we set a preferred sort order earlier in the session?
-	elseif (isset($_SESSION['who_online_sort_by']))
-	{
-		$context['sort_by'] = $_SESSION['who_online_sort_by'];
-		$sort_method = $sort_methods[$_SESSION['who_online_sort_by']];
-	}
-	// Default to last time online.
-	else
-	{
-		$context['sort_by'] = $_SESSION['who_online_sort_by'] = 'time';
-		$sort_method = 'lo.log_time';
-	}
-
-	$context['sort_direction'] = isset($_REQUEST['asc']) || (isset($_REQUEST['sort_dir']) && $_REQUEST['sort_dir'] == 'asc') ? 'up' : 'down';
-
 	$conditions = array();
 	if (!allowedTo('moderate_forum'))
 		$conditions[] = '(COALESCE(mem.show_online, 1) = 1)';
 
-	// Fallback to top filter?
-	if (isset($_REQUEST['submit_top']) && isset($_REQUEST['show_top']))
-		$_REQUEST['show'] = $_REQUEST['show_top'];
 	// Does the user wish to apply a filter?
 	if (isset($_REQUEST['show']) && isset($show_methods[$_REQUEST['show']]))
 		$context['show_by'] = $_SESSION['who_online_filter'] = $_REQUEST['show'];
@@ -126,7 +92,7 @@ function Who()
 	$smcFunc['db_free_result']($request);
 
 	// Prepare some page index variables.
-	$context['page_index'] = constructPageIndex($scripturl . '?action=who;sort=' . $context['sort_by'] . ($context['sort_direction'] == 'up' ? ';asc' : '') . ';show=' . $context['show_by'], $_REQUEST['start'], $totalMembers, $modSettings['defaultMaxMembers']);
+	$context['page_index'] = constructPageIndex($scripturl . '?action=who;show=' . $context['show_by'], $_REQUEST['start'], $totalMembers, $modSettings['defaultMaxMembers']);
 	$context['start'] = $_REQUEST['start'];
 
 	// Look for people online, provided they don't mind if you see they are.
@@ -139,12 +105,10 @@ function Who()
 			LEFT JOIN {db_prefix}members AS mem ON (lo.id_member = mem.id_member)
 			LEFT JOIN {db_prefix}membergroups AS mg ON (mg.id_group = CASE WHEN mem.id_group = {int:regular_member} THEN mem.id_post_group ELSE mem.id_group END)' . (!empty($conditions) ? '
 		WHERE ' . implode(' AND ', $conditions) : '') . '
-		ORDER BY {raw:sort_method} {raw:sort_direction}
+		ORDER BY lo.log_time DESC
 		LIMIT {int:offset}, {int:limit}',
 		array(
 			'regular_member' => 0,
-			'sort_method' => $sort_method,
-			'sort_direction' => $context['sort_direction'] == 'up' ? 'ASC' : 'DESC',
 			'offset' => $context['start'],
 			'limit' => $modSettings['defaultMaxMembers'],
 		)

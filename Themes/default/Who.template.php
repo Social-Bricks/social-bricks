@@ -26,26 +26,27 @@ function template_main()
 			</div>
 			<div id="mlist">
 				<div class="pagesection">
-					<div class="pagelinks floatleft">', $context['page_index'], '</div>
-					<div class="selectbox floatright" id="upper_show">
-						', $txt['who_show'], '
-						<select name="show_top" onchange="document.forms.whoFilter.show.value = this.value; document.forms.whoFilter.submit();">';
+					<div class="generic_menu">
+						<ul class="dropmenu dropdown_menu_1_tabs">';
 
 	foreach ($context['show_methods'] as $value => $label)
+	{
 		echo '
-							<option value="', $value, '" ', $value == $context['show_by'] ? ' selected' : '', '>', $label, '</option>';
+							<li>
+								<a class="', $value == $context['show_by'] ? ' active' : '', '"" href="', $scripturl, '?action=who;show=', $value, '">', $label, '</a>
+							</li>';
+	}
+
+	// The end of tabs
 	echo '
-						</select>
-						<noscript>
-							<input type="submit" name="submit_top" value="', $txt['go'], '" class="button">
-						</noscript>
+						</ul>
 					</div>
 				</div>
 				<table class="table_grid">
 					<thead>
 						<tr class="title_bar">
-							<th scope="col" class="lefttext" style="width: 40%;"><a href="', $scripturl, '?action=who;start=', $context['start'], ';show=', $context['show_by'], ';sort=user', $context['sort_direction'] != 'down' && $context['sort_by'] == 'user' ? '' : ';asc', '" rel="nofollow">', $txt['who_user'], $context['sort_by'] == 'user' ? '<span class="main_icons sort_' . $context['sort_direction'] . '"></span>' : '', '</a></th>
-							<th scope="col" class="lefttext time" style="width: 10%;"><a href="', $scripturl, '?action=who;start=', $context['start'], ';show=', $context['show_by'], ';sort=time', $context['sort_direction'] == 'down' && $context['sort_by'] == 'time' ? ';asc' : '', '" rel="nofollow">', $txt['who_time'], $context['sort_by'] == 'time' ? '<span class="main_icons sort_' . $context['sort_direction'] . '"></span>' : '', '</a></th>
+							<th scope="col" class="lefttext" style="width: 40%;">', $txt['who_user'], '</th>
+							<th scope="col" class="lefttext time" style="width: 10%;">', $txt['who_time'], '</th>
 							<th scope="col" class="lefttext half_table">', $txt['who_action'], '</th>
 						</tr>
 					</thead>
@@ -109,19 +110,6 @@ function template_main()
 				</table>
 				<div class="pagesection" id="lower_pagesection">
 					<div class="pagelinks floatleft" id="lower_pagelinks">', $context['page_index'], '</div>
-					<div class="selectbox floatright">
-						', $txt['who_show'], '
-						<select name="show" onchange="document.forms.whoFilter.submit();">';
-
-	foreach ($context['show_methods'] as $value => $label)
-		echo '
-							<option value="', $value, '" ', $value == $context['show_by'] ? ' selected' : '', '>', $label, '</option>';
-	echo '
-						</select>
-						<noscript>
-							<input type="submit" value="', $txt['go'], '" class="button">
-						</noscript>
-					</div>
 				</div><!-- #lower_pagesection -->
 			</div><!-- #mlist -->
 		</form>
