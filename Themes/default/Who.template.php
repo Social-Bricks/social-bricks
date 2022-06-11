@@ -20,99 +20,97 @@ function template_main()
 	// Display the table header and linktree.
 	echo '
 	<div class="main_section" id="whos_online">
-		<form action="', $scripturl, '?action=who" method="post" id="whoFilter" accept-charset="UTF-8">
-			<div class="cat_bar">
-				<h3 class="catbg">', $txt['who_title'], '</h3>
-			</div>
-			<div id="mlist">
-				<div class="pagesection">
-					<div class="generic_menu">
-						<ul class="dropmenu dropdown_menu_1_tabs">';
+		<div class="cat_bar">
+			<h3 class="catbg">', $txt['who_title'], '</h3>
+		</div>
+		<div id="mlist">
+			<div class="pagesection">
+				<div class="generic_menu">
+					<ul class="dropmenu dropdown_menu_1_tabs">';
 
 	foreach ($context['show_methods'] as $value => $label)
 	{
 		echo '
-							<li>
-								<a class="', $value == $context['show_by'] ? ' active' : '', '"" href="', $scripturl, '?action=who;show=', $value, '">', $label, '</a>
-							</li>';
+						<li>
+							<a class="', $value == $context['show_by'] ? ' active' : '', '"" href="', $scripturl, '?action=who;show=', $value, '">', $label, '</a>
+						</li>';
 	}
 
 	// The end of tabs
 	echo '
-						</ul>
-					</div>
+					</ul>
 				</div>
-				<table class="table_grid">
-					<thead>
-						<tr class="title_bar">
-							<th scope="col" class="lefttext" style="width: 40%;">', $txt['who_user'], '</th>
-							<th scope="col" class="lefttext time" style="width: 10%;">', $txt['who_time'], '</th>
-							<th scope="col" class="lefttext half_table">', $txt['who_action'], '</th>
-						</tr>
-					</thead>
-					<tbody>';
+			</div>
+			<table class="table_grid">
+				<thead>
+					<tr class="title_bar">
+						<th scope="col" class="lefttext" style="width: 40%;">', $txt['who_user'], '</th>
+						<th scope="col" class="lefttext time" style="width: 10%;">', $txt['who_time'], '</th>
+						<th scope="col" class="lefttext half_table">', $txt['who_action'], '</th>
+					</tr>
+				</thead>
+				<tbody>';
 
 	foreach ($context['members'] as $member)
 	{
 		echo '
-						<tr class="windowbg">
-							<td>';
+					<tr class="windowbg">
+						<td>';
 
 		// Guests can't be messaged.
 		if (!$member['is_guest'])
 			echo '
-								<span class="contact_info floatright">
-									', $context['can_send_pm'] ? '<a href="' . $member['online']['href'] . '" title="' . $txt['pm_online'] . '">' : '', $settings['use_image_buttons'] ? '<span class="main_icons im_' . ($member['online']['is_online'] == 1 ? 'on' : 'off') . '" title="' . $txt['pm_online'] . '"></span>' : $member['online']['label'], $context['can_send_pm'] ? '</a>' : '', '
-								</span>';
+							<span class="contact_info floatright">
+								', $context['can_send_pm'] ? '<a href="' . $member['online']['href'] . '" title="' . $txt['pm_online'] . '">' : '', $settings['use_image_buttons'] ? '<span class="main_icons im_' . ($member['online']['is_online'] == 1 ? 'on' : 'off') . '" title="' . $txt['pm_online'] . '"></span>' : $member['online']['label'], $context['can_send_pm'] ? '</a>' : '', '
+							</span>';
 
 		echo '
-								<span class="member', $member['is_hidden'] ? ' hidden' : '', '">
-									', $member['is_guest'] ? $member['name'] : '<a href="' . $member['href'] . '" title="' . sprintf($txt['view_profile_of_username'], $member['name']) . '"' . (empty($member['color']) ? '' : ' style="color: ' . $member['color'] . '"') . '>' . $member['name'] . '</a>', '
-								</span>';
+							<span class="member', $member['is_hidden'] ? ' hidden' : '', '">
+								', $member['is_guest'] ? $member['name'] : '<a href="' . $member['href'] . '" title="' . sprintf($txt['view_profile_of_username'], $member['name']) . '"' . (empty($member['color']) ? '' : ' style="color: ' . $member['color'] . '"') . '>' . $member['name'] . '</a>', '
+							</span>';
 
 		if (!empty($member['ip']))
 			echo '
-								(<a href="' . $scripturl . '?action=', ($member['is_guest'] ? 'trackip' : 'profile;area=tracking;sa=ip;u=' . $member['id']), ';searchip=' . $member['ip'] . '">' . str_replace(':', ':&ZeroWidthSpace;', $member['ip']) . '</a>)';
+							(<a href="' . $scripturl . '?action=', ($member['is_guest'] ? 'trackip' : 'profile;area=tracking;sa=ip;u=' . $member['id']), ';searchip=' . $member['ip'] . '">' . str_replace(':', ':&ZeroWidthSpace;', $member['ip']) . '</a>)';
 
 		echo '
-							</td>
-							<td class="time">', $member['time'], '</td>
-							<td>';
+						</td>
+						<td class="time">', $member['time'], '</td>
+						<td>';
 
 		if (is_array($member['action']))
 		{
 			$tag = !empty($member['action']['tag']) ? $member['action']['tag'] : 'span';
 
 			echo '
-								<', $tag, !empty($member['action']['class']) ? ' class="' . $member['action']['class'] . '"' : '', '>
-									', $txt[$member['action']['label']], (!empty($member['action']['error_message']) ? $member['action']['error_message'] : ''), '
-								</', $tag, '>';
+							<', $tag, !empty($member['action']['class']) ? ' class="' . $member['action']['class'] . '"' : '', '>
+								', $txt[$member['action']['label']], (!empty($member['action']['error_message']) ? $member['action']['error_message'] : ''), '
+							</', $tag, '>';
 		}
 		else
 			echo $member['action'];
 
 		echo '
-							</td>
-						</tr>';
+						</td>
+					</tr>';
 	}
 
 	// No members?
 	if (empty($context['members']))
 		echo '
-						<tr class="windowbg">
-							<td colspan="3">
-							', $txt['who_no_online_' . ($context['show_by'] == 'guests' || $context['show_by'] == 'spiders' ? $context['show_by'] : 'members')], '
-							</td>
-						</tr>';
+					<tr class="windowbg">
+						<td colspan="3">
+						', $txt['who_no_online_' . ($context['show_by'] == 'guests' || $context['show_by'] == 'spiders' ? $context['show_by'] : 'members')], '
+						</td>
+					</tr>';
 
 	echo '
-					</tbody>
-				</table>
-				<div class="pagesection" id="lower_pagesection">
-					<div class="pagelinks floatleft" id="lower_pagelinks">', $context['page_index'], '</div>
-				</div><!-- #lower_pagesection -->
-			</div><!-- #mlist -->
-		</form>
+				</tbody>
+			</table>
+			<div class="pagesection" id="lower_pagesection">
+				<div class="pagelinks floatleft" id="lower_pagelinks">', $context['page_index'], '</div>
+			</div><!-- #lower_pagesection -->
+		</div><!-- #mlist -->
 	</div><!-- #whos_online -->';
 }
 
