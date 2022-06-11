@@ -20,6 +20,7 @@ use Performing\TwigComponents\Configuration as TwigComponentsConfiguration;
 use Twig\Loader\FilesystemLoader;
 use Twig\Environment as TwigEnvironment;
 use Twig\TwigFunction;
+use Twig\TwigFilter;
 
 /**
  * Load the $modSettings array.
@@ -2674,6 +2675,13 @@ function load_twig()
 			$csrf .= '<input type="hidden" name="' . $context[$token . '_token_var'] . '" value="' . $context[$token . '_token'] . '">';
 
 		return new \Twig\Markup($csrf, 'UTF-8');
+	}));
+	$twig->addFunction(new TwigFunction('helplink', function($link) {
+		global $scripturl;
+		return $scripturl . '?action=helpadmin;help=' . $link;
+	}));
+	$twig->addFilter(new TwigFilter('time', function ($string) {
+		return new \Twig\Markup(timeformat($string), 'UTF-8');
 	}));
 
 	TwigComponentsConfiguration::make($twig)

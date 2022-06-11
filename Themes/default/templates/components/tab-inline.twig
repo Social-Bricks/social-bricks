@@ -1,0 +1,5 @@
+{% for item in items %}
+	{% if not loop.first %}|{% endif %}
+	{% if item.is_selected %}<x-icon icon="right_arrow" />{% endif %}
+	<a href="{{ item.url }}" {% if item.is_selected %} style="font-weight: bold;" {% endif %}{% if item.description %} title="{{ item.description }}"{% endif %}>{{ item.label }}{% if item.amount %}<x-badge :amount="item.amount" />{% endif %}</a>
+{% endfor %}

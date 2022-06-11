@@ -1,0 +1,113 @@
+	<x-form form_action="{{ form_url }}" token="admin-el">
+		<x-panel.heading help="error_log">
+			{{ txt('errorlog') }}
+		</x-panel.heading>
+		<x-panel.body>
+			{{ txt('apply_filter_of_type') }}: <x-tab-inline :items="error_types" />
+
+			{% if has_filter %}
+				<br>
+				<strong>{{ txt('applying_filter') }}:</strong> {{ filter.entity }} {{ filter.value.html|raw }}
+
+				<x-form.button name="reset" value="1">{{ txt('clear_filter') }}</x-form.button>
+			{% endif %}
+		</x-panel.body>
+
+		<div class="pagesection">
+			<div class="pagelinks">
+				{{ pagination|raw }}
+			</div>
+			<div class="floatright">
+				{% if has_filter %}
+					<x-form.button name="delall" value="1" data-confirm="{{ txt('remove_filtered_results_confirm') }}" class="you_sure">{{ txt('remove_filtered_results') }}</x-button>
+				{% else %}
+					<x-form.button name="delall" value="1" data-confirm="{{ txt('sure_about_errorlog_remove') }}" class="you_sure">{{ txt('remove_all') }}</x-button>
+				{% endif %}
+				<x-form.button name="removeSelection" value="1" data-confirm="{{ txt('remove_selection_confirm') }}" class="you_sure">{{ txt('remove_selection') }}</x-button>
+
+				<x-form.invert-all mask="delete[]" />
+			</div>
+		</div>
+
+		{% for error in errors %}
+			<div class="windowbg word_break">
+				<div class="counter" style="padding: 0 10px 10px 0">{{ error.id }}</div>
+				<div class="topic_details">
+					<span class="floatright">
+						<input type="checkbox" name="delete[]" value="{{ error.id }}">
+					</span>
+					<h5>
+						<a href="{{ reverse_direction_url|raw }}" title="{{ txt('reverse_direction') }}"><x-icon :icon="'sort_' ~ sort_direction" /></a> {{ error.timestamp|time }}
+					</h5>
+					<hr class="clear">
+				</div>
+				<div>
+					<div class="half_content">
+						<a href="{{ error.filter.member_id }}" title="{{ txt('apply_filter') }}: {{ txt('filter_only_member') }}"><x-icon icon="filter" /></a>
+						<strong>{{ error.member.link|raw }}</strong>
+
+						<br>
+						<a href="{{ error.filter.ip }}" title="{{ txt('apply_filter') }}: {{ txt('filter_only_ip') }}"><x-icon icon="filter" /></a>
+						<strong><a href="{{ error.member.ip_link }}">{{ error.member.ip }}</a></strong>
+
+						{% if error.member.session %}
+						<br>
+						<a href="{{ error.filter.session }}" title="{{ txt('apply_filter') }}: {{ txt('filter_only_session') }}"><x-icon icon="filter" /></a> {{ error.member.session }}
+						{% endif %}
+
+						<br>
+						<a href="{{ error.filter.url }}" title="{{ txt('apply_filter') }}: {{ txt('filter_only_url') }}"><x-icon icon="filter" /></a>
+						<a href="{{ error.url.html }}" class="bbc_link word_break">{{ error.url.html }}</a>
+
+						{% if error.file %}
+						<br>
+						<a href="{{ error.filter.file }}" title="{{ txt('apply_filter') }}: {{ txt('filter_only_file') }}"><x-icon icon="filter" /></a> <a class="bbc_link" href="{{ error.file.href }}" onclick="return reqWin(this.href, 600, 480, false);">{{ error.file.file }}</a> ({{ txt('line') }} {{ error.file.line }})
+						{% endif %}
+
+					</div>
+					<div class="half_content">
+						<strong class="floatright">
+							<span class="main_icons details"></span> <a class="bbc_link" href="', $scripturl, '?action=admin;area=logs;sa=errorlog;backtrace={{ error.id }}" onclick="return reqWin(this.href, 600, 480, false);">{{ txt('backtrace_title') }}</a>
+						</strong>
+					</div>
+				</div>
+				<div class="post">
+					<br class="clear">
+					<a href="{{ error.filter.type }}" title="{{ txt('apply_filter') }}: {{ txt.filter_only_type }}"><x-icon icon="filter" /></a>{{ txt('error_type') }}:
+					{% if error.error_type.type == 'critical' %}
+						<span class="error">{{ error.error_type.name }}
+					{% else %}
+						{{ error.error_type.name }}
+					{% endif %}
+					<br>
+
+					<div class="floatleft">
+						<a href="{{ error.filter.message }}" title="{{ txt('apply_filter') }}: {{ txt('filter_only_message') }}"><x-icon icon="filter" /></a>
+					</div>
+					<div class="codeheader"><span class="code floatleft">{{ txt('error_message') }}</span> <a class="codeoperation sb_select_text">{{ txt('code_select') }}</a> <a class="codeoperation sb_expand_code hidden" data-shrink-txt="{{ txt('code_shrink') }}" data-expand-txt="{{ txt('code_expand') }}">{{ txt('code_expand') }}</a>
+					</div><code class="bbc_code" style="white-space: pre-line; overflow-y: auto">{{ error.message.html|raw }}</code>
+				</div>
+			</div>
+		{% endfor %}
+
+
+		{% if sort_direction == 'down' %}
+			<input type="hidden" name="desc" value="1">
+		{% endif %}
+
+		<div class="pagesection">
+			<div class="pagelinks">
+				{{ pagination|raw }}
+			</div>
+			<div class="floatright">
+				{% if has_filter %}
+					<x-form.button name="delall" value="1" data-confirm="{{ txt('remove_filtered_results_confirm') }}" class="you_sure">{{ txt('remove_filtered_results') }}</x-button>
+				{% else %}
+					<x-form.button name="delall" value="1" data-confirm="{{ txt('sure_about_errorlog_remove') }}" class="you_sure">{{ txt('remove_all') }}</x-button>
+				{% endif %}
+				<x-form.button name="removeSelection" value="1" data-confirm="{{ txt('remove_selection_confirm') }}" class="you_sure">{{ txt('remove_selection') }}</x-button>
+
+				<x-form.invert-all mask="delete[]" />
+			</div>
+		</div>
+	</x-form>

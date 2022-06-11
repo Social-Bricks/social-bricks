@@ -14,6 +14,8 @@
  * @version 2.1.0
  */
 
+use SocialBricks\Renderable;
+
 /**
  * View the forum's error log.
  * This function sets all the context up to show the error log for maintenance.
@@ -24,7 +26,7 @@
  */
 function ViewErrorLog()
 {
-	global $scripturl, $txt, $context, $modSettings, $user_profile, $filter, $smcFunc;
+	global $scripturl, $txt, $context, $modSettings, $user_profile, $filter, $smcFunc, $boarddir;
 
 	// Viewing contents of a file?
 	if (isset($_GET['file']))
@@ -84,6 +86,11 @@ function ViewErrorLog()
 			'datatype' => 'int',
 		),
 	);
+
+	if (isset($_REQUEST['reset']))
+	{
+		redirectexit('action=admin;area=logs;sa=errorlog' . (isset($_REQUEST['desc']) ? ';desc' : ''));
+	}
 
 	// Set up the filtering...
 	if (isset($_GET['value'], $_GET['filter']) && isset($filters[$_GET['filter']]))
@@ -159,6 +166,8 @@ function ViewErrorLog()
 	$context['errors'] = array();
 	$members = array();
 
+	$log_base = $scripturl . '?action=admin;area=logs;sa=errorlog' . ($context['sort_direction'] == 'down' ? ';desc' : '');
+
 	for ($i = 0; $row = $smcFunc['db_fetch_assoc']($request); $i++)
 	{
 		$search_message = preg_replace('~&lt;span class=&quot;remove&quot;&gt;(.+?)&lt;/span&gt;~', '%', $smcFunc['db_escape_wildcard_string']($row['message']));
@@ -169,20 +178,27 @@ function ViewErrorLog()
 		$show_message = strtr(strtr(preg_replace('~&lt;span class=&quot;remove&quot;&gt;(.+?)&lt;/span&gt;~', '$1', $row['message']), array("\r" => '', '<br>' => "\n", '<' => '&lt;', '>' => '&gt;', '"' => '&quot;')), array("\n" => '<br>'));
 
 		$context['errors'][$row['id_error']] = array(
+			'filter' => array(
+				'member_id' => $log_base . ';filter=id_member;value=' . $row['id_member'],
+				'ip' => $log_base . ';filter=id_member;value=' . inet_dtop($row['ip']),
+				'session' => $log_base . ';filter=session;value=' . $row['session'],
+				'url' => $log_base . ';filter=url;value=' . base64_encode($smcFunc['db_escape_wildcard_string']($row['url'])),
+				'type' => $log_base . ';filter=error_type;value=' . $row['error_type'],
+				'message' => $log_base . ';filter=message;value=' . base64_encode($search_message),
+			),
 			'member' => array(
 				'id' => $row['id_member'],
 				'ip' => inet_dtop($row['ip']),
-				'session' => $row['session']
+				'ip_link' => $scripturl . '?action=trackip;searchip=' . inet_dtop($row['ip']),
+				'session' => $row['session'],
 			),
 			'time' => timeformat($row['log_time']),
 			'timestamp' => $row['log_time'],
 			'url' => array(
-				'html' => $smcFunc['htmlspecialchars'](strpos($row['url'], 'cron.php') === false ? (substr($row['url'], 0, 1) == '?' ? $scripturl : '') . $row['url'] : $row['url']),
-				'href' => base64_encode($smcFunc['db_escape_wildcard_string']($row['url']))
+				'html' => strpos($row['url'], 'cron.php') === false ? (substr($row['url'], 0, 1) == '?' ? $scripturl : '') . $row['url'] : $row['url'],
 			),
 			'message' => array(
 				'html' => $show_message,
-				'href' => base64_encode($search_message)
 			),
 			'id' => $row['id_error'],
 			'error_type' => array(
@@ -197,12 +213,13 @@ function ViewErrorLog()
 			$linkfile = strpos($row['file'], 'eval') === false || strpos($row['file'], '?') === false; // De Morgan's Law.  Want this true unless both are present.
 
 			$context['errors'][$row['id_error']]['file'] = array(
-				'file' => $row['file'],
+				'file' => str_replace($boarddir, '$boarddir', $row['file']),
 				'line' => $row['line'],
 				'href' => $scripturl . '?action=admin;area=logs;sa=errorlog;file=' . base64_encode($row['file']) . ';line=' . $row['line'],
 				'link' => $linkfile ? '<a href="' . $scripturl . '?action=admin;area=logs;sa=errorlog;file=' . base64_encode($row['file']) . ';line=' . $row['line'] . '" onclick="return reqWin(this.href, 600, 480, false);">' . $row['file'] . '</a>' : $row['file'],
 				'search' => base64_encode($row['file']),
 			);
+			$context['errors'][$row['id_error']]['filter']['file'] = $log_base . ';filter=file;value=' . base64_encode($row['file']);
 		}
 
 		// Make a list of members to load later.
@@ -269,8 +286,12 @@ function ViewErrorLog()
 		{
 			$context['filter']['value']['html'] = '\'' . strtr($smcFunc['htmlspecialchars']($filter['value']['sql']), array("\n" => '<br>', '&lt;br /&gt;' => '<br>', "\t" => '&nbsp;&nbsp;&nbsp;', '\_' => '_', '\\%' => '%', '\\\\' => '\\')) . '\'';
 		}
+		elseif ($filter['variable'] == 'file')
+		{
+			$context['filter']['value']['html'] = str_replace($boarddir, '$boarddir', $filter['value']['sql']);
+		}
 		else
-			$context['filter']['value']['html'] = &$filter['value']['sql'];
+			$context['filter']['value']['html'] = $filter['value']['sql'];
 	}
 
 	$context['error_types'] = array();
@@ -300,30 +321,41 @@ function ViewErrorLog()
 		$sum += $row['num_errors'];
 
 		$context['error_types'][$sum] = array(
-			'label' => (isset($txt['errortype_' . $row['error_type']]) ? $txt['errortype_' . $row['error_type']] : $row['error_type']) . ' (' . $row['num_errors'] . ')',
+			'label' => (isset($txt['errortype_' . $row['error_type']]) ? $txt['errortype_' . $row['error_type']] : $row['error_type']),
 			'error_type' => $row['error_type'],
 			'description' => isset($txt['errortype_' . $row['error_type'] . '_desc']) ? $txt['errortype_' . $row['error_type'] . '_desc'] : '',
 			'url' => $scripturl . '?action=admin;area=logs;sa=errorlog' . ($context['sort_direction'] == 'down' ? ';desc' : '') . ';filter=error_type;value=' . $row['error_type'],
 			'is_selected' => isset($filter) && $filter['value']['sql'] == $smcFunc['db_escape_wildcard_string']($row['error_type']),
+			'amount' => $row['num_errors'],
 		);
 	}
 	$smcFunc['db_free_result']($request);
 
 	// Update the all errors tab with the total number of errors
-	$context['error_types']['all']['label'] .= ' (' . $sum . ')';
-
-	// Finally, work out what is the last tab!
-	if (isset($context['error_types'][$sum]))
-		$context['error_types'][$sum]['is_last'] = true;
-	else
-		$context['error_types']['all']['is_last'] = true;
+	$context['error_types']['all']['amount'] = $sum;
 
 	// And this is pretty basic ;).
 	$context['page_title'] = $txt['errorlog'];
-	$context['has_filter'] = isset($filter);
-	$context['sub_template'] = 'error_log';
 
 	createToken('admin-el');
+
+	if (empty($context['errors']))
+	{
+		return new Renderable('areas/admin/logs/error_log_empty.twig');
+	}
+	else
+	{
+		return new Renderable('areas/admin/logs/error_log.twig', [
+			'form_url' => $scripturl . '?action=admin;area=logs;sa=errorlog' . ($context['sort_direction'] == 'down' ? ';desc' : '') . ';start=' . $context['start'] . (isset($filter) ? $context['filter']['href'] : ''),
+			'reverse_direction_url' => $scripturl . '?action=admin;area=logs;sa=errorlog' . ($context['sort_direction'] != 'down' ? ';desc' : '') . (isset($filter) ? $context['filter']['href'] : ''),
+			'error_types' => $context['error_types'],
+			'errors' => $context['errors'],
+			'sort_direction' => $context['sort_direction'],
+			'has_filter' => isset($filter),
+			'filter' => $context['filter'] ?? [],
+			'pagination' => $context['page_index'],
+		]);
+	}
 }
 
 /**

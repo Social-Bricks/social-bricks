@@ -880,7 +880,7 @@ function AdminLogs()
 	$subAction = isset($_REQUEST['sa']) && isset($log_functions[$_REQUEST['sa']]) && empty($log_functions[$_REQUEST['sa']]['disabled']) ? $_REQUEST['sa'] : 'errorlog';
 
 	require_once($sourcedir . '/' . $log_functions[$subAction][0]);
-	call_helper($log_functions[$subAction][1]);
+	return call_helper($log_functions[$subAction][1]);
 }
 
 /**
